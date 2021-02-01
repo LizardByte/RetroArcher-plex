@@ -1,0 +1,52 @@
+# Ignore Mac system files
+.DS_Store
+
+# Ignore python cache files
+*__pycache__
+*.pyc
+
+# Ignore Plex Font
+*plexina
+
+# Ignore helper scripts
+*.ps1
+
+# Ignore log files
+*.log
+
+# Ignore retroarcher stuff
+*bin*retroarch.cfg
+*bin*.lpl
+*bin*cheats/
+*bin*config*.opt
+*bin*config/record/
+*bin*config/remaps/
+*bin*downloads/
+*bin*layouts/
+*bin*logs/
+*bin*playlists/
+*bin*recordings/
+*bin*saves/
+*bin*screenshots/
+*bin*states/
+*bin*system/
+
+#overlays... for now exclude these
+*bin*overlays/
+*bin*config/
+
+#very large folders... user can get this from retroarch menu
+*bin*thumbnails/
+
+#dynamic wallpapers
+*bin*wallpapers/Explore.png
+*bin*wallpapers/Favorites.png
+*bin*wallpapers/History.png
+*bin*wallpapers/Images.png
+*bin*wallpapers/Import Content.png
+*bin*wallpapers/Main Menu.png
+*bin*wallpapers/Music.png
+*bin*wallpapers/Netplay.png
+*bin*wallpapers/Settings.png
+*bin*wallpapers/Videos.png
+*bin*wallpapers/*.zip
