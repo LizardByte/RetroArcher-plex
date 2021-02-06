@@ -1,0 +1,12 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Reddit support
+    url: https://www.reddit.com/r/RetroArcher
+    about: Ask questions about RetroArcher on Reddit
+  - name: Discord support
+    url: https://discord.gg/d6MpcrbYQs
+    about: Ask question about RetroArcher in Discord
+#
+#  - name: Feature suggestions
+#    url: https://ombifeatures.featureupvote.com
+#    about: Share your suggestions or ideas to make Ombi better!
