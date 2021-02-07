@@ -1,6 +1,21 @@
 ### RetroArcher.bundle for Plex Media Server:
 Retro Archer is a gaming plug-in for Plex!
 
+### Prerequisites for server:
+ - Tautulli (https://tautulli.com/)
+ - Windows
+    - GeForce Experience (https://www.nvidia.com/en-us/geforce/geforce-experience/)
+ - Linux
+    - TBD
+ - Mac
+    - TBD
+
+### Prerequisites for client:
+ - Moonlight: (https://github.com/moonlight-stream/moonlight-android)
+ - Enable developer mode
+    - TV-(https://developer.android.com/training/tv/start/start#run-on-a-real-device)-Skip Step 1
+    - Phone/Tablet-(https://developer.android.com/studio/debug/dev-options#enable)
+
 ### Installation:
 It is recommended to install the [WebTools plugin](http://forums.plex.tv/discussion/288191/webtools-unsupported-appstore/p1).
 
@@ -34,7 +49,7 @@ Ubuntu
 6. "cd" to folder in step 4 and change ownership of RetroArcher.bundle: "sudo chown plex:{gid} RetroArcher.bundle"
 7. Run "sudo service plexmediaserver restart".
 
-### Moonlight
+### Moonlight (https://github.com/moonlight-stream/moonlight-docs/wiki/Setup-Guide#using-moonlight-to-stream-your-entire-desktop)
 1. Install Latest GeForce Experience and login
 2. Under Settings/Shield enable GAMESTREAM (note: a monitor must be connected to the Nvidia GPU)
 3. Click "Add"
@@ -42,4 +57,3 @@ Ubuntu
 5. Click "Edit" and rename to "RetroArcher" or whatever you want
 6. Change the BoxArt if you wish.
 7. If you have multiple monitors, it would be best to set them to duplicate.
-Reference (https://github.com/moonlight-stream/moonlight-docs/wiki/Setup-Guide#using-moonlight-to-stream-your-entire-desktop)
