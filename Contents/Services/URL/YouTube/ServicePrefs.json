@@ -1,0 +1,50 @@
+[
+	{
+		"id": "youtube_region",
+		"type": "enum",
+		"label": "Preferred Region for Videos and channels",
+		"values": [
+			"All/ALL",
+			"Australia/AU",
+			"Brazil/BR",
+			"Canada/CA",
+			"Czech Republic/CZ",
+			"France/FR",
+			"Germany/DE",
+			"Great Britain/GB",
+			"Hong Kong/HK",
+			"India/IN",
+			"Ireland/IE",
+			"Israel/IL",
+			"Italy/IT",
+			"Japan/JP",
+			"Mexico/MX",
+			"Netherlands/NL",
+			"New Zealand/NZ",
+			"Poland/PL",
+			"Russia/RU",
+			"South Africa/ZA",
+			"South Korea/KR",
+			"Spain/ES",
+			"Sweden/SE",
+			"Taiwan/TW",
+			"United States/US"
+		],
+		"default": "All/ALL" 
+	},
+	{
+		"id": "youtube_user",
+		"type": "text",
+		"label": "Username",
+		"default": "",
+		"secure": "true"
+	},
+	{
+		"id": "youtube_passwd",
+		"type": "text",
+		"label": "Password",
+		"default": "",
+		"option": "hidden",
+		"secure": "true"
+	}
+]

@@ -1,0 +1,8 @@
+This folder is for the metadata agent only... everything needs to be compatible with python 2.7
+
+Do NOT update idna. The latest version to support Python 2.7 is 2.10.
+Do NOT update igdb, unless they accept this pull request (https://github.com/twitchtv/igdb-api-python/pull/7)
+Do NOT update plexapi, unless they accept this pull request (https://github.com/pkkid/python-plexapi/pull/658)
+Do NOT update plexapi... without fully reviewing differences (it doesn't support python 2.7 by default)
+
+Before updating any of the submodules in this folder verify they work with python 2.7 AND test!

@@ -1,0 +1,337 @@
+import urlparse
+
+YOUTUBE_VIDEO_FORMATS =	['360p',	'720p',	'1080p']
+YOUTUBE_FMT =			[18,		22,		37]
+YOUTUBE_CONTAINERS =	['mp4',		'mp4',	'mp4']
+YOUTUBE_VIDEORES =		['360',		'720',	'1080']
+YOUTUBE_VIDEOCODEC =	['h264',	'h264',	'h264']
+YOUTUBE_AUDIOCODEC =	['aac',		'aac',	'aac']
+
+HTTP_HEADERS = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36'}
+
+RE_URL_MAP = Regex('"url_encoded_fmt_stream_map".+?"([^"]+)')
+RE_URL_MAP_ALT = Regex('&amp;url_encoded_fmt_stream_map=(.+?)&amp;')
+RE_URL_MAP_AGE_GATE = Regex('&url_encoded_fmt_stream_map=(.+?)&')
+RE_PATH_1 = Regex('^/(watch|details)(_popup)?')
+RE_PATH_2 = Regex('^/[^/]+$')
+RE_VID_ID = Regex('/(v|e(mbed)?)/(v/)?(?P<id>.{11})')
+RE_VID_PID = Regex('pid=(.{11})')
+RE_VIDEO_ID = Regex('"video_id":\s"([^"]+)')
+
+RE_DURATION = Regex('PT(\d+)M(\d+)S')
+RE_AGE_GATE = Regex('(player-age-gate-content">)')
+
+####################################################################################################
+def NormalizeURL(url):
+
+  video_id = None
+
+  if isinstance(url, basestring):
+    url = urlparse.urlparse(url)
+
+  domain = url.netloc
+
+  # Edit mobile urls and tv urls
+  if domain.startswith('m.') or ('/tv' in url.path and url.fragment != ''):
+
+    # Rewrite mobile urls and tv urls that contain a hash
+    if url.fragment != '':
+      url = urlparse.urlparse('https://www.youtube.com%s' % url.fragment)
+
+  # http://www.youtube.com/?v=lgTssWW2Qw4&feature=player_embedded
+  # http://www.youtube.com/watch?v=lgTssWW2Qw4&feature=player_embedded
+  # http://www.youtube.com/details?v=pjyfMCTAqKU
+  if url.path == '/' or RE_PATH_1.match(url.path):
+    qs = String.ParseQueryString(url.query)
+    if 'v' in qs:
+      video_id = qs['v'][0][0:11]
+
+  # http://youtu.be/vXhmyyXFd5I
+  elif domain == 'youtu.be':
+    video_id = url.path[1:12]
+
+  # http://www.youtube.com/user/andyverg#p/a/u/0/HTGOoQNYGL4
+  elif (url.path[0:6] == '/user/' or RE_PATH_2.match(url.path)) and url.fragment != '':
+    video_id = url.fragment.split('/')[-1]
+
+  # http://www.youtube.com/user/fujitvlive?feature=lb&v=eYpAUMZLXqo
+  elif url.path[0:6] == '/user/' and "v=" in url.query:
+    qs = String.ParseQueryString(url.query)
+    if 'v' in qs:
+      video_id = qs['v'][0][0:11]
+
+  # http://www.youtube.com/v/taaSlWjKdDY
+  # http://www.youtube.com/e/NO00y65njH0
+  # http://www.youtube.com/embed/nd5WGLWNllA
+  elif url.path[0:3] == '/v/' or url.path[0:3] == '/e/' or url.path[0:7] == '/embed/':
+    video_id = RE_VID_ID.search(url.path).group('id')
+
+  # http://www.youtube.com/my_subscriptions?pid=nCgQDjiotG0&show_edit=1&feature=uploadeemail_edit
+  elif url.path[0:17] == '/my_subscriptions' and url.query != '':
+    video_id = RE_VID_PID.findall(url.query)[0]
+
+  # http://www.youtube.com/movie/the-last-man-on-earth
+  elif url.path[0:7] == '/movie/':
+    url = HTML.ElementFromURL(url.geturl()).xpath('//a[contains(@href, "watch-now-button")]')
+
+    if url:
+      url = urlparse.urlparse(url[0].get('href'))
+      qs = String.ParseQueryString(url.query)
+
+      if 'v' in qs:
+        video_id = qs['v'][0][0:11]
+
+  if video_id is None:
+    page = HTTP.Request(url.geturl()).content
+    id = HTML.ElementFromString(page).xpath('//div[@data-video-id]/@data-video-id')
+
+    if id:
+      video_id = id[0]
+    else:
+      id = RE_VIDEO_ID.search(page)
+
+      if id:
+        video_id = id.group(1)
+      else:
+        return None
+
+  return 'https://www.youtube.com/watch?v=%s' % video_id
+
+####################################################################################################
+def MetadataObjectForURL(url):
+
+  if url.find('?v=') == -1 or len(url.split('?v=')[-1].split('&')[0]) != 11:
+    raise Ex.MediaNotAvailable
+
+  html = HTML.ElementFromURL(url)
+
+  title = html.xpath('//meta[@property="og:title"]/@content')
+
+  if len(title) < 1:
+    raise Ex.MediaNotAvailable
+
+  title = title[0]
+  summary = html.xpath('//meta[@property="og:description"]/@content')[0]
+  thumb = html.xpath('//meta[@property="og:image"]/@content')[0]
+
+  date = html.xpath('//meta[@itemprop="datePublished"]/@content')[0]
+  date = Datetime.ParseDate(date).date()
+
+  duration = html.xpath('//meta[@itemprop="duration"]/@content')[0]
+  d = RE_DURATION.search(duration)
+  total_duration = ((int(d.group(1)) * 60) + (int(d.group(2)))) * 1000
+
+  return VideoClipObject(
+    title = title,
+    summary = summary,
+    thumb = Resource.ContentsOfURLWithFallback(thumb.replace('https://', 'http://')),
+    originally_available_at = date,
+    duration = total_duration
+  )
+
+####################################################################################################
+def MediaObjectsForURL(url):
+
+  if url.find('?v=') == -1:
+    return None
+
+  ret = []
+
+  fmts = list(YOUTUBE_VIDEO_FORMATS)
+  fmts.reverse()
+
+  for fmt in fmts:
+    index = YOUTUBE_VIDEO_FORMATS.index(fmt)
+
+    ret.append(MediaObject(
+      parts = [PartObject(key=Callback(PlayVideo, url=url, post_url=url, default_fmt=fmt))],
+      container = YOUTUBE_CONTAINERS[index],
+      video_codec = YOUTUBE_VIDEOCODEC[index],
+      audio_codec = YOUTUBE_AUDIOCODEC[index],
+      video_resolution = YOUTUBE_VIDEORES[index],
+      optimized_for_streaming = (YOUTUBE_CONTAINERS[index] == 'mp4')
+    ))
+
+  return ret
+
+####################################################################################################
+def PickMatch(fmts, index, match_format):
+
+  fmt = None
+  desired_container = YOUTUBE_CONTAINERS[index]
+  desired_codec = YOUTUBE_VIDEOCODEC[index]
+
+  # See if we can find the right quality.
+  for i in reversed(range(0, index+1)):
+    if YOUTUBE_FMT[i] in fmts:
+      this_container = YOUTUBE_CONTAINERS[i]
+      this_codec = YOUTUBE_VIDEOCODEC[i]
+      if match_format == False or (this_container == desired_container and this_codec == desired_codec):
+        Log(" -> PICKED %s %s/%s %s", YOUTUBE_CONTAINERS[i], YOUTUBE_VIDEOCODEC[i], YOUTUBE_AUDIOCODEC[i], YOUTUBE_VIDEORES[i])
+        fmt = YOUTUBE_FMT[i]
+        break
+
+  return fmt
+
+####################################################################################################
+@indirect
+def PlayVideo(url=None, default_fmt=None, **kwargs):
+
+  if not url:
+    return None
+
+  # Set default_fmt to '360p' if the value is not set or one of the old string values is used.
+  if not default_fmt or default_fmt in ('Standard', 'Medium', 'High'):
+    default_fmt = '360p'
+
+  # Some videos require the user to authenticate in order for age verification to be successful. Since
+  # this is currently not supported, we should detect the case and raise the suitable Framework
+  # exception. If we're being redirected to a different/unknown URL, we will attempt to just continue.
+  try:
+    yt_page = HTTP.Request(url, headers=HTTP_HEADERS, cacheTime=1, follow_redirects=False).content
+  except Ex.RedirectError, e:
+    if 'verify_age?' in e.location:
+      yt_page = HTTP.Request('%s&has_verified=1' % url, headers=HTTP_HEADERS, cacheTime=1).content
+    else:
+      yt_page = HTTP.Request(url, headers=HTTP_HEADERS, cacheTime=1).content
+  except:
+    raise Ex.MediaNotAvailable
+
+  # Check for geoblocks and unavailable videos
+  video_id = url[url.find('?v=')+3:].split('&')[0]
+
+  # Check for age-gate
+  if RE_AGE_GATE.search(yt_page):
+    age_gate = True
+    data = {
+      'video_id': video_id,
+      'el': 'player_embedded',
+      'gl': 'US',
+      'hl': 'en',
+      'eurl': 'https://youtube.googleapis.com/v/%s' % (video_id),
+      'asv': 3,
+      'sts':'1588',
+    }
+    video_info_url = 'https://www.youtube.com/get_video_info'
+    yt_page = HTTP.Request(video_info_url, values=data, headers=HTTP_HEADERS).content
+  else:
+    age_gate = False
+
+    # Other checks (geoblocking, etc.) should be done here. Need to figure out what checks and how to check
+    # *** OLD CODE ***
+    # try:
+    #  details = JSON.ObjectFromURL(YOUTUBE_VIDEO_DETAILS % video_id, headers=HTTP_HEADERS)['data']
+    #except:
+    #  raise Ex.MediaNotAuthorized
+    #
+    #if 'status' in details:
+    #  if 'value' in details['status'] and details['status']['value'] == 'restricted':
+    #    if 'reason' in details['status'] and details['status']['reason'] == 'requesterRegion':
+    #      raise Ex.MediaGeoblocked
+
+  # Build up the format map.
+  if age_gate:
+    fmt_url_map = RE_URL_MAP_AGE_GATE.findall(yt_page)
+
+    if len(fmt_url_map) < 1:
+      raise Ex.MediaNotAvailable
+
+    fmt_url_map = String.Unquote(fmt_url_map[0]).replace('\/', '/').split(',')
+  else:
+    fmt_url_map = RE_URL_MAP.findall(yt_page)
+  
+    if not fmt_url_map:
+      fmt_url_map = RE_URL_MAP_ALT.findall(yt_page)
+
+      if not fmt_url_map:
+        raise Ex.MediaNotAvailable
+    fmt_url_map = fmt_url_map[0].replace('\/', '/').split(',')
+  
+  fmts = []
+  fmts_info = {}
+
+  for f in fmt_url_map:
+    map = {}
+
+    if '\u0026' in f:
+      params = f.split('\u0026')
+    elif '&' in f:
+      params = f.split('&')
+    else:
+      continue
+
+    for p in params:
+      if '=' in p:
+        (name, value) = p.split('=', 1)
+        map[name] = value
+
+    if 'itag' in map:
+      quality = int(map['itag'])
+
+      if 'url' in map: # Just http (url) for now, not rtmp (stream)
+        video_url = String.Unquote(map['url'])
+
+        if not 'signature' in video_url and 'sig' in map:
+          video_url = video_url + '&signature=' + map['sig']
+        elif not 'signature' in video_url and 's' in map:
+          video_url = video_url + '&signature=' + decrypt_signature(map['s'], age_gate=age_gate)
+
+        if 'signature' in video_url:
+          if 'ratebypass' not in video_url:
+            video_url += '&ratebypass=yes'
+
+          fmts_info[quality] = video_url
+          fmts.append(quality)
+
+  Log("Available formats: %s", str(fmts))
+
+  if len(fmts) < 1:
+    raise Ex.MediaNotAvailable
+
+  # Figure out the index we're looking for.
+  index = YOUTUBE_VIDEO_FORMATS.index(default_fmt)
+
+  # Try to match with format.
+  fmt = PickMatch(fmts, index, True)
+
+  # If that didn't work, pick any format in <= quality.
+  if not fmt:
+    fmt = PickMatch(fmts, index, False)
+
+  # Just pick the worst quality.
+  if not fmt:
+    fmt = fmts[-1]
+
+  final_url = fmts_info[fmt].decode('unicode_escape')
+  Log("VIDEO URL (fmt=%d): %s", fmt, final_url)
+
+  return IndirectResponse(VideoClipObject, key=final_url)
+
+####################################################################################################
+def decrypt_signature(s, age_gate=False):
+
+  key = '-'.join([str(len(p)) for p in s.split('.')])
+  r = int(Datetime.TimestampFromDatetime(Datetime.Now()))/100
+
+  json_obj = JSON.ObjectFromURL('http://6bcff61fb860029015c6-b0c40228a7b02641ddb14594625d1e51.r77.cf3.rackcdn.com/y.json?%d' % (r), cacheTime=60, headers={'Accept-Encoding': 'identity'})
+
+  if key not in json_obj:
+    Log('Unable to decrypt signature, key %s not available' % (key))
+    raise Ex.MediaNotAvailable
+
+  d = ''
+
+  for p in json_obj[key]:
+    t = []
+
+    for x in p.split(':'):
+      t.append(int(x) if x != "" else None)
+
+    if len(t) == 1:
+      d = '%s%s' % (d, s[t[0]])
+    elif len(t) == 2:
+      d = '%s%s' % (d, s[t[0]:t[1]])
+    elif len(t) == 3:
+      d = '%s%s' % (d, s[t[0]:t[1]:t[2]])
+
+  return d

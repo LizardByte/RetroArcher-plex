@@ -5,48 +5,55 @@
 *__pycache__
 *.pyc
 
-# Ignore Plex Font
-*plexina
-
-# Ignore helper scripts
-*.ps1
-
 # Ignore log files
 *.log
 
+#Ignore developer scripts
+Contents/Code/developer
+
 # Ignore retroarcher stuff
-*bin*retroarch.cfg
-*bin*.lpl
-*bin*cheats/
-*bin*config*.opt
-*bin*config/record/
-*bin*config/remaps/
-*bin*downloads/
-*bin*layouts/
-*bin*logs/
-*bin*playlists/
-*bin*recordings/
-*bin*saves/
-*bin*screenshots/
-*bin*states/
-*bin*system/
+Contents/bin/RetroArch/
+Contents/bin*retroarch.cfg
+Contents/bin*.lpl
+Contents/bin*cache/
+Contents/bin*cheats/
+Contents/bin*config*.opt
+Contents/bin*config/record/
+Contents/bin*config/remaps/
+Contents/bin*downloads/
+Contents/bin*layouts/
+Contents/bin*logs/
+Contents/bin*playlists/
+Contents/bin*recordings/
+Contents/bin*saves/
+Contents/bin*screenshots/
+Contents/bin*states/
+Contents/bin*system/
 
 #overlays... for now exclude these
-*bin*overlays/
-*bin*config/
+Contents/bin*overlays/
+Contents/bin*config/
 
 #very large folders... user can get this from retroarch menu
-*bin*thumbnails/
+Contents/bin*thumbnails/
 
 #dynamic wallpapers
-*bin*wallpapers/Explore.png
-*bin*wallpapers/Favorites.png
-*bin*wallpapers/History.png
-*bin*wallpapers/Images.png
-*bin*wallpapers/Import Content.png
-*bin*wallpapers/Main Menu.png
-*bin*wallpapers/Music.png
-*bin*wallpapers/Netplay.png
-*bin*wallpapers/Settings.png
-*bin*wallpapers/Videos.png
-*bin*wallpapers/*.zip
+Contents/bin*wallpapers/Explore.png
+Contents/bin*wallpapers/Favorites.png
+Contents/bin*wallpapers/History.png
+Contents/bin*wallpapers/Images.png
+Contents/bin*wallpapers/Import Content.png
+Contents/bin*wallpapers/Main Menu.png
+Contents/bin*wallpapers/Music.png
+Contents/bin*wallpapers/Netplay.png
+Contents/bin*wallpapers/Settings.png
+Contents/bin*wallpapers/Videos.png
+Contents/bin*wallpapers/*.zip
+
+# Ignore Certain Start Videos
+Contents/Resources/StartVideos/Games/
+Contents/Resources/StartVideos/Platforms/
+Contents/Resources/StartVideos/Platforms.bak/
+
+#Ignore these for now until we include vidoes that we have permission to distribute
+Contents/Resources/StartVideos/Random/

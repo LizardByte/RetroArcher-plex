@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>URL</key>
+	<dict>
+		<key>YouTube</key>
+		<dict>
+			<key>TestURLs</key>
+			<array>
+				<string>http://youtu.be/vXhmyyXFd5I</string>
+				<string>http://youtube.com/watch?v=vXhmyyXFd5I</string>
+				<string>https://www.youtube.com/watch?v=siOHh0uzcuY</string>
+				<string>http://www.youtube.com/user/andyverg#p/a/u/0/HTGOoQNYGL4</string>
+				<string>http://www.youtube.com/shemarooent#p/u/0/DP99hSszVLs</string>
+				<string>http://m.youtube.com/#/watch?v=Eef-JaGhSto</string>
+				<string>http://m.youtube.com/details?v=pjyfMCTAqKU</string>
+				<string>http://www.youtube.com/android</string>
+				<string>http://youtube.googleapis.com/v/BDjYgnUfNf4</string>
+			</array>
+			<key>URLPatterns</key>
+			<array>
+				<string>^(?!.*\.{2,})(https?:)?//(www\.|m\.)?youtu(be(\.googleapis)?\.com|\.be)/(?!account(_|\?)?|artist(/|\?)|blog\?|categories\?|channels\?|charts|embed/(__videoid__|videoseries\?)|playlist\?|p/|profile\?|results\?|subscribe_widget|\?tab=).+</string>
+			</array>
+		</dict>
+	</dict>
+</dict>
+</plist>

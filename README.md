@@ -44,7 +44,7 @@ Ubuntu
 1. Download the [zipped bundle](https://github.com/ReenigneArcher/RetroArcher.bundle/archive/master.zip) from github,
 2. Extract it,
 3. Rename it to **RetroArcher.bundle**,
-4. Move to the folder:  /var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins
+4. Move to the folder:  /var/<folder>/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins where <folder> is "lib" or "snap"
 5. Find the group number for user "plex" by command "id plex".
 6. "cd" to folder in step 4 and change ownership of RetroArcher.bundle: "sudo chown plex:{gid} RetroArcher.bundle"
 7. Run "sudo service plexmediaserver restart".
