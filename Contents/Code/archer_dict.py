@@ -39,6 +39,15 @@ dTHEGAMESDB_rating = {  'EC - Early Childhood' : ['EC', 3],
                         '' : ['', 18]
                      }
 
+dEncoderMapping = {
+    '0' : 'h264_nvenc',
+    '1' : 'h264_qsv',
+    '2' : 'h264_videotoolbox',
+    '3' : 'libx264',
+    '4' : 'mpeg2_qsv',
+    '5' : 'mpeg2video'
+}
+
 dDefaultSettings = {
 	'sSourceRomDirectory' : '',
 	
@@ -48,7 +57,7 @@ dDefaultSettings = {
     'lIncludeLanguages' : '',
     'lExcludeLanguages' : '',
     'lExcludeTags' : 'Beta, Demo, Kiosk, Proto',
-    'eFfmpegEncoder' : 'h264_nvenc',
+    'eFfmpegEncoder' : '0',
     'iFfmpegThreads' : '1',
     'iFfmpegLength' : '30',
     'iFfmpegTextSize' : '24',

@@ -47,30 +47,32 @@ def Themes(self, metadata, media, lang, force, movie, game):
     themeDir = Prefs['sSourceThemeDirectory']
     found = False
 
-    for x in audio_extensions:
-        if found == False:
-            path = [os.path.join(themeDir, game_platform, game_name + x), os.path.join(themeDir, game_platform, short_name + x)]
-            Log.Info(path)
-            for y in path:
-                if os.path.exists(y):
-                    theme_songs.append(y)
-                    Log.Info('found theme song!')
-                    found = True
-                    break
+    if themeDir != None:
+        for x in audio_extensions:
+            if found == False:
+                path = [os.path.join(themeDir, game_platform, game_name + x), os.path.join(themeDir, game_platform, short_name + x)]
+                Log.Info(path)
+                for y in path:
+                    if os.path.exists(y):
+                        theme_songs.append(y)
+                        Log.Info('found theme song!')
+                        found = True
+                        break
 
-    '''
-    y = 0
-    for x in theme_songs:
-        Log.Info(x)
+        '''
+        y = 0
+        for x in theme_songs:
+            Log.Info(x)
+            
+            theme_data = load_file(x)
+            #theme_data = HTTP.Request(x) #for a url instead
+            
+            metadata.themes[game_name] = Proxy.Media(theme_data, sort_order = y)
+            metadata.themes.validate_keys(game_name)
+            y += 1
+        '''
+        for x in metadata.themes:
+            Log.Info(x)
         
-        theme_data = load_file(x)
-        #theme_data = HTTP.Request(x) #for a url instead
-        
-        metadata.themes[game_name] = Proxy.Media(theme_data, sort_order = y)
-        metadata.themes.validate_keys(game_name)
-        y += 1
-    '''
-    for x in metadata.themes:
-        Log.Info(x)
-    
-    hPlexAPI.add_themes(theme_songs, media.id)
+        hPlexAPI.add_themes(theme_songs, media.id)
+

@@ -159,6 +159,7 @@ def getDataFolders(directory, agent):
     dataFolders['mediaFolder'] = os.path.join(directory, 'Plug-in Support', 'Data', agent, 'media')
     dataFolders['dbFolder'] = os.path.join(directory, 'Plug-in Support', 'Data', agent, 'database')
     return dataFolders
+
 '''
 def installAPK(d, myapk, confirm):
     import requests
@@ -243,112 +244,6 @@ def installAPK(d, myapk, confirm):
                 "Remote apk is not removed. Manually install command:\n\t"
                 + "adb shell pm install -r -t " + dst)
 '''
-
-
-def launchEmulator():
-	pass
-	'''
-    #copy and replace fanart background to retroarch wallpaper directory
-
-
-    emulator_path = r'E:\AppData\RetroArch' #build this from plexapi or settings file
-    #emulator_path = os.path.abspath('E:\AppData\RetroArch')
-    print(emulator_path)
-    emulator_app = 'retroarch.exe'
-    #emulator_core = r'E:\AppData\RetroArch\cores\mupen64plus_next_libretro.dll'
-    emulator_core = r'"cores\mupen64plus_next_libretro.dll"'
-    #emulator_core = os.path.abspath('"cores\mupen64plus_next_libretro.dll"')
-    print(emulator_core)
-    rom = r'L:\Libraries\Games\Emulation\roms\Nintendo 64\007 - GoldenEye (USA).zip'
-    rom = r'"L:\Libraries\Games\Emulation\roms\Nintendo 64\007 - GoldenEye (USA).zip"'
-    #rom = os.path.abspath('L:\Libraries\Games\Emulation\roms\Nintendo 64\007 - GoldenEye (USA).zip')
-    print(rom)
-
-    #os.system('cd /d ' + emulator_path )
-    #os.system('"' + emulator_path + '" -L ' + '"' + emulator_core + '" ' + '"' + rom + '" ')
-    print('"' + emulator_path + '" -L ' + '"' + emulator_core + '" ' + '"' + rom + '"')
-
-    #launches emulator... turning off for testing
-    #os.chdir(emulator_path)
-    #time.sleep(0.5)
-    #os.system(emulator_app + " -L " + emulator_core + rom)
-	'''
-
-    '''
-    Usage: retroarch [OPTIONS]... [FILE]
-      -h, --help            Show this help message.
-      -v, --verbose         Verbose logging.
-          --log-file FILE   Log messages to FILE.
-          --version         Show version.
-          --features        Prints available features compiled into program.
-          --menu            Do not require content or libretro core to be loaded,
-                            starts directly in menu. If no arguments are passed to
-                            the program, it is equivalent to using --menu as only argument.
-      -s, --save=PATH       Path for save files (*.srm). (DEPRECATED, use --appendconfig and savefile_directory)
-      -S, --savestate=PATH  Path for the save state files (*.state). (DEPRECATED, use --apendconfig and savestate_directory)
-          --set-shader PATH Path to a shader (preset) that will be loaded each time content is loaded.
-                            Effectively overrides automatic shader presets.
-                            An empty argument "" will disable automatic shader presets.
-      -f, --fullscreen      Start the program in fullscreen regardless of config settings.
-      -c, --config=FILE     Path for config file.
-                    Defaults to retroarch.cfg in same directory as retroarch.exe.
-                    If a default config is not found, the program will attempt to create one.
-          --appendconfig=FILE
-                            Extra config files are loaded in, and take priority over
-                            config selected in -c (or default). Multiple configs are
-                            delimited by '|'.
-      -L, --libretro=FILE   Path to libretro implementation. Overrides any config setting.
-          --subsystem=NAME  Use a subsystem of the libretro core. Multiple content
-                            files are loaded as multiple arguments. If a content
-                            file is skipped, use a blank ("") command line argument.
-                            Content must be loaded in an order which depends on the
-                            particular subsystem used. See verbose log output to learn
-                            how a particular subsystem wants content to be loaded.
-
-      -N, --nodevice=PORT
-                            Disconnects controller device connected to PORT (1 to 16).
-      -A, --dualanalog=PORT
-                            Connect a DualAnalog controller to PORT (1 to 16).
-      -d, --device=PORT:ID
-                            Connect a generic device into PORT of the device (1 to 16).
-                            Format is PORT:ID, where ID is a number corresponding to the particular device.
-      -P, --bsvplay=FILE    Playback a BSV movie file.
-      -R, --bsvrecord=FILE  Start recording a BSV movie file from the beginning.
-          --eof-exit        Exit upon reaching the end of the BSV movie file.
-      -M, --sram-mode=MODE  SRAM handling mode. MODE can be 'noload-nosave',
-                            'noload-save', 'load-nosave' or 'load-save'.
-                            Note: 'noload-save' implies that save files *WILL BE OVERWRITTEN*.
-      -H, --host            Host netplay as user 1.
-      -C, --connect=HOST    Connect to netplay server as user 2.
-          --port=PORT       Port used to netplay. Default is 55435.
-          --stateless       Use "stateless" mode for netplay
-                            (requires a very fast network).
-          --check-frames=NUMBER
-                            Check frames when using netplay.
-          --command         Sends a command over UDP to an already running program process.
-          Available commands are listed if command is invalid.
-          --nick=NICK       Picks a username (for use with netplay). Not mandatory.
-      -r, --record=FILE     Path to record video file.
-            Using .mkv extension is recommended.
-          --recordconfig    Path to settings used during recording.
-          --size=WIDTHxHEIGHT
-                            Overrides output video size when recording.
-      -U, --ups=FILE        Specifies path for UPS patch that will be applied to content.
-          --bps=FILE        Specifies path for BPS patch that will be applied to content.
-          --ips=FILE        Specifies path for IPS patch that will be applied to content.
-          --no-patch        Disables all forms of content patching.
-      -D, --detach          Detach program from the running console. Not relevant for all platforms.
-          --max-frames=NUMBER
-                            Runs for the specified number of frames, then exits.
-          --max-frames-ss
-                            Takes a screenshot at the end of max-frames.
-          --max-frames-ss-path=FILE
-                            Path to save the screenshot to at the end of max-frames.
-          --accessibility
-                            Enables accessibilty for blind users using text-to-speech.
-          --load-menu-on-error
-                            Open menu instead of quitting if specified core or content fails to load.
-    '''
 
 def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, movieName, dataFolders):
     #convert movieName to romName
@@ -776,11 +671,11 @@ def scanner(paths, SourceRomDir, dataFolders):
     except KeyError as e:
         ffmpegThreads = int(archer_dict.dDefaultSettings['iFfmpegThreads'])
     try:
-        encoder = settings['PluginPreferences']['eFfmpegEncoder']
+        encoder = archer_dict.dEncoderMapping[settings['PluginPreferences']['eFfmpegEncoder']]
     except KeyError as e:
-        encoder = archer_dict.dDefaultSettings['eFfmpegEncoder']
+        encoder = archer_dict.dEncoderMapping[archer_dict.dDefaultSettings['eFfmpegEncoder']]
     if encoder == None:
-        encoder = archer_dict.dDefaultSettings['eFfmpegEncoder']
+        encoder = archer_dict.dEncoderMapping[archer_dict.dDefaultSettings['eFfmpegEncoder']]
     
     '''ffmpeg command line options'''
     try:
@@ -816,7 +711,7 @@ def scanner(paths, SourceRomDir, dataFolders):
     except KeyError as e:
         borderSize = archer_dict.dDefaultSettings['sFfmpegTextBoxBorder']
     
-    if border == 'True':
+    if border.lower() == 'true':
         border = str(1)
     else:
         border = str(0)
@@ -1056,7 +951,7 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                         #try to find a find a random platform start video, then try to find a random non platform start video
                                                         if src == None:
                                                             startVidDir = [ platformVideoDirectory, randomVideoDirectory ]
-                                                            type = ['platform', 'random']
+                                                            video_type = ['platform', 'random']
                                                             typeHashList = [platformMD5List, randomMD5List]
                                                             typeMakeNew = [platformVideos, randomVideos]
                                                             t = 0
@@ -1064,7 +959,7 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                                 videoList = list_videos(videoDir)
                                                                 if len(videoList) > 0:
                                                                     src = os.path.join(videoDir, random.choice(videoList))
-                                                                    videoType = type[t]
+                                                                    videoType = video_type[t]
                                                                     
                                                                     found = 0
                                                                     for extension in videoExtensions:

@@ -7,7 +7,7 @@ import common
 
 def igdb_wrapper():
     #disable this if we need to generate a new igdb.json manually
-	'''
+    '''
     client_id = Prefs['sTwitchClientID']
     Log.Info(client_id)
     client_secret = Prefs['sTwitchClientSecret']
