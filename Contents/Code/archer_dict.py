@@ -105,6 +105,7 @@ dDefaultSettings = {
     'PLEX_URL' : 'http://localhost:32400',
 	'PLEX_TOKEN' : '',
 	
+    'scanner_doom' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
     'scanner_nintendo_wii' : 'True',
@@ -120,6 +121,7 @@ dDefaultSettings = {
 	'emulator_atari_lynx' : 0,  
 	'emulator_atari_st' : 0,  
 	'emulator_colecovision' : 0,
+	'emulator_doom' : 0,
 	'emulator_gce_vectrex' : 0,
 	'emulator_magnavox_odyssey_2' : 0,
 	'emulator_mattel_intellivision' : 0,
@@ -157,6 +159,7 @@ dDefaultSettings = {
 	'core_atari_lynx' : 0,
 	'core_atari_st' : 0,
 	'core_colecovision' : 0,
+	'core_doom' : 0,
 	'core_gce_vectrex' : 0,
 	'core_magnavox_odyssey_2' : 0,
 	'core_mattel_intellivision' : 0,
@@ -750,16 +753,6 @@ dPlatformMapping = {
 		'romType' : 0,
 		'multiDisk' : False
 		},
-    'Doom' : { 
-		'systemNames' : ['Doom', 'Prboom'],
-		'systemIds' : {
-			'igdb' : 13,
-			'thegamesdb' : 1
-			},
-		'romExtensions' : ['wad'],
-		'romType' : 1,
-		'multiDisk' : False
-		},
     'Donner Model 30' : { 
 		'systemNames' : ['Donner Model 30', 'donner30', 'Donner 30'],
 		'systemIds' : {
@@ -769,6 +762,40 @@ dPlatformMapping = {
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
+		},
+    'Doom' : { 
+		'systemNames' : ['Doom'],
+		'systemIds' : {
+			'igdb' : 6,
+			'thegamesdb' : 1
+			},
+		'romExtensions' : ['wad'],
+		'romType' : 1,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'prboom_libretro.dll', #default
+                    1 : 'boom3_libretro.dll', #Beetle PSX
+                    2 : 'boom3_xp_libretro.dll', #Beetle PSX HW
+                    3 : 'prboom_libretro.dll', #DuckStation
+                    'prboom_libretro.dll' : {
+                        'coreExtensions' : ['wad'],
+                        'friendlyName' : 'Doom (PrBoom)'
+                        },
+                    'boom3_libretro.dll' : {
+                        'coreExtensions' : ['wad'],
+                        'friendlyName' : 'Doom (boom3)'
+                        },
+                    'boom3_xp_libretro.dll' : {
+                        'coreExtensions' : ['wad'],
+                        'friendlyName' : 'Doom (boom 3 xp)'
+                        }
+                    }
+                }
+            }
 		},
     'Dragon 32' : { 
 		'systemNames' : ['Dragon 32'],

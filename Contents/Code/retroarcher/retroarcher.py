@@ -561,7 +561,7 @@ def make_link(src, dst, system, romName):
     print(time)
     
     if os.path.isfile(dst) == True:
-        os.remove(dst) #look into this... it looks like it's removing the file (left over from when hard links were being used instead of ffmpeg)
+        os.remove(dst) #remove destination if it exists already
     for x in illegal_characters:
         romName = romName.replace(x, '\%s' % (x))
     
@@ -744,7 +744,7 @@ def scanner(paths, SourceRomDir, dataFolders):
         useExisting = False
     
     if useExisting == True:
-        try: #needs a bunch of work... read existing json file compare, re-write, etc.
+        try:
             if ffmpegOverlay == database['ffmpegOverlay']:
                 print('overlay settings did not change')
                 ffmpeg_changed = 0 #no changes
@@ -802,7 +802,10 @@ def scanner(paths, SourceRomDir, dataFolders):
                                 except KeyError as e: #system not in plex settings or default settings (we haven't enabled it yet)
                                     getSystem = ''
                             
-                            if getSystem == 'true':
+                            print(getSystem)
+                            print(type(getSystem))
+                            
+                            if getSystem.lower() == 'true':
                                 #probably pre-mature until we know if a rom was found, but this should be faster... from here to next for loop
                                 platformVideoDirectory = os.path.join(startVideoDirectory, 'Platforms', system)
                                 

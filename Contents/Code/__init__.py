@@ -46,7 +46,11 @@ class RetroArcherCommonAgent:
         game_name_full = os.path.basename(fullpath) #the file name
         Log.Info(game_name_full)
         
-        game_version = '(' + game_name_full.rsplit('.', 1)[0].split('(', 1)[-1].strip()
+        game_version = game_name_full.rsplit('.', 1)[0].split('(', 1)[-1].strip()
+        if game_version != game_name_full.rsplit('.', 1)[0]:
+            game_version = '(' + game_version
+        else:
+            game_version = ''
         Log.Info(game_version)
         
         game_platform = common.platformPath(fullpath)
@@ -55,7 +59,7 @@ class RetroArcherCommonAgent:
         if media.filename is not None: #do this when first initiating a fix match or automatch
             #fullpath = urllib.unquote(media.filename) #the full path of the video file... this only works on auto search
             
-            game_name = game_name_full.split('(', 1)[0].strip()
+            game_name = game_name_full.rsplit('.', 1)[0].split('(', 1)[0].strip()
         
         else: #do this when perfoming a manual search
             game_name = media.name
@@ -108,7 +112,11 @@ class RetroArcherCommonAgent:
         game_name = game_name_full.rsplit('.',1)[0] #the file name
         Log.Info(game_name)
         
-        game_version = '(' + game_name_full.rsplit('.', 1)[0].split('(', 1)[-1].strip()
+        game_version = game_name_full.rsplit('.', 1)[0].split('(', 1)[-1].strip()
+        if game_version != game_name_full.rsplit('.', 1)[0]:
+            game_version = '(' + game_version
+        else:
+            game_version = ''
         Log.Info(game_version)
         
         game_platform = common.platformPath(fullpath)

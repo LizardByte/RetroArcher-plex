@@ -6,7 +6,7 @@ import json
 import common
 
 def igdb_wrapper():
-    #disable this if we need to generate a new igdb.json manually
+    #uncomment this section if we need to generate a new igdb.json manually
     '''
     client_id = Prefs['sTwitchClientID']
     Log.Info(client_id)
@@ -483,7 +483,7 @@ def Update(self, metadata, media, lang, force, movie, game):
     
     '''title'''
     title = "%s [%s] %s" % (jsonGame[0]['name'], platformName, gameVersion)
-    metadata.title = title
+    metadata.title = title.strip()
     
     '''platform id'''
     for key, value in archer_dict.dPlatformMapping.items():

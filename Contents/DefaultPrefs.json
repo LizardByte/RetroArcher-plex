@@ -56,6 +56,7 @@
   { "id":"PLEX_URL",                  "label":"ADVANCED SETTINGS\n_____________________________________________________________________________________\nPLEX|Server URL",    "type":"text",    "default":"http://localhost:32400"  },
   { "id":"PLEX_TOKEN",                "label":"PLEX|Server token",    "type":"text",    "option":"hidden",     "default":"",		"secure":"true"  },
 
+  { "id":"scanner_doom",                                  "label":"SCANNER|Doom",    "type":"bool",    "default":"True"  },
   { "id":"scanner_nintendo_64",                           "label":"SCANNER|Nintendo - 64",    "type":"bool",    "default":"True"  },
   { "id":"scanner_nintendo_gamecube",                     "label":"SCANNER|Nintendo - GameCube",    "type":"bool",    "default":"True"  },
   { "id":"scanner_nintendo_wii",                          "label":"SCANNER|Nintendo - Wii",    "type":"bool",    "default":"True"  },
@@ -71,6 +72,7 @@
   { "id":"emulator_atari_lynx",                           "label":"EMULATOR|Atari - Lynx",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },  
   { "id":"emulator_atari_st",                             "label":"EMULATOR|Atari - ST",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },  
   { "id":"emulator_colecovision",                         "label":"EMULATOR|ColecoVision",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
+  { "id":"emulator_doom",                                 "label":"EMULATOR|Doom",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_gce_vectrex",                          "label":"EMULATOR|GCE - Vectrex",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_magnavox_odyssey_2",                   "label":"EMULATOR|Magnavox - Odyssey2",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_mattel_intellivision",                 "label":"EMULATOR|Mattel - Intellivision",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
@@ -108,6 +110,7 @@
   { "id":"core_atari_lynx",                               "label":"RETROARCH|CORE|Atari - Lynx",    "type": "enum",    "values": [ "default", "Beetle Lynx", "Handy" ],    "default": "default"  },
   { "id":"core_atari_st",                                 "label":"RETROARCH|CORE|Atari - ST",    "type": "enum",    "values": [ "default", "Hatari" ],    "default": "default"  },
   { "id":"core_colecovision",                             "label":"RETROARCH|CORE|ColecoVision",    "type": "enum",    "values": [ "default", "blueMSX" ],    "default": "default"  },
+  { "id":"core_doom",                                     "label":"RETROARCH|CORE|Doom",    "type": "enum",    "values": [ "default", "boom3", "boom 3 xp", "PrBoom" ],    "default": "PrBoom"  },
   { "id":"core_gce_vectrex",                              "label":"RETROARCH|CORE|GCE - Vectrex",    "type": "enum",    "values": [ "default", "vecx" ],    "default": "default"  },
   { "id":"core_magnavox_odyssey_2",                       "label":"RETROARCH|CORE|Magnavox - Odyssey2",    "type": "enum",    "values": [ "default", "O2EM" ],    "default": "default"  },
   { "id":"core_mattel_intellivision",                     "label":"RETROARCH|CORE|Mattel - Intellivision",    "type": "enum",    "values": [ "default", "FreeIntv" ],    "default": "default"  },
