@@ -1,0 +1,36 @@
+{
+  "Ports":{
+    0:{
+      "name": "2048",
+      "core": "2048_libretro.dll",
+      "id": {
+        "igdb": None,
+        "thegamesdb": 34987
+        }
+    },
+	1:{
+      "name": "Minecraft",
+      "core": "craft_libretro.dll",
+      "id": {
+        "igdb": None,
+        "thegamesdb": 68757
+        }
+    },
+	2:{
+      "name": "Mr.Boom",
+      "core": "mrboom_libretro.dll",
+      "id": {
+        "igdb": None,
+        "thegamesdb": 43566
+        }
+    },
+	3:{
+      "name": "The Powder Toy",
+      "core": "thepowdertoy_libretro.dll",
+      "id": {
+        "igdb": None,
+        "thegamesdb": None
+        }
+    }
+  }
+}
