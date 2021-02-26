@@ -125,6 +125,10 @@ dDefaultSettings = {
     'scanner_nintendo_gamecube' : 'True',
     'scanner_nintendo_wii' : 'True',
 	'scanner_sony_playstation' : 'True',
+	'scanner_sony_playstation_2' : 'True',
+	'scanner_sony_psp' : 'True',
+	'scanner_wonderswan' : 'True',
+	'scanner_wonderswan_color' : 'True',
 	
     'emulator_3do_interactive_multiplayer' : 0,
 	'emulator_amstrad_cpc' : 0,
@@ -164,7 +168,7 @@ dDefaultSettings = {
 	'emulator_sega_sg-1000' : 0,
     'emulator_sony_playstation' : 0,
     'emulator_sony_playstation_2' : 0,
-    'emulator_sony_playstation_portable' : 0,
+    'emulator_sony_psp' : 0,
 	'emulator_super_nintendo_entertainment_system' : 0,
 	'emulator_nintendo_wii' : 0,
 	'emulator_wonderswan' : 0,
@@ -209,7 +213,7 @@ dDefaultSettings = {
 	'core_sega_sg-1000' : 0,
 	'core_sony_playstation' : 0,
 	'core_sony_playstation_2' : 0,
-	'core_sony_playstation_portable' : 0,
+	'core_sony_psp' : 0,
     'core_super_nintendo_entertainment_system' : 0,
 	'core_wonderswan' : 0,
 	'core_wonderswan_color' : 0,
@@ -256,7 +260,7 @@ dPlatformMapping = {
             'igdb' : 50,
             'thegamesdb' : 25
 			},
-        'romExtensions' : [],
+        'romExtensions' : ['chd', 'cue', 'iso'],
         'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -267,7 +271,7 @@ dPlatformMapping = {
                     0 : 'opera_libretro.dll', #default
                     1 : 'opera_libretro.dll', #Opera
                     'opera_libretro.dll' : {
-                        'coreExtensions' : ['bin', 'chd', 'cue', 'iso'],
+                        'coreExtensions' : ['iso', 'bin', 'chd', 'cue'],
                         'friendlyName' : 'The 3DO Company - 3DO (Opera)'
                         }
                     }
@@ -332,11 +336,11 @@ dPlatformMapping = {
                     1 : 'cap32_libretro.dll', #Caprice32
                     2 : 'crocods_libretro.dll', #CrocoDS
                     'cap32_libretro.dll' : {
-                        'coreExtensions' : ['cdt', 'cpr', 'dsk', 'sna', 'tap', 'voc', 'zip'],
+                        'coreExtensions' : ['dsk', 'sna', 'zip', 'tap', 'cdt', 'voc', 'cpr', 'm3u'],
                         'friendlyName' : 'Amstrad - CPC (Caprice32)'
                         },
                     'crocods_libretro.dll' : {
-                        'coreExtensions' : ['dsk', 'kcr', 'sna'],
+                        'coreExtensions' : ['dsk', 'sna', 'kcr'],
                         'friendlyName' : 'Amstrad - CPC (CrocoDS)'
                         }
                     }
@@ -429,7 +433,7 @@ dPlatformMapping = {
 			'igdb' : 52,
 			'thegamesdb' : 23
 			},
-		'romExtensions' : ['7z', 'chd', 'zip'],
+		'romExtensions' : ['7z', 'ccd', 'chd', 'cmd', 'cue', 'iso', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -441,52 +445,57 @@ dPlatformMapping = {
                     1 : 'daphne_libretro.dll', #Daphne
                     2 : 'fbalpha2012_cps1_libretro.dll', #FB Alpha 2012 CPS-1
                     3 : 'fbalpha2012_cps2_libretro.dll', #FB Alpha 2012 CPS-2
-                    4 : 'fbalpha2012_neogeo_libretro.dll', #FB Alpha 2012 NeoGeo
-                    5 : 'fbalpha2012_libretro.dll', #FB Alpha 2012
-                    6 : 'fbneo_libretro.dll', #FinalBurn Neo
-                    7 : 'hbmame_libretro.dll', #HBMAME
-                    8 : 'mame_libretro.dll', #MAME - Current
-                    9 : 'mame2000_libretro.dll', #MAME 2000
-                    9 : 'mame2003_midway_libretro.dll', #MAME 2003 - Midway
-                    10 : 'mame2003_libretro.dll', #MAME 2003
-                    11 : 'mame2003_plus_libretro.dll', #MAME 2003 Plus
-                    12 : 'mame2010_libretro.dll', #MAME 2010
-                    13 : 'mame2015_libretro.dll', #MAME 2015
-                    14 : 'mame2016_libretro.dll', #MAME 2016
+                    4 : 'fbalpha2012_cps3_libretro.dll', #FB Alpha 2012 CPS-3
+                    5 : 'fbalpha2012_neogeo_libretro.dll', #FB Alpha 2012 Neo Geo
+                    6 : 'fbalpha2012_libretro.dll', #FB Alpha 2012
+                    7 : 'fbneo_libretro.dll', #FinalBurn Neo
+                    8 : 'hbmame_libretro.dll', #HBMAME
+                    9 : 'mamearcade_libretro.dll', #MAME - Current
+                    10 : 'mame2000_libretro.dll', #MAME 2000
+                    11 : 'mame2003_midway_libretro.dll', #MAME 2003 - Midway
+                    12 : 'mame2003_libretro.dll', #MAME 2003
+                    13 : 'mame2003_plus_libretro.dll', #MAME 2003-Plus
+                    14 : 'mame2010_libretro.dll', #MAME 2010
+                    15 : 'mame2015_libretro.dll', #MAME 2015
+                    16 : 'mame2016_libretro.dll', #MAME 2016
                     'daphne_libretro.dll' : {
-                        'coreExtensions' : [],
+                        'coreExtensions' : ['zip'],
                         'friendlyName' : 'Arcade (Daphne)'
                         },
                     'fbalpha2012_cps1_libretro.dll' : {
-                        'coreExtensions' : [],
+                        'coreExtensions' : ['zip'],
                         'friendlyName' : 'Arcade (FB Alpha 2012 CPS-1)'
                         },
-                    'fbalpha2012_cps1_libretro.dll' : {
-                        'coreExtensions' : [],
+                    'fbalpha2012_cps2_libretro.dll' : {
+                        'coreExtensions' : ['zip'],
                         'friendlyName' : 'Arcade (FB Alpha 2012 CPS-2)'
                         },
+                    'fbalpha2012_cps3_libretro.dll' : {
+                        'coreExtensions' : ['zip'],
+                        'friendlyName' : 'Arcade (FB Alpha 2012 CPS-3)'
+                        },
                     'fbalpha2012_neogeo_libretro.dll' : {
-                        'coreExtensions' : [],
-                        'friendlyName' : 'Arcade (FB Alpha 2012 NeoGeo)'
+                        'coreExtensions' : ['zip'],
+                        'friendlyName' : 'Arcade (FB Alpha 2012 Neo Geo)'
                         },
                     'fbalpha2012_libretro.dll' : {
-                        'coreExtensions' : [],
+                        'coreExtensions' : ['iso', 'zip', '7z'],
                         'friendlyName' : 'Arcade (FB Alpha 2012)'
                         },
                     'fbneo_libretro.dll' : {
-                        'coreExtensions' : ['7z', 'zip'],
+                        'coreExtensions' : ['zip', '7z', 'cue', 'ccd'],
                         'friendlyName' : 'Arcade (FinalBurn Neo)'
                         },
                     'hbmame_libretro.dll' : {
-                        'coreExtensions' : [],
+                        'coreExtensions' : ['zip', 'chd', '7z', 'cmd'],
                         'friendlyName' : 'Arcade (HBMAME)'
                         },
-                    'mame_libretro.dll' : {
-                        'coreExtensions' : [],
+                    'mamearcade_libretro.dll' : {
+                        'coreExtensions' : ['zip', 'chd', '7z', 'cmd'],
                         'friendlyName' : 'Arcade (Mame - Current)'
                         },
                     'mame2000_libretro.dll' : {
-                        'coreExtensions' : [],
+                        'coreExtensions' : ['zip', '7z', 'chd'],
                         'friendlyName' : 'Arcade (MAME 2000)'
                         },
                     'mame2003_midway_libretro.dll' : {
@@ -498,19 +507,19 @@ dPlatformMapping = {
                         'friendlyName' : 'Arcade (MAME 2003)'
                         },
                     'mame2003_plus_libretro.dll' : {
-                        'coreExtensions' : ['chd', 'zip'],
-                        'friendlyName' : 'Arcade (MAME 2003 Plus)'
+                        'coreExtensions' : ['zip'],
+                        'friendlyName' : 'Arcade (MAME 2003-Plus)'
                         },
                     'mame2010_libretro.dll' : {
-                        'coreExtensions' : ['7z', 'chd', 'zip'],
+                        'coreExtensions' : ['zip', '7z', 'chd'],
                         'friendlyName' : 'Arcade (MAME 2010)'
                         },
                     'mame2015_libretro.dll' : {
-                        'coreExtensions' : [],
+                        'coreExtensions' : ['zip', 'chd', '7z', 'cmd'],
                         'friendlyName' : 'Arcade (MAME 2015)'
                         },
                     'mame2016_libretro.dll' : {
-                        'coreExtensions' : [],
+                        'coreExtensions' : ['zip', 'chd', '7z', 'cmd'],
                         'friendlyName' : 'Arcade (MAME 2016)'
                         }
                     }
@@ -523,7 +532,7 @@ dPlatformMapping = {
 			'igdb' : 52,
 			'thegamesdb' : 23
 			},
-		'romExtensions' : [],
+				'romExtensions' : ['zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -534,7 +543,7 @@ dPlatformMapping = {
                     0 : 'daphne_libretro.dll', #default
                     1 : 'daphne_libretro.dll', #Daphne
                     'daphne_libretro.dll' : {
-                        'coreExtensions' : [],
+                        'coreExtensions' : ['zip'],
                         'friendlyName' : 'Arcade (Daphne)'
                         }
                     }
@@ -547,7 +556,7 @@ dPlatformMapping = {
 			'igdb' : 52,
 			'thegamesdb' : 23
 			},
-		'romExtensions' : ['7z', 'zip'],
+        'romExtensions' : ['7z', 'ccd', 'cue', 'iso', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -558,27 +567,32 @@ dPlatformMapping = {
                     0 : 'fbneo_libretro.dll', #default
                     1 : 'fbalpha2012_cps1_libretro.dll', #FB Alpha 2012 CPS-1
                     2 : 'fbalpha2012_cps2_libretro.dll', #FB Alpha 2012 CPS-2
-                    3 : 'fbalpha2012_neogeo_libretro.dll', #FB Alpha 2012 NeoGeo
-                    4 : 'fbalpha2012_libretro.dll', #FB Alpha 2012
-                    5 : 'fbneo_libretro.dll', #FinalBurn Neo
+                    3 : 'fbalpha2012_cps3_libretro.dll', #FB Alpha 2012 CPS-3
+                    4 : 'fbalpha2012_neogeo_libretro.dll', #FB Alpha 2012 Neo Geo
+                    5 : 'fbalpha2012_libretro.dll', #FB Alpha 2012
+                    6 : 'fbneo_libretro.dll', #FinalBurn Neo
                     'fbalpha2012_cps1_libretro.dll' : {
-                        'coreExtensions' : [],
+                        'coreExtensions' : ['zip'],
                         'friendlyName' : 'Arcade (FB Alpha 2012 CPS-1)'
                         },
-                    'fbalpha2012_cps1_libretro.dll' : {
-                        'coreExtensions' : [],
+                    'fbalpha2012_cps2_libretro.dll' : {
+                        'coreExtensions' : ['zip'],
                         'friendlyName' : 'Arcade (FB Alpha 2012 CPS-2)'
                         },
+                    'fbalpha2012_cps3_libretro.dll' : {
+                        'coreExtensions' : ['zip'],
+                        'friendlyName' : 'Arcade (FB Alpha 2012 CPS-3)'
+                        },
                     'fbalpha2012_neogeo_libretro.dll' : {
-                        'coreExtensions' : [],
-                        'friendlyName' : 'Arcade (FB Alpha 2012 NeoGeo)'
+                        'coreExtensions' : ['zip'],
+                        'friendlyName' : 'Arcade (FB Alpha 2012 Neo Geo)'
                         },
                     'fbalpha2012_libretro.dll' : {
-                        'coreExtensions' : [],
+                        'coreExtensions' : ['iso', 'zip', '7z'],
                         'friendlyName' : 'Arcade (FB Alpha 2012)'
                         },
                     'fbneo_libretro.dll' : {
-                        'coreExtensions' : ['7z', 'zip'],
+                        'coreExtensions' : ['zip', '7z', 'cue', 'ccd'],
                         'friendlyName' : 'Arcade (FinalBurn Neo)'
                         }
                     }
@@ -591,7 +605,7 @@ dPlatformMapping = {
 			'igdb' : 52,
 			'thegamesdb' : 23
 			},
-		'romExtensions' : ['7z', 'chd', 'zip'],
+        'romExtensions' : ['7z', 'chd', 'cmd', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -601,24 +615,24 @@ dPlatformMapping = {
                 {'cores' : {
                     0 : 'mame2000_libretro.dll', #default
                     1 : 'hbmame_libretro.dll', #HBMAME
-                    2 : 'mame_libretro.dll', #MAME - Current
+                    2 : 'mamearcade_libretro.dll', #MAME - Current
                     3 : 'mame2000_libretro.dll', #MAME 2000
                     4 : 'mame2003_midway_libretro.dll', #MAME 2003 - Midway
                     5 : 'mame2003_libretro.dll', #MAME 2003
-                    6 : 'mame2003_plus_libretro.dll', #MAME 2003 Plus
+                    6 : 'mame2003_plus_libretro.dll', #MAME 2003-Plus
                     7 : 'mame2010_libretro.dll', #MAME 2010
                     8 : 'mame2015_libretro.dll', #MAME 2015
                     9 : 'mame2016_libretro.dll', #MAME 2016
                     'hbmame_libretro.dll' : {
-                        'coreExtensions' : [],
+                        'coreExtensions' : ['zip', 'chd', '7z', 'cmd'],
                         'friendlyName' : 'Arcade (HBMAME)'
                         },
-                    'mame_libretro.dll' : {
-                        'coreExtensions' : [],
+                    'mamearcade_libretro.dll' : {
+                        'coreExtensions' : ['zip', 'chd', '7z', 'cmd'],
                         'friendlyName' : 'Arcade (Mame - Current)'
                         },
                     'mame2000_libretro.dll' : {
-                        'coreExtensions' : [],
+                        'coreExtensions' : ['zip', '7z', 'chd'],
                         'friendlyName' : 'Arcade (MAME 2000)'
                         },
                     'mame2003_midway_libretro.dll' : {
@@ -630,19 +644,19 @@ dPlatformMapping = {
                         'friendlyName' : 'Arcade (MAME 2003)'
                         },
                     'mame2003_plus_libretro.dll' : {
-                        'coreExtensions' : ['chd', 'zip'],
-                        'friendlyName' : 'Arcade (MAME 2003 Plus)'
+                        'coreExtensions' : ['zip'],
+                        'friendlyName' : 'Arcade (MAME 2003-Plus)'
                         },
                     'mame2010_libretro.dll' : {
-                        'coreExtensions' : ['7z', 'chd', 'zip'],
+                        'coreExtensions' : ['zip', '7z', 'chd'],
                         'friendlyName' : 'Arcade (MAME 2010)'
                         },
                     'mame2015_libretro.dll' : {
-                        'coreExtensions' : [],
+                        'coreExtensions' : ['zip', 'chd', '7z', 'cmd'],
                         'friendlyName' : 'Arcade (MAME 2015)'
                         },
                     'mame2016_libretro.dll' : {
-                        'coreExtensions' : [],
+                        'coreExtensions' : ['zip', 'chd', '7z', 'cmd'],
                         'friendlyName' : 'Arcade (MAME 2016)'
                         }
                     }
@@ -655,7 +669,7 @@ dPlatformMapping = {
 			'igdb' : 59,
 			'thegamesdb' : 22
 			},
-		'romExtensions' : ['a26', 'bin', 'zip'],
+		'romExtensions' : ['a26', 'bin'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -666,7 +680,7 @@ dPlatformMapping = {
                     0 : 'stella_libretro.dll', #default
                     1 : 'stella_libretro.dll', #Stella
                     'stella_libretro.dll' : {
-                        'coreExtensions' : ['a26', 'bin', 'zip'],
+                        'coreExtensions' : ['a26', 'bin'],
                         'friendlyName' : 'Atari - 2600 (Stella)'
                         }
                     }
@@ -690,7 +704,7 @@ dPlatformMapping = {
                     0 : 'atari800_libretro.dll', #default
                     1 : 'atari800_libretro.dll', #Stella
                     'atari800_libretro.dll' : {
-                        'coreExtensions' : ['a52', 'atr', 'atx', 'bin', 'cas', 'cdm', 'xex', 'xfd', 'zip'],
+                        'coreExtensions' : ['xfd', 'atr', 'cdm', 'cas', 'bin', 'a52', 'zip', 'atx', 'car', 'com', 'xex'],
                         'friendlyName' : 'Atari - 5200 (Atari800)'
                         }
                     }
@@ -703,7 +717,7 @@ dPlatformMapping = {
 			'igdb' : 60,
 			'thegamesdb' : 27
 			},
-		'romExtensions' : ['a78', 'bin', 'zip'],
+		'romExtensions' : ['a78', 'bin'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -714,7 +728,7 @@ dPlatformMapping = {
                     0 : 'prosystem_libretro.dll', #default
                     1 : 'prosystem_libretro.dll', #Stella
                     'prosystem_libretro.dll' : {
-                        'coreExtensions' : ['a78', 'bin', 'zip'],
+                        'coreExtensions' : ['a78', 'bin'],
                         'friendlyName' : 'Atari - 7800 (ProSystem)'
                         }
                     }
@@ -738,7 +752,7 @@ dPlatformMapping = {
                     0 : 'atari800_libretro.dll', #default
                     1 : 'atari800_libretro.dll', #Stella
                     'atari800_libretro.dll' : {
-                        'coreExtensions' : ['a52', 'atr', 'atx', 'bin', 'cas', 'cdm', 'xex', 'xfd', 'zip'],
+                        'coreExtensions' : ['xfd', 'atr', 'cdm', 'cas', 'bin', 'a52', 'zip', 'atx', 'car', 'com', 'xex'],
                         'friendlyName' : 'Atari - 5200 (Atari800)'
                         }
                     }
@@ -751,7 +765,7 @@ dPlatformMapping = {
 			'igdb' : 62,
 			'thegamesdb' : 28
 			},
-		'romExtensions' : ['abs', 'bin', 'cof', 'j64', 'jag', 'prg', 'rom', 'zip'],
+		'romExtensions' : ['abs', 'bin', 'cof', 'j64', 'jag', 'prg', 'rom'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -762,7 +776,7 @@ dPlatformMapping = {
                     0 : 'virtualjaguar_libretro.dll', #default
                     1 : 'virtualjaguar_libretro.dll', #Stella
                     'virtualjaguar_libretro.dll' : {
-                        'coreExtensions' : ['abs', 'bin', 'cof', 'j64', 'jag', 'prg', 'rom', 'zip'],
+                        'coreExtensions' : ['j64', 'jag', 'rom', 'abs', 'cof', 'bin', 'prg'],
                         'friendlyName' : 'Atari - Jaguar (Virtual Jaguar)'
                         }
                     }
@@ -775,7 +789,7 @@ dPlatformMapping = {
 			'igdb' : 62,
 			'thegamesdb' : 29
 			},
-		'romExtensions' : ['abs', 'bin', 'cof', 'j64', 'jag', 'prg', 'rom', 'zip'],
+		'romExtensions' : ['abs', 'bin', 'cof', 'j64', 'jag', 'prg', 'rom'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -786,7 +800,7 @@ dPlatformMapping = {
                     0 : 'virtualjaguar_libretro.dll', #default
                     1 : 'virtualjaguar_libretro.dll', #Virtual Jaguar
                     'virtualjaguar_libretro.dll' : {
-                        'coreExtensions' : ['abs', 'bin', 'cof', 'j64', 'jag', 'prg', 'rom', 'zip'],
+                        'coreExtensions' : ['j64', 'jag', 'rom', 'abs', 'cof', 'bin', 'prg'],
                         'friendlyName' : 'Atari - Jaguar (Virtual Jaguar)'
                         }
                     }
@@ -799,7 +813,7 @@ dPlatformMapping = {
 			'igdb' : 61,
 			'thegamesdb' : 4924
 			},
-		'romExtensions' : ['lnx', 'o', 'zip'],
+		'romExtensions' : ['lnx', 'o'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -811,11 +825,11 @@ dPlatformMapping = {
                     1 : 'mednafen_lynx_libretro.dll', #Beetle Lynx
                     2 : 'handy_libretro.dll', #Handy
                     'mednafen_lynx_libretro.dll' : {
-                        'coreExtensions' : ['lnx', 'o', 'zip'],
+                        'coreExtensions' : ['lnx', 'o'],
                         'friendlyName' : 'Atari - Lynx (Beetle Lynx)'
                         },
                     'handy_libretro.dll' : {
-                        'coreExtensions' : ['lnx', 'zip'],
+                        'coreExtensions' : ['lnx', 'o'],
                         'friendlyName' : 'Atari - Lynx (Handy)'
                         }
                     }
@@ -839,7 +853,7 @@ dPlatformMapping = {
                     0 : 'hatari_libretro.dll', #default
                     1 : 'hatari_libretro.dll', #Hatari
                     'hatari_libretro.dll' : {
-                        'coreExtensions' : ['dim', 'ipf', 'msa', 'st', 'stx', 'zip'],
+                        'coreExtensions' : ['st', 'msa', 'zip', 'stx', 'dim', 'ipf', 'm3u'],
                         'friendlyName' : 'Atari - ST/STE/TT/Falcon (Hatari)'
                         }
                     }
@@ -863,7 +877,7 @@ dPlatformMapping = {
                     0 : 'atari800_libretro.dll', #default
                     1 : 'atari800_libretro.dll', #Stella
                     'atari800_libretro.dll' : {
-                        'coreExtensions' : ['a52', 'atr', 'atx', 'bin', 'cas', 'cdm', 'xex', 'xfd', 'zip'],
+                        'coreExtensions' : ['xfd|atr|cdm|cas|bin|a52|zip|atx|car|com|xex'],
                         'friendlyName' : 'Atari - 5200 (Atari800)'
                         }
                     }
@@ -2462,9 +2476,9 @@ dPlatformMapping = {
 			'igdb' : 7,
 			'thegamesdb' : 10
 			},
-		'romExtensions' : ['cbn', 'ccd', 'chd', 'cue', 'exe', 'img', 'mdf', 'pbp', 'toc'], #don't include m3u during scanning
+		'romExtensions' : ['cbn', 'ccd', 'chd', 'cue', 'exe', 'img', 'mdf', 'pbp', 'toc'], #don't include bin during scanning
 		'romType' : 0,
-        'multiDisk' : True,
+        'multiDisk' : True, #creates and adds m3u
         'emulators' : {
             0 : 'retroarch', #agent enums to emulator name
             1 : 'retroarch',
@@ -2473,22 +2487,22 @@ dPlatformMapping = {
                     0 : 'duckstation_libretro.dll', #default
                     1 : 'mednafen_psx_libretro.dll', #Beetle PSX
                     2 : 'mednafen_psx_hw_libretro.dll', #Beetle PSX HW
-                    3 : 'duckstation_libretro.dll', #DuckStation
+                    3 : 'duckstation_libretro.dll', #SwanStation
                     4 : 'pcsx_rearmed_libretro.dll', #PCSX ReARMed
                     'mednafen_psx_libretro.dll' : {
-                        'coreExtensions' : ['ccd', 'chd', 'cue', 'exe', 'm3u', 'pbp', 'toc'],
+                        'coreExtensions' : ['cue', 'toc', 'm3u', 'ccd', 'exe', 'pbp', 'chd'],
                         'friendlyName' : 'Sony - Playstation (Beetle PSX)'
                         },
                     'mednafen_psx_hw_libretro.dll' : {
-                        'coreExtensions' : ['ccd', 'chd', 'cue', 'exe', 'm3u', 'pbp', 'toc'],
+                        'coreExtensions' : ['cue', 'toc', 'm3u', 'ccd', 'exe', 'pbp', 'chd'],
                         'friendlyName' : 'Sony - Playstation (Beetle PSX HW)'
                         },
                     'duckstation_libretro.dll' : {
-                        'coreExtensions' : ['chd', 'cue', 'm3u'],
-                        'friendlyName' : 'Sony - Playstation (DuckStation)'
+                        'coreExtensions' : ['cue', 'bin', 'img', 'chd', 'm3u'],
+                        'friendlyName' : 'Sony - Playstation (SwanStation)'
                         },
                     'pcsx_rearmed_libretro.dll' : {
-                        'coreExtensions' : ['cbn', 'ccd', 'cue', 'img', 'm3u', 'mdf', 'pbp', 'toc'],
+                        'coreExtensions' : ['bin', 'cue', 'img', 'mdf', 'pbp', 'toc', 'cbn', 'm3u', 'ccd', 'chd'],
                         'friendlyName' : 'Sony - Playstation (PCSX ReARMed)'
                         }
                     }
@@ -2504,12 +2518,16 @@ dPlatformMapping = {
 		'romExtensions' : ['ciso', 'cue', 'elf', 'iso'],
 		'romType' : 0,
 		'multiDisk' : False,
-        'emulators' :
-            {'retroarch' :
-                {'cores' :
-                    {'PCSX2' : {
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'pcsx2_libretro.dll', #default
+                    1 : 'pcsx2_libretro.dll', #Beetle Cygne
+                    'pcsx2_libretro.dll' : {
                         'coreExtensions' : ['ciso', 'cue', 'elf', 'iso'],
-                        'friendlyName' : 'Sony - Playstation 2 (PCSX2)'
+                        'friendlyName' : 'Sony - PlayStation 2 (PCSX2)'
                         }
                     }
                 }
@@ -2561,15 +2579,19 @@ dPlatformMapping = {
 			'igdb' : 38,
 			'thegamesdb' : 13
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['elf', 'iso', 'cso', 'prx', 'pbp'],
 		'romType' : 0,
 		'multiDisk' : False,
-        'emulators' :
-            {'retroarch' :
-                {'cores' :
-                    {'PPSSPP' : {
-                        'coreExtensions' : ['cso', 'elf', 'iso', 'pbp', 'prx'],
-                        'friendlyName' : 'Sony - Playstation Portable (PPSSPP)'
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'ppsspp_libretro.dll', #default
+                    1 : 'ppsspp_libretro.dll', #Beetle Cygne
+                    'ppsspp_libretro.dll' : {
+                        'coreExtensions' : ['elf', 'iso', 'cso', 'prx', 'pbp'],
+                        'friendlyName' : 'Sony - PlayStation Portable (PPSSPP)'
                         }
                     }
                 }
@@ -2751,9 +2773,23 @@ dPlatformMapping = {
 			'igdb' : 57,
 			'thegamesdb' : 4925
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['pc2', 'ws', 'wsc'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'mednafen_wswan_libretro.dll', #default
+                    1 : 'mednafen_wswan_libretro.dll', #Beetle Cygne
+                    'mednafen_wswan_libretro.dll' : {
+                        'coreExtensions' : ['ws', 'wsc', 'pc2'],
+                        'friendlyName' : 'Bandai - WonderSwan/Color (Beetle Cygne)'
+                        }
+                    }
+                }
+            }
 		},
     'WonderSwan Color' : { 
 		'systemNames' : ['WonderSwan Color', 'Bandai WonderSwan Color'],
@@ -2761,9 +2797,23 @@ dPlatformMapping = {
 			'igdb' : 123,
 			'thegamesdb' : 4926
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['pc2', 'ws', 'wsc'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'mednafen_wswan_libretro.dll', #default
+                    1 : 'mednafen_wswan_libretro.dll', #Beetle Cygne
+                    'mednafen_wswan_libretro.dll' : {
+                        'coreExtensions' : ['ws', 'wsc', 'pc2'],
+                        'friendlyName' : 'Bandai - WonderSwan/Color (Beetle Cygne)'
+                        }
+                    }
+                }
+            }
 		},
     'XAVIX Port' : { 
 		'systemNames' : ['XAVIX Port'],
