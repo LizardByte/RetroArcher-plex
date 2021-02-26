@@ -111,6 +111,15 @@ dDefaultSettings = {
     'scanner_arcade_daphne' : 'True',
     'scanner_arcade_finalburn' : 'True',
     'scanner_arcade_mame' : 'True',
+    'scanner_atari_2600' : 'True',
+    'scanner_atari_5200' : 'True',
+    'scanner_atari_7800' : 'True',
+    'scanner_atari_800' : 'True',
+    'scanner_atari_jaguar' : 'True',
+    'scanner_atari_jaguar_cd' : 'True',
+    'scanner_atari_lynx' : 'True',
+    'scanner_atari_st' : 'True',
+    'scanner_atari_xe' : 'True',
     'scanner_doom_engine' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
@@ -126,9 +135,12 @@ dDefaultSettings = {
 	'emulator_atari_2600' : 0,
 	'emulator_atari_5200' : 0,
 	'emulator_atari_7800' : 0,
+	'emulator_atari_800' : 0,
 	'emulator_atari_jaguar' : 0,
+	'emulator_atari_jaguar_cd' : 0,
 	'emulator_atari_lynx' : 0,  
 	'emulator_atari_st' : 0,  
+	'emulator_atari_xe' : 0,  
 	'emulator_colecovision' : 0,
 	'emulator_doom_engine' : 0,
 	'emulator_gce_vectrex' : 0,
@@ -167,9 +179,12 @@ dDefaultSettings = {
 	'core_atari_2600' : 0,
 	'core_atari_5200' : 0,
 	'core_atari_7800' : 0,
+	'core_atari_800' : 0,
 	'core_atari_jaguar' : 0,
+	'core_atari_jaguar_cd' : 0,
 	'core_atari_lynx' : 0,
 	'core_atari_st' : 0,
+	'core_atari_xe' : 0,
 	'core_colecovision' : 0,
 	'core_doom_engine' : 0,
 	'core_gce_vectrex' : 0,
@@ -640,9 +655,23 @@ dPlatformMapping = {
 			'igdb' : 59,
 			'thegamesdb' : 22
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['a26', 'bin', 'zip'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'stella_libretro.dll', #default
+                    1 : 'stella_libretro.dll', #Stella
+                    'stella_libretro.dll' : {
+                        'coreExtensions' : ['a26', 'bin', 'zip'],
+                        'friendlyName' : 'Atari - 2600 (Stella)'
+                        }
+                    }
+                }
+            }
 		},
     'Atari 5200' : { 
 		'systemNames' : ['Atari 5200', 'Atari5200'],
@@ -650,9 +679,23 @@ dPlatformMapping = {
 			'igdb' : 66,
 			'thegamesdb' : 26
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['a52', 'atr', 'atx', 'bin', 'cas', 'cdm', 'xex', 'xfd', 'zip'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'atari800_libretro.dll', #default
+                    1 : 'atari800_libretro.dll', #Stella
+                    'atari800_libretro.dll' : {
+                        'coreExtensions' : ['a52', 'atr', 'atx', 'bin', 'cas', 'cdm', 'xex', 'xfd', 'zip'],
+                        'friendlyName' : 'Atari - 5200 (Atari800)'
+                        }
+                    }
+                }
+            }
 		},
     'Atari 7800' : { 
 		'systemNames' : ['Atari 7800', 'Atari7800', 'Atari 7800 ProSystem'],
@@ -660,9 +703,23 @@ dPlatformMapping = {
 			'igdb' : 60,
 			'thegamesdb' : 27
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['a78', 'bin', 'zip'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'prosystem_libretro.dll', #default
+                    1 : 'prosystem_libretro.dll', #Stella
+                    'prosystem_libretro.dll' : {
+                        'coreExtensions' : ['a78', 'bin', 'zip'],
+                        'friendlyName' : 'Atari - 7800 (ProSystem)'
+                        }
+                    }
+                }
+            }
 		},
     'Atari 800' : { 
 		'systemNames' : ['Atari 800', 'Atari 8-bit', 'Atari800', 'Atari8bit'],
@@ -670,9 +727,23 @@ dPlatformMapping = {
 			'igdb' : 64,
 			'thegamesdb' : 4943
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['a52', 'atr', 'atx', 'bin', 'cas', 'cdm', 'xex', 'xfd', 'zip'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'atari800_libretro.dll', #default
+                    1 : 'atari800_libretro.dll', #Stella
+                    'atari800_libretro.dll' : {
+                        'coreExtensions' : ['a52', 'atr', 'atx', 'bin', 'cas', 'cdm', 'xex', 'xfd', 'zip'],
+                        'friendlyName' : 'Atari - 5200 (Atari800)'
+                        }
+                    }
+                }
+            }
 		},
     'Atari Jaguar' : { 
 		'systemNames' : ['Atari Jaguar', 'Jaguar'],
@@ -680,9 +751,23 @@ dPlatformMapping = {
 			'igdb' : 62,
 			'thegamesdb' : 28
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['abs', 'bin', 'cof', 'j64', 'jag', 'prg', 'rom', 'zip'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'virtualjaguar_libretro.dll', #default
+                    1 : 'virtualjaguar_libretro.dll', #Stella
+                    'virtualjaguar_libretro.dll' : {
+                        'coreExtensions' : ['abs', 'bin', 'cof', 'j64', 'jag', 'prg', 'rom', 'zip'],
+                        'friendlyName' : 'Atari - Jaguar (Virtual Jaguar)'
+                        }
+                    }
+                }
+            }
 		},
     'Atari Jaguar CD' : { 
 		'systemNames' : ['Atari Jaguar CD', 'Jaguar CD'],
@@ -690,9 +775,23 @@ dPlatformMapping = {
 			'igdb' : 62,
 			'thegamesdb' : 29
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['abs', 'bin', 'cof', 'j64', 'jag', 'prg', 'rom', 'zip'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'virtualjaguar_libretro.dll', #default
+                    1 : 'virtualjaguar_libretro.dll', #Virtual Jaguar
+                    'virtualjaguar_libretro.dll' : {
+                        'coreExtensions' : ['abs', 'bin', 'cof', 'j64', 'jag', 'prg', 'rom', 'zip'],
+                        'friendlyName' : 'Atari - Jaguar (Virtual Jaguar)'
+                        }
+                    }
+                }
+            }
 		},
     'Atari Lynx' : { 
 		'systemNames' : ['Atari Lynx', 'Lynx'],
@@ -700,9 +799,28 @@ dPlatformMapping = {
 			'igdb' : 61,
 			'thegamesdb' : 4924
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['lnx', 'o', 'zip'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'mednafen_lynx_libretro.dll', #default
+                    1 : 'mednafen_lynx_libretro.dll', #Beetle Lynx
+                    2 : 'handy_libretro.dll', #Handy
+                    'mednafen_lynx_libretro.dll' : {
+                        'coreExtensions' : ['lnx', 'o', 'zip'],
+                        'friendlyName' : 'Atari - Lynx (Beetle Lynx)'
+                        },
+                    'handy_libretro.dll' : {
+                        'coreExtensions' : ['lnx', 'zip'],
+                        'friendlyName' : 'Atari - Lynx (Handy)'
+                        }
+                    }
+                }
+            }
 		},
     'Atari ST' : { 
 		'systemNames' : ['Atari ST', 'Atari ST/STE', 'Atari-ST', 'Atari-STE', 'Atari STE'],
@@ -710,9 +828,23 @@ dPlatformMapping = {
 			'igdb' : 63,
 			'thegamesdb' : 4937
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['dim', 'ipf', 'msa', 'st', 'stx', 'zip'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'hatari_libretro.dll', #default
+                    1 : 'hatari_libretro.dll', #Hatari
+                    'hatari_libretro.dll' : {
+                        'coreExtensions' : ['dim', 'ipf', 'msa', 'st', 'stx', 'zip'],
+                        'friendlyName' : 'Atari - ST/STE/TT/Falcon (Hatari)'
+                        }
+                    }
+                }
+            }
 		},
     'Atari XE' : { 
 		'systemNames' : ['Atari XE', 'Atari-XE'],
@@ -720,9 +852,23 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 30
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['a52', 'atr', 'atx', 'bin', 'cas', 'cdm', 'xex', 'xfd', 'zip'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'atari800_libretro.dll', #default
+                    1 : 'atari800_libretro.dll', #Stella
+                    'atari800_libretro.dll' : {
+                        'coreExtensions' : ['a52', 'atr', 'atx', 'bin', 'cas', 'cdm', 'xex', 'xfd', 'zip'],
+                        'friendlyName' : 'Atari - 5200 (Atari800)'
+                        }
+                    }
+                }
+            }
 		},
     'AY-3-8500' : { 
 		'systemNames' : ['AY-3-8500'],
