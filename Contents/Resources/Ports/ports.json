@@ -4,7 +4,7 @@
       "name": "2048",
       "core": "2048_libretro.dll",
       "id": {
-        "igdb": None,
+        "igdb": 9105,
         "thegamesdb": 34987
         }
     },
@@ -12,7 +12,7 @@
       "name": "Minecraft",
       "core": "craft_libretro.dll",
       "id": {
-        "igdb": None,
+        "igdb": 121,
         "thegamesdb": 68757
         }
     },
@@ -20,7 +20,7 @@
       "name": "Mr.Boom",
       "core": "mrboom_libretro.dll",
       "id": {
-        "igdb": None,
+        "igdb": 46621,
         "thegamesdb": 43566
         }
     },
@@ -28,7 +28,7 @@
       "name": "The Powder Toy",
       "core": "thepowdertoy_libretro.dll",
       "id": {
-        "igdb": None,
+        "igdb": 79055,
         "thegamesdb": None
         }
     }
