@@ -136,6 +136,7 @@ dDefaultSettings = {
     'scanner_microsoft_dos' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
+    'scanner_nintendo_game_&_watch' : 'True',
     'scanner_nintendo_wii' : 'True',
 	'scanner_sony_playstation' : 'True',
 	'scanner_sony_playstation_2' : 'True',
@@ -182,6 +183,7 @@ dDefaultSettings = {
 	'emulator_nintendo_ds' : 0,
 	'emulator_nintendo_entertainment_system' : 0,
 	'emulator_nintendo_family_computer' : 0,
+	'emulator_nintendo_game_&_watch' : 0,
 	'emulator_nintendo_game_boy' : 0,
 	'emulator_nintendo_game_boy_advance' : 0,
 	'emulator_nintendo_game_boy_color' : 0,
@@ -237,6 +239,7 @@ dDefaultSettings = {
 	'core_nintendo_ds' : 0,
 	'core_nintendo_entertainment_system' : 0,
 	'core_nintendo_family_computer' : 0,
+	'core_nintendo_game_&_watch' : 0,
 	'core_nintendo_game_boy' : 0,
 	'core_nintendo_game_boy_advance' : 0,
 	'core_nintendo_game_boy_color' : 0,
@@ -2095,9 +2098,23 @@ dPlatformMapping = {
 			'igdb' : 307,
 			'thegamesdb' : 4950
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['mgw'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'gw_libretro.dll', #default
+                    1 : 'gw_libretro.dll', #GW
+                    'gw_libretro.dll' : {
+                        'coreExtensions' : ['mgw'],
+                        'friendlyName' : 'Handheld Electronic (GW)'
+                        }
+                    }
+                }
+            }
 		},
     'Nintendo Game Boy' : { 
 		'systemNames' : ['Nintendo Game Boy', 'Game Boy', 'GB', 'Nintendo GB'],
