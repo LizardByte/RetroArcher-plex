@@ -120,6 +120,9 @@ dDefaultSettings = {
     'scanner_atari_lynx' : 'True',
     'scanner_atari_st' : 'True',
     'scanner_atari_xe' : 'True',
+    'scanner_cannonball' : 'True',
+    'scanner_cave_story' : 'True',
+    'scanner_commodore_amiga' : 'True',
     'scanner_doom_engine' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
@@ -145,7 +148,10 @@ dDefaultSettings = {
 	'emulator_atari_lynx' : 0,  
 	'emulator_atari_st' : 0,  
 	'emulator_atari_xe' : 0,  
+	'emulator_cannonball' : 0,
+	'emulator_cave_story' : 0,
 	'emulator_colecovision' : 0,
+	'emulator_commodore_amiga' : 0,
 	'emulator_doom_engine' : 0,
 	'emulator_gce_vectrex' : 0,
 	'emulator_magnavox_odyssey_2' : 0,
@@ -189,7 +195,10 @@ dDefaultSettings = {
 	'core_atari_lynx' : 0,
 	'core_atari_st' : 0,
 	'core_atari_xe' : 0,
+	'core_cannonball' : 0,
+	'core_cave_story' : 0,
 	'core_colecovision' : 0,
+	'core_commodore_amiga' : 0,
 	'core_doom_engine' : 0,
 	'core_gce_vectrex' : 0,
 	'core_magnavox_odyssey_2' : 0,
@@ -1014,6 +1023,30 @@ dPlatformMapping = {
 		'romType' : 0,
 		'multiDisk' : False
 		},
+    'Cannonball' : { 
+		'systemNames' : ['Cannonball'],
+		'systemIds' : {
+			'igdb' : 13,
+			'thegamesdb' : 1
+			},
+		'romExtensions' : ['game'],
+		'romType' : 1,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'cannonball_libretro.dll', #default
+                    1 : 'cannonball_libretro.dll', #Cannonball
+                    'cannonball_libretro.dll' : {
+                        'coreExtensions' : ['game', '88'],
+                        'friendlyName' : 'Cannonball'
+                        }
+                    }
+                }
+            }
+		},
     'Casio PV-1000' : { 
 		'systemNames' : ['Casio PV-1000'],
 		'systemIds' : {
@@ -1023,6 +1056,30 @@ dPlatformMapping = {
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
+		},
+    'Cave Story' : { 
+		'systemNames' : ['Cave Story', 'Cavestory'],
+		'systemIds' : {
+			'igdb' : 6,
+			'thegamesdb' : 1
+			},
+		'romExtensions' : ['exe'],
+		'romType' : 1,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'nxengine_libretro.dll', #default
+                    1 : 'nxengine_libretro.dll', #NX Engine
+                    'nxengine_libretro.dll' : {
+                        'coreExtensions' : ['exe'],
+                        'friendlyName' : 'Cave Story (NX Engine)'
+                        }
+                    }
+                }
+            }
 		},
     'CDC Cyber 70' : { 
 		'systemNames' : ['CDC Cyber 70', 'cdccyber70'],
@@ -1090,9 +1147,23 @@ dPlatformMapping = {
 			'igdb' : 16,
 			'thegamesdb' : 4911
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['adf', 'adz', 'dms', 'fdi', 'ipf', 'hdf', 'hdz', 'lha', 'slave', 'info', 'cue', 'ccd', 'nrg', 'mds', 'iso', 'chd', 'uae', 'zip', '7z'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'puae_libretro.dll', #default
+                    1 : 'puae_libretro.dll', #NX Engine
+                    'puae_libretro.dll' : {
+                        'coreExtensions' : ['adf', 'adz', 'dms', 'fdi', 'ipf', 'hdf', 'hdz', 'lha', 'slave', 'info', 'cue', 'ccd', 'nrg', 'mds', 'iso', 'chd', 'uae', 'm3u', 'zip', '7z'],
+                        'friendlyName' : 'Commodore - Amiga (PUAE)'
+                        }
+                    }
+                }
+            }
 		},
     'Commodore Amiga CD32' : { 
 		'systemNames' : ['Commodore Amiga CD32', 'Amiga CD32'],
