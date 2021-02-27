@@ -131,6 +131,7 @@ dDefaultSettings = {
     'scanner_commodore_plus_4' : 'True',
     'scanner_commodore_vic-20' : 'True',
     'scanner_doom_engine' : 'True',
+    'scanner_fairchild_channel_f' : 'True',
     'scanner_microsoft_dos' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
@@ -168,6 +169,7 @@ dDefaultSettings = {
 	'emulator_commodore_plus_4' : 0,
 	'emulator_commodore_vic-20' : 0,
 	'emulator_doom_engine' : 0,
+	'emulator_fairchild_channel_f' : 0,
 	'emulator_gce_vectrex' : 0,
 	'emulator_magnavox_odyssey_2' : 0,
 	'emulator_mattel_intellivision' : 0,
@@ -222,6 +224,7 @@ dDefaultSettings = {
 	'core_commodore_plus_4' : 0,
 	'core_commodore_vic-20' : 0,
 	'core_doom_engine' : 0,
+	'core_fairchild_channel_f' : 0,
 	'core_gce_vectrex' : 0,
 	'core_magnavox_odyssey_2' : 0,
 	'core_mattel_intellivision' : 0,
@@ -1530,14 +1533,28 @@ dPlatformMapping = {
 		'multiDisk' : False
 		},
     'Fairchild Channel F' : { 
-		'systemNames' : ['Fairchild Channel F'],
+		'systemNames' : ['Fairchild Channel F', 'Channel F'],
 		'systemIds' : {
 			'igdb' : 127,
 			'thegamesdb' : 4928
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['bin', 'chf'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'freechaf_libretro.dll', #default
+                    1 : 'freechaf_libretro.dll', #FreeChaF
+                    'freechaf_libretro.dll' : {
+                        'coreExtensions' : ['bin', 'chf'],
+                        'friendlyName' : 'Fairchild ChannelF (FreeChaF)'
+                        }
+                    }
+                }
+            }
 		},
     'Ferranti Nimrod Computer' : { 
 		'systemNames' : ['Ferranti Nimrod Computer', 'Nimrod'],
