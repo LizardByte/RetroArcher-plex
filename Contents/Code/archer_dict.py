@@ -132,6 +132,7 @@ dDefaultSettings = {
     'scanner_commodore_vic-20' : 'True',
     'scanner_doom_engine' : 'True',
     'scanner_fairchild_channel_f' : 'True',
+    'scanner_gce_vectrex' : 'True',
     'scanner_microsoft_dos' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
@@ -1612,9 +1613,23 @@ dPlatformMapping = {
 			'igdb' : 70,
 			'thegamesdb' : 4939
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['bin', 'vec'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'vecx_libretro.dll', #default
+                    1 : 'vecx_libretro.dll', #vecx
+                    'vecx_libretro.dll' : {
+                        'coreExtensions' : ['bin', 'vec'],
+                        'friendlyName' : 'GCE - Vectrex (vecx)'
+                        }
+                    }
+                }
+            }
 		},
     'Google Stadia' : { 
 		'systemNames' : ['Google Stadia', 'Stadia'],

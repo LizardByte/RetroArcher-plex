@@ -83,6 +83,7 @@
   { "id":"scanner_commodore_vic-20",                      "label":"SCANNER|Commodore - VIC-20",    "type":"bool",    "default":"True"  },
   { "id":"scanner_doom_engine",                           "label":"SCANNER|Doom Engine",    "type":"bool",    "default":"True"  },
   { "id":"scanner_fairchild_channel_f",                   "label":"SCANNER|Fairchild Channel F",    "type":"bool",    "default":"True"  },
+  { "id":"scanner_gce_vectrex",                           "label":"SCANNER|GCE - Vectrex",    "type":"bool",    "default":"True"  },
   { "id":"scanner_microsoft_dos",                         "label":"SCANNER|DOS",    "type":"bool",    "default":"True"  },
   { "id":"scanner_nintendo_64",                           "label":"SCANNER|Nintendo - 64",    "type":"bool",    "default":"True"  },
   { "id":"scanner_nintendo_gamecube",                     "label":"SCANNER|Nintendo - GameCube",    "type":"bool",    "default":"True"  },
