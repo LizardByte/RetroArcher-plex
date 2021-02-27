@@ -133,6 +133,7 @@ dDefaultSettings = {
     'scanner_doom_engine' : 'True',
     'scanner_fairchild_channel_f' : 'True',
     'scanner_gce_vectrex' : 'True',
+    'scanner_lua_engine' : 'True',
     'scanner_microsoft_dos' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
@@ -173,6 +174,7 @@ dDefaultSettings = {
 	'emulator_doom_engine' : 0,
 	'emulator_fairchild_channel_f' : 0,
 	'emulator_gce_vectrex' : 0,
+	'emulator_lua_engine' : 0,
 	'emulator_magnavox_odyssey_2' : 0,
 	'emulator_mattel_intellivision' : 0,
 	'emulator_microsoft_dos' : 0,
@@ -229,6 +231,7 @@ dDefaultSettings = {
 	'core_doom_engine' : 0,
 	'core_fairchild_channel_f' : 0,
 	'core_gce_vectrex' : 0,
+	'core_lua_engine' : 0,
 	'core_magnavox_odyssey_2' : 0,
 	'core_mattel_intellivision' : 0,
 	'core_microsoft_dos' : 0,
@@ -1703,6 +1706,30 @@ dPlatformMapping = {
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
+		},
+    'Lua Engine' : { 
+		'systemNames' : ['Lua Engine', 'Lua', 'Lutro'],
+		'systemIds' : {
+			'igdb' : None,
+			'thegamesdb' : None
+			},
+		'romExtensions' : ['lutro', 'lua'],
+		'romType' : 1,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'lutro_libretro.dll', #default
+                    1 : 'lutro_libretro.dll', #Lutro
+                    'lutro_libretro.dll' : {
+                        'coreExtensions' : ['lutro', 'lua'],
+                        'friendlyName' : 'Lua Engine (Lutro)'
+                        }
+                    }
+                }
+            }
 		},
     'Magnavox Odyssey' : { 
 		'systemNames' : ['Magnavox Odyssey', 'Magnavox Odyssey 1', 'Odyssey 1', 'Odyssey', 'Odysee', 'Odisea', 'Odissea'],
