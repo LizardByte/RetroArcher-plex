@@ -122,6 +122,7 @@ dDefaultSettings = {
     'scanner_atari_xe' : 'True',
     'scanner_cannonball' : 'True',
     'scanner_cave_story' : 'True',
+    'scanner_chailove' : 'True',
     'scanner_commodore_amiga' : 'True',
     'scanner_doom_engine' : 'True',
     'scanner_nintendo_64' : 'True',
@@ -150,6 +151,7 @@ dDefaultSettings = {
 	'emulator_atari_xe' : 0,  
 	'emulator_cannonball' : 0,
 	'emulator_cave_story' : 0,
+	'emulator_chailove' : 0,
 	'emulator_colecovision' : 0,
 	'emulator_commodore_amiga' : 0,
 	'emulator_doom_engine' : 0,
@@ -197,6 +199,7 @@ dDefaultSettings = {
 	'core_atari_xe' : 0,
 	'core_cannonball' : 0,
 	'core_cave_story' : 0,
+	'core_chailove' : 0,
 	'core_colecovision' : 0,
 	'core_commodore_amiga' : 0,
 	'core_doom_engine' : 0,
@@ -1090,6 +1093,30 @@ dPlatformMapping = {
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
+		},
+    'ChaiLove' : { 
+		'systemNames' : ['ChaiLove', 'Chai'],
+		'systemIds' : {
+			'igdb' : 6,
+			'thegamesdb' : 1
+			},
+		'romExtensions' : ['chai', 'chailove'],
+		'romType' : 0,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'chailove_libretro.dll', #default
+                    1 : 'chailove_libretro.dll', #ChaiLove
+                    'chailove_libretro.dll' : {
+                        'coreExtensions' : ['chai', 'chailove'],
+                        'friendlyName' : 'ChaiLove'
+                        }
+                    }
+                }
+            }
 		},
     'Coleco Telstar Arcade' : { 
 		'systemNames' : ['Coleco Telstar Arcade'],
