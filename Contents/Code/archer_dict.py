@@ -126,6 +126,7 @@ dDefaultSettings = {
     'scanner_commodore_amiga' : 'True',
     'scanner_commodore_128' : 'True',
     'scanner_commodore_64' : 'True',
+    'scanner_commodore_64_supercpu' : 'True',
     'scanner_doom_engine' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
@@ -158,6 +159,7 @@ dDefaultSettings = {
 	'emulator_commodore_amiga' : 0,
 	'emulator_commodore_128' : 0,
 	'emulator_commodore_64' : 0,
+	'emulator_commodore_64_supercpu' : 0,
 	'emulator_doom_engine' : 0,
 	'emulator_gce_vectrex' : 0,
 	'emulator_magnavox_odyssey_2' : 0,
@@ -208,6 +210,7 @@ dDefaultSettings = {
 	'core_commodore_amiga' : 0,
 	'core_commodore_128' : 0,
 	'core_commodore_64' : 0,
+	'core_commodore_64_supercpu' : 0,
 	'core_doom_engine' : 0,
 	'core_gce_vectrex' : 0,
 	'core_magnavox_odyssey_2' : 0,
@@ -1188,6 +1191,30 @@ dPlatformMapping = {
                 }
             }
 		},
+    'Commodore 64 SuperCPU' : { 
+		'systemNames' : ['Commodore 64 SuperCPU', 'C64 SuperCPU'],
+		'systemIds' : {
+			'igdb' : 15,
+			'thegamesdb' : 40
+			},
+		'romExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'vfl', 'vsf', 'nib', 'nbz', 'lnx'],
+		'romType' : 0,
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'vice_xscpu64_libretro.dll', #default
+                    1 : 'vice_xscpu64_libretro.dll', #VICE xscpu64
+                    'vice_x64sc_libretro.dll' : {
+                        'coreExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'm3u', 'vfl', 'vsf', 'nib', 'nbz'],
+                        'friendlyName' : 'Commodore - C64 SuperCPU (VICE xscpu64)'
+                        }
+                    }
+                }
+            }
+		},
     'Commodore 128' : { 
 		'systemNames' : ['Commodore 128', 'C128'],
 		'systemIds' : {
@@ -1203,7 +1230,7 @@ dPlatformMapping = {
             'retroarch' :
                 {'cores' : {
                     0 : 'vice_x128_libretro.dll', #default
-                    1 : 'vice_x128_libretro.dll', #ChaiLove
+                    1 : 'vice_x128_libretro.dll', #VICE x128
                     'vice_x128_libretro.dll' : {
                         'coreExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'm3u', 'vfl', 'vsf', 'nib', 'nbz'],
                         'friendlyName' : 'Commodore - C128 (VICE x128)'
