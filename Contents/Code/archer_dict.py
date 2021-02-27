@@ -131,6 +131,7 @@ dDefaultSettings = {
     'scanner_commodore_plus_4' : 'True',
     'scanner_commodore_vic-20' : 'True',
     'scanner_doom_engine' : 'True',
+    'scanner_microsoft_dos' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
     'scanner_nintendo_wii' : 'True',
@@ -1724,9 +1725,43 @@ dPlatformMapping = {
 			'igdb' : 13,
 			'thegamesdb' : 1
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['zip', 'dosz', 'exe', 'conf', 'com', 'bat', 'iso', 'cue', 'ins', 'img', 'ima', 'vhd', 'm3u8'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'dosbox_libretro.dll', #default
+                    1 : 'dosbox_libretro.dll', #DOSBox
+                    2 : 'dosbox_core_libretro.dll', #DOSBox-core
+                    3 : 'dosbox_pure_libretro.dll', #DOSBox-Pure
+                    4 : 'dosbox_svn_ce_libretro.dll', #DOSBox-SVN CE
+                    3 : 'dosbox_svn_libretro.dll', #DOSBox-SVN
+                    'dosbox_libretro.dll' : {
+                        'coreExtensions' : ['exe', 'com', 'bat', 'conf'],
+                        'friendlyName' : 'DOS (DOSBox)'
+                        },
+                    'dosbox_core_libretro.dll' : {
+                        'coreExtensions' : ['exe', 'com', 'bat', 'conf', 'cue', 'iso'],
+                        'friendlyName' : 'DOS (DOSBox-core)'
+                        },
+                    'dosbox_pure_libretro.dll' : {
+                        'coreExtensions' : ['zip', 'dosz', 'exe', 'com', 'bat', 'iso', 'cue', 'ins', 'img', 'ima', 'vhd', 'm3u', 'm3u8'],
+                        'friendlyName' : 'DOS (DOSBox-Pure)'
+                        },
+                    'dosbox_svn_ce_libretro.dll' : {
+                        'coreExtensions' : ['exe', 'com', 'bat', 'conf', 'cue', 'iso'],
+                        'friendlyName' : 'DOS (DOSBox-SVN CE)'
+                        },
+                    'dosbox_svn_libretro.dll' : {
+                        'coreExtensions' : ['exe', 'com', 'bat', 'conf', 'cue', 'iso'],
+                        'friendlyName' : 'DOS (DOSBox-SVN)'
+                        }
+                    }
+                }
+            }
 		},
     'Microsoft MSX' : { 
 		'systemNames' : ['Microsoft MSX', 'MSX'],
