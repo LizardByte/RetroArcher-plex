@@ -127,6 +127,9 @@ dDefaultSettings = {
     'scanner_commodore_128' : 'True',
     'scanner_commodore_64' : 'True',
     'scanner_commodore_64_supercpu' : 'True',
+    'scanner_commodore_pet' : 'True',
+    'scanner_commodore_plus_4' : 'True',
+    'scanner_commodore_vic-20' : 'True',
     'scanner_doom_engine' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
@@ -160,6 +163,9 @@ dDefaultSettings = {
 	'emulator_commodore_128' : 0,
 	'emulator_commodore_64' : 0,
 	'emulator_commodore_64_supercpu' : 0,
+	'emulator_commodore_pet' : 0,
+	'emulator_commodore_plus_4' : 0,
+	'emulator_commodore_vic-20' : 0,
 	'emulator_doom_engine' : 0,
 	'emulator_gce_vectrex' : 0,
 	'emulator_magnavox_odyssey_2' : 0,
@@ -211,6 +217,9 @@ dDefaultSettings = {
 	'core_commodore_128' : 0,
 	'core_commodore_64' : 0,
 	'core_commodore_64_supercpu' : 0,
+	'core_commodore_pet' : 0,
+	'core_commodore_plus_4' : 0,
+	'core_commodore_vic-20' : 0,
 	'core_doom_engine' : 0,
 	'core_gce_vectrex' : 0,
 	'core_magnavox_odyssey_2' : 0,
@@ -1289,9 +1298,23 @@ dPlatformMapping = {
 			'igdb' : 90,
 			'thegamesdb' : None
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'vfl', 'vsf', 'nib', 'nbz'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'vice_xpet_libretro.dll', #default
+                    1 : 'vice_xpet_libretro.dll', #VICE xpet
+                    'vice_xpet_libretro.dll' : {
+                        'coreExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'm3u', 'vfl', 'vsf', 'nib', 'nbz'],
+                        'friendlyName' : 'Commodore - C128 (VICE xpet)'
+                        }
+                    }
+                }
+            }
 		},
     'Commodore Plus 4' : { 
 		'systemNames' : ['Commodore Plus 4', 'Commodore Plus/4', 'C+4'],
@@ -1299,19 +1322,47 @@ dPlatformMapping = {
 			'igdb' : 94,
 			'thegamesdb' : None
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'vfl', 'vsf', 'nib', 'nbz'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'vice_xplus4_libretro.dll', #default
+                    1 : 'vice_xplus4_libretro.dll', #VICE xplus4
+                    'vice_xplus4_libretro.dll' : {
+                        'coreExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'm3u', 'vfl', 'vsf', 'nib', 'nbz'],
+                        'friendlyName' : 'Commodore - PLUS/4 (VICE xplus4)'
+                        }
+                    }
+                }
+            }
 		},
-    'Commodore VIC-20-20' : { 
+    'Commodore VIC-20' : { 
 		'systemNames' : ['Commodore VIC-20', 'vic-20'],
 		'systemIds' : {
 			'igdb' : 71,
 			'thegamesdb' : 4945
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'vfl', 'vsf', 'nib', 'nbz'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'vice_xvic_libretro.dll', #default
+                    1 : 'vice_xvic_libretro.dll', #VICE xvic
+                    'vice_xvic_libretro.dll' : {
+                        'coreExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'm3u', 'vfl', 'vsf', 'nib', 'nbz'],
+                        'friendlyName' : 'Commodore - VIC-20 (VICE xvic)'
+                        }
+                    }
+                }
+            }
 		},
     'Daydream' : { 
 		'systemNames' : ['Daydream'],
