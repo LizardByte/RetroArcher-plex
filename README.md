@@ -102,16 +102,16 @@ Ubuntu
 ### Game Stream Server Desktop (https://github.com/moonlight-stream/moonlight-docs/wiki/Setup-Guide#using-moonlight-to-stream-your-entire-desktop)
 1. Install Latest GeForce Experience, Open-Stream, or Sunshine
 2. If using GeForce Experience:
-  a. Log-in
-  b. Under Settings/Shield enable GAMESTREAM (note: a monitor must be connected to the Nvidia GPU)
-  c. Click "Add"
-  d. Browse to C:\windows\system32\mstsc.exe
-  e. Click "Edit" and rename to "RetroArcher"
-  f. Change the BoxArt if you wish (https://github.com/ReenigneArcher/RetroArcher.database/blob/main/Posters/3-4/RetroArcher/RetroArcher.png).
-  g. Open Moonlight on a client app
-  h. Long press okay on your server name and select `View Details`, make a note of the `Name` and `UUID`, select `OK`
-  i. Select the server and enter the pairing code on your server
-  j. Long press ok on the app you created in Step 3-6 and select `View Details`, make a note of the `Name` and `ID`, select `OK`
+    - Log-in
+    - Under Settings/Shield enable GAMESTREAM (note: a monitor must be connected to the Nvidia GPU)
+    - Click "Add"
+    - Browse to C:\windows\system32\mstsc.exe
+    - Click "Edit" and rename to "RetroArcher"
+    - Change the BoxArt if you wish (https://github.com/ReenigneArcher/RetroArcher.database/blob/main/Posters/3-4/RetroArcher/RetroArcher.png).
+    - Open Moonlight on a client app
+    - Long press okay on your server name and select `View Details`, make a note of the `Name` and `UUID`, select `OK`
+    - Select the server and enter the pairing code on your server
+    - Long press ok on the app you created in Step 3-6 and select `View Details`, make a note of the `Name` and `ID`, select `OK`
 3. If you have multiple monitors, it would be best to set them to duplicate.
 
 ### RetroArcher plug-in
