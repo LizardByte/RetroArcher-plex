@@ -144,6 +144,7 @@ dDefaultSettings = {
     'scanner_nec_pc_engine' : 'True',
     'scanner_nec_pc_engine_cd' : 'True',
     'scanner_nec_pc_engine_supergrafx' : 'True',
+    'scanner_nec_pc-8801' : 'True',
     'scanner_nec_turbografx-16' : 'True',
     'scanner_nec_turbografx-cd' : 'True',
     'scanner_nintendo_64' : 'True',
@@ -197,6 +198,7 @@ dDefaultSettings = {
 	'emulator_nec_pc_engine' : 0,
 	'emulator_nec_pc_engine_cd' : 0,
 	'emulator_nec_pc_engine_supergrafx' : 0,
+	'emulator_nec_pc-8801' : 0,
 	'emulator_nec_turbografx-16' : 0,
 	'emulator_nec_turbografx-cd' : 0,
 	'emulator_nintendo_3ds' : 0,
@@ -258,11 +260,12 @@ dDefaultSettings = {
 	'core_microsoft_msx2' : 0,
 	'core_microsoft_msx2+' : 0,
 	'core_microsoft_msx_turbor' : 0,
-	'core_nintendo_nec_pc_engine' : 0,
-	'core_nintendo_nec_pc_engine_cd' : 0,
-	'core_nintendo_nec_pc_engine_supergrafx' : 0,
-	'core_nintendo_nec_turbografx-16' : 0,
-	'core_nintendo_nec_turbografx-cd' : 0,
+	'core_nec_pc_engine' : 0,
+	'core_nec_pc_engine_cd' : 0,
+	'core_nec_pc_engine_supergrafx' : 0,
+	'core_nec_pc-8801' : 0,
+	'core_nec_turbografx-16' : 0,
+	'core_nec_turbografx-cd' : 0,
 	'core_nintendo_3ds' : 0,
 	'core_nintendo_64' : 0,
 	'core_nintendo_ds' : 0,
@@ -2087,14 +2090,28 @@ dPlatformMapping = {
 		'multiDisk' : False
 		},
     'NEC PC-8801' : { 
-		'systemNames' : ['NEC PC-8801', 'PC-8801', 'PC-88'],
+		'systemNames' : ['NEC PC-8801', 'PC-8801', 'PC-88', 'PC-8000', 'PC-8800'],
 		'systemIds' : {
 			'igdb' : 125,
 			'thegamesdb' : 4933
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['d88', 'u88'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'quasi88_libretro.dll', #default
+                    1 : 'quasi88_libretro.dll', #QUASI88
+                    'quasi88_libretro.dll' : {
+                        'coreExtensions' : ['d88', 'u88', 'm3u'],
+                        'friendlyName' : 'NEC - PC-8000 / PC-8800 series (QUASI88)'
+                        }
+                    }
+                }
+            }
 		},
     'NEC PC-9801' : { 
 		'systemNames' : ['NEC PC-9801', 'PC-9801', 'PC-98'],
