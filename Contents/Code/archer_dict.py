@@ -120,9 +120,8 @@ dDefaultSettings = {
     'scanner_atari_lynx' : 'True',
     'scanner_atari_st' : 'True',
     'scanner_atari_xe' : 'True',
-    'scanner_cannonball' : 'True',
-    'scanner_cave_story' : 'True',
-    'scanner_chailove' : 'True',
+    'scanner_cave_story_engine' : 'True',
+    'scanner_chailove_engine' : 'True',
     'scanner_commodore_amiga' : 'True',
     'scanner_commodore_128' : 'True',
     'scanner_commodore_64' : 'True',
@@ -134,11 +133,13 @@ dDefaultSettings = {
     'scanner_fairchild_channel_f' : 'True',
     'scanner_gce_vectrex' : 'True',
     'scanner_lua_engine' : 'True',
+    'scanner_magnovox_odyssey_2' : 'True',
     'scanner_microsoft_dos' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
     'scanner_nintendo_game_&_watch' : 'True',
     'scanner_nintendo_wii' : 'True',
+    'scanner_outrun_engine' : 'True',
 	'scanner_sony_playstation' : 'True',
 	'scanner_sony_playstation_2' : 'True',
 	'scanner_sony_psp' : 'True',
@@ -160,9 +161,8 @@ dDefaultSettings = {
 	'emulator_atari_lynx' : 0,  
 	'emulator_atari_st' : 0,  
 	'emulator_atari_xe' : 0,  
-	'emulator_cannonball' : 0,
-	'emulator_cave_story' : 0,
-	'emulator_chailove' : 0,
+	'emulator_cave_story_engine' : 0,
+	'emulator_chailove_engine' : 0,
 	'emulator_colecovision' : 0,
 	'emulator_commodore_amiga' : 0,
 	'emulator_commodore_128' : 0,
@@ -193,6 +193,7 @@ dDefaultSettings = {
 	'emulator_nintendo_pokemon_mini' : 0,
 	'emulator_nintendo_super_famicom' : 0,
 	'emulator_nintendo_virtual_boy' : 0,
+	'emulator_outrun_engine' : 0,
 	'emulator_sega_sg-1000' : 0,
     'emulator_sony_playstation' : 0,
     'emulator_sony_playstation_2' : 0,
@@ -217,9 +218,8 @@ dDefaultSettings = {
 	'core_atari_lynx' : 0,
 	'core_atari_st' : 0,
 	'core_atari_xe' : 0,
-	'core_cannonball' : 0,
-	'core_cave_story' : 0,
-	'core_chailove' : 0,
+	'core_cave_story_engine' : 0,
+	'core_chailove_engine' : 0,
 	'core_colecovision' : 0,
 	'core_commodore_amiga' : 0,
 	'core_commodore_128' : 0,
@@ -251,6 +251,7 @@ dDefaultSettings = {
 	'core_nintendo_super_famicom' : 0,
 	'core_nintendo_virtual_boy' : 0,
 	'core_nintendo_wii' : 0,
+	'core_outrun_engine' : 0,
 	'core_sega_sg-1000' : 0,
 	'core_sony_playstation' : 0,
 	'core_sony_playstation_2' : 0,
@@ -1055,30 +1056,6 @@ dPlatformMapping = {
 		'romType' : 0,
 		'multiDisk' : False
 		},
-    'Cannonball' : { 
-		'systemNames' : ['Cannonball'],
-		'systemIds' : {
-			'igdb' : 13,
-			'thegamesdb' : 1
-			},
-		'romExtensions' : ['game'],
-		'romType' : 1,
-		'multiDisk' : False,
-        'emulators' : {
-            0 : 'retroarch', #agent enums to emulator name
-            1 : 'retroarch',
-            'retroarch' :
-                {'cores' : {
-                    0 : 'cannonball_libretro.dll', #default
-                    1 : 'cannonball_libretro.dll', #Cannonball
-                    'cannonball_libretro.dll' : {
-                        'coreExtensions' : ['game', '88'],
-                        'friendlyName' : 'Cannonball'
-                        }
-                    }
-                }
-            }
-		},
     'Casio PV-1000' : { 
 		'systemNames' : ['Casio PV-1000'],
 		'systemIds' : {
@@ -1089,7 +1066,7 @@ dPlatformMapping = {
 		'romType' : 0,
 		'multiDisk' : False
 		},
-    'Cave Story' : { 
+    'Cave Story Engine' : { 
 		'systemNames' : ['Cave Story', 'Cavestory'],
 		'systemIds' : {
 			'igdb' : 6,
@@ -1123,7 +1100,7 @@ dPlatformMapping = {
 		'romType' : 0,
 		'multiDisk' : False
 		},
-    'ChaiLove' : { 
+    'ChaiLove Engine' : { 
 		'systemNames' : ['ChaiLove', 'Chai'],
 		'systemIds' : {
 			'igdb' : 6,
@@ -1747,9 +1724,23 @@ dPlatformMapping = {
 			'igdb' : 133,
 			'thegamesdb' : 4927
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['bin'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'o2em_libretro.dll', #default
+                    1 : 'o2em_libretro.dll', #O2EM
+                    'o2em_libretro.dll' : {
+                        'coreExtensions' : ['bin'],
+                        'friendlyName' : 'Magnavox - Odyssey2 / Phillips Videopac+ (O2EM)'
+                        }
+                    }
+                }
+            }
 		},
     'Mattel Intellivision' : { 
 		'systemNames' : ['Mattel Intellivision', 'Intellivision'],
@@ -2360,6 +2351,30 @@ dPlatformMapping = {
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
+		},
+    'OutRun Engine' : { 
+		'systemNames' : ['Cannonball'],
+		'systemIds' : {
+			'igdb' : 13,
+			'thegamesdb' : 1
+			},
+		'romExtensions' : ['game'],
+		'romType' : 1,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'cannonball_libretro.dll', #default
+                    1 : 'cannonball_libretro.dll', #Cannonball
+                    'cannonball_libretro.dll' : {
+                        'coreExtensions' : ['game', '88'],
+                        'friendlyName' : 'Cannonball'
+                        }
+                    }
+                }
+            }
 		},
     'Ouya' : { 
 		'systemNames' : ['Ouya'],
