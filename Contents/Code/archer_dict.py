@@ -122,6 +122,7 @@ dDefaultSettings = {
     'scanner_atari_xe' : 'True',
     'scanner_cave_story_engine' : 'True',
     'scanner_chailove_engine' : 'True',
+    'scanner_colecovision' : 'True',
     'scanner_commodore_amiga' : 'True',
     'scanner_commodore_128' : 'True',
     'scanner_commodore_64' : 'True',
@@ -136,11 +137,16 @@ dDefaultSettings = {
     'scanner_magnovox_odyssey_2' : 'True',
     'scanner_mattel_intellivision' : 'True',
     'scanner_microsoft_dos' : 'True',
+    'scanner_microsoft_msx' : 'True',
+    'scanner_microsoft_msx2' : 'True',
+    'scanner_microsoft_msx2+' : 'True',
+    'scanner_microsoft_msx_turbor' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
     'scanner_nintendo_game_&_watch' : 'True',
     'scanner_nintendo_wii' : 'True',
     'scanner_outrun_engine' : 'True',
+	'scanner_sega_sg-1000' : 'True',
 	'scanner_sony_playstation' : 'True',
 	'scanner_sony_playstation_2' : 'True',
 	'scanner_sony_psp' : 'True',
@@ -181,6 +187,8 @@ dDefaultSettings = {
 	'emulator_microsoft_dos' : 0,
 	'emulator_microsoft_msx' : 0,
 	'emulator_microsoft_msx2' : 0,
+	'emulator_microsoft_msx2+' : 0,
+	'emulator_microsoft_msx_turbor' : 0,
 	'emulator_nintendo_3ds' : 0,
 	'emulator_nintendo_64' : 0,
 	'emulator_nintendo_ds' : 0,
@@ -238,6 +246,8 @@ dDefaultSettings = {
 	'core_microsoft_dos' : 0,
 	'core_microsoft_msx' : 0,
 	'core_microsoft_msx2' : 0,
+	'core_microsoft_msx2+' : 0,
+	'core_microsoft_msx_turbor' : 0,
 	'core_nintendo_3ds' : 0,
 	'core_nintendo_64' : 0,
 	'core_nintendo_ds' : 0,
@@ -1141,9 +1151,23 @@ dPlatformMapping = {
 			'igdb' : 68,
 			'thegamesdb' : 31
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'bluemsx_libretro.dll', #default
+                    1 : 'bluemsx_libretro.dll', #blueMSX
+                    'bluemsx_libretro.dll' : {
+                        'coreExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc', 'm3u'],
+                        'friendlyName' : 'MSX/SVI/ColecoVision/SG-1000 (blueMSX)'
+                        }
+                    }
+                }
+            }
 		},
     'Commodore 16' : { 
 		'systemNames' : ['Commodore 16', 'C16'],
@@ -1837,9 +1861,28 @@ dPlatformMapping = {
 			'igdb' : 27,
 			'thegamesdb' : 4929
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'bluemsx_libretro.dll', #default
+                    1 : 'bluemsx_libretro.dll', #blueMSX
+                    2 : 'fmsx_libretro.dll', #FreeIntv
+                    'bluemsx_libretro.dll' : {
+                        'coreExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc', 'm3u'],
+                        'friendlyName' : 'MSX/SVI/ColecoVision/SG-1000 (blueMSX)'
+                        },
+                    'fmsx_libretro.dll' : {
+                        'coreExtensions' : ['rom', 'mx1', 'mx2', 'dsk', 'cas'],
+                        'friendlyName' : 'Microsoft - MSX (fMSX)'
+                        }
+                    }
+                }
+            }
 		},
     'Microsoft MSX2' : { 
 		'systemNames' : ['Microsoft MSX2', 'MSX2'],
@@ -1847,9 +1890,28 @@ dPlatformMapping = {
 			'igdb' : 53,
 			'thegamesdb' : 4929
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'bluemsx_libretro.dll', #default
+                    1 : 'bluemsx_libretro.dll', #blueMSX
+                    2 : 'fmsx_libretro.dll', #FreeIntv
+                    'bluemsx_libretro.dll' : {
+                        'coreExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc', 'm3u'],
+                        'friendlyName' : 'MSX/SVI/ColecoVision/SG-1000 (blueMSX)'
+                        },
+                    'fmsx_libretro.dll' : {
+                        'coreExtensions' : ['rom', 'mx1', 'mx2', 'dsk', 'cas'],
+                        'friendlyName' : 'Microsoft - MSX (fMSX)'
+                        }
+                    }
+                }
+            }
 		},
     'Microsoft MSX2+' : { 
 		'systemNames' : ['Microsoft MSX2+', 'MSX2+'],
@@ -1857,9 +1919,28 @@ dPlatformMapping = {
 			'igdb' : 53,
 			'thegamesdb' : 4929
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'bluemsx_libretro.dll', #default
+                    1 : 'bluemsx_libretro.dll', #blueMSX
+                    2 : 'fmsx_libretro.dll', #FreeIntv
+                    'bluemsx_libretro.dll' : {
+                        'coreExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc', 'm3u'],
+                        'friendlyName' : 'MSX/SVI/ColecoVision/SG-1000 (blueMSX)'
+                        },
+                    'fmsx_libretro.dll' : {
+                        'coreExtensions' : ['rom', 'mx1', 'mx2', 'dsk', 'cas'],
+                        'friendlyName' : 'Microsoft - MSX (fMSX)'
+                        }
+                    }
+                }
+            }
 		},
     'Microsoft MSX TurboR' : { 
 		'systemNames' : ['Microsoft MSX TurboR', 'MSX TurboR'],
@@ -1867,9 +1948,28 @@ dPlatformMapping = {
 			'igdb' : 53,
 			'thegamesdb' : 4929
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'bluemsx_libretro.dll', #default
+                    1 : 'bluemsx_libretro.dll', #blueMSX
+                    2 : 'fmsx_libretro.dll', #FreeIntv
+                    'bluemsx_libretro.dll' : {
+                        'coreExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc', 'm3u'],
+                        'friendlyName' : 'MSX/SVI/ColecoVision/SG-1000 (blueMSX)'
+                        },
+                    'fmsx_libretro.dll' : {
+                        'coreExtensions' : ['rom', 'mx1', 'mx2', 'dsk', 'cas'],
+                        'friendlyName' : 'Microsoft - MSX (fMSX)'
+                        }
+                    }
+                }
+            }
 		},
     'Microsoft Windows' : { 
 		'systemNames' : ['Microsoft Windows', 'Windows', 'PC (Microsoft Windows)', 'PC', 'mswin'],
@@ -2707,9 +2807,23 @@ dPlatformMapping = {
 			'igdb' : 84,
 			'thegamesdb' : 4949
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'bluemsx_libretro.dll', #default
+                    1 : 'bluemsx_libretro.dll', #blueMSX
+                    'bluemsx_libretro.dll' : {
+                        'coreExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc', 'm3u'],
+                        'friendlyName' : 'MSX/SVI/ColecoVision/SG-1000 (blueMSX)'
+                        }
+                    }
+                }
+            }
 		},
     'Sharp MZ-2200' : { 
 		'systemNames' : ['Sharp MZ-2200', 'MZ-2200', 'MZ2200'],
