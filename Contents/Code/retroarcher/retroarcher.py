@@ -278,10 +278,12 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
         emulator = int(settings['PluginPreferences']['emulator_' + systemKey])
         print('agent setting found')
     except KeyError as e:
-        emulator = archer_dict.dDefaultSettings['emulator_' + systemKey]
+        #emulator = archer_dict.dDefaultSettings['emulator_' + systemKey]
+        emulator = 0
         print('default setting found')
     except TypeError as e:
-        emulator = archer_dict.dDefaultSettings['emulator_' + systemKey]
+        #emulator = archer_dict.dDefaultSettings['emulator_' + systemKey]
+        emulator = 0
         print('default setting found')
     print(emulator)
     emulator = archer_dict.dPlatformMapping[system]['emulators'][emulator]
@@ -292,11 +294,13 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
             core = int(settings['PluginPreferences']['core_' + systemKey])
             print('agent setting found')
         except KeyError as e:
-            core = archer_dict.dDefaultSettings['core_' + systemKey]
-            print('default setting found')
+            #core = archer_dict.dDefaultSettings['core_' + systemKey]
+            core = 0
+            print('using default setting')
         except TypeError as e:
-            core = archer_dict.dDefaultSettings['core_' + systemKey]
-            print('default setting found')
+            #core = archer_dict.dDefaultSettings['core_' + systemKey]
+            core = 0
+            print('using default setting')
         print(core)
         core = archer_dict.dPlatformMapping[system]['emulators'][emulator]['cores'][core]
         print(core)
