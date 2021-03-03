@@ -141,6 +141,11 @@ dDefaultSettings = {
     'scanner_microsoft_msx2' : 'True',
     'scanner_microsoft_msx2+' : 'True',
     'scanner_microsoft_msx_turbor' : 'True',
+    'scanner_nec_pc_engine' : 'True',
+    'scanner_nec_pc_engine_cd' : 'True',
+    'scanner_nec_pc_engine_supergrafx' : 'True',
+    'scanner_nec_turbografx-16' : 'True',
+    'scanner_nec_turbografx-cd' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
     'scanner_nintendo_game_&_watch' : 'True',
@@ -189,6 +194,11 @@ dDefaultSettings = {
 	'emulator_microsoft_msx2' : 0,
 	'emulator_microsoft_msx2+' : 0,
 	'emulator_microsoft_msx_turbor' : 0,
+	'emulator_nec_pc_engine' : 0,
+	'emulator_nec_pc_engine_cd' : 0,
+	'emulator_nec_pc_engine_supergrafx' : 0,
+	'emulator_nec_turbografx-16' : 0,
+	'emulator_nec_turbografx-cd' : 0,
 	'emulator_nintendo_3ds' : 0,
 	'emulator_nintendo_64' : 0,
 	'emulator_nintendo_ds' : 0,
@@ -248,6 +258,11 @@ dDefaultSettings = {
 	'core_microsoft_msx2' : 0,
 	'core_microsoft_msx2+' : 0,
 	'core_microsoft_msx_turbor' : 0,
+	'core_nintendo_nec_pc_engine' : 0,
+	'core_nintendo_nec_pc_engine_cd' : 0,
+	'core_nintendo_nec_pc_engine_supergrafx' : 0,
+	'core_nintendo_nec_turbografx-16' : 0,
+	'core_nintendo_nec_turbografx-cd' : 0,
 	'core_nintendo_3ds' : 0,
 	'core_nintendo_64' : 0,
 	'core_nintendo_ds' : 0,
@@ -2091,6 +2106,107 @@ dPlatformMapping = {
 		'romType' : 0,
 		'multiDisk' : False
 		},
+    'NEC PC Engine' : { 
+		'systemNames' : ['NEC PC Engine', 'PC Engine'],
+		'systemIds' : {
+			'igdb' : 86,
+			'thegamesdb' : 34
+			},
+		'romExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'chd', 'sgx'],
+		'romType' : 0,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'mednafen_pce_libretro.dll', #default
+                    1 : 'mednafen_pce_libretro.dll', #Beetle PCE
+                    2 : 'mednafen_pce_fast_libretro.dll', #Beetle PCE FAST
+                    3 : 'mednafen_supergrafx_libretro.dll', #Beetle SuperGrafx
+                    'mednafen_pce_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'bin', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine / SuperGrafx / CD (Beetle PCE)'
+                        },
+                    'mednafen_pce_fast_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'bin', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine / CD (Beetle PCE FAST)'
+                        },
+                    'mednafen_supergrafx_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'sgx', 'cue', 'ccd', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine SuperGrafx (Beetle SuperGrafx)'
+                        }
+                    }
+                }
+            }
+		},
+    'NEC PC Engine CD' : { 
+		'systemNames' : ['NEC PC Engine CD', 'PC Engine CD'],
+		'systemIds' : {
+			'igdb' : 150,
+			'thegamesdb' : 4955
+			},
+		'romExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'chd', 'sgx'],
+		'romType' : 0,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'mednafen_pce_libretro.dll', #default
+                    1 : 'mednafen_pce_libretro.dll', #Beetle PCE
+                    2 : 'mednafen_pce_fast_libretro.dll', #Beetle PCE FAST
+                    3 : 'mednafen_supergrafx_libretro.dll', #Beetle SuperGrafx
+                    'mednafen_pce_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'bin', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine / SuperGrafx / CD (Beetle PCE)'
+                        },
+                    'mednafen_pce_fast_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'bin', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine / CD (Beetle PCE FAST)'
+                        },
+                    'mednafen_supergrafx_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'sgx', 'cue', 'ccd', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine SuperGrafx (Beetle SuperGrafx)'
+                        }
+                    }
+                }
+            }
+		},
+    'NEC PC Engine SuperGrafx' : { 
+		'systemNames' : ['NEC PC Engine SuperGrafx', 'PC Engine SuperGrafx'],
+		'systemIds' : {
+			'igdb' : 128,
+			'thegamesdb' : None
+			},
+		'romExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'chd', 'sgx'],
+		'romType' : 0,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'mednafen_pce_libretro.dll', #default
+                    1 : 'mednafen_pce_libretro.dll', #Beetle PCE
+                    2 : 'mednafen_supergrafx_libretro.dll', #Beetle SuperGrafx
+                    'mednafen_pce_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'bin', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine / SuperGrafx / CD (Beetle PCE)'
+                        },
+                    'mednafen_pce_fast_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'bin', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine / CD (Beetle PCE FAST)'
+                        },
+                    'mednafen_supergrafx_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'sgx', 'cue', 'ccd', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine SuperGrafx (Beetle SuperGrafx)'
+                        }
+                    }
+                }
+            }
+		},
     'NEC PC-FX' : { 
 		'systemNames' : ['NEC PC-FX', 'PC-FX'],
 		'systemIds' : {
@@ -2107,9 +2223,33 @@ dPlatformMapping = {
 			'igdb' : 86,
 			'thegamesdb' : 34
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'chd', 'sgx'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'mednafen_pce_libretro.dll', #default
+                    1 : 'mednafen_pce_libretro.dll', #Beetle PCE
+                    2 : 'mednafen_pce_fast_libretro.dll', #Beetle PCE FAST
+                    3 : 'mednafen_supergrafx_libretro.dll', #Beetle SuperGrafx
+                    'mednafen_pce_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'bin', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine / SuperGrafx / CD (Beetle PCE)'
+                        },
+                    'mednafen_pce_fast_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'bin', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine / CD (Beetle PCE FAST)'
+                        },
+                    'mednafen_supergrafx_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'sgx', 'cue', 'ccd', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine SuperGrafx (Beetle SuperGrafx)'
+                        }
+                    }
+                }
+            }
 		},
     'NEC TurboGrafx-CD' : { 
 		'systemNames' : ['NEC TurboGrafx-CD', 'TurboGrafx-CD', 'NEC TurboGrafx-CD32', 'TurboGrafx-CD32'],
@@ -2117,9 +2257,33 @@ dPlatformMapping = {
 			'igdb' : 150,
 			'thegamesdb' : 4955
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'chd', 'sgx'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'mednafen_pce_libretro.dll', #default
+                    1 : 'mednafen_pce_libretro.dll', #Beetle PCE
+                    2 : 'mednafen_pce_fast_libretro.dll', #Beetle PCE FAST
+                    3 : 'mednafen_supergrafx_libretro.dll', #Beetle SuperGrafx
+                    'mednafen_pce_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'bin', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine / SuperGrafx / CD (Beetle PCE)'
+                        },
+                    'mednafen_pce_fast_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'bin', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine / CD (Beetle PCE FAST)'
+                        },
+                    'mednafen_supergrafx_libretro.dll' : {
+                        'coreExtensions' : ['pce', 'sgx', 'cue', 'ccd', 'chd'],
+                        'friendlyName' : 'NEC - PC Engine SuperGrafx (Beetle SuperGrafx)'
+                        }
+                    }
+                }
+            }
 		},
     'Nintendo New 3DS' : { 
 		'systemNames' : ['Nintendo New 3DS', 'New Nintendo 3DS', 'n3DS'],
@@ -2505,36 +2669,6 @@ dPlatformMapping = {
 		'systemNames' : ['PC-50X Family'],
 		'systemIds' : {
 			'igdb' : 142,
-			'thegamesdb' : None
-			},
-		'romExtensions' : [],
-		'romType' : 0,
-		'multiDisk' : False
-		},
-    'PC Engine' : { 
-		'systemNames' : ['PC Engine', 'NEC PC Engine'],
-		'systemIds' : {
-			'igdb' : 86,
-			'thegamesdb' : 34
-			},
-		'romExtensions' : [],
-		'romType' : 0,
-		'multiDisk' : False
-		},
-    'PC Engine CD' : { 
-		'systemNames' : ['PC Engine CD', 'NEC PC Engine CD'],
-		'systemIds' : {
-			'igdb' : 150,
-			'thegamesdb' : 4955
-			},
-		'romExtensions' : [],
-		'romType' : 0,
-		'multiDisk' : False
-		},
-    'PC Engine SuperGrafx' : { 
-		'systemNames' : ['PC Engine SuperGrafx'],
-		'systemIds' : {
-			'igdb' : 128,
 			'thegamesdb' : None
 			},
 		'romExtensions' : [],
