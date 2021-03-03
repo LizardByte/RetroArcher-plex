@@ -134,6 +134,7 @@ dDefaultSettings = {
     'scanner_gce_vectrex' : 'True',
     'scanner_lua_engine' : 'True',
     'scanner_magnovox_odyssey_2' : 'True',
+    'scanner_mattel_intellivision' : 'True',
     'scanner_microsoft_dos' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
@@ -1748,9 +1749,23 @@ dPlatformMapping = {
 			'igdb' : 67,
 			'thegamesdb' : 32
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['int', 'bin', 'rom'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'freeintv_libretro.dll', #default
+                    1 : 'freeintv_libretro.dll', #FreeIntv
+                    'freeintv_libretro.dll' : {
+                        'coreExtensions' : ['int', 'bin', 'rom'],
+                        'friendlyName' : 'Mattel - Intellivision (FreeIntv)'
+                        }
+                    }
+                }
+            }
 		},
     'Mega Duck' : { 
 		'systemNames' : ['Mega Duck'],

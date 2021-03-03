@@ -85,6 +85,7 @@
   { "id":"scanner_gce_vectrex",                           "label":"SCANNER|GCE Vectrex",    "type":"bool",    "default":"True"  },
   { "id":"scanner_lua_engine",                            "label":"SCANNER|Lua Engine",    "type":"bool",    "default":"True"  },
   { "id":"scanner_magnavox_odyssey_2",                    "label":"SCANNER|Magnavox Odyssey 2",    "type":"bool",    "default":"True"  },
+  { "id":"scanner_mattel_intellivision",                  "label":"SCANNER|Mattel Intellivision",    "type":"bool",    "default":"True"  },
   { "id":"scanner_microsoft_dos",                         "label":"SCANNER|Microsoft DOS",    "type":"bool",    "default":"True"  },
   { "id":"scanner_nintendo_64",                           "label":"SCANNER|Nintendo 64",    "type":"bool",    "default":"True"  },
   { "id":"scanner_nintendo_game_&_watch",                 "label":"SCANNER|Nintendo Game & Watch",    "type":"bool",    "default":"True"  },
