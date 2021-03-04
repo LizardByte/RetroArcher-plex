@@ -102,6 +102,7 @@
   { "id":"scanner_nec_turbografx-cd",                     "label":"SCANNER|NEC TurboGrafx-CD",    "type":"bool",    "default":"True"  },
   { "id":"scanner_nintendo_3ds",                          "label":"SCANNER|Nintendo 3DS",    "type":"bool",    "default":"True"  },
   { "id":"scanner_nintendo_64",                           "label":"SCANNER|Nintendo 64",    "type":"bool",    "default":"True"  },
+  { "id":"scanner_nintendo_ds",                           "label":"SCANNER|Nintendo DS",    "type":"bool",    "default":"True"  },
   { "id":"scanner_nintendo_game_and_watch",               "label":"SCANNER|Nintendo Game and Watch",    "type":"bool",    "default":"True"  },
   { "id":"scanner_nintendo_gamecube",                     "label":"SCANNER|Nintendo GameCube",    "type":"bool",    "default":"True"  },
   { "id":"scanner_nintendo_wii",                          "label":"SCANNER|Nintendo Wii",    "type":"bool",    "default":"True"  },

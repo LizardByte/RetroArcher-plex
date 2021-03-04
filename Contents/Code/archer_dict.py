@@ -152,6 +152,7 @@ dDefaultSettings = {
     'scanner_nec_turbografx-cd' : 'True',
     'scanner_nintendo_3ds' : 'True',
     'scanner_nintendo_64' : 'True',
+    'scanner_nintendo_ds' : 'True',
     'scanner_nintendo_gamecube' : 'True',
     'scanner_nintendo_game_and_watch' : 'True',
     'scanner_nintendo_wii' : 'True',
@@ -2278,9 +2279,33 @@ dPlatformMapping = {
 			'igdb' : 20,
 			'thegamesdb' : 8
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['nds', 'bin'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'desmume2015_libretro.dll', #default
+                    1 : 'desmume2015_libretro.dll', #DeSmuME 2015
+                    2 : 'desmume_libretro.dll', #DeSmuME
+                    3 : 'melonds_libretro.dll', #melonDS
+                    'desmume2015_libretro.dll' : {
+                        'coreExtensions' : ['nds', 'bin'],
+                        'friendlyName' : 'Nintendo - DS (DeSmuME 2015)'
+                        },
+                    'desmume_libretro.dll' : {
+                        'coreExtensions' : ['nds', 'bin'],
+                        'friendlyName' : 'Nintendo - DS (DeSmuME)'
+                        },
+                    'melonds_libretro.dll' : {
+                        'coreExtensions' : ['nds'],
+                        'friendlyName' : 'Nintendo - DS (melonDS)'
+                        }
+                    }
+                }
+            }
 		},
     'Nintendo DSi' : { 
 		'systemNames' : ['Nintendo DSi'],
