@@ -153,6 +153,8 @@ dDefaultSettings = {
     'scanner_nintendo_3ds' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_ds' : 'True',
+    'scanner_nintendo_game_boy' : 'True',
+    'scanner_nintendo_game_boy_color' : 'True',
     'scanner_nintendo_gamecube' : 'True',
     'scanner_nintendo_game_and_watch' : 'True',
     'scanner_nintendo_wii' : 'True',
@@ -2387,9 +2389,53 @@ dPlatformMapping = {
 			'igdb' : 33,
 			'thegamesdb' : 4
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc', 'gbs', 'dmg', 'cgb', 'sgb', 'bin', 'rom'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'emux_gb_libretro.dll', #default
+                    1 : 'emux_gb_libretro.dll', #Emux GB
+                    2 : 'fixgb_libretro.dll', #fixGB
+                    3 : 'gamebatte_libretro.dll', #Gambatte
+                    4 : 'gearboy_libretro.dll', #Gearboy
+                    5 : 'sameboy_libretro.dll', #SameBoy
+                    6 : 'tgbdual_libretro.dll', #TGB Dual
+                    7 : 'mesen-s_libretro.dll', #Mesen-S
+                    'emux_gb_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'bin', 'rom'],
+                        'friendlyName' : 'Nintendo - Game Boy / Color (Emux GB)'
+                        },
+                    'fixgb_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'gbc', 'gbs'],
+                        'friendlyName' : 'Nintendo - Game Boy / Color (fixGB)'
+                        },
+                    'gamebatte_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'gbc', 'dmg'],
+                        'friendlyName' : 'Nintendo - Game Boy / Color (Gambatte)'
+                        },
+                    'gearboy_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'dmg', 'gbc', 'cgb', 'sgb'],
+                        'friendlyName' : 'Nintendo - Game Boy / Color (Gearboy)'
+                        },
+                    'sameboy_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'gbc'],
+                        'friendlyName' : 'Nintendo - Game Boy / Color (SameBoy)'
+                        },
+                    'tgbdual_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'gbc', 'sgb'],
+                        'friendlyName' : 'Nintendo - Game Boy / Color (TGB Dual)'
+                        },
+                    'mesen-s_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC / Game Boy / Color (Mesen-S)'
+                        }
+                    }
+                }
+            }
 		},
     'Nintendo Game Boy Advance' : { 
 		'systemNames' : ['Nintendo Game Boy Advance', 'Game Boy Advance', 'GBA', 'Nintendo GBA'],
@@ -2407,9 +2453,53 @@ dPlatformMapping = {
 			'igdb' : 22,
 			'thegamesdb' : 41
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc', 'gbs', 'dmg', 'cgb', 'sgb', 'bin', 'rom'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'emux_gb_libretro.dll', #default
+                    1 : 'emux_gb_libretro.dll', #Emux GB
+                    2 : 'fixgb_libretro.dll', #fixGB
+                    3 : 'gamebatte_libretro.dll', #Gambatte
+                    4 : 'gearboy_libretro.dll', #Gearboy
+                    5 : 'sameboy_libretro.dll', #SameBoy
+                    6 : 'tgbdual_libretro.dll', #TGB Dual
+                    7 : 'mesen-s_libretro.dll', #Mesen-S
+                    'emux_gb_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'bin', 'rom'],
+                        'friendlyName' : 'Nintendo - Game Boy / Color (Emux GB)'
+                        },
+                    'fixgb_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'gbc', 'gbs'],
+                        'friendlyName' : 'Nintendo - Game Boy / Color (fixGB)'
+                        },
+                    'gamebatte_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'gbc', 'dmg'],
+                        'friendlyName' : 'Nintendo - Game Boy / Color (Gambatte)'
+                        },
+                    'gearboy_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'dmg', 'gbc', 'cgb', 'sgb'],
+                        'friendlyName' : 'Nintendo - Game Boy / Color (Gearboy)'
+                        },
+                    'sameboy_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'gbc'],
+                        'friendlyName' : 'Nintendo - Game Boy / Color (SameBoy)'
+                        },
+                    'tgbdual_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'gbc', 'sgb'],
+                        'friendlyName' : 'Nintendo - Game Boy / Color (TGB Dual)'
+                        },
+                    'mesen-s_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC / Game Boy / Color (Mesen-S)'
+                        }
+                    }
+                }
+            }
 		},
     'Nintendo GameCube' : { 
 		'systemNames' : ['Nintendo GameCube', 'NGC', 'GameCube', 'GC', 'Dolphin'],
