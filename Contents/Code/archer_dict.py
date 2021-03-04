@@ -150,6 +150,7 @@ dDefaultSettings = {
     'scanner_nec_pc_engine_supergrafx' : 'True',
     'scanner_nec_turbografx-16' : 'True',
     'scanner_nec_turbografx-cd' : 'True',
+    'scanner_nintendo_3ds' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_gamecube' : 'True',
     'scanner_nintendo_game_and_watch' : 'True',
@@ -2224,9 +2225,28 @@ dPlatformMapping = {
 			'igdb' : 37,
 			'thegamesdb' : 4912
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['3ds', '3dsx', 'elf', 'axf', 'cci', 'cxi', 'app'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'citra_libretro.dll', #default
+                    1 : 'citra_libretro.dll', #Citra
+                    2 : 'citra_canary_libretro.dll', #Citra Canary/Experimental
+                    'citra_libretro.dll' : {
+                        'coreExtensions' : ['3ds', '3dsx', 'elf', 'axf', 'cci', 'cxi', 'app'],
+                        'friendlyName' : 'Nintendo - 3DS (Citra)'
+                        },
+                    'citra_canary_libretro.dll' : {
+                        'coreExtensions' : ['3ds', '3dsx', 'elf', 'axf', 'cci', 'cxi', 'app'],
+                        'friendlyName' : 'Nintendo - 3DS (Citra Canary/Experimental)'
+                        }
+                    }
+                }
+            }
 		},
     'Nintendo 64' : { 
 		'systemNames' : ['Nintendo 64', 'N64', 'Nintendo 64DD', 'N64DD'],
