@@ -161,6 +161,7 @@ dDefaultSettings = {
     'scanner_nintendo_game_boy_color' : 'True',
     'scanner_nintendo_gamecube' : 'True',
     'scanner_nintendo_game_and_watch' : 'True',
+    'scanner_nintendo_pokemon_mini' : 'True',
     'scanner_nintendo_wii' : 'True',
     'scanner_outrun_engine' : 'True',
 	'scanner_sega_sg-1000' : 'True',
@@ -2731,9 +2732,23 @@ dPlatformMapping = {
 			'igdb' : 166,
 			'thegamesdb' : 4957
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['min'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'pokemini_libretro.dll', #default
+                    1 : 'pokemini_libretro.dll', #PokeMini
+                    'pokemini_libretro.dll' : {
+                        'coreExtensions' : ['min'],
+                        'friendlyName' : 'Nintendo - Pokemon Mini (PokeMini)'
+                        }
+                    }
+                }
+            }
 		},
     'Nintendo Super Famicom' : { 
 		'systemNames' : ['Nintendo Super Famicom', 'SFAM', 'Super Famicom', 'SFC', 'Super Family Computer', 'NSFAM', 'NSFC', 'Nintendo Super Family Computer'],
