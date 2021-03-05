@@ -122,6 +122,7 @@
   { "id":"scanner_sony_playstation_2",                    "label":"SCANNER|Sony PlayStation 2",    "type":"bool",    "default":"True"  },
   { "id":"scanner_sony_psp",                              "label":"SCANNER|Sony PSP",    "type":"bool",    "default":"True"  },
   { "id":"scanner_super_nintendo_entertainment_system",   "label":"SCANNER|Super Nintendo Entertainment System",    "type":"bool",    "default":"True"  },
+  { "id":"scanner_tapwave_zodiac",                        "label":"SCANNER|Tapwave Zodiac",    "type":"bool",    "default":"True"  },
   { "id":"scanner_wonderswan",                            "label":"SCANNER|Wonderswan",    "type":"bool",    "default":"True"  },
   { "id":"scanner_wonderswan_color",                      "label":"SCANNER|Wonderswan Color",    "type":"bool",    "default":"True"  },
 
@@ -191,6 +192,7 @@
   { "id":"emulator_sony_playstation_2",                   "label":"EMULATOR|Sony PlayStation 2",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_sony_psp",                             "label":"EMULATOR|Sony PSP",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_super_nintendo_entertainment_system",  "label":"EMULATOR|Super Nintendo Entertainment System",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
+  { "id":"emulator_tapwave_zodiac",                       "label":"EMULATOR|Tapwave Zodiac",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_wonderswan",                           "label":"EMULATOR|WonderSwan",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_wonderswan_color",                     "label":"EMULATOR|WonderSwan Color",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
 
@@ -260,6 +262,7 @@
   { "id":"core_sony_playstation_2",                       "label":"RETROARCH|CORE|Sony PlayStation 2",    "type": "enum",    "values": [ "default", "PCSX2" ],    "default": "default"  },
   { "id":"core_sony_psp",                                 "label":"RETROARCH|CORE|Sony PSP",    "type": "enum",    "values": [ "default", "PPSSPP" ],    "default": "default"  },
   { "id":"core_super_nintendo_entertainment_system",      "label":"RETROARCH|CORE|Super Nintendo Entertainment System",    "type": "enum",    "values": [ "default", "higan Accuracy", "nSide Balanced", "Beetle bsnes", "Beetle Supafaust", "bsnes 2014 Accuracy", "bsnes 2014 Balanced", "bsnes 2014 Performance", "bsnes C++98(v085)", "bsnes", "bsnes-hd beta", "bsnes-mercury Accuracy", "bsnes-mercury Balanced", "bsnes-mercury Performance", "Snes9x - Current", "Snes9x 2002", "Snes9x 2005 Plus", "Snes9x 2005", "Snes9x 2010", "Mesen-S" ],    "default": "default"  },
+  { "id":"core_tapwave_zodiac",                           "label":"RETROARCH|CORE|Tapwave Zodiac",    "type": "enum",    "values": [ "default", "Mu" ],    "default": "default"  },
   { "id":"core_wonderswan",                               "label":"RETROARCH|CORE|WonderSwan",    "type": "enum",    "values": [ "default", "Beetle Cygne" ],    "default": "default"  },
   { "id":"core_wonderswan_color",                         "label":"RETROARCH|CORE|WonderSwan Color",    "type": "enum",    "values": [ "default", "Beetle Cygne" ],    "default": "default"  },
   

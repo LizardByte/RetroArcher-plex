@@ -172,6 +172,7 @@ dDefaultSettings = {
 	'scanner_sony_playstation_2' : 'True',
 	'scanner_sony_psp' : 'True',
 	'scanner_super_nintendo_entertainment_system' : 'True',
+	'scanner_tapwave_zodiac' : 'True',
 	'scanner_wonderswan' : 'True',
 	'scanner_wonderswan_color' : 'True',
 	
@@ -3900,14 +3901,28 @@ dPlatformMapping = {
 		'multiDisk' : False
 		},
     'Tapwave Zodiac' : { 
-		'systemNames' : ['Tapwave Zodiac', 'zod', 'Zodiac'],
+		'systemNames' : ['Tapwave Zodiac', 'zod', 'Zodiac', 'Palm OS'],
 		'systemIds' : {
 			'igdb' : 44,
 			'thegamesdb' : None
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['prc', 'pqa', 'img'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'mu_libretro.dll', #default
+                    1 : 'mu_libretro.dll', #Mu
+                    'mu_libretro.dll' : {
+                        'coreExtensions' : ['prc', 'pqa', 'img'],
+                        'friendlyName' : 'Palm OS (Mu)'
+                        }
+                    }
+                }
+            }
 		},
     'Tatung Einstein' : { 
 		'systemNames' : ['Tatung Einstein'],
