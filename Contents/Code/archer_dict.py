@@ -162,12 +162,15 @@ dDefaultSettings = {
     'scanner_nintendo_gamecube' : 'True',
     'scanner_nintendo_game_and_watch' : 'True',
     'scanner_nintendo_pokemon_mini' : 'True',
+    'scanner_nintendo_super_famicom' : 'True',
+    'scanner_nintendo_super_famicom_satellaview' : 'True',
     'scanner_nintendo_wii' : 'True',
     'scanner_outrun_engine' : 'True',
 	'scanner_sega_sg-1000' : 'True',
 	'scanner_sony_playstation' : 'True',
 	'scanner_sony_playstation_2' : 'True',
 	'scanner_sony_psp' : 'True',
+	'scanner_super_nintendo_entertainment_system' : 'True',
 	'scanner_wonderswan' : 'True',
 	'scanner_wonderswan_color' : 'True',
 	
@@ -2521,7 +2524,7 @@ dPlatformMapping = {
 			'igdb' : 33,
 			'thegamesdb' : 4
 			},
-		'romExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc', 'gbs', 'dmg', 'cgb', 'sgb', 'bin', 'rom', 'gba'],
+		'romExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc', 'gbs', 'dmg', 'cgb', 'sgb', 'bin', 'rom', 'gba', 'bml'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -2539,6 +2542,8 @@ dPlatformMapping = {
                     7 : 'mesen-s_libretro.dll', #Mesen-S
                     8 : 'mgba_libretro.dll', #mGBA
                     9 : 'vbam_libretro.dll', #VBA-M
+                    10 : 'higan_sfc_libretro.dll', #higan Accuracy
+                    11 : 'higan_sfc_balanced_libretro.dll', #nSide Balanced
                     'emux_gb_libretro.dll' : {
                         'coreExtensions' : ['gb', 'bin', 'rom'],
                         'friendlyName' : 'Nintendo - Game Boy / Color (Emux GB)'
@@ -2574,6 +2579,14 @@ dPlatformMapping = {
                     'vbam_libretro.dll' : {
                         'coreExtensions' : ['dmg', 'gb', 'gbc', 'cgb', 'sgb', 'gba'],
                         'friendlyName' : 'Nintendo - Game Boy Advance (VBA-M)'
+                        },
+                    'higan_sfc_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc', 'bml', 'rom'],
+                        'friendlyName' : 'Nintendo - SNES / Famicom (higan Accuracy)'
+                        },
+                    'higan_sfc_balanced_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc', 'bml', 'rom'],
+                        'friendlyName' : 'Nintendo - SNES / Famicom (nSide Balanced)'
                         }
                     }
                 }
@@ -2634,7 +2647,7 @@ dPlatformMapping = {
 			'igdb' : 22,
 			'thegamesdb' : 41
 			},
-		'romExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc', 'gbs', 'dmg', 'cgb', 'sgb', 'bin', 'rom', 'gba'],
+		'romExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc', 'gbs', 'dmg', 'cgb', 'sgb', 'bin', 'rom', 'gba', 'bml'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -2652,6 +2665,8 @@ dPlatformMapping = {
                     7 : 'mesen-s_libretro.dll', #Mesen-S
                     8 : 'mgba_libretro.dll', #mGBA
                     9 : 'vbam_libretro.dll', #VBA-M
+                    10 : 'higan_sfc_libretro.dll', #higan Accuracy
+                    11 : 'higan_sfc_balanced_libretro.dll', #nSide Balanced
                     'emux_gb_libretro.dll' : {
                         'coreExtensions' : ['gb', 'bin', 'rom'],
                         'friendlyName' : 'Nintendo - Game Boy / Color (Emux GB)'
@@ -2687,6 +2702,14 @@ dPlatformMapping = {
                     'vbam_libretro.dll' : {
                         'coreExtensions' : ['dmg', 'gb', 'gbc', 'cgb', 'sgb', 'gba'],
                         'friendlyName' : 'Nintendo - Game Boy Advance (VBA-M)'
+                        },
+                    'higan_sfc_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc', 'bml', 'rom'],
+                        'friendlyName' : 'Nintendo - SNES / Famicom (higan Accuracy)'
+                        },
+                    'higan_sfc_balanced_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc', 'bml', 'rom'],
+                        'friendlyName' : 'Nintendo - SNES / Famicom (nSide Balanced)'
                         }
                     }
                 }
@@ -2756,9 +2779,113 @@ dPlatformMapping = {
 			'igdb' : 58,
 			'thegamesdb' : 6
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc', 'bs', 'st', 'gb', 'gbc', 'bml', 'rom'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'snes9x_libretro.dll', #default
+                    1 : 'higan_sfc_libretro.dll', #higan Accuracy
+                    2 : 'higan_sfc_balanced_libretro.dll', #nSide Balanced
+                    3 : 'mednafen_snes_libretro.dll', #Beetle bsnes
+                    4 : 'mednafen_supafaust_libretro.dll', #Beetle Supafaust
+                    5 : 'bsnes2014_accuracy_libretro.dll', #bsnes 2014 Accuracy
+                    6 : 'bsnes2014_balanced_libretro.dll', #bsnes 2014 Balanced
+                    7 : 'bsnes2014_performance_libretro.dll', #bsnes 2014 Performance
+                    8 : 'bsnes_cplusplus98_libretro.dll', #bsnes C++98(v085)
+                    9 : 'bsnes_libretro.dll', #bsnes
+                    10 : 'bsnes_hd_beta_libretro.dll', #bsnes-hd beta
+                    11 : 'bsnes_mercury_accuracy_libretro.dll', #bsnes-mercury Accuracy
+                    12 : 'bsnes_mercury_balanced_libretro.dll', #bsnes-mercury Balanced
+                    13 : 'bsnes_mercury_performance_libretro.dll', #bsnes-mercury Performance
+                    14 : 'snes9x_libretro.dll', #Snes9x - Current
+                    15 : 'snes9x2002_libretro.dll', #Snes9x 2002
+                    16 : 'snes9x2005_plus_libretro.dll', #Snes9x 2005 Plus
+                    17 : 'snes9x2005_libretro.dll', #Snes9x 2005
+                    18 : 'snes9x2010_libretro.dll', #Snes9x 2010
+                    19 : 'mesen-s_libretro.dll', #Mesen-S
+                    'higan_sfc_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc', 'bml', 'rom'],
+                        'friendlyName' : 'Nintendo - SNES / Famicom (higan Accuracy)'
+                        },
+                    'higan_sfc_balanced_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc', 'bml', 'rom'],
+                        'friendlyName' : 'Nintendo - SNES / Famicom (nSide Balanced)'
+                        },
+                    'mednafen_snes_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'bs', 'st', 'sfc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Beetle bsnes)'
+                        },
+                    'mednafen_supafaust_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Beetle Supafaust)'
+                        },
+                    'bsnes2014_accuracy_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes 2014 Accuracy)'
+                        },
+                    'bsnes2014_balanced_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes 2014 Balanced)'
+                        },
+                    'bsnes2014_performance_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes 2014 Performance)'
+                        },
+                    'bsnes_cplusplus98_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes C++98 (v085))'
+                        },
+                    'bsnes_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc', 'bs'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes)'
+                        },
+                    'bsnes_hd_beta_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes-hd beta)'
+                        },
+                    'bsnes_mercury_accuracy_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes-mercury Accuracy)'
+                        },
+                    'bsnes_mercury_balanced_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes-mercury Balanced)'
+                        },
+                    'bsnes_mercury_performance_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes-mercury Performance)'
+                        },
+                    'snes9x_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'sfc', 'swc', 'fig', 'bs', 'st'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x - Current)'
+                        },
+                    'snes9x2002_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x 2002)'
+                        },
+                    'snes9x2005_plus_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x 2005 Plus)'
+                        },
+                    'snes9x2005_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x 2005)'
+                        },
+                    'snes9x2010_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x 2010)'
+                        },
+                    'mesen-s_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC / Game Boy / Color (Mesen-S)'
+                        }
+                    }
+                }
+            }
 		},
     'Nintendo Super Famicom Satellaview' : { 
 		'systemNames' : ['Nintendo Super Famicom Satellaview', 'Satellaview'],
@@ -2766,9 +2893,113 @@ dPlatformMapping = {
 			'igdb' : 306,
 			'thegamesdb' : None
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc', 'bs', 'st', 'gb', 'gbc', 'bml', 'rom'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'snes9x_libretro.dll', #default
+                    1 : 'higan_sfc_libretro.dll', #higan Accuracy
+                    2 : 'higan_sfc_balanced_libretro.dll', #nSide Balanced
+                    3 : 'mednafen_snes_libretro.dll', #Beetle bsnes
+                    4 : 'mednafen_supafaust_libretro.dll', #Beetle Supafaust
+                    5 : 'bsnes2014_accuracy_libretro.dll', #bsnes 2014 Accuracy
+                    6 : 'bsnes2014_balanced_libretro.dll', #bsnes 2014 Balanced
+                    7 : 'bsnes2014_performance_libretro.dll', #bsnes 2014 Performance
+                    8 : 'bsnes_cplusplus98_libretro.dll', #bsnes C++98(v085)
+                    9 : 'bsnes_libretro.dll', #bsnes
+                    10 : 'bsnes_hd_beta_libretro.dll', #bsnes-hd beta
+                    11 : 'bsnes_mercury_accuracy_libretro.dll', #bsnes-mercury Accuracy
+                    12 : 'bsnes_mercury_balanced_libretro.dll', #bsnes-mercury Balanced
+                    13 : 'bsnes_mercury_performance_libretro.dll', #bsnes-mercury Performance
+                    14 : 'snes9x_libretro.dll', #Snes9x - Current
+                    15 : 'snes9x2002_libretro.dll', #Snes9x 2002
+                    16 : 'snes9x2005_plus_libretro.dll', #Snes9x 2005 Plus
+                    17 : 'snes9x2005_libretro.dll', #Snes9x 2005
+                    18 : 'snes9x2010_libretro.dll', #Snes9x 2010
+                    19 : 'mesen-s_libretro.dll', #Mesen-S
+                    'higan_sfc_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc', 'bml', 'rom'],
+                        'friendlyName' : 'Nintendo - SNES / Famicom (higan Accuracy)'
+                        },
+                    'higan_sfc_balanced_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc', 'bml', 'rom'],
+                        'friendlyName' : 'Nintendo - SNES / Famicom (nSide Balanced)'
+                        },
+                    'mednafen_snes_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'bs', 'st', 'sfc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Beetle bsnes)'
+                        },
+                    'mednafen_supafaust_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Beetle Supafaust)'
+                        },
+                    'bsnes2014_accuracy_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes 2014 Accuracy)'
+                        },
+                    'bsnes2014_balanced_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes 2014 Balanced)'
+                        },
+                    'bsnes2014_performance_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes 2014 Performance)'
+                        },
+                    'bsnes_cplusplus98_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes C++98 (v085))'
+                        },
+                    'bsnes_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc', 'bs'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes)'
+                        },
+                    'bsnes_hd_beta_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes-hd beta)'
+                        },
+                    'bsnes_mercury_accuracy_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes-mercury Accuracy)'
+                        },
+                    'bsnes_mercury_balanced_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes-mercury Balanced)'
+                        },
+                    'bsnes_mercury_performance_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes-mercury Performance)'
+                        },
+                    'snes9x_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'sfc', 'swc', 'fig', 'bs', 'st'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x - Current)'
+                        },
+                    'snes9x2002_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x 2002)'
+                        },
+                    'snes9x2005_plus_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x 2005 Plus)'
+                        },
+                    'snes9x2005_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x 2005)'
+                        },
+                    'snes9x2010_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x 2010)'
+                        },
+                    'mesen-s_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC / Game Boy / Color (Mesen-S)'
+                        }
+                    }
+                }
+            }
 		},
     'Nintendo Switch' : { 
 		'systemNames' : ['Nintendo Switch', 'Switch', 'NX'],
@@ -3505,9 +3736,113 @@ dPlatformMapping = {
 			'igdb' : 19,
 			'thegamesdb' : 6
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc', 'bs', 'st', 'gb', 'gbc', 'bml', 'rom'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'snes9x_libretro.dll', #default
+                    1 : 'higan_sfc_libretro.dll', #higan Accuracy
+                    2 : 'higan_sfc_balanced_libretro.dll', #nSide Balanced
+                    3 : 'mednafen_snes_libretro.dll', #Beetle bsnes
+                    4 : 'mednafen_supafaust_libretro.dll', #Beetle Supafaust
+                    5 : 'bsnes2014_accuracy_libretro.dll', #bsnes 2014 Accuracy
+                    6 : 'bsnes2014_balanced_libretro.dll', #bsnes 2014 Balanced
+                    7 : 'bsnes2014_performance_libretro.dll', #bsnes 2014 Performance
+                    8 : 'bsnes_cplusplus98_libretro.dll', #bsnes C++98(v085)
+                    9 : 'bsnes_libretro.dll', #bsnes
+                    10 : 'bsnes_hd_beta_libretro.dll', #bsnes-hd beta
+                    11 : 'bsnes_mercury_accuracy_libretro.dll', #bsnes-mercury Accuracy
+                    12 : 'bsnes_mercury_balanced_libretro.dll', #bsnes-mercury Balanced
+                    13 : 'bsnes_mercury_performance_libretro.dll', #bsnes-mercury Performance
+                    14 : 'snes9x_libretro.dll', #Snes9x - Current
+                    15 : 'snes9x2002_libretro.dll', #Snes9x 2002
+                    16 : 'snes9x2005_plus_libretro.dll', #Snes9x 2005 Plus
+                    17 : 'snes9x2005_libretro.dll', #Snes9x 2005
+                    18 : 'snes9x2010_libretro.dll', #Snes9x 2010
+                    19 : 'mesen-s_libretro.dll', #Mesen-S
+                    'higan_sfc_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc', 'bml', 'rom'],
+                        'friendlyName' : 'Nintendo - SNES / Famicom (higan Accuracy)'
+                        },
+                    'higan_sfc_balanced_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc', 'bml', 'rom'],
+                        'friendlyName' : 'Nintendo - SNES / Famicom (nSide Balanced)'
+                        },
+                    'mednafen_snes_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'bs', 'st', 'sfc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Beetle bsnes)'
+                        },
+                    'mednafen_supafaust_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Beetle Supafaust)'
+                        },
+                    'bsnes2014_accuracy_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes 2014 Accuracy)'
+                        },
+                    'bsnes2014_balanced_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes 2014 Balanced)'
+                        },
+                    'bsnes2014_performance_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes 2014 Performance)'
+                        },
+                    'bsnes_cplusplus98_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes C++98 (v085))'
+                        },
+                    'bsnes_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc', 'bs'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes)'
+                        },
+                    'bsnes_hd_beta_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'gb', 'gbc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes-hd beta)'
+                        },
+                    'bsnes_mercury_accuracy_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes-mercury Accuracy)'
+                        },
+                    'bsnes_mercury_balanced_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes-mercury Balanced)'
+                        },
+                    'bsnes_mercury_performance_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'bml'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (bsnes-mercury Performance)'
+                        },
+                    'snes9x_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'sfc', 'swc', 'fig', 'bs', 'st'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x - Current)'
+                        },
+                    'snes9x2002_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x 2002)'
+                        },
+                    'snes9x2005_plus_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x 2005 Plus)'
+                        },
+                    'snes9x2005_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x 2005)'
+                        },
+                    'snes9x2010_libretro.dll' : {
+                        'coreExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC (Snes9x 2010)'
+                        },
+                    'mesen-s_libretro.dll' : {
+                        'coreExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc'],
+                        'friendlyName' : 'Nintendo - SNES / SFC / Game Boy / Color (Mesen-S)'
+                        }
+                    }
+                }
+            }
 		},
     'SwanCrystal' : { 
 		'systemNames' : ['SwanCrystal'],
