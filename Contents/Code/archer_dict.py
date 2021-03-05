@@ -153,6 +153,9 @@ dDefaultSettings = {
     'scanner_nintendo_3ds' : 'True',
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_ds' : 'True',
+    'scanner_nintendo_entertainment_system' : 'True',
+    'scanner_nintendo_famicom_disk_system' : 'True',
+    'scanner_nintendo_family_computer' : 'True',
     'scanner_nintendo_game_boy' : 'True',
     'scanner_nintendo_game_boy_advance' : 'True',
     'scanner_nintendo_game_boy_color' : 'True',
@@ -2326,9 +2329,48 @@ dPlatformMapping = {
 			'igdb' : 18,
 			'thegamesdb' : 7
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['nes', 'fds', 'unf', 'unif', 'bin', 'rom'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'bnes_libretro.dll', #default
+                    1 : 'bnes_libretro.dll', #bnes
+                    2 : 'emux_nes_libretro.dll', #Emux NES
+                    3 : 'fceumm_libretro.dll', #FCEUmm
+                    4 : 'mesen_libretro.dll', #Mesen
+                    5 : 'nestopia_libretro.dll', #Nestopia UE
+                    6 : 'quicknes_libretro.dll', #QuickNES
+                    'bnes_libretro.dll' : {
+                        'coreExtensions' : ['nes'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (bnes)'
+                        },
+                    'emux_nes_libretro.dll' : {
+                        'coreExtensions' : ['nes', 'bin', 'rom'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (Emux NES)'
+                        },
+                    'fceumm_libretro.dll' : {
+                        'coreExtensions' : ['fds', 'nes', 'unif', 'unf'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (FCEUmm)'
+                        },
+                    'mesen_libretro.dll' : {
+                        'coreExtensions' : ['nes', 'fds', 'unf', 'unif'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (Mesen)'
+                        },
+                    'nestopia_libretro.dll' : {
+                        'coreExtensions' : ['nes', 'fds', 'unf', 'unif'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (Nestopia UE)'
+                        },
+                    'quicknes_libretro.dll' : {
+                        'coreExtensions' : ['nes'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (QuickNES)'
+                        }
+                    }
+                }
+            }
 		},
     'Nintendo eShop' : { 
 		'systemNames' : ['Nintendo eShop'],
@@ -2346,9 +2388,48 @@ dPlatformMapping = {
 			'igdb' : 51,
 			'thegamesdb' : 4936
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['nes', 'fds', 'unf', 'unif', 'bin', 'rom'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'bnes_libretro.dll', #default
+                    1 : 'bnes_libretro.dll', #bnes
+                    2 : 'emux_nes_libretro.dll', #Emux NES
+                    3 : 'fceumm_libretro.dll', #FCEUmm
+                    4 : 'mesen_libretro.dll', #Mesen
+                    5 : 'nestopia_libretro.dll', #Nestopia UE
+                    6 : 'quicknes_libretro.dll', #QuickNES
+                    'bnes_libretro.dll' : {
+                        'coreExtensions' : ['nes'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (bnes)'
+                        },
+                    'emux_nes_libretro.dll' : {
+                        'coreExtensions' : ['nes', 'bin', 'rom'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (Emux NES)'
+                        },
+                    'fceumm_libretro.dll' : {
+                        'coreExtensions' : ['fds', 'nes', 'unif', 'unf'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (FCEUmm)'
+                        },
+                    'mesen_libretro.dll' : {
+                        'coreExtensions' : ['nes', 'fds', 'unf', 'unif'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (Mesen)'
+                        },
+                    'nestopia_libretro.dll' : {
+                        'coreExtensions' : ['nes', 'fds', 'unf', 'unif'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (Nestopia UE)'
+                        },
+                    'quicknes_libretro.dll' : {
+                        'coreExtensions' : ['nes'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (QuickNES)'
+                        }
+                    }
+                }
+            }
 		},
     'Nintendo Family Computer' : { 
 		'systemNames' : ['Nintendo Family Computer', 'Family Computer (FAMICOM)', 'FAMICOM', 'Family Computer'],
@@ -2356,9 +2437,48 @@ dPlatformMapping = {
 			'igdb' : 99,
 			'thegamesdb' : None
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['nes', 'fds', 'unf', 'unif', 'bin', 'rom'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'bnes_libretro.dll', #default
+                    1 : 'bnes_libretro.dll', #bnes
+                    2 : 'emux_nes_libretro.dll', #Emux NES
+                    3 : 'fceumm_libretro.dll', #FCEUmm
+                    4 : 'mesen_libretro.dll', #Mesen
+                    5 : 'nestopia_libretro.dll', #Nestopia UE
+                    6 : 'quicknes_libretro.dll', #QuickNES
+                    'bnes_libretro.dll' : {
+                        'coreExtensions' : ['nes'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (bnes)'
+                        },
+                    'emux_nes_libretro.dll' : {
+                        'coreExtensions' : ['nes', 'bin', 'rom'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (Emux NES)'
+                        },
+                    'fceumm_libretro.dll' : {
+                        'coreExtensions' : ['fds', 'nes', 'unif', 'unf'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (FCEUmm)'
+                        },
+                    'mesen_libretro.dll' : {
+                        'coreExtensions' : ['nes', 'fds', 'unf', 'unif'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (Mesen)'
+                        },
+                    'nestopia_libretro.dll' : {
+                        'coreExtensions' : ['nes', 'fds', 'unf', 'unif'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (Nestopia UE)'
+                        },
+                    'quicknes_libretro.dll' : {
+                        'coreExtensions' : ['nes'],
+                        'friendlyName' : 'Nintendo - NES / Famicom (QuickNES)'
+                        }
+                    }
+                }
+            }
 		},
     'Nintendo Game and Watch' : { 
 		'systemNames' : ['Nintendo Game and Watch', 'Nintendo Game & Watch', 'Game & Watch', 'Game and Watch', 'Tricotronic'],
