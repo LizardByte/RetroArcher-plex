@@ -2261,7 +2261,7 @@ dPlatformMapping = {
 			'igdb' : 4,
 			'thegamesdb' : 3
 			},
-		'romExtensions' : ['zip', 'n64', 'v64', 'z64', 'bin', 'u1', 'ndd'],
+		'romExtensions' : ['n64', 'v64', 'z64', 'bin', 'u1', 'ndd', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -2270,10 +2270,20 @@ dPlatformMapping = {
             'retroarch' :
                 {'cores' : {
                     0 : 'mupen64plus_next_libretro.dll', #default
-                    1 : 'mupen64plus_next_libretro.dll', #Mupen64Plus
+                    1 : 'mupen64plus_next_libretro.dll', #Mupen64Plus-Next
+                    2 : 'mupen64plus_next_gles3_libretro.dll', #Mupen64Plus-Next GLES3
+                    3 : 'parrallel_libretro.dll', #ParaLLEl N64
                     'mupen64plus_next_libretro.dll' : {
-                        'coreExtensions' : ['zip', 'n64', 'v64', 'z64', 'bin', 'u1', 'ndd'],
-                        'friendlyName' : 'Nintendo 64 (Mupen64Plus)'
+                        'coreExtensions' : ['n64', 'v64', 'z64', 'bin', 'u1'],
+                        'friendlyName' : 'Nintendo - Nintendo 64 (Mupen64Plus-Next)'
+                        },
+                    'mupen64plus_next_gles3_libretro.dll' : {
+                        'coreExtensions' : ['n64', 'v64', 'z64', 'bin', 'u1'],
+                        'friendlyName' : 'Nintendo - Nintendo 64 (Mupen64Plus-Next GLES3)'
+                        },
+                    'parrallel_libretro.dll' : {
+                        'coreExtensions' : ['n64', 'v64', 'z64', 'bin', 'u1', 'ndd'],
+                        'friendlyName' : 'Nintendo - Nintendo 64 (ParaLLEl N64)'
                         }
                     }
                 }
