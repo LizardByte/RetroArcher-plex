@@ -154,6 +154,7 @@ dDefaultSettings = {
     'scanner_nintendo_64' : 'True',
     'scanner_nintendo_ds' : 'True',
     'scanner_nintendo_game_boy' : 'True',
+    'scanner_nintendo_game_boy_advance' : 'True',
     'scanner_nintendo_game_boy_color' : 'True',
     'scanner_nintendo_gamecube' : 'True',
     'scanner_nintendo_game_and_watch' : 'True',
@@ -2389,7 +2390,7 @@ dPlatformMapping = {
 			'igdb' : 33,
 			'thegamesdb' : 4
 			},
-		'romExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc', 'gbs', 'dmg', 'cgb', 'sgb', 'bin', 'rom'],
+		'romExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc', 'gbs', 'dmg', 'cgb', 'sgb', 'bin', 'rom', 'gba'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -2405,6 +2406,8 @@ dPlatformMapping = {
                     5 : 'sameboy_libretro.dll', #SameBoy
                     6 : 'tgbdual_libretro.dll', #TGB Dual
                     7 : 'mesen-s_libretro.dll', #Mesen-S
+                    8 : 'mgba_libretro.dll', #mGBA
+                    9 : 'vbam_libretro.dll', #VBA-M
                     'emux_gb_libretro.dll' : {
                         'coreExtensions' : ['gb', 'bin', 'rom'],
                         'friendlyName' : 'Nintendo - Game Boy / Color (Emux GB)'
@@ -2432,6 +2435,14 @@ dPlatformMapping = {
                     'mesen-s_libretro.dll' : {
                         'coreExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc'],
                         'friendlyName' : 'Nintendo - SNES / SFC / Game Boy / Color (Mesen-S)'
+                        },
+                    'mgba_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'gbc', 'gba'],
+                        'friendlyName' : 'Nintendo - Game Boy Advance (mGBA)'
+                        },
+                    'vbam_libretro.dll' : {
+                        'coreExtensions' : ['dmg', 'gb', 'gbc', 'cgb', 'sgb', 'gba'],
+                        'friendlyName' : 'Nintendo - Game Boy Advance (VBA-M)'
                         }
                     }
                 }
@@ -2443,9 +2454,48 @@ dPlatformMapping = {
 			'igdb' : 24,
 			'thegamesdb' : 5
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['dmg', 'gb', 'gbc', 'cgb', 'sgb', 'gba', 'agb', 'bin'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'mednafen_gba_libretro.dll', #default
+                    1 : 'mednafen_gba_libretro.dll', #Beetle GBA
+                    2 : 'gpsp_libretro.dll', #gpSP
+                    3 : 'meteor_libretro.dll', #Meteor
+                    4 : 'mgba_libretro.dll', #mGBA
+                    5 : 'vba_next_libretro.dll', #VBA Next
+                    6 : 'vbam_libretro.dll', #VBA-M
+                    'mednafen_gba_libretro.dll' : {
+                        'coreExtensions' : ['gba', 'agb', 'bin'],
+                        'friendlyName' : 'Nintendo - Game Boy Advance (Beetle GBA)'
+                        },
+                    'gpsp_libretro.dll' : {
+                        'coreExtensions' : ['gba', 'bin'],
+                        'friendlyName' : 'Nintendo - Game Boy Advance (gpSP)'
+                        },
+                    'meteor_libretro.dll' : {
+                        'coreExtensions' : ['gba'],
+                        'friendlyName' : 'Nintendo - Game Boy Advance (Meteor)'
+                        },
+                    'mgba_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'gbc', 'gba'],
+                        'friendlyName' : 'Nintendo - Game Boy Advance (mGBA)'
+                        },
+                    'vba_next_libretro.dll' : {
+                        'coreExtensions' : ['gba'],
+                        'friendlyName' : 'Nintendo - Game Boy Advance (VBA Next)'
+                        },
+                    'vbam_libretro.dll' : {
+                        'coreExtensions' : ['dmg', 'gb', 'gbc', 'cgb', 'sgb', 'gba'],
+                        'friendlyName' : 'Nintendo - Game Boy Advance (VBA-M)'
+                        }
+                    }
+                }
+            }
 		},
     'Nintendo Game Boy Color' : { 
 		'systemNames' : ['Nintendo Game Boy Color', 'Game Boy Color', 'GBC', 'Nintendo GBC'],
@@ -2453,7 +2503,7 @@ dPlatformMapping = {
 			'igdb' : 22,
 			'thegamesdb' : 41
 			},
-		'romExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc', 'gbs', 'dmg', 'cgb', 'sgb', 'bin', 'rom'],
+		'romExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc', 'gbs', 'dmg', 'cgb', 'sgb', 'bin', 'rom', 'gba'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -2469,6 +2519,8 @@ dPlatformMapping = {
                     5 : 'sameboy_libretro.dll', #SameBoy
                     6 : 'tgbdual_libretro.dll', #TGB Dual
                     7 : 'mesen-s_libretro.dll', #Mesen-S
+                    8 : 'mgba_libretro.dll', #mGBA
+                    9 : 'vbam_libretro.dll', #VBA-M
                     'emux_gb_libretro.dll' : {
                         'coreExtensions' : ['gb', 'bin', 'rom'],
                         'friendlyName' : 'Nintendo - Game Boy / Color (Emux GB)'
@@ -2496,6 +2548,14 @@ dPlatformMapping = {
                     'mesen-s_libretro.dll' : {
                         'coreExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc'],
                         'friendlyName' : 'Nintendo - SNES / SFC / Game Boy / Color (Mesen-S)'
+                        },
+                    'mgba_libretro.dll' : {
+                        'coreExtensions' : ['gb', 'gbc', 'gba'],
+                        'friendlyName' : 'Nintendo - Game Boy Advance (mGBA)'
+                        },
+                    'vbam_libretro.dll' : {
+                        'coreExtensions' : ['dmg', 'gb', 'gbc', 'cgb', 'sgb', 'gba'],
+                        'friendlyName' : 'Nintendo - Game Boy Advance (VBA-M)'
                         }
                     }
                 }
@@ -2507,7 +2567,7 @@ dPlatformMapping = {
 			'igdb' : 21,
 			'thegamesdb' : 2
 			},
-		'romExtensions' : ['ciso', 'dol', 'elf', 'gcm', 'gcz', 'iso', 'tgc', 'wad', 'wbfs'],
+		'romExtensions' : ['gcm', 'iso', 'wbfs', 'ciso', 'gcz', 'elf', 'dol', 'dff', 'tgc', 'wad', 'rvz'],
 		'romType' : 0,
 		'multiDisk' : True,
         'emulators' : {
@@ -2518,8 +2578,8 @@ dPlatformMapping = {
                     0 : 'dolphin_libretro.dll', #default
                     1 : 'dolphin_libretro.dll', #Dolphin
                     'dolphin_libretro.dll' : {
-                        'coreExtensions' : ['ciso', 'dol', 'elf', 'gcm', 'gcz', 'iso', 'tgc', 'wad', 'wbfs'],
-                        'friendlyName' : 'Nintendo GameCube (Dolphin)'
+                        'coreExtensions' : ['gcm', 'iso', 'wbfs', 'ciso', 'gcz', 'elf', 'dol', 'dff', 'tgc', 'wad', 'rvz', 'm3u'],
+                        'friendlyName' : 'Nintendo - GameCube / Wii (Dolphin)'
                         }
                     }
                 }
@@ -2601,9 +2661,9 @@ dPlatformMapping = {
 			'igdb' : 5,
 			'thegamesdb' : 9
 			},
-		'romExtensions' : ['ciso', 'dol', 'elf', 'gcm', 'gcz', 'iso', 'tgc', 'wad', 'wbfs'],
+		'romExtensions' : ['gcm', 'iso', 'wbfs', 'ciso', 'gcz', 'elf', 'dol', 'dff', 'tgc', 'wad', 'rvz'],
 		'romType' : 0,
-		'multiDisk' : False,
+		'multiDisk' : True,
         'emulators' : {
             0 : 'retroarch', #agent enums to emulator name
             1 : 'retroarch',
@@ -2612,8 +2672,8 @@ dPlatformMapping = {
                     0 : 'dolphin_libretro.dll', #default
                     1 : 'dolphin_libretro.dll', #Dolphin
                     'dolphin_libretro.dll' : {
-                        'coreExtensions' : ['ciso', 'dol', 'elf', 'gcm', 'gcz', 'iso', 'tgc', 'wad', 'wbfs'],
-                        'friendlyName' : 'Nintendo Wii (Dolphin)'
+                        'coreExtensions' : ['gcm', 'iso', 'wbfs', 'ciso', 'gcz', 'elf', 'dol', 'dff', 'tgc', 'wad', 'rvz', 'm3u'],
+                        'friendlyName' : 'Nintendo - GameCube / Wii (Dolphin)'
                         }
                     }
                 }
