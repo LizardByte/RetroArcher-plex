@@ -164,6 +164,7 @@ dDefaultSettings = {
     'scanner_nintendo_pokemon_mini' : 'True',
     'scanner_nintendo_super_famicom' : 'True',
     'scanner_nintendo_super_famicom_satellaview' : 'True',
+    'scanner_nintendo_virtual_boy' : 'True',
     'scanner_nintendo_wii' : 'True',
     'scanner_outrun_engine' : 'True',
 	'scanner_sega_sg-1000' : 'True',
@@ -3017,9 +3018,23 @@ dPlatformMapping = {
 			'igdb' : 87,
 			'thegamesdb' : 4918
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['vb', 'vboy', 'bin'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'mednafen_vb_libretro.dll', #default
+                    1 : 'mednafen_vb_libretro.dll', #Beetle VB
+                    'mednafen_vb_libretro.dll' : {
+                        'coreExtensions' : ['vb', 'vboy', 'bin'],
+                        'friendlyName' : 'Nintendo - Virtual Boy (Beetle VB)'
+                        }
+                    }
+                }
+            }
 		},
     'Nintendo Virtual Console' : { 
 		'systemNames' : ['Nintendo Virtual Console', 'Virtual Console (Nintendo)', 'VC', 'Nintendo VC'],
