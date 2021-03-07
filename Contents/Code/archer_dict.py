@@ -171,6 +171,7 @@ dDefaultSettings = {
 	'scanner_quake_ii_engine' : 'True',
 	'scanner_quake_iii_engine' : 'True',
 	'scanner_rick_dangerous_engine' : 'True',
+	'scanner_rpg_maker' : 'True',
 	'scanner_sega_sg-1000' : 'True',
 	'scanner_sony_playstation' : 'True',
 	'scanner_sony_playstation_2' : 'True',
@@ -3390,6 +3391,30 @@ dPlatformMapping = {
                     'xrick_libretro.dll' : {
                         'coreExtensions' : ['zip'],
                         'friendlyName' : 'Rick Dangerous (XRick)'
+                        }
+                    }
+                }
+            }
+		},
+    'RPG Maker' : { 
+		'systemNames' : ['RPG Maker', 'EasyRPG'],
+		'systemIds' : {
+			'igdb' : 6,
+			'thegamesdb' : 1
+			},
+		'romExtensions' : ['ldb'],
+		'romType' : 0,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'easyrpg_libretro.dll', #default
+                    1 : 'easyrpg_libretro.dll', #EasyRPG
+                    'easyrpg_libretro.dll' : {
+                        'coreExtensions' : ['ldb'],
+                        'friendlyName' : 'RPG Maker 2000/2003 (EasyRPG)'
                         }
                     }
                 }
