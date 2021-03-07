@@ -170,6 +170,7 @@ dDefaultSettings = {
 	'scanner_quake_1_engine' : 'True',
 	'scanner_quake_ii_engine' : 'True',
 	'scanner_quake_iii_engine' : 'True',
+	'scanner_rick_dangerous_engine' : 'True',
 	'scanner_sega_sg-1000' : 'True',
 	'scanner_sony_playstation' : 'True',
 	'scanner_sony_playstation_2' : 'True',
@@ -3279,7 +3280,7 @@ dPlatformMapping = {
 		'multiDisk' : False
 		},
     'Quake 1 Engine' : { 
-		'systemNames' : ['Quake 1 Engine', 'Quake Engine', 'Quake'],
+		'systemNames' : ['Quake 1 Engine', 'Quake Engine', 'Quake', 'Quake I Engine', 'Quake I'],
 		'systemIds' : {
 			'igdb' : 6,
 			'thegamesdb' : 1
@@ -3303,7 +3304,7 @@ dPlatformMapping = {
             }
 		},
     'Quake II Engine' : { 
-		'systemNames' : ['Quake II Engine', 'Quake II Engine', 'Quake II', 'Quake 2 Engine', 'Quake 2 Engine', 'Quake 2'],
+		'systemNames' : ['Quake II Engine', 'Quake II', 'Quake 2 Engine', 'Quake 2'],
 		'systemIds' : {
 			'igdb' : 6,
 			'thegamesdb' : 1
@@ -3327,7 +3328,7 @@ dPlatformMapping = {
             }
 		},
     'Quake III Engine' : { 
-		'systemNames' : ['Quake III Engine', 'Quake III Engine', 'Quake III', 'Quake 3 Engine', 'Quake 3 Engine', 'Quake 3'],
+		'systemNames' : ['Quake III Engine', 'Quake III', 'Quake 3 Engine', 'Quake 3'],
 		'systemIds' : {
 			'igdb' : 6,
 			'thegamesdb' : 1
@@ -3369,6 +3370,30 @@ dPlatformMapping = {
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
+		},
+    'Rick Dangerous Engine' : { 
+		'systemNames' : ['Rick Dangerous Engine', 'Rick Dangerous'],
+		'systemIds' : {
+			'igdb' : 6,
+			'thegamesdb' : 1
+			},
+		'romExtensions' : ['zip'],
+		'romType' : 0,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'xrick_libretro.dll', #default
+                    1 : 'xrick_libretro.dll', #XRick
+                    'xrick_libretro.dll' : {
+                        'coreExtensions' : ['zip'],
+                        'friendlyName' : 'Rick Dangerous (XRick)'
+                        }
+                    }
+                }
+            }
 		},
     'SAM Coupé' : { 
 		'systemNames' : ['SAM Coupé', 'SAM Coupe'],
