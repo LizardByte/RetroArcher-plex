@@ -52,121 +52,124 @@ dDefaultSettings = {
 	'sSourceRomDirectory' : '',
 	
 	'lExcludedTerms' : '[BIOS], Action Replay, Game Genie, Game Saver, GameBooster, GameShark',
-    'lIncludeRegions' : '',
-    'lExcludeRegions' : '',
-    'lIncludeLanguages' : '',
-    'lExcludeLanguages' : '',
-    'lExcludeTags' : 'Beta, Demo, Kiosk, Proto',
-    'eFfmpegEncoder' : '0',
-    'iFfmpegThreads' : '1',
-    'iFfmpegLength' : '30',
-    'iFfmpegTextSize' : '24',
-    'sFfmpegTextColor' : 'white',
-    'sFfmpegTextX' : '20',
-    'sFfmpegTextY' : '20',
-    'sFfmpegTextBox' : 'True',
-    'sFfmpegTextBoxColor' : 'black@0.5',
-    'sFfmpegTextBoxBorder' : '5',
-    'iBufferSize' : '65536',
+	'lIncludeRegions' : '',
+	'lExcludeRegions' : '',
+	'lIncludeLanguages' : '',
+	'lExcludeLanguages' : '',
+	'lExcludeTags' : 'Beta, Demo, Kiosk, Proto',
+	'eFfmpegEncoder' : '0',
+	'iFfmpegThreads' : '1',
+	'iFfmpegLength' : '30',
+	'iFfmpegTextSize' : '24',
+	'sFfmpegTextColor' : 'white',
+	'sFfmpegTextX' : '20',
+	'sFfmpegTextY' : '20',
+	'sFfmpegTextBox' : 'True',
+	'sFfmpegTextBoxColor' : 'black@0.5',
+	'sFfmpegTextBoxBorder' : '5',
+	'iBufferSize' : '65536',
 	
-    'sSearchSite' : 'IGDB',
+	'sSearchSite' : 'IGDB',
 	
-    'sMoonlightPcUuid' : '',
-    'sMoonlightAppId' : '',
-    'sMoonlightAppName' : 'RetroArcher',
+	'sMoonlightPcUuid' : '',
+	'sMoonlightAppId' : '',
+	'sMoonlightAppName' : 'RetroArcher',
 	
-    'bGameStreamEnabled' : 'False',
-    'sGameStreamWhiteList' : '',
-    'sGameStreamBlackList' : '',
-    'eGameStreamApp' : 'moonlight',
-    'eGameStreamHost' : 'Nvidia GeForce Experience',
-    'sNvStreamerPath' : 'C:\\Program Files\\NVIDIA Corporation\\NvStreamSrv\\nvstreamer.exe',
-    'sSunshinePath' : '',
-    'sOpenStreamPath' : '',
+	'bGameStreamEnabled' : 'False',
+	'sGameStreamWhiteList' : '',
+	'sGameStreamBlackList' : '',
+	'eGameStreamApp' : 'moonlight',
+	'eGameStreamHost' : 'Nvidia GeForce Experience',
+	'sNvStreamerPath' : 'C:\\Program Files\\NVIDIA Corporation\\NvStreamSrv\\nvstreamer.exe',
+	'sSunshinePath' : '',
+	'sOpenStreamPath' : '',
 	
-    'sTwitchClientID' : '',
+	'sTwitchClientID' : '',
 	'sTwitchClientSecret' : '',
 	'sTheGamesDBapikey' : '146a546e4a1e764d50dad39bf3f0129fa1609301b81998a15fb6fd243c5827ae',
-    'sRAWGapikey' : 'e4649e88b13b4b2e83c76f5065bd5828',
+	'sRAWGapikey' : 'e4649e88b13b4b2e83c76f5065bd5828',
 	'sYouTubeApiKey' : 'AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4',
 	
-    'ePreferredRatingSystem' : 'ESRB',  
+	'ePreferredRatingSystem' : 'ESRB',  
 	
-    'bPlatformAsCollection' : 'True',
+	'bPlatformAsCollection' : 'True',
 	
-    'sThemesSource' : 'RetroArcher.database',
+	'sThemesSource' : 'RetroArcher.database',
 	'iMaxThemes' : '0',
-    'sSourceThemeDirectory' : '',
+	'sSourceThemeDirectory' : '',
 	
-    'bGetReviews' : 'True',
+	'bGetReviews' : 'True',
 	
-    'bGetExtraObject' : 'True',
+	'bGetExtraObject' : 'True',
 	
-    'PLEX_URL' : 'http://localhost:32400',
+	'PLEX_URL' : 'http://localhost:32400',
 	'PLEX_TOKEN' : '',
 	
-    #these are needed to ensure we don't scan any unsupported systems
-    'scanner_3do_interactive_multiplayer' : 'True',
-    'scanner_amstrad_cpc' : 'True',
-    'scanner_arcade' : 'True',
-    'scanner_arcade_daphne' : 'True',
-    'scanner_arcade_finalburn' : 'True',
-    'scanner_arcade_mame' : 'True',
-    'scanner_atari_2600' : 'True',
-    'scanner_atari_5200' : 'True',
-    'scanner_atari_7800' : 'True',
-    'scanner_atari_800' : 'True',
-    'scanner_atari_jaguar' : 'True',
-    'scanner_atari_jaguar_cd' : 'True',
-    'scanner_atari_lynx' : 'True',
-    'scanner_atari_st' : 'True',
-    'scanner_atari_xe' : 'True',
-    'scanner_cave_story_engine' : 'True',
-    'scanner_chailove_engine' : 'True',
-    'scanner_colecovision' : 'True',
-    'scanner_commodore_amiga' : 'True',
-    'scanner_commodore_128' : 'True',
-    'scanner_commodore_64' : 'True',
-    'scanner_commodore_64_supercpu' : 'True',
-    'scanner_commodore_pet' : 'True',
-    'scanner_commodore_plus_4' : 'True',
-    'scanner_commodore_vic-20' : 'True',
-    'scanner_doom_engine' : 'True',
-    'scanner_fairchild_channel_f' : 'True',
-    'scanner_gce_vectrex' : 'True',
-    'scanner_lua_engine' : 'True',
-    'scanner_magnovox_odyssey_2' : 'True',
-    'scanner_mattel_intellivision' : 'True',
-    'scanner_microsoft_dos' : 'True',
-    'scanner_microsoft_msx' : 'True',
-    'scanner_microsoft_msx2' : 'True',
-    'scanner_microsoft_msx2_plus' : 'True',
-    'scanner_microsoft_msx_turbor' : 'True',
-    'scanner_nec_pc-8801' : 'True',
-    'scanner_nec_pc-9801' : 'True',
-    'scanner_nec_pc-fx' : 'True',
-    'scanner_nec_pc_engine' : 'True',
-    'scanner_nec_pc_engine_cd' : 'True',
-    'scanner_nec_pc_engine_supergrafx' : 'True',
-    'scanner_nec_turbografx-16' : 'True',
-    'scanner_nec_turbografx-cd' : 'True',
-    'scanner_nintendo_3ds' : 'True',
-    'scanner_nintendo_64' : 'True',
-    'scanner_nintendo_ds' : 'True',
-    'scanner_nintendo_entertainment_system' : 'True',
-    'scanner_nintendo_famicom_disk_system' : 'True',
-    'scanner_nintendo_family_computer' : 'True',
-    'scanner_nintendo_game_boy' : 'True',
-    'scanner_nintendo_game_boy_advance' : 'True',
-    'scanner_nintendo_game_boy_color' : 'True',
-    'scanner_nintendo_gamecube' : 'True',
-    'scanner_nintendo_game_and_watch' : 'True',
-    'scanner_nintendo_pokemon_mini' : 'True',
-    'scanner_nintendo_super_famicom' : 'True',
-    'scanner_nintendo_super_famicom_satellaview' : 'True',
-    'scanner_nintendo_virtual_boy' : 'True',
-    'scanner_nintendo_wii' : 'True',
-    'scanner_outrun_engine' : 'True',
+	#these are needed to ensure we don't scan any unsupported systems
+	'scanner_3do_interactive_multiplayer' : 'True',
+	'scanner_amstrad_cpc' : 'True',
+	'scanner_arcade' : 'True',
+	'scanner_arcade_daphne' : 'True',
+	'scanner_arcade_finalburn' : 'True',
+	'scanner_arcade_mame' : 'True',
+	'scanner_atari_2600' : 'True',
+	'scanner_atari_5200' : 'True',
+	'scanner_atari_7800' : 'True',
+	'scanner_atari_800' : 'True',
+	'scanner_atari_jaguar' : 'True',
+	'scanner_atari_jaguar_cd' : 'True',
+	'scanner_atari_lynx' : 'True',
+	'scanner_atari_st' : 'True',
+	'scanner_atari_xe' : 'True',
+	'scanner_cave_story_engine' : 'True',
+	'scanner_chailove_engine' : 'True',
+	'scanner_colecovision' : 'True',
+	'scanner_commodore_amiga' : 'True',
+	'scanner_commodore_128' : 'True',
+	'scanner_commodore_64' : 'True',
+	'scanner_commodore_64_supercpu' : 'True',
+	'scanner_commodore_pet' : 'True',
+	'scanner_commodore_plus_4' : 'True',
+	'scanner_commodore_vic-20' : 'True',
+	'scanner_doom_engine' : 'True',
+	'scanner_fairchild_channel_f' : 'True',
+	'scanner_gce_vectrex' : 'True',
+	'scanner_lua_engine' : 'True',
+	'scanner_magnovox_odyssey_2' : 'True',
+	'scanner_mattel_intellivision' : 'True',
+	'scanner_microsoft_dos' : 'True',
+	'scanner_microsoft_msx' : 'True',
+	'scanner_microsoft_msx2' : 'True',
+	'scanner_microsoft_msx2_plus' : 'True',
+	'scanner_microsoft_msx_turbor' : 'True',
+	'scanner_nec_pc-8801' : 'True',
+	'scanner_nec_pc-9801' : 'True',
+	'scanner_nec_pc-fx' : 'True',
+	'scanner_nec_pc_engine' : 'True',
+	'scanner_nec_pc_engine_cd' : 'True',
+	'scanner_nec_pc_engine_supergrafx' : 'True',
+	'scanner_nec_turbografx-16' : 'True',
+	'scanner_nec_turbografx-cd' : 'True',
+	'scanner_nintendo_3ds' : 'True',
+	'scanner_nintendo_64' : 'True',
+	'scanner_nintendo_ds' : 'True',
+	'scanner_nintendo_entertainment_system' : 'True',
+	'scanner_nintendo_famicom_disk_system' : 'True',
+	'scanner_nintendo_family_computer' : 'True',
+	'scanner_nintendo_game_boy' : 'True',
+	'scanner_nintendo_game_boy_advance' : 'True',
+	'scanner_nintendo_game_boy_color' : 'True',
+	'scanner_nintendo_gamecube' : 'True',
+	'scanner_nintendo_game_and_watch' : 'True',
+	'scanner_nintendo_pokemon_mini' : 'True',
+	'scanner_nintendo_super_famicom' : 'True',
+	'scanner_nintendo_super_famicom_satellaview' : 'True',
+	'scanner_nintendo_virtual_boy' : 'True',
+	'scanner_nintendo_wii' : 'True',
+	'scanner_outrun_engine' : 'True',
+	'scanner_quake_1_engine' : 'True',
+	'scanner_quake_ii_engine' : 'True',
+	'scanner_quake_iii_engine' : 'True',
 	'scanner_sega_sg-1000' : 'True',
 	'scanner_sony_playstation' : 'True',
 	'scanner_sony_playstation_2' : 'True',
@@ -176,9 +179,9 @@ dDefaultSettings = {
 	'scanner_wonderswan' : 'True',
 	'scanner_wonderswan_color' : 'True',
 	
-    'bRetroArchCacheClean' : 'True',
+	'bRetroArchCacheClean' : 'True',
 	
-    'sOgXboxIpAddress' : '',
+	'sOgXboxIpAddress' : '',
 	'sOgXboxGamePaths' : 'Games',
 	'bOgXboxGames' : 'True',
 	'sOgXboxAppPaths' :	'Apps, Applications',
@@ -3274,6 +3277,78 @@ dPlatformMapping = {
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
+		},
+    'Quake 1 Engine' : { 
+		'systemNames' : ['Quake 1 Engine', 'Quake Engine', 'Quake'],
+		'systemIds' : {
+			'igdb' : 6,
+			'thegamesdb' : 1
+			},
+		'romExtensions' : ['pak'],
+		'romType' : 0,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'tyrquake_libretro.dll', #default
+                    1 : 'tyrquake_libretro.dll', #TyrQuake
+                    'tyrquake_libretro.dll' : {
+                        'coreExtensions' : ['pak'],
+                        'friendlyName' : 'Quake (TyrQuake)'
+                        }
+                    }
+                }
+            }
+		},
+    'Quake II Engine' : { 
+		'systemNames' : ['Quake II Engine', 'Quake II Engine', 'Quake II', 'Quake 2 Engine', 'Quake 2 Engine', 'Quake 2'],
+		'systemIds' : {
+			'igdb' : 6,
+			'thegamesdb' : 1
+			},
+		'romExtensions' : ['pak'],
+		'romType' : 0,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'vitaquake2_libretro.dll', #default
+                    1 : 'vitaquake2_libretro.dll', #vitaQuake 2
+                    'vitaquake2_libretro.dll' : {
+                        'coreExtensions' : ['pak'],
+                        'friendlyName' : 'Quake II (vitaQuake 2)'
+                        }
+                    }
+                }
+            }
+		},
+    'Quake III Engine' : { 
+		'systemNames' : ['Quake III Engine', 'Quake III Engine', 'Quake III', 'Quake 3 Engine', 'Quake 3 Engine', 'Quake 3'],
+		'systemIds' : {
+			'igdb' : 6,
+			'thegamesdb' : 1
+			},
+		'romExtensions' : ['pk3'],
+		'romType' : 0,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'vitaquake3_libretro.dll', #default
+                    1 : 'vitaquake3_libretro.dll', #vitaQuake 3
+                    'vitaquake3_libretro.dll' : {
+                        'coreExtensions' : ['pk3'],
+                        'friendlyName' : 'Quake III: Arena (vitaQuake 3)'
+                        }
+                    }
+                }
+            }
 		},
     'R-Zone' : { 
 		'systemNames' : ['R-Zone'],
