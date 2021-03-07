@@ -173,6 +173,8 @@ dDefaultSettings = {
 	'scanner_rick_dangerous_engine' : 'True',
 	'scanner_rpg_maker' : 'True',
 	'scanner_scummvm' : 'True',
+	'scanner_sega_dreamcast' : 'True',
+	'scanner_sega_naomi' : 'True',
 	'scanner_sega_sg-1000' : 'True',
 	'scanner_sony_playstation' : 'True',
 	'scanner_sony_playstation_2' : 'True',
@@ -3501,9 +3503,28 @@ dPlatformMapping = {
 			'igdb' : 23,
 			'thegamesdb' : 16
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['chd', 'cdi', 'iso', 'elf', 'bin', 'cue', 'gdi', 'lst', 'zip', 'dat', '7z'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'flycast_libretro.dll', #default
+                    1 : 'flycast_libretro.dll', #Flycast
+                    2 : 'flycast_gles2_libretro.dll', #Flycast GLES2
+                    'flycast_libretro.dll' : {
+                        'coreExtensions' : ['chd', 'cdi', 'iso', 'elf', 'bin', 'cue', 'gdi', 'lst', 'zip', 'dat', '7z', 'm3u'],
+                        'friendlyName' : 'Sega - Dreamcast/NAOMI (Flycast)'
+                        },
+                    'flycast_gles2_libretro.dll' : {
+                        'coreExtensions' : ['chd', 'cdi', 'iso', 'elf', 'bin', 'cue', 'gdi', 'lst', 'zip', 'dat', '7z', 'm3u'],
+                        'friendlyName' : 'Sega - Dreamcast/NAOMI (Flycast GLES2)'
+                        }
+                    }
+                }
+            }
 		},
     'Sega Game Gear' : { 
 		'systemNames' : ['Sega Game Gear', 'Game Gear', 'GG', 'Sega GG'],
@@ -3551,9 +3572,28 @@ dPlatformMapping = {
 			'igdb' : 52,
 			'thegamesdb' : 23
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['chd', 'cdi', 'iso', 'elf', 'bin', 'cue', 'gdi', 'lst', 'zip', 'dat', '7z'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'flycast_libretro.dll', #default
+                    1 : 'flycast_libretro.dll', #Flycast
+                    2 : 'flycast_gles2_libretro.dll', #Flycast GLES2
+                    'flycast_libretro.dll' : {
+                        'coreExtensions' : ['chd', 'cdi', 'iso', 'elf', 'bin', 'cue', 'gdi', 'lst', 'zip', 'dat', '7z', 'm3u'],
+                        'friendlyName' : 'Sega - Dreamcast/NAOMI (Flycast)'
+                        },
+                    'flycast_gles2_libretro.dll' : {
+                        'coreExtensions' : ['chd', 'cdi', 'iso', 'elf', 'bin', 'cue', 'gdi', 'lst', 'zip', 'dat', '7z', 'm3u'],
+                        'friendlyName' : 'Sega - Dreamcast/NAOMI (Flycast GLES2)'
+                        }
+                    }
+                }
+            }
 		},
     'Sega Naomi 2' : { 
 		'systemNames' : ['Sega Naomi 2', 'Naomi 2'],
