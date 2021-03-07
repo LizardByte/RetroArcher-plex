@@ -173,9 +173,18 @@ dDefaultSettings = {
 	'scanner_rick_dangerous_engine' : 'True',
 	'scanner_rpg_maker' : 'True',
 	'scanner_scummvm' : 'True',
+	'scanner_sega_32x' : 'True',
+	'scanner_sega_cd' : 'True',
 	'scanner_sega_dreamcast' : 'True',
+	'scanner_sega_game_gear' : 'True',
+	'scanner_sega_genesis' : 'True',
+	'scanner_sega_master_system' : 'True',
+	'scanner_sega_mega_drive' : 'True',
 	'scanner_sega_naomi' : 'True',
+	'scanner_sega_pico' : 'True',
+	'scanner_sega_saturn' : 'True',
 	'scanner_sega_sg-1000' : 'True',
+	'scanner_sega_st-v' : 'True',
 	'scanner_sony_playstation' : 'True',
 	'scanner_sony_playstation_2' : 'True',
 	'scanner_sony_psp' : 'True',
@@ -3483,9 +3492,23 @@ dPlatformMapping = {
 			'igdb' : 30,
 			'thegamesdb' : 33
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['gen', 'smd', 'md', '32x', 'cue', 'iso', 'sms', '68k'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'picodrive_libretro.dll', #default
+                    1 : 'picodrive_libretro.dll', #PicoDrive
+                    'picodrive_libretro.dll' : {
+                        'coreExtensions' : ['bin', 'gen', 'smd', 'md', '32x', 'cue', 'iso', 'sms', '68k'],
+                        'friendlyName' : 'Sega - MS/MD/CD/32X (PicoDrive)'
+                        }
+                    }
+                }
+            }
 		},
     'Sega CD' : { 
 		'systemNames' : ['Sega CD', 'segacd', 'Mega CD'],
@@ -3493,9 +3516,28 @@ dPlatformMapping = {
 			'igdb' : 78,
 			'thegamesdb' : 21
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', '32x'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'genesis_plus_gx_libretro.dll', #default
+                    1 : 'genesis_plus_gx_libretro.dll', #Genesis Plus GX
+                    2 : 'picodrive_libretro.dll', #PicoDrive
+                    'genesis_plus_gx_libretro.dll' : {
+                        'coreExtensions' : ['mdx', 'md', 'smd', 'gen', 'bin', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd'],
+                        'friendlyName' : 'Sega - MS/GG/MD/CD (Genesis Plus GX)'
+                        },
+                    'picodrive_libretro.dll' : {
+                        'coreExtensions' : ['bin', 'gen', 'smd', 'md', '32x', 'cue', 'iso', 'sms', '68k'],
+                        'friendlyName' : 'Sega - MS/MD/CD/32X (PicoDrive)'
+                        }
+                    }
+                }
+            }
 		},
     'Sega Dreamcast' : { 
 		'systemNames' : ['Sega Dreamcast', 'Dreamcast', 'DC'],
@@ -3532,9 +3574,33 @@ dPlatformMapping = {
 			'igdb' : 35,
 			'thegamesdb' : 20
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', 'rom', 'col', ],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'smsplus_libretro.dll', #default
+                    1 : 'smsplus_libretro.dll', #SMS Plus GX
+                    2 : 'genesis_plus_gx_libretro.dll', #Genesis Plus GX
+                    3 : 'gearsystem_libretro.dll', #Gearsystem
+                    'smsplus_libretro.dll' : {
+                        'coreExtensions' : ['sms', 'bin', 'rom', 'col', 'gg', 'sg'],
+                        'friendlyName' : 'Sega - MS/GG (SMS Plus GX)'
+                        },
+                    'genesis_plus_gx_libretro.dll' : {
+                        'coreExtensions' : ['mdx', 'md', 'smd', 'gen', 'bin', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd'],
+                        'friendlyName' : 'Sega - MS/GG/MD/CD (Genesis Plus GX)'
+                        },
+                    'gearsystem_libretro.dll' : {
+                        'coreExtensions' : ['sms', 'gg', 'sg', 'bin', 'rom'],
+                        'friendlyName' : 'Sega - MS/GG/SG-1000 (Gearsystem)'
+                        }
+                    }
+                }
+            }
 		},
     'Sega Genesis' : { 
 		'systemNames' : ['Sega Genesis', 'Genesis'],
@@ -3542,9 +3608,33 @@ dPlatformMapping = {
 			'igdb' : 29,
 			'thegamesdb' : 18
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', '32x'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'genesis_plus_gx_libretro.dll', #default
+                    1 : 'blastem_libretro.dll', #BlastEm
+                    2 : 'genesis_plus_gx_libretro.dll', #Genesis Plus GX
+                    3 : 'picodrive_libretro.dll', #PicoDrive
+                    'blastem_libretro.dll' : {
+                        'coreExtensions' : ['md', 'bin', 'smd', 'gen'],
+                        'friendlyName' : 'Sega - Mega Drive - Genesis (BlastEm)'
+                        },
+                    'genesis_plus_gx_libretro.dll' : {
+                        'coreExtensions' : ['mdx', 'md', 'smd', 'gen', 'bin', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd'],
+                        'friendlyName' : 'Sega - MS/GG/MD/CD (Genesis Plus GX)'
+                        },
+                    'picodrive_libretro.dll' : {
+                        'coreExtensions' : ['bin', 'gen', 'smd', 'md', '32x', 'cue', 'iso', 'sms', '68k'],
+                        'friendlyName' : 'Sega - MS/MD/CD/32X (PicoDrive)'
+                        }
+                    }
+                }
+            }
 		},
     'Sega Master System' : { 
 		'systemNames' : ['Sega Master System', 'SMS', 'Master System', 'Sega Mark III', 'Mark III'],
@@ -3552,9 +3642,43 @@ dPlatformMapping = {
 			'igdb' : 64,
 			'thegamesdb' : 35
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', 'rom', 'col', '32x'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'genesis_plus_gx_libretro.dll', #default
+                    1 : 'emux_sms_libretro.dll', #Emux SMS
+                    2 : 'smsplus_libretro.dll', #SMS Plus GX
+                    3 : 'genesis_plus_gx_libretro.dll', #Genesis Plus GX
+                    4 : 'gearsystem_libretro.dll', #Gearsystem
+                    5 : 'picodrive_libretro.dll', #PicoDrive
+                    'emux_sms_libretro.dll' : {
+                        'coreExtensions' : ['sms', 'bms', 'bin', 'rom'],
+                        'friendlyName' : 'Sega - Master System (Emux SMS)'
+                        },
+                    'smsplus_libretro.dll' : {
+                        'coreExtensions' : ['sms', 'bin', 'rom', 'col', 'gg', 'sg'],
+                        'friendlyName' : 'Sega - MS/GG (SMS Plus GX)'
+                        },
+                    'genesis_plus_gx_libretro.dll' : {
+                        'coreExtensions' : ['mdx', 'md', 'smd', 'gen', 'bin', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd'],
+                        'friendlyName' : 'Sega - MS/GG/MD/CD (Genesis Plus GX)'
+                        },
+                    'gearsystem_libretro.dll' : {
+                        'coreExtensions' : ['sms', 'gg', 'sg', 'bin', 'rom'],
+                        'friendlyName' : 'Sega - MS/GG/SG-1000 (Gearsystem)'
+                        },
+                    'picodrive_libretro.dll' : {
+                        'coreExtensions' : ['bin', 'gen', 'smd', 'md', '32x', 'cue', 'iso', 'sms', '68k'],
+                        'friendlyName' : 'Sega - MS/MD/CD/32X (PicoDrive)'
+                        }
+                    }
+                }
+            }
 		},
     'Sega Mega Drive' : { 
 		'systemNames' : ['Sega Mega Drive', 'Mega Drive'],
@@ -3562,9 +3686,33 @@ dPlatformMapping = {
 			'igdb' : 29,
 			'thegamesdb' : 36
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', '32x'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'blastem_libretro.dll', #default
+                    1 : 'blastem_libretro.dll', #BlastEm
+                    2 : 'genesis_plus_gx_libretro.dll', #Genesis Plus GX
+                    3 : 'picodrive_libretro.dll', #PicoDrive
+                    'blastem_libretro.dll' : {
+                        'coreExtensions' : ['md', 'bin', 'smd', 'gen'],
+                        'friendlyName' : 'Sega - Mega Drive - Genesis (BlastEm)'
+                        },
+                    'genesis_plus_gx_libretro.dll' : {
+                        'coreExtensions' : ['mdx', 'md', 'smd', 'gen', 'bin', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd'],
+                        'friendlyName' : 'Sega - MS/GG/MD/CD (Genesis Plus GX)'
+                        },
+                    'picodrive_libretro.dll' : {
+                        'coreExtensions' : ['bin', 'gen', 'smd', 'md', '32x', 'cue', 'iso', 'sms', '68k'],
+                        'friendlyName' : 'Sega - MS/MD/CD/32X (PicoDrive)'
+                        }
+                    }
+                }
+            }
 		},
     'Sega Naomi' : { 
 		'systemNames' : ['Sega Naomi', 'Naomi'],
@@ -3611,9 +3759,28 @@ dPlatformMapping = {
 			'igdb' : 339,
 			'thegamesdb' : 4958
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', '32x'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'genesis_plus_gx_libretro.dll', #default
+                    1 : 'genesis_plus_gx_libretro.dll', #Genesis Plus GX
+                    2 : 'picodrive_libretro.dll', #PicoDrive
+                    'genesis_plus_gx_libretro.dll' : {
+                        'coreExtensions' : ['mdx', 'md', 'smd', 'gen', 'bin', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd'],
+                        'friendlyName' : 'Sega - MS/GG/MD/CD (Genesis Plus GX)'
+                        },
+                    'picodrive_libretro.dll' : {
+                        'coreExtensions' : ['bin', 'gen', 'smd', 'md', '32x', 'cue', 'iso', 'sms', '68k'],
+                        'friendlyName' : 'Sega - MS/MD/CD/32X (PicoDrive)'
+                        }
+                    }
+                }
+            }
 		},
     'Sega Saturn' : { 
 		'systemNames' : ['Sega Saturn', 'Saturn', 'JVC Saturn', 'Hi-Saturn', 'Samsung Saturn', 'V-Saturn'],
@@ -3621,17 +3788,7 @@ dPlatformMapping = {
 			'igdb' : 32,
 			'thegamesdb' : 17
 			},
-		'romExtensions' : [],
-		'romType' : 0,
-		'multiDisk' : False
-		},
-    'Sega SG-1000' : { 
-		'systemNames' : ['Sega SG-1000', 'SG-1000', 'sg1000', 'Sega Game 1000'],
-		'systemIds' : {
-			'igdb' : 84,
-			'thegamesdb' : 4949
-			},
-		'romExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc'],
+		'romExtensions' : ['toc', 'ccd', 'chd', 'cue', 'iso', 'mds', 'zip'],
 		'romType' : 0,
 		'multiDisk' : True,
         'emulators' : {
@@ -3639,11 +3796,84 @@ dPlatformMapping = {
             1 : 'retroarch',
             'retroarch' :
                 {'cores' : {
-                    0 : 'bluemsx_libretro.dll', #default
+                    0 : 'mednafen_saturn_libretro.dll', #default
+                    1 : 'mednafen_saturn_libretro.dll', #Beetle Saturn
+                    2 : 'yabasanshiro_libretro.dll', #YabaSanshiro
+                    3 : 'yabause_libretro.dll', #Yabause
+                    4 : 'kronos_libretro.dll', #Kronos
+                    'mednafen_saturn_libretro.dll' : {
+                        'coreExtensions' : ['ccd', 'chd', 'cue', 'toc', 'm3u'],
+                        'friendlyName' : 'Sega - Saturn (Beetle Saturn)'
+                        },
+                    'yabasanshiro_libretro.dll' : {
+                        'coreExtensions' : ['bin', 'ccd', 'chd', 'cue', 'iso', 'mds', 'zip'],
+                        'friendlyName' : 'Sega - Saturn (YabaSanshiro)'
+                        },
+                    'yabause_libretro.dll' : {
+                        'coreExtensions' : ['bin', 'ccd', 'chd', 'cue', 'iso', 'mds', 'zip'],
+                        'friendlyName' : 'Sega - Saturn (Yabause)'
+                        },
+                    'kronos_libretro.dll' : {
+                        'coreExtensions' : ['ccd', 'chd', 'cue', 'iso', 'mds', 'zip', 'm3u'],
+                        'friendlyName' : 'Sega - Saturn/ST-V (Kronos)'
+                        }
+                    }
+                }
+            }
+		},
+    'Sega SG-1000' : { 
+		'systemNames' : ['Sega SG-1000', 'SG-1000', 'sg1000', 'Sega Game 1000'],
+		'systemIds' : {
+			'igdb' : 84,
+			'thegamesdb' : 4949
+			},
+		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', 'rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sc'],
+		'romType' : 0,
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'genesis_plus_gx_libretro.dll', #default
                     1 : 'bluemsx_libretro.dll', #blueMSX
+                    2 : 'genesis_plus_gx_libretro.dll', #Genesis Plus GX
+                    3 : 'gearsystem_libretro.dll', #Gearsystem
                     'bluemsx_libretro.dll' : {
                         'coreExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc', 'm3u'],
                         'friendlyName' : 'MSX/SVI/ColecoVision/SG-1000 (blueMSX)'
+                        },
+                    'genesis_plus_gx_libretro.dll' : {
+                        'coreExtensions' : ['mdx', 'md', 'smd', 'gen', 'bin', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd'],
+                        'friendlyName' : 'Sega - MS/GG/MD/CD (Genesis Plus GX)'
+                        },
+                    'gearsystem_libretro.dll' : {
+                        'coreExtensions' : ['sms', 'gg', 'sg', 'bin', 'rom'],
+                        'friendlyName' : 'Sega - MS/GG/SG-1000 (Gearsystem)'
+                        }
+                    }
+                }
+            }
+		},
+    'Sega ST-V' : { 
+		'systemNames' : ['Sega ST-V', 'Sega Titan Video', 'STV'],
+		'systemIds' : {
+			'igdb' : 52,
+			'thegamesdb' : 23
+			},
+		'romExtensions' : ['ccd', 'chd', 'cue', 'iso', 'mds', 'zip'],
+		'romType' : 0,
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'kronos_libretro.dll', #default
+                    1 : 'kronos_libretro.dll', #Kronos
+                    'kronos_libretro.dll' : {
+                        'coreExtensions' : ['ccd', 'chd', 'cue', 'iso', 'mds', 'zip', 'm3u'],
+                        'friendlyName' : 'Sega - Saturn/ST-V (Kronos)'
                         }
                     }
                 }
