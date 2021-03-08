@@ -148,6 +148,7 @@
   { "id":"scanner_star_trek_voyager_engine",              "label":"SCANNER|Star Trek Voyager Engine",    "type":"bool",    "default":"True"  },
   { "id":"scanner_super_nintendo_entertainment_system",   "label":"SCANNER|Super Nintendo Entertainment System",    "type":"bool",    "default":"True"  },
   { "id":"scanner_tapwave_zodiac",                        "label":"SCANNER|Tapwave Zodiac",    "type":"bool",    "default":"True"  },
+  { "id":"scanner_thomson_mo5",                           "label":"SCANNER|Thomson MO5",    "type":"bool",    "default":"True"  },
   { "id":"scanner_wonderswan",                            "label":"SCANNER|Wonderswan",    "type":"bool",    "default":"True"  },
   { "id":"scanner_wonderswan_color",                      "label":"SCANNER|Wonderswan Color",    "type":"bool",    "default":"True"  },
 
@@ -243,6 +244,7 @@
   { "id":"emulator_star_trek_voyager_engine",             "label":"EMULATOR|Star Trek Voyager Engine",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_super_nintendo_entertainment_system",  "label":"EMULATOR|Super Nintendo Entertainment System",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_tapwave_zodiac",                       "label":"EMULATOR|Tapwave Zodiac",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
+  { "id":"emulator_thomson_mo5",                          "label":"EMULATOR|Thomson MO5",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_wonderswan",                           "label":"EMULATOR|WonderSwan",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_wonderswan_color",                     "label":"EMULATOR|WonderSwan Color",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
 
@@ -338,6 +340,7 @@
   { "id":"core_star_trek_voyager_engine",                 "label":"RETROARCH|CORE|Star Trek Voyager Engine",    "type": "enum",    "values": [ "default", "vitaVoyager" ],    "default": "default"  },
   { "id":"core_super_nintendo_entertainment_system",      "label":"RETROARCH|CORE|Super Nintendo Entertainment System",    "type": "enum",    "values": [ "default", "higan Accuracy", "nSide Balanced", "Beetle bsnes", "Beetle Supafaust", "bsnes 2014 Accuracy", "bsnes 2014 Balanced", "bsnes 2014 Performance", "bsnes C++98(v085)", "bsnes", "bsnes-hd beta", "bsnes-mercury Accuracy", "bsnes-mercury Balanced", "bsnes-mercury Performance", "Snes9x - Current", "Snes9x 2002", "Snes9x 2005 Plus", "Snes9x 2005", "Snes9x 2010", "Mesen-S" ],    "default": "default"  },
   { "id":"core_tapwave_zodiac",                           "label":"RETROARCH|CORE|Tapwave Zodiac",    "type": "enum",    "values": [ "default", "Mu" ],    "default": "default"  },
+  { "id":"core_thomson_mo5",                              "label":"RETROARCH|CORE|Thomson MO5",    "type": "enum",    "values": [ "default", "Theodore" ],    "default": "default"  },
   { "id":"core_wonderswan",                               "label":"RETROARCH|CORE|WonderSwan",    "type": "enum",    "values": [ "default", "Beetle Cygne" ],    "default": "default"  },
   { "id":"core_wonderswan_color",                         "label":"RETROARCH|CORE|WonderSwan Color",    "type": "enum",    "values": [ "default", "Beetle Cygne" ],    "default": "default"  },
   

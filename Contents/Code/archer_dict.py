@@ -198,6 +198,7 @@ dDefaultSettings = {
 	'scanner_star_trek_voyager_engine' : 'True',
 	'scanner_super_nintendo_entertainment_system' : 'True',
 	'scanner_tapwave_zodiac' : 'True',
+	'scanner_thomson_mo5' : 'True',
 	'scanner_wonderswan' : 'True',
 	'scanner_wonderswan_color' : 'True',
 	
@@ -4505,9 +4506,23 @@ dPlatformMapping = {
 			'igdb' : 156,
 			'thegamesdb' : None
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['fd', 'sap', 'k7', 'm7', 'm5', 'rom'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'theodore_libretro.dll', #default
+                    1 : 'theodore_libretro.dll', #Theodore
+                    'theodore_libretro.dll' : {
+                        'coreExtensions' : ['fd', 'sap', 'k7', 'm7', 'm5', 'rom'],
+                        'friendlyName' : 'Thomson - MO/TO (Theodore)'
+                        }
+                    }
+                }
+            }
 		},
     'Tomy Tutor' : { 
 		'systemNames' : ['Tomy Tutor'],
