@@ -8,6 +8,9 @@
 # Ignore log files
 *.log
 
+# Ignore backup files
+*.bak
+
 #Ignore developer scripts
 Contents/Code/developer
 

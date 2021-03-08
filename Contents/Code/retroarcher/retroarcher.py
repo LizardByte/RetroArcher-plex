@@ -278,10 +278,12 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
         emulator = int(settings['PluginPreferences']['emulator_' + systemKey])
         print('agent setting found')
     except KeyError as e:
-        emulator = archer_dict.dDefaultSettings['emulator_' + systemKey]
+        #emulator = archer_dict.dDefaultSettings['emulator_' + systemKey]
+        emulator = 0
         print('default setting found')
     except TypeError as e:
-        emulator = archer_dict.dDefaultSettings['emulator_' + systemKey]
+        #emulator = archer_dict.dDefaultSettings['emulator_' + systemKey]
+        emulator = 0
         print('default setting found')
     print(emulator)
     emulator = archer_dict.dPlatformMapping[system]['emulators'][emulator]
@@ -292,11 +294,13 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
             core = int(settings['PluginPreferences']['core_' + systemKey])
             print('agent setting found')
         except KeyError as e:
-            core = archer_dict.dDefaultSettings['core_' + systemKey]
-            print('default setting found')
+            #core = archer_dict.dDefaultSettings['core_' + systemKey]
+            core = 0
+            print('using default setting')
         except TypeError as e:
-            core = archer_dict.dDefaultSettings['core_' + systemKey]
-            print('default setting found')
+            #core = archer_dict.dDefaultSettings['core_' + systemKey]
+            core = 0
+            print('using default setting')
         print(core)
         core = archer_dict.dPlatformMapping[system]['emulators'][emulator]['cores'][core]
         print(core)
@@ -446,7 +450,8 @@ def launchADB(clientIP):
             #maybe we want to auto install some apks?
     
     #add -W for more silent starting https://developer.android.com/studio/command-line/adb
-    device.shell('am start -W --user 0 -n com.limelight/com.limelight.ShortcutTrampoline --es "UUID" "' + moonlightPcUuid + '" --es "AppId" "' + str(moonlightAppId) + '"') #open moonlight on client device streaming to server desktop
+    #why did -W stop working after a server reboot?
+    device.shell('am start -W -n com.limelight/com.limelight.ShortcutTrampoline --es "UUID" "' + moonlightPcUuid + '" --es "AppId" "' + str(moonlightAppId) + '"') #open moonlight on client device streaming to server desktop
     
     return True
 
@@ -1124,10 +1129,14 @@ if __name__ == '__main__':
     
     #arguments for launcher
     parser.add_argument('--launch', action='store_true', required=False, help='Launch the rom from Tautulli.')
-    parser.add_argument('--ip_address', type=str, nargs='?', required=False, default='', help='IP address of android device.') #from tautulli
+    parser.add_argument('--ip_address', type=str, nargs='?', required=False, default='', help='IP address of client device.')
     parser.add_argument('--platform', type=str, nargs='?', required=False, default='', help='Platform type passed in from Tautulli. Example: Android')
+    parser.add_argument('--device', type=str, nargs='?', required=False, default='', help='Device type passed in from Tautulli.')
+    parser.add_argument('--product', type=str, nargs='?', required=False, default='', help='Product type passed in from Tautulli.')
+    parser.add_argument('--player', type=str, nargs='?', required=False, default='', help='Player type passed in from Tautulli.')
     parser.add_argument('--remaining_time', type=str, nargs='?', required=False, default='', help='Remaining time passed in from Tautulli.') #Used to determine when to continue execution of launcher
     parser.add_argument('--file', type=str, nargs='?', required=False, default='', help='Full file path passed in from Tautulli.') #need to parse the filename and match it in the json file to the matching rom file
+    parser.add_argument('--user', type=str, nargs='?', required=False, default='', help='Plex User passed in from Tautulli.')
     
     #arguments for scanner
     parser.add_argument('--scan', action='store_true', required=False, help='Scan the library, update media, and rom mapping.')
@@ -1136,13 +1145,9 @@ if __name__ == '__main__':
     parser.add_argument('--update', action='store_true', required=False, help='Update plu-in from github.')
 
     #testing args from tautulli
-    parser.add_argument('--user', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--username', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--user_email', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--user_thumb', type=str, nargs='?', required=False, default='', help='Dev')
-    parser.add_argument('--device', type=str, nargs='?', required=False, default='', help='Dev')
-    parser.add_argument('--product', type=str, nargs='?', required=False, default='', help='Dev')
-    parser.add_argument('--player', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--initial_stream', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--stream_local', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--stream_location', type=str, nargs='?', required=False, default='', help='Dev')
