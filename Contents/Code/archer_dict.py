@@ -195,6 +195,7 @@ dDefaultSettings = {
 	'scanner_sony_playstation' : 'True',
 	'scanner_sony_playstation_2' : 'True',
 	'scanner_sony_psp' : 'True',
+	'scanner_star_trek_voyager_engine' : 'True',
 	'scanner_super_nintendo_entertainment_system' : 'True',
 	'scanner_tapwave_zodiac' : 'True',
 	'scanner_wonderswan' : 'True',
@@ -4237,7 +4238,7 @@ dPlatformMapping = {
             'retroarch' :
                 {'cores' : {
                     0 : 'ppsspp_libretro.dll', #default
-                    1 : 'ppsspp_libretro.dll', #Beetle Cygne
+                    1 : 'ppsspp_libretro.dll', #PPSSPP
                     'ppsspp_libretro.dll' : {
                         'coreExtensions' : ['elf', 'iso', 'cso', 'prx', 'pbp'],
                         'friendlyName' : 'Sony - PlayStation Portable (PPSSPP)'
@@ -4265,6 +4266,30 @@ dPlatformMapping = {
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
+		},
+    'Star Trek Voyager Engine' : { 
+		'systemNames' : ['Star Trek Voyager Engine', 'Star Trek Voyager'],
+		'systemIds' : {
+			'igdb' : 6,
+			'thegamesdb' : 1
+			},
+		'romExtensions' : ['pk3'],
+		'romType' : 0,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'vitavoyager_libretro.dll', #default
+                    1 : 'vitavoyager_libretro.dll', #vitaVoyager
+                    'vitavoyager_libretro.dll' : {
+                        'coreExtensions' : ['pk3'],
+                        'friendlyName' : 'Star Trek: Voyager - Elite Force (vitaVoyager)'
+                        }
+                    }
+                }
+            }
 		},
     'Steam VR' : { 
 		'systemNames' : ['Steam VR'],
