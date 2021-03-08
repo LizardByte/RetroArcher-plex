@@ -150,6 +150,7 @@
   { "id":"scanner_tapwave_zodiac",                        "label":"SCANNER|Tapwave Zodiac",    "type":"bool",    "default":"True"  },
   { "id":"scanner_thomson_mo5",                           "label":"SCANNER|Thomson MO5",    "type":"bool",    "default":"True"  },
   { "id":"scanner_tomb_raider_classic_engine",            "label":"SCANNER|Tomb Raider Classic Engine",    "type":"bool",    "default":"True"  },
+  { "id":"scanner_wolfenstein_3d_engine",                 "label":"SCANNER|Wolfenstein 3D Engine",    "type":"bool",    "default":"True"  },
   { "id":"scanner_wonderswan",                            "label":"SCANNER|Wonderswan",    "type":"bool",    "default":"True"  },
   { "id":"scanner_wonderswan_color",                      "label":"SCANNER|Wonderswan Color",    "type":"bool",    "default":"True"  },
 
@@ -247,6 +248,7 @@
   { "id":"emulator_tapwave_zodiac",                       "label":"EMULATOR|Tapwave Zodiac",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_thomson_mo5",                          "label":"EMULATOR|Thomson MO5",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_tomb_raider_classic_engine",           "label":"EMULATOR|Tomb Raider Classic Engine",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
+  { "id":"emulator_wolfenstein_3d_engine",                "label":"EMULATOR|Wolfenstein 3D Engine",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_wonderswan",                           "label":"EMULATOR|WonderSwan",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_wonderswan_color",                     "label":"EMULATOR|WonderSwan Color",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
 
@@ -344,6 +346,7 @@
   { "id":"core_tapwave_zodiac",                           "label":"RETROARCH|CORE|Tapwave Zodiac",    "type": "enum",    "values": [ "default", "Mu" ],    "default": "default"  },
   { "id":"core_thomson_mo5",                              "label":"RETROARCH|CORE|Thomson MO5",    "type": "enum",    "values": [ "default", "Theodore" ],    "default": "default"  },
   { "id":"core_tomb_raider_classic_engine",               "label":"RETROARCH|CORE|Tomb Raider Classic Engine",    "type": "enum",    "values": [ "default", "OpenLara" ],    "default": "default"  },
+  { "id":"core_wolfenstein_3d_engine",                    "label":"RETROARCH|CORE|Wolfenstein 3D Engine",    "type": "enum",    "values": [ "default", "ECWolf" ],    "default": "default"  },
   { "id":"core_wonderswan",                               "label":"RETROARCH|CORE|WonderSwan",    "type": "enum",    "values": [ "default", "Beetle Cygne" ],    "default": "default"  },
   { "id":"core_wonderswan_color",                         "label":"RETROARCH|CORE|WonderSwan Color",    "type": "enum",    "values": [ "default", "Beetle Cygne" ],    "default": "default"  },
   

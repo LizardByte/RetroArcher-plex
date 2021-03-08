@@ -200,6 +200,7 @@ dDefaultSettings = {
 	'scanner_tapwave_zodiac' : 'True',
 	'scanner_thomson_mo5' : 'True',
 	'scanner_tomb_raider_classic_engine' : 'True',
+	'scanner_wolfenstein_3d_engine' : 'True',
 	'scanner_wonderswan' : 'True',
 	'scanner_wonderswan_color' : 'True',
 	
@@ -4598,6 +4599,30 @@ dPlatformMapping = {
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
+		},
+    'Wolfenstein 3D Engine' : { 
+		'systemNames' : ['Wolfenstein 3D Engine', 'Wolfenstein 3D'],
+		'systemIds' : {
+			'igdb' : 6,
+			'thegamesdb' : 1
+			},
+		'romExtensions' : ['wl6', 'n3d', 'sod', 'sdm', 'wl1', 'pk3', 'exe'],
+		'romType' : 0,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'ecwolf_libretro.dll', #default
+                    1 : 'ecwolf_libretro.dll', #ECWolf
+                    'ecwolf_libretro.dll' : {
+                        'coreExtensions' : ['wl6', 'n3d', 'sod', 'sdm', 'wl1', 'pk3', 'exe'],
+                        'friendlyName' : 'Wolfenstein 3D (ECWolf)'
+                        }
+                    }
+                }
+            }
 		},
     'WonderSwan' : { 
 		'systemNames' : ['WonderSwan', 'Bandai WonderSwan'],
