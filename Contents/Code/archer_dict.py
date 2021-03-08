@@ -185,6 +185,8 @@ dDefaultSettings = {
 	'scanner_sega_saturn' : 'True',
 	'scanner_sega_sg-1000' : 'True',
 	'scanner_sega_st-v' : 'True',
+	'scanner_sharp_x1' : 'True',
+	'scanner_sharp_x68000' : 'True',
 	'scanner_sony_playstation' : 'True',
 	'scanner_sony_playstation_2' : 'True',
 	'scanner_sony_psp' : 'True',
@@ -3895,9 +3897,23 @@ dPlatformMapping = {
 			'igdb' : 77,
 			'thegamesdb' : 4977
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['dx1', 'zip', '2d', '2hd', 'tfd', 'd88', '88d', 'hdm', 'xdf', 'dup', 'tap', 'cmd'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'x1_libretro.dll', #default
+                    1 : 'x1_libretro.dll', #X Millennium
+                    'x1_libretro.dll' : {
+                        'coreExtensions' : ['dx1', 'zip', '2d', '2hd', 'tfd', 'd88', '88d', 'hdm', 'xdf', 'dup', 'tap', 'cmd'],
+                        'friendlyName' : 'Sharp X1 (X Millennium)'
+                        }
+                    }
+                }
+            }
 		},
     'Sharp X68000' : { 
 		'systemNames' : ['Sharp X68000', 'x68000'],
@@ -3905,9 +3921,23 @@ dPlatformMapping = {
 			'igdb' : 121,
 			'thegamesdb' : 4931
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['dim', 'zip', 'img', 'd88', '88d', 'hdm', 'dup', '2hd', 'xdf', 'hdf', 'cmd'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : True,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'pk68k_libretro.dll', #default
+                    1 : 'pk68k_libretro.dll', #PX68k
+                    'pk68k_libretro.dll' : {
+                        'coreExtensions' : ['dim', 'zip', 'img', 'd88', '88d', 'hdm', 'dup', '2hd', 'xdf', 'hdf', 'cmd', 'm3u'],
+                        'friendlyName' : 'Sharp - X68000 (PX68k)'
+                        }
+                    }
+                }
+            }
 		},
     'Sinclair ZX Spectrum' : { 
 		'systemNames' : ['Sinclair ZX Spectrum', 'ZX Spectrum', 'ZXS'],
