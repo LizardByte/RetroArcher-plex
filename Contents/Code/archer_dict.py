@@ -187,6 +187,8 @@ dDefaultSettings = {
 	'scanner_sega_st-v' : 'True',
 	'scanner_sharp_x1' : 'True',
 	'scanner_sharp_x68000' : 'True',
+	'scanner_sinclair_zx_81' : 'True',
+	'scanner_sinclair_zx_spectrum' : 'True',
 	'scanner_sony_playstation' : 'True',
 	'scanner_sony_playstation_2' : 'True',
 	'scanner_sony_psp' : 'True',
@@ -3939,25 +3941,53 @@ dPlatformMapping = {
                 }
             }
 		},
+    'Sinclair ZX 81' : { 
+		'systemNames' : ['Sinclair ZX 81', 'ZX 81', 'Sinclair ZX81', 'ZX81'],
+		'systemIds' : {
+			'igdb' : 373,
+			'thegamesdb' : None
+			},
+		'romExtensions' : ['p', 'tzx', 't81'],
+		'romType' : 0,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : '81_libretro.dll', #default
+                    1 : '81_libretro.dll', #EightyOne
+                    '81_libretro.dll' : {
+                        'coreExtensions' : ['p', 'tzx', 't81'],
+                        'friendlyName' : 'Sinclair - ZX 81 (EightyOne)'
+                        }
+                    }
+                }
+            }
+		},
     'Sinclair ZX Spectrum' : { 
 		'systemNames' : ['Sinclair ZX Spectrum', 'ZX Spectrum', 'ZXS'],
 		'systemIds' : {
 			'igdb' : 26,
 			'thegamesdb' : 4913
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['tzx', 'tap', 'z80', 'rzx', 'scl', 'trd'],
 		'romType' : 0,
-		'multiDisk' : False
-		},
-    'Sinclair ZX-81' : { 
-		'systemNames' : ['Sinclair ZX-81', 'ZX-81', 'Sinclair ZX81', 'ZX81'],
-		'systemIds' : {
-			'igdb' : 373,
-			'thegamesdb' : None
-			},
-		'romExtensions' : [],
-		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'fuse_libretro.dll', #default
+                    1 : 'fuse_libretro.dll', #Fuse
+                    'fuse_libretro.dll' : {
+                        'coreExtensions' : ['tzx', 'tap', 'z80', 'rzx', 'scl', 'trd'],
+                        'friendlyName' : 'Sinclair - ZX Spectrum (Fuse)'
+                        }
+                    }
+                }
+            }
 		},
     'SNK Hyper Neo Geo 64' : { 
 		'systemNames' : ['SNK Hyper Neo Geo 64', 'Hyper Neo Geo 64'],
