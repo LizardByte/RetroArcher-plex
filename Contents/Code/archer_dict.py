@@ -199,6 +199,7 @@ dDefaultSettings = {
 	'scanner_super_nintendo_entertainment_system' : 'True',
 	'scanner_tapwave_zodiac' : 'True',
 	'scanner_thomson_mo5' : 'True',
+	'scanner_tomb_raider_classic_engine' : 'True',
 	'scanner_wonderswan' : 'True',
 	'scanner_wonderswan_color' : 'True',
 	
@@ -4519,6 +4520,30 @@ dPlatformMapping = {
                     'theodore_libretro.dll' : {
                         'coreExtensions' : ['fd', 'sap', 'k7', 'm7', 'm5', 'rom'],
                         'friendlyName' : 'Thomson - MO/TO (Theodore)'
+                        }
+                    }
+                }
+            }
+		},
+    'Tomb Raider Classic Engine' : { 
+		'systemNames' : ['Tomb Raider Classic Engine', 'Tomb Raider Engine', 'Tomb Raider Classic', 'Tomb Raider'],
+		'systemIds' : {
+			'igdb' : 6,
+			'thegamesdb' : 1
+			},
+		'romExtensions' : ['phd', 'psx', 'tr2'],
+		'romType' : 0,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'openlara_libretro.dll', #default
+                    1 : 'openlara_libretro.dll', #OpenLara
+                    'openlara_libretro.dll' : {
+                        'coreExtensions' : ['phd', 'psx', 'tr2'],
+                        'friendlyName' : 'Tomb Raider (OpenLara)'
                         }
                     }
                 }
