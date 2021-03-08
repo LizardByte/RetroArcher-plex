@@ -4159,7 +4159,7 @@ dPlatformMapping = {
 			'igdb' : 8,
 			'thegamesdb' : 11
 			},
-		'romExtensions' : ['ciso', 'cue', 'elf', 'iso'],
+		'romExtensions' : ['ciso', 'cue', 'elf', 'iso', 'isz', 'cso'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -4168,10 +4168,15 @@ dPlatformMapping = {
             'retroarch' :
                 {'cores' : {
                     0 : 'pcsx2_libretro.dll', #default
-                    1 : 'pcsx2_libretro.dll', #Beetle Cygne
+                    1 : 'pcsx2_libretro.dll', #PCSX2
+                    2 : 'play_libretro.dll', #Play!
                     'pcsx2_libretro.dll' : {
-                        'coreExtensions' : ['ciso', 'cue', 'elf', 'iso'],
+                        'coreExtensions' : ['elf', 'iso', 'ciso', 'cue', 'bin'],
                         'friendlyName' : 'Sony - PlayStation 2 (PCSX2)'
+                        },
+                    'play_libretro.dll' : {
+                        'coreExtensions' : ['iso', 'isz', 'cso', 'bin', 'elf'],
+                        'friendlyName' : 'Sony - PlayStation 2 (Play!)'
                         }
                     }
                 }
