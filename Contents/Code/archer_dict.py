@@ -189,6 +189,9 @@ dDefaultSettings = {
 	'scanner_sharp_x68000' : 'True',
 	'scanner_sinclair_zx_81' : 'True',
 	'scanner_sinclair_zx_spectrum' : 'True',
+	'scanner_snk_neo_geo_cd' : 'True',
+	'scanner_snk_neo_geo_pocket' : 'True',
+	'scanner_snk_neo_geo_pocket_color' : 'True',
 	'scanner_sony_playstation' : 'True',
 	'scanner_sony_playstation_2' : 'True',
 	'scanner_sony_psp' : 'True',
@@ -4015,9 +4018,23 @@ dPlatformMapping = {
 			'igdb' : 136,
 			'thegamesdb' : 4956
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['cue', 'chd'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'neocd_libretro.dll', #default
+                    1 : 'neocd_libretro.dll', #NeoCD
+                    'neocd_libretro.dll' : {
+                        'coreExtensions' : ['cue', 'chd'],
+                        'friendlyName' : 'SNK - Neo Geo CD (NeoCD)'
+                        }
+                    }
+                }
+            }
 		},
     'SNK Neo Geo MVS' : { 
 		'systemNames' : ['SNK Neo Geo MVS', 'Neo Geo MVS', 'neogeomvs', 'Neo Geo Multi Video System'],
@@ -4035,9 +4052,28 @@ dPlatformMapping = {
 			'igdb' : 119,
 			'thegamesdb' : 4922
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['ngp', 'ngc', 'ngpc', 'npc'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'mednafen_ngp_libretro.dll', #default
+                    1 : 'mednafen_ngp_libretro.dll', #Beetle NeoPop
+                    2 : 'race_libretro.dll', #RACE
+                    'mednafen_ngp_libretro.dll' : {
+                        'coreExtensions' : ['ngp', 'ngc', 'ngpc', 'npc'],
+                        'friendlyName' : 'SNK - Neo Geo Pocket / Color (Beetle NeoPop)'
+                        },
+                    'race_libretro.dll' : {
+                        'coreExtensions' : ['ngp', 'ngc', 'ngpc', 'npc'],
+                        'friendlyName' : 'SNK - Neo Geo Pocket / Color (RACE)'
+                        }
+                    }
+                }
+            }
 		},
     'SNK Neo Geo Pocket Color' : { 
 		'systemNames' : ['SNK Neo Geo Pocket Color', 'Neo Geo Pocket Color'],
@@ -4045,9 +4081,28 @@ dPlatformMapping = {
 			'igdb' : 120,
 			'thegamesdb' : 4923
 			},
-		'romExtensions' : [],
+		'romExtensions' : ['ngp', 'ngc', 'ngpc', 'npc'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'retroarch', #agent enums to emulator name
+            1 : 'retroarch',
+            'retroarch' :
+                {'cores' : {
+                    0 : 'mednafen_ngp_libretro.dll', #default
+                    1 : 'mednafen_ngp_libretro.dll', #Beetle NeoPop
+                    2 : 'race_libretro.dll', #RACE
+                    'mednafen_ngp_libretro.dll' : {
+                        'coreExtensions' : ['ngp', 'ngc', 'ngpc', 'npc'],
+                        'friendlyName' : 'SNK - Neo Geo Pocket / Color (Beetle NeoPop)'
+                        },
+                    'race_libretro.dll' : {
+                        'coreExtensions' : ['ngp', 'ngc', 'ngpc', 'npc'],
+                        'friendlyName' : 'SNK - Neo Geo Pocket / Color (RACE)'
+                        }
+                    }
+                }
+            }
 		},
     'Sol-20' : { 
 		'systemNames' : ['Sol-20'],
