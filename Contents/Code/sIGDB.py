@@ -6,32 +6,6 @@ import json
 import common
 
 def igdb_wrapper():
-    #uncomment this section if we need to generate a new igdb.json manually
-    '''
-    client_id = Prefs['sTwitchClientID']
-    Log.Info(client_id)
-    client_secret = Prefs['sTwitchClientSecret']
-    Log.Info(client_secret)
-
-    grant_type = 'client_credentials'
-
-    authHeaders = {
-                'Accept': 'application/json',
-                'client_id': client_id,
-                'client_secret': client_secret,
-                'grant_type': grant_type
-            }
-
-    tokenURL = 'https://id.twitch.tv/oauth2/token'
-
-    authorization = post_json(tokenURL, authHeaders)
-    Log.Info('authorization')
-    Log.Info(authorization)
-    print(authorization)
-
-    wrapper = IGDBWrapper(client_id, authorization['access_token'])
-    '''
-    
     url = 'https://raw.githubusercontent.com/ReenigneArcher/RetroArcher.proxy/main/igdb.json'
     
     authorization = JSON.ObjectFromURL(url, values=None, headers={}, cacheTime=86400, encoding=None, errors=None, timeout=60, sleep=0)

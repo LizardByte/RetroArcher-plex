@@ -24,7 +24,7 @@
   
   { "id":"sMoonlightPcUuid",          "label":"LAUNCHER|Moonlight Machine UUID",    "type":"text",    "default":""  },
   { "id":"sMoonlightAppId",           "label":"LAUNCHER|Moonlight App ID",    "type":"text",    "default":""  },
-  { "id":"sMoonlightAppName",         "label":"LAUNCHER|Moonlight App ID",    "type":"text",    "default":"RetroArcher"  },
+  { "id":"sMoonlightAppName",         "label":"LAUNCHER|Moonlight App Name",    "type":"text",    "default":"RetroArcher"  },
   
   { "id":"bGameStreamEnabled",        "label":"GAMESTREAM|GENERAL|Enable gamestream",    "type":"bool",    "default":"False"  },
   { "id":"sGameStreamWhiteList",      "label":"GAMESTREAM|GENERAL|White listed users",    "type":"text",    "default":""  },
@@ -35,8 +35,6 @@
   { "id":"sSunshinePath",             "label":"GAMESTREAM|SUNSHINE|sunshine path",    "type":"text",    "default":""  },
   { "id":"sOpenStreamPath",           "label":"GAMESTREAM|SUNSHINE|sunshine path",    "type":"text",    "default":""  },
   
-  { "id":"sTwitchClientID",           "label":"SEARCH|Client ID|Twitch",    "type":"text",    "option":"hidden",     "default":""  },
-  { "id":"sTwitchClientSecret",       "label":"SEARCH|Client Secret|Twitch",    "type":"text",    "option":"hidden",     "default":""  },
   { "id":"sTheGamesDBapikey",         "label":"SEARCH|API KEY|thegamesdb.net",    "type":"text",    "option":"hidden",     "default":"146a546e4a1e764d50dad39bf3f0129fa1609301b81998a15fb6fd243c5827ae"  },
   { "id":"sRAWGapikey",               "label":"SEARCH|API KEY|RAWG",    "type":"text",    "option":"hidden",     "default":"e4649e88b13b4b2e83c76f5065bd5828"  },
   { "id":"sYouTubeApiKey",            "label":"SEARCH|API KEY|YouTube",    "type":"text",    "option":"hidden",     "default":"AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4"  },

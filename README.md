@@ -123,7 +123,7 @@ Ubuntu
     - SCANNER|ADVANCED|FFMPEG|Encoder (h264_nvenc is set as default assuming most users will have an nvidia gpu)
     - LAUNCHER|Moonlight Machine UUID
     - LAUNCHER|Moonlight App ID (`1` unless using GeForce Experience)
-    - LAUNCHER|Moonlight App ID (`Desktop` unless using GeForce Experience)
+    - LAUNCHER|Moonlight App Name (`Desktop` unless using GeForce Experience)
     - GAMESTREAM|GENERAL|White listed users
     - PLEX|Server token
     - Ignore last 3 settings entirely
@@ -135,7 +135,7 @@ Ubuntu
     - This video will be placed inside the `<plex data folder location>\Plex Media Server\Plug-in Support\Data\com.github.agents.reenignearcher.retroarcher` directory.
     - If your start videos are 1080p and 20 seconds in length, they will take approximately 5-6GB per 1000 files.
       - The length of the video can be adjusted in the plug-in settings within Plex. 20 seconds is enough in my testing for Android clients. For Windows clients a longer amount may be desired.
-2. Note that Plex will start collecting meta-data once the videos are added. THe metadata collected can take up a lot of space. Most users will have large rom collections, much larger than a standard movie library. Therefore consider that the metadata folder will grow tremendously. I am recommending a separate large SSD for your Plex Data folder only.
+2. Note that Plex will start collecting meta-data once the videos are added. The metadata collected can take up a lot of space. Most users will have large rom collections, much larger than a standard movie library. Therefore consider that the metadata folder will grow tremendously. I am recommending a separate large SSD for your Plex Data folder only.
 3. Place start videos in `<plex data folder location>\Plex Media Server\Plug-ins\RetroArcher.bundle\Contents\Resources\StartVideos`
     - Games
       - Can contain game specific start videos

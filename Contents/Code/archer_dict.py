@@ -84,8 +84,6 @@ dDefaultSettings = {
 	'sSunshinePath' : '',
 	'sOpenStreamPath' : '',
 	
-	'sTwitchClientID' : '',
-	'sTwitchClientSecret' : '',
 	'sTheGamesDBapikey' : '146a546e4a1e764d50dad39bf3f0129fa1609301b81998a15fb6fd243c5827ae',
 	'sRAWGapikey' : 'e4649e88b13b4b2e83c76f5065bd5828',
 	'sYouTubeApiKey' : 'AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4',
