@@ -48,6 +48,12 @@ dEncoderMapping = {
     '5' : 'mpeg2video'
 }
 
+dGameStreamHostMapping = {
+    '0' : 'GeForce Experience',
+    '1' : 'Open-Stream',
+    '2' : 'Sunshine'
+}
+
 dDefaultSettings = {
 	'sSourceRomDirectory' : '',
 	
@@ -79,7 +85,7 @@ dDefaultSettings = {
 	'sGameStreamWhiteList' : '',
 	'sGameStreamBlackList' : '',
 	'eGameStreamApp' : 'moonlight',
-	'eGameStreamHost' : 'Nvidia GeForce Experience',
+	'eGameStreamHost' : '0',
 	'sNvStreamerPath' : 'C:\\Program Files\\NVIDIA Corporation\\NvStreamSrv\\nvstreamer.exe',
 	'sSunshinePath' : '',
 	'sOpenStreamPath' : '',

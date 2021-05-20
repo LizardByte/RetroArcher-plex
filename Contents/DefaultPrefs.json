@@ -30,7 +30,7 @@
   { "id":"sGameStreamWhiteList",      "label":"GAMESTREAM|GENERAL|White listed users",    "type":"text",    "default":""  },
   { "id":"sGameStreamBlackList",      "label":"GAMESTREAM|GENERAL|Black listed users",    "type":"text",    "default":""  },
   { "id":"eGameStreamApp",            "label":"GAMESTREAM|GENERAL|Game stream client app",    "type":"enum",    "values": [ "moonlight" ], "default":"moonlight"  },
-  { "id":"eGameStreamHost",           "label":"GAMESTREAM|GENERAL|Game stream host",    "type":"enum",    "values": [ "Nvidia GeForce Experience", "Sunshine", "Open-Stream" ], "default":"Nvidia GeForce Experience"  },
+  { "id":"eGameStreamHost",           "label":"GAMESTREAM|GENERAL|Game stream host",    "type":"enum",    "values": [ "GeForce Experience", "Open-Stream", "Sunshine" ], "default":"GeForce Experience"  },
   { "id":"sNvStreamerPath",           "label":"GAMESTREAM|NVIDIA|nvstreamer path",    "type":"text",    "default":"C:\\Program Files\\NVIDIA Corporation\\NvStreamSrv\\nvstreamer.exe"  },
   { "id":"sSunshinePath",             "label":"GAMESTREAM|SUNSHINE|sunshine path",    "type":"text",    "default":""  },
   { "id":"sOpenStreamPath",           "label":"GAMESTREAM|SUNSHINE|sunshine path",    "type":"text",    "default":""  },
