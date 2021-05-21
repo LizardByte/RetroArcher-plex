@@ -1428,7 +1428,7 @@ dPlatformMapping = {
 		'romType' : 0,
 		'multiDisk' : False
 		},
-    'Entex Select-A-Game-a-game' : { 
+    'Entex Select-A-Game' : { 
 		'systemNames' : ['Entex Select-A-Game'],
 		'systemIds' : {
 			'igdb' : None,
@@ -4496,8 +4496,8 @@ dPlatformMapping = {
 		'romType' : 0,
 		'multiDisk' : False
 		},
-    'Texas Instruments TI-99/4A' : { 
-		'systemNames' : ['Texas Instruments TI-99/4A', 'Texas Instruments TI-99', 'ti-99'],
+    'Texas Instruments TI-99-4A' : { 
+		'systemNames' : ['Texas Instruments TI-99-4A', 'Texas Instruments TI-99', 'ti-99'],
 		'systemIds' : {
 			'igdb' : 129,
 			'thegamesdb' : 4953
