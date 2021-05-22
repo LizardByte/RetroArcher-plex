@@ -229,7 +229,7 @@ dDefaultSettings = {
 	'bAutoInstallApk' : 'False',
 	'bAutoUpdateApk' : 'False',
 	'sUpdateRepository' : 'https://github.com/ReenigneArcher/RetroArcher.bundle',
-	'sUpdateBranch' : 'master',
+	'sUpdateBranch' : 'main',
 	'sUpdateAuto' : 'False'
 }
 

@@ -370,6 +370,6 @@
   { "id":"bAutoInstallApk",           "label":"-CLIENT|Auto install missing apps",    "type":"bool",    "default":"False"  },
   { "id":"bAutoUpdateApk",            "label":"-CLIENT|Auto update outdated apps",    "type":"bool",    "default":"False"  },
   { "id":"sUpdateRepository",         "label":"-UPDATER|Repository",    "type":"text",    "default":"https://github.com/ReenigneArcher/RetroArcher.bundle"  },
-  { "id":"sUpdateBranch",             "label":"-UPDATER|Branch",    "type":"text",    "default":"master"  },
+  { "id":"sUpdateBranch",             "label":"-UPDATER|Branch",    "type":"text",    "default":"main"  },
   { "id":"sUpdateAuto",               "label":"-UPDATER|Automatic update (during scanning)",    "type":"bool",    "default":"False"  }
 ]
