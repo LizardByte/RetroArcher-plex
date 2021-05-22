@@ -100,6 +100,9 @@ dDefaultSettings = {
 	
 	'PLEX_URL' : 'http://localhost:32400',
 	'PLEX_TOKEN' : '',
+    
+    'app_directory_retroarch' : '',
+    'app_binary_retroarch' : 'retroarch',
 	
 	#these are needed to ensure we don't scan any unsupported systems
 	'scanner_3do_interactive_multiplayer' : 'True',

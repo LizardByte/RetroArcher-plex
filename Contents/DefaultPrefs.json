@@ -39,6 +39,9 @@
   { "id":"PLEX_URL",                  "label":"ADVANCED SETTINGS\n_____________________________________________________________________________________\nPLEX|Server URL",    "type":"text",    "default":"http://localhost:32400"  },
   { "id":"PLEX_TOKEN",                "label":"PLEX|Server token",    "type":"text",    "option":"hidden",     "default":"",		"secure":"true"  },
 
+  { "id":"app_directory_retroarch",   "label":"APPLICAITON|DIRECTORY|RetroArch",    "type":"text",    "default":""  },
+  { "id":"app_binary_retroarch",      "label":"APPLICAITON|BINARY|RetroArch",    "type":"text",    "default":"retroarch"  },
+
   { "id":"scanner_3do_interactive_multiplayer",           "label":"SCANNER|3DO Interactive Multiplayer",    "type":"bool",    "default":"True"  },
   { "id":"scanner_amstrad_cpc",                           "label":"SCANNER|Amstrad CPC",    "type":"bool",    "default":"True"  },
   { "id":"scanner_arcade",                                "label":"SCANNER|Arcade",    "type":"bool",    "default":"True"  },

@@ -188,6 +188,28 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
     emulator = archer_dict.dPlatformMapping[system]['emulators'][emulator]
     print(emulator)
     
+    try:
+        applicationDirectory = settings['PluginPreferences']['app_directory_' + emulator]
+        print('agent setting found')
+    except KeyError as e:
+        applicationDirectory = archer_dict.dDefaultSettings['app_directory_' + emulator]
+        print('using default setting')
+    except TypeError as e:
+        applicationDirectory = archer_dict.dDefaultSettings['app_directory_' + emulator]
+        print('using default setting')
+    print(applicationDirectory)
+    
+    try:
+        binaryCommand = settings['PluginPreferences']['app_binary_' + emulator]
+        print('agent setting found')
+    except KeyError as e:
+        binaryCommand = archer_dict.dDefaultSettings['app_binary_' + emulator]
+        print('using default setting')
+    except TypeError as e:
+        binaryCommand = archer_dict.dDefaultSettings['app_binary_' + emulator]
+        print('using default setting')
+    print(binaryCommand)
+    
     if emulator == 'retroarch':
         try:
             core = int(settings['PluginPreferences']['core_' + systemKey])
@@ -247,8 +269,10 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
         'win64' : {
             'emulators' : {
                 'retroarch' : {
-                    'dir' : os.path.join(paths['contentsDir'], 'bin', 'RetroArch', 'win64'),
-                    'command' : 'start "RetroArcher" "retroarch.exe" -L "' + emulatorCore + '" "' + fullRomPath + '" '
+                    #'dir' : os.path.join(paths['contentsDir'], 'bin', 'RetroArch', 'win64'),
+                    'dir' : applicationDirectory,
+                    #'command' : 'start "RetroArcher" "retroarch.exe" -L "' + emulatorCore + '" "' + fullRomPath + '" '
+                    'command' : 'start "RetroArcher" "' + binaryCommand + '" -L "' + emulatorCore + '" "' + fullRomPath + '" '
                     }
                 },
             'stream_host' : {
