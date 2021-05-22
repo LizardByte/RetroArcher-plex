@@ -372,11 +372,11 @@ def launchADB(clientIP):
         moonlightAppName = archer_dict.dDefaultSettings['sMoonlightAppName']
     '''
     
-    abdAddress = clientIP + ':' + str(adbPort)
-    output = adb.connect(abdAddress)
+    adbAddress = clientIP + ':' + str(adbPort)
+    output = adb.connect(adbAddress)
     print(output)
 
-    device = adb.device(serial=abdAddress)
+    device = adb.device(serial=adbAddress)
 
     #possible apps that can be useful
     packages = {
