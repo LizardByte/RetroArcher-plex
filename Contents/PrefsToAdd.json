@@ -1,0 +1,40 @@
+
+[
+  { "id":"lExcludedTerms",            "label":"-SCANNER|ROMS|Exclude games with these strings in the game name (comma separated)",    "type":"text",    "default":"[BIOS], Action Replay, Game Genie, Game Saver, GameBooster, GameShark"  },
+  { "id":"lIncludeRegions",           "label":"-SCANNER|ROMS|Include games with these region tags (comma separated)",    "type":"text",    "default":""  },
+  { "id":"lExcludeRegions",           "label":"-SCANNER|ROMS|Exclude games with these region tags (comma separated)",    "type":"text",    "default":""  },
+  { "id":"lIncludeLanguages",         "label":"-SCANNER|ROMS|Include games with these language tags (comma separated)",    "type":"text",    "default":""  },
+  { "id":"lExcludeLanguages",         "label":"-SCANNER|ROMS|Exclude games with these language tags (comma separated)",    "type":"text",    "default":""  },
+  { "id":"lExcludeTags",              "label":"-SCANNER|ROMS|Exclude games with these tags (comma separated)",    "type":"text",    "default":"Beta, Demo, Kiosk, Proto"  },
+  { "id":"iFfmpegThreads",            "label":"-SCANNER|ADVANCED|FFMPEG|Simulatenous Encodings",    "type":"text",    "default":"1"  },
+
+  { "id":"sNvStreamerPath",           "label":"GAMESTREAM|NVIDIA|nvstreamer path",    "type":"text",    "default":"C:\\Program Files\\NVIDIA Corporation\\NvStreamSrv\\nvstreamer.exe"  },
+  { "id":"sSunshinePath",             "label":"GAMESTREAM|SUNSHINE|sunshine path",    "type":"text",    "default":""  },
+  { "id":"sOpenStreamPath",           "label":"GAMESTREAM|OPEN-STREAM|opens-stream path",    "type":"text",    "default":""  },
+  
+  { "id":"sTheGamesDBapikey",         "label":"SEARCH|API KEY|thegamesdb.net",    "type":"text",    "option":"hidden",     "default":"146a546e4a1e764d50dad39bf3f0129fa1609301b81998a15fb6fd243c5827ae"  },
+  { "id":"sRAWGapikey",               "label":"SEARCH|API KEY|RAWG",    "type":"text",    "option":"hidden",     "default":"e4649e88b13b4b2e83c76f5065bd5828"  },
+  
+  { "id":"sOgXboxIpAddress",		  "label":"\n_____________________________________________________________________________________FUTURE SETTINGS PLACEHOLDER\n_____________________________________________________________________________________-OG XBOX|Xbox IP address",	"type":"text",		"default":""	},
+  { "id":"sOgXboxGamePaths",		  "label":"-OG XBOX|Game folder name on each partition of xbox",		"type":"text",		"default":"Games"	},
+  { "id":"bOgXboxGames",              "label":"-OG XBOX|Include Xbox games in Plex library",    "type":"bool",    "default":"True"  },
+  { "id":"sOgXboxAppPaths",		      "label":"-OG XBOX|Application folder name on each partition of xbox",		"type":"text",		"default":"Apps, Applications"	},
+  { "id":"bOgXboxApps",               "label":"-OG XBOX|Include Xbox applications in Plex library",    "type":"bool",    "default":"True"  },
+  { "id":"sOgXboxDemoPaths",          "label":"-OG XBOX|Demo folder name on each partition of xbox",		"type":"text",		"default":"Demos"	},
+  { "id":"bOgXboxDemos",              "label":"-OG XBOX|Include Xbox demos in Plex library",    "type":"bool",    "default":"True"  },
+  { "id":"sOgXboxPosterSource",       "label":"-OG XBOX|Source for Plex library poster",    "type": "enum",    "values": [ "RetroArcher-Agent", "XBMC4Xbox" ],    "default": "RetroArcher-Agent"  },
+  { "id":"bOgXboxPosterSync",         "label":"-OG XBOX|Sync Plex library posters to XBMC4Xbox",    "type":"bool",    "default":"False"  },
+  { "id":"sHelpPlatform",             "label":"-NOTIFICATIONS|Platform",    "type": "enum",    "values": [ "none", "Discord", "email" ],    "default": "none"  },
+  { "id":"bHelpSendLinks",            "label":"-NOTIFICATIONS|Send help links",    "type":"bool",    "default":"True"  },
+  { "id":"bHelpIncludeLibretro",      "label":"-NOTIFICATIONS|Include libretro core documentation",    "type":"bool",    "default":"True"  },
+  { "id":"bHelpIncludeGameManual",    "label":"-NOTIFICATIONS|Include game manual",    "type":"bool",    "default":"True"  },
+  { "id":"bHelpIncludeGameMaps",      "label":"-NOTIFICATIONS|Include game maps",    "type":"bool",    "default":"True"  },
+  { "id":"bResetSettings",            "label":"-CONFIG|Reset all settings",    "type":"bool",    "default":"False"  },
+  { "id":"bResetFactory",             "label":"-CONFIG|Factory reset this plugin (WARNING: this cannot be undone)",    "type":"bool",    "default":"False"  },
+  { "id":"bAutoInstallApk",           "label":"-CLIENT|Auto install missing apps",    "type":"bool",    "default":"False"  },
+  { "id":"bAutoUpdateApk",            "label":"-CLIENT|Auto update outdated apps",    "type":"bool",    "default":"False"  },
+  { "id":"sUpdateRepository",         "label":"-UPDATER|Repository",    "type":"text",    "default":"https://github.com/ReenigneArcher/RetroArcher.bundle"  },
+  { "id":"sUpdateBranch",             "label":"-UPDATER|Branch",    "type":"text",    "default":"main"  },
+  { "id":"sUpdateAuto",               "label":"-UPDATER|Automatic update (during scanning)",    "type":"bool",    "default":"False"  }
+
+]

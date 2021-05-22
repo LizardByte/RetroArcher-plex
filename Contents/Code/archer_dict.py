@@ -86,23 +86,15 @@ dDefaultSettings = {
 	'sGameStreamBlackList' : '',
 	'eGameStreamApp' : 'moonlight',
 	'eGameStreamHost' : '0',
-	'sNvStreamerPath' : 'C:\\Program Files\\NVIDIA Corporation\\NvStreamSrv\\nvstreamer.exe',
-	'sSunshinePath' : '',
-	'sOpenStreamPath' : '',
 	
-	'sTheGamesDBapikey' : '146a546e4a1e764d50dad39bf3f0129fa1609301b81998a15fb6fd243c5827ae',
-	'sRAWGapikey' : 'e4649e88b13b4b2e83c76f5065bd5828',
 	'sYouTubeApiKey' : 'AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4',
 	
 	'ePreferredRatingSystem' : 'ESRB',  
 	
 	'bPlatformAsCollection' : 'True',
 	
-	'sThemesSource' : 'RetroArcher.database',
-	'iMaxThemes' : '0',
+	'sThemesSource' : 'Local',
 	'sSourceThemeDirectory' : '',
-	
-	'bGetReviews' : 'True',
 	
 	'bGetExtraObject' : 'True',
 	
@@ -206,31 +198,7 @@ dDefaultSettings = {
 	'scanner_tomb_raider_classic_engine' : 'True',
 	'scanner_wolfenstein_3d_engine' : 'True',
 	'scanner_wonderswan' : 'True',
-	'scanner_wonderswan_color' : 'True',
-	
-	'bRetroArchCacheClean' : 'True',
-	
-	'sOgXboxIpAddress' : '',
-	'sOgXboxGamePaths' : 'Games',
-	'bOgXboxGames' : 'True',
-	'sOgXboxAppPaths' :	'Apps, Applications',
-	'bOgXboxApps' : 'True',
-	'sOgXboxDemoPaths' : 'Demos',
-	'bOgXboxDemos' : 'True',
-	'sOgXboxPosterSource' : 'RetroArcher-Agent',
-	'bOgXboxPosterSync' : 'True',
-	'sHelpPlatform' : 'none',
-	'bHelpSendLinks' : 'True',
-	'bHelpIncludeLibretro' : 'True',
-	'bHelpIncludeGameManual' : 'True',
-	'bHelpIncludeGameMaps' : 'True',
-	'bResetSettings' : 'False',
-	'bResetFactory' : 'False',
-	'bAutoInstallApk' : 'False',
-	'bAutoUpdateApk' : 'False',
-	'sUpdateRepository' : 'https://github.com/ReenigneArcher/RetroArcher.bundle',
-	'sUpdateBranch' : 'main',
-	'sUpdateAuto' : 'False'
+	'scanner_wonderswan_color' : 'True'
 }
 
 dPlatformMapping = {
