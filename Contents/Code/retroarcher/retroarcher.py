@@ -12,22 +12,6 @@ import time
 from multiprocessing.pool import ThreadPool as Pool
 from datetime import datetime
 
-'''
-need to add logic to only run one instance... can't stream more than one session from same pc
-or allow user to add pool of PCs???
-
-how to allow streaming when PC isn't connected to a monitor
-
-settings to add to plex metadata agent:
--nvidia localappdata path
-
-re-write nvidia shortcut in "%localappdata%\\NVIDIA Corporation\Shield Apps"
-	add - thumbnail as well (this way GFE won't delete the shortcut)
-
-calculate appid... it's based off of the shortcut target (not sure what else or how to calculate) # https://github.com/moonlight-stream/moonlight-android/search?q=appid
-https://github.com/moonlight-stream/moonlight-android/issues/878
-'''
-
 def convertXMLtoJSON(filepath):
     inputFile = open (filepath, 'rb')
     j = xmltodict.parse(inputFile)
@@ -160,91 +144,6 @@ def getDataFolders(directory, agent):
     dataFolders['dbFolder'] = os.path.join(directory, 'Plug-in Support', 'Data', agent, 'database')
     return dataFolders
 
-'''
-def installAPK(d, myapk, confirm):
-    import requests
-    
-    if re.match(r"^https?://", myapk):
-        resp = requests.get(myapk, stream=True)
-        resp.raise_for_status()
-        length = int(resp.headers.get("Content-Length", 0))
-        r = ReadProgress(resp.raw, length)
-        print("tmpfile path:", r.filepath())
-    else:
-        length = os.stat(myapk).st_size
-        fd = open(myapk, "rb")
-        r = ReadProgress(fd, length, source_path=myapk)
-
-    dst = "/data/local/tmp/tmp-%d.apk" % (int(time.time() * 1000))
-    print("push to %s" % dst)
-    
-    start = time.time()
-    d.sync.push(r, dst)
-    
-    # parse apk package-name
-    apk = apkutils2.APK(r.filepath())
-    package_name = apk.manifest.package_name
-    main_activity = apk.manifest.main_activity
-    version_name = apk.manifest.version_name
-    print("packageName:", package_name)
-    print("mainActivity:", main_activity)
-    print("apkVersion: {}".format(version_name))
-    print("success pushed, time used %d seconds" % (time.time() - start))
-
-    new_dst = "/data/local/tmp/{}-{}.apk".format(package_name, version_name)
-    d.shell(["mv", dst, new_dst])
-    dst = new_dst
-    info = d.sync.stat(dst)
-    print("verify pushed apk, md5: %s, size: %s" %
-          (r._hash, humanize(info.size)))
-    assert info.size == r.copied
-
-    print("install to android system ...")
-    if confirm:
-        # Beta
-        try:
-            import uiautomator2 as u2
-            ud = u2.connect(args.serial)
-            ud.press("home")
-            ud.watcher.when("继续安装").click()
-            ud.watcher.when("允许").click()
-            ud.watcher.when("安装").click()
-            ud.watcher.start(2.0)
-        except Exception as e:
-            print("WARNING: Uiautomator2 prepare failed", e)
-    
-    try:
-        start = time.time()
-        d.install_remote(dst, clean=True)
-        print("Success installed, time used %d seconds" %
-            (time.time() - start))
-        if args.launch:
-            print("Launch app: %s/%s" % (package_name, main_activity))
-            d.shell(['am', 'start', '-n', package_name+"/"+main_activity])
-
-    except AdbInstallError as e:
-        if e.reason in ["INSTALL_FAILED_PERMISSION_MODEL_DOWNGRADE",
-                "INSTALL_FAILED_UPDATE_INCOMPATIBLE", "INSTALL_FAILED_VERSION_DOWNGRADE"]:
-            print("uninstall %s because %s" % (package_name, e.reason))
-            d.uninstall(package_name)
-            d.install_remote(dst, clean=True)
-            print("Success installed, time used %d seconds" %
-                (time.time() - start))
-            if args.launch:
-                print("Launch app: %s/%s" % (package_name, main_activity))
-                d.shell(['am', 'start', '-n', package_name+"/"+main_activity])
-        elif e.reason == "INSTALL_FAILED_CANCELLED_BY_USER":
-            print("Catch error %s, reinstall" % e.reason)
-            d.install_remote(dst, clean=True)
-            print("Success installed, time used %d seconds" %
-                  (time.time() - start))
-        else:
-            sys.exit(
-                "Failure " + e.reason + "\n" +
-                "Remote apk is not removed. Manually install command:\n\t"
-                + "adb shell pm install -r -t " + dst)
-'''
-
 def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, movieName, dataFolders):
     #convert movieName to romName
     game_name_full = os.path.basename(movieName) #the file name
@@ -289,6 +188,28 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
     emulator = archer_dict.dPlatformMapping[system]['emulators'][emulator]
     print(emulator)
     
+    try:
+        applicationDirectory = settings['PluginPreferences']['app_directory_' + emulator]
+        print('agent setting found')
+    except KeyError as e:
+        applicationDirectory = archer_dict.dDefaultSettings['app_directory_' + emulator]
+        print('using default setting')
+    except TypeError as e:
+        applicationDirectory = archer_dict.dDefaultSettings['app_directory_' + emulator]
+        print('using default setting')
+    print(applicationDirectory)
+    
+    try:
+        binaryCommand = settings['PluginPreferences']['app_binary_' + emulator]
+        print('agent setting found')
+    except KeyError as e:
+        binaryCommand = archer_dict.dDefaultSettings['app_binary_' + emulator]
+        print('using default setting')
+    except TypeError as e:
+        binaryCommand = archer_dict.dDefaultSettings['app_binary_' + emulator]
+        print('using default setting')
+    print(binaryCommand)
+    
     if emulator == 'retroarch':
         try:
             core = int(settings['PluginPreferences']['core_' + systemKey])
@@ -311,6 +232,22 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
     fullRomPath = os.path.join(SourceRomDir, romName)
     print(fullRomPath)
     
+    '''
+    #this takes far too long for large isos... I think it isn't needed, we can just open the file
+    #hash the rom file to pre-spinup disk https://stackoverflow.com/a/22058673
+    BUF_SIZE = 65536 # lets read stuff in 64kb chunks! totally arbitrary, change for your app!
+    with open(fullRomPath, 'rb') as f:
+        while True:
+            data = f.read(BUF_SIZE)
+            if not data:
+                break
+    
+    time.sleep(1) # probably make this configurable
+    '''
+    
+    with open(fullRomPath, 'rb') as f:
+        print('We are trying to read the file... to pre-spin up the disk')
+    
     print(clientPlatform)
 
     launch = False
@@ -328,20 +265,52 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
         launch = False
     
     if launch == True:
-        dEmulatorPaths = {
-        'retroarch' : {
-            'win64' : {
-                'dir' : os.path.join(paths['contentsDir'], 'bin', 'RetroArch', 'win64'),
-                'command' : 'start "RetroArcher" "retroarch.exe" -L "' + emulatorCore + '" "' + fullRomPath + '" '
+        dSystemPlatformMapping = {
+        'win64' : {
+            'emulators' : {
+                'retroarch' : {
+                    #'dir' : os.path.join(paths['contentsDir'], 'bin', 'RetroArch', 'win64'),
+                    'dir' : applicationDirectory,
+                    #'command' : 'start "RetroArcher" "retroarch.exe" -L "' + emulatorCore + '" "' + fullRomPath + '" '
+                    'command' : 'start "RetroArcher" "' + binaryCommand + '" -L "' + emulatorCore + '" "' + fullRomPath + '" '
+                    }
                 },
-            'win32' : {
-                'dir' : os.path.join(paths['contentsDir'], 'bin', 'RetroArch', 'win32'),
-                'command' : 'start "RetroArcher" "retroarch.exe" -L "' + emulatorCore + '" "' + fullRomPath + '" '
+            'stream_host' : {
+                'GeForce Experience' : {
+                    'process' : 'nvstreamer.exe',
+                    },
+                'OpenStream' : {
+                    'process' : 'openstream.exe'
+                    },
+                'Sunshine' : {
+                    'process' : 'sunshine.exe'
+                    }
                 },
-            #'linux' : 'tbd',
-            #'macOS' : 'tbd'
+            'kill_command' : 'taskkill /F /IM'
+            },
+        'win32' : {
+            'emulators' : {
+                'retroarch' : {
+                    'dir' : os.path.join(paths['contentsDir'], 'bin', 'RetroArch', 'win64'),
+                    'command' : 'start "RetroArcher" "retroarch.exe" -L "' + emulatorCore + '" "' + fullRomPath + '" '
+                    }
+                },
+            'stream_host' : {
+                'GeForce Experience' : {
+                    'process' : 'nvstreamer.exe',
+                    },
+                'Open-Stream' : {
+                    'process' : 'openstream.exe'
+                    },
+                'Sunshine' : {
+                    'process' : 'sunshine.exe'
+                    }
+                },
+            'kill_command' : 'taskkill /f /im'
+            }
+        #'linux' : 'tbd',
+        #'macOS' : 'tbd'
         }
-    }
         
         if sys.platform == 'win32': #if windows determine if 32 bit or 64 bit
             import struct
@@ -354,13 +323,38 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                 platform = 'win32'
         print(platform)
         
-        emulatorPath = dEmulatorPaths[emulator][platform]['dir']
+        emulatorPath = dSystemPlatformMapping[platform]['emulators'][emulator]['dir']
         print(emulatorPath)
         os.chdir(emulatorPath)
         
-        command = dEmulatorPaths[emulator][platform]['command']
+        command = dSystemPlatformMapping[platform]['emulators'][emulator]['command']
         print(command)
         os.system(command)
+        
+        #kill the stream once the emulator is killed
+        try:
+            gamestreamhost = archer_dict.dGameStreamHostMapping[settings['PluginPreferences']['eGameStreamHost']]
+        except KeyError as e:
+            gamestreamhost = archer_dict.dGameStreamHostMapping[archer_dict.dDefaultSettings['eGameStreamHost']]
+        if gamestreamhost == None:
+            gamestreamhost = archer_dict.dGameStreamHostMapping[archer_dict.dDefaultSettings['eGameStreamHost']]
+        
+        '''
+        #this is trying to kill streamer process before it's even started... we need to run after retroarch.exe exits
+        process = dSystemPlatformMapping[platform]['stream_host'][gamestreamhost]['process']
+        print(process)
+        command = '%s %s' % (dSystemPlatformMapping[platform]['kill_command'], process)
+        print(command)
+        print(os.system(command))
+        '''
+        
+        '''
+        import psutil
+        for proc in psutil.process_iter():
+            if proc.name == process:
+                p = psutil.Process(proc.pid)
+                proc.kill()
+        '''
 
 def launchADB(clientIP):
     #should we kill and launch the server?
@@ -402,11 +396,11 @@ def launchADB(clientIP):
         moonlightAppName = archer_dict.dDefaultSettings['sMoonlightAppName']
     '''
     
-    abdAddress = clientIP + ':' + str(adbPort)
-    output = adb.connect(abdAddress)
+    adbAddress = clientIP + ':' + str(adbPort)
+    output = adb.connect(adbAddress)
     print(output)
 
-    device = adb.device(serial=abdAddress)
+    device = adb.device(serial=adbAddress)
 
     #possible apps that can be useful
     packages = {
@@ -840,7 +834,11 @@ def scanner(paths, SourceRomDir, dataFolders):
                                 if value['multiDisk'] == True:
                                     checks.append(['m3u'])
                                 
-                                dstPath = os.path.join(dataFolders['mediaFolder'], system)
+                                libraryType = value['libraryType']
+                                libPath = os.path.join(dataFolders['mediaFolder'], libraryType)
+                                make_dir(libPath)
+                                print(libPath)
+                                dstPath = os.path.join(dataFolders['mediaFolder'], libraryType, system)
                                 make_dir(dstPath)
                                 print(dstPath)
                                 
@@ -1002,8 +1000,8 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                     if ffmpeg_changed == 1:
                                                         makeLink = True
                                                     
-                                                    if makeLink == True:
-                                                        destinationPath = os.path.join(system, romName + '.' + src.rsplit('.', 1)[-1])
+                                                    if makeLink == True and skipRom == False:
+                                                        destinationPath = os.path.join(libraryType, system, romName + '.' + src.rsplit('.', 1)[-1])
                                                         
                                                         videoKey = os.path.join(romName + '.' + src.rsplit('.', 1)[-1])
                                                         

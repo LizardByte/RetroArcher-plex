@@ -14,45 +14,6 @@
 #Ignore developer scripts
 Contents/Code/developer
 
-# Ignore retroarcher stuff
-Contents/bin/RetroArch/
-Contents/bin*retroarch.cfg
-Contents/bin*.lpl
-Contents/bin*cache/
-Contents/bin*cheats/
-Contents/bin*config*.opt
-Contents/bin*config/record/
-Contents/bin*config/remaps/
-Contents/bin*downloads/
-Contents/bin*layouts/
-Contents/bin*logs/
-Contents/bin*playlists/
-Contents/bin*recordings/
-Contents/bin*saves/
-Contents/bin*screenshots/
-Contents/bin*states/
-Contents/bin*system/
-
-#overlays... for now exclude these
-Contents/bin*overlays/
-Contents/bin*config/
-
-#very large folders... user can get this from retroarch menu
-Contents/bin*thumbnails/
-
-#dynamic wallpapers
-Contents/bin*wallpapers/Explore.png
-Contents/bin*wallpapers/Favorites.png
-Contents/bin*wallpapers/History.png
-Contents/bin*wallpapers/Images.png
-Contents/bin*wallpapers/Import Content.png
-Contents/bin*wallpapers/Main Menu.png
-Contents/bin*wallpapers/Music.png
-Contents/bin*wallpapers/Netplay.png
-Contents/bin*wallpapers/Settings.png
-Contents/bin*wallpapers/Videos.png
-Contents/bin*wallpapers/*.zip
-
 # Ignore Certain Start Videos
 Contents/Resources/StartVideos/Games/
 Contents/Resources/StartVideos/Platforms/

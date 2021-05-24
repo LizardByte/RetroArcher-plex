@@ -2,14 +2,7 @@
 [
   { "id":"sSourceRomDirectory",       "label":"ROMS|Fullpath of source rom directory",    "type":"text",    "default":""  },
   
-  { "id":"lExcludedTerms",            "label":"-SCANNER|ROMS|Exclude games with these strings in the game name (comma separated)",    "type":"text",    "default":"[BIOS], Action Replay, Game Genie, Game Saver, GameBooster, GameShark"  },
-  { "id":"lIncludeRegions",           "label":"-SCANNER|ROMS|Include games with these region tags (comma separated)",    "type":"text",    "default":""  },
-  { "id":"lExcludeRegions",           "label":"-SCANNER|ROMS|Exclude games with these region tags (comma separated)",    "type":"text",    "default":""  },
-  { "id":"lIncludeLanguages",         "label":"-SCANNER|ROMS|Include games with these language tags (comma separated)",    "type":"text",    "default":""  },
-  { "id":"lExcludeLanguages",         "label":"-SCANNER|ROMS|Exclude games with these language tags (comma separated)",    "type":"text",    "default":""  },
-  { "id":"lExcludeTags",              "label":"-SCANNER|ROMS|Exclude games with these tags (comma separated)",    "type":"text",    "default":"Beta, Demo, Kiosk, Proto"  },
   { "id":"eFfmpegEncoder",            "label":"SCANNER|ADVANCED|FFMPEG|Encoder",    "type":"enum",    "values": [ "h264_nvenc", "h264_qsv", "h264_videotoolbox", "libx264", "mpeg2_qsv", "mpeg2video" ], "default":"h264_nvenc"  },
-  { "id":"iFfmpegThreads",            "label":"-SCANNER|ADVANCED|FFMPEG|Simulatenous Encodings",    "type":"text",    "default":"1"  },
   { "id":"iFfmpegLength",             "label":"SCANNER|ADVANCED|FFMPEG|Encoding length in seconds",    "type":"text",    "default":"30"  },
   { "id":"iFfmpegTextSize",           "label":"SCANNER|ADVANCED|FFMPEG|Text size",    "type":"text",    "default":"24"  },
   { "id":"sFfmpegTextColor",          "label":"SCANNER|ADVANCED|FFMPEG|Text color (name or hex)",    "type":"text",    "default":"white"  },
@@ -24,21 +17,14 @@
   
   { "id":"sMoonlightPcUuid",          "label":"LAUNCHER|Moonlight Machine UUID",    "type":"text",    "default":""  },
   { "id":"sMoonlightAppId",           "label":"LAUNCHER|Moonlight App ID",    "type":"text",    "default":""  },
-  { "id":"sMoonlightAppName",         "label":"LAUNCHER|Moonlight App ID",    "type":"text",    "default":"RetroArcher"  },
+  { "id":"sMoonlightAppName",         "label":"LAUNCHER|Moonlight App Name",    "type":"text",    "default":"RetroArcher"  },
   
   { "id":"bGameStreamEnabled",        "label":"GAMESTREAM|GENERAL|Enable gamestream",    "type":"bool",    "default":"False"  },
   { "id":"sGameStreamWhiteList",      "label":"GAMESTREAM|GENERAL|White listed users",    "type":"text",    "default":""  },
   { "id":"sGameStreamBlackList",      "label":"GAMESTREAM|GENERAL|Black listed users",    "type":"text",    "default":""  },
   { "id":"eGameStreamApp",            "label":"GAMESTREAM|GENERAL|Game stream client app",    "type":"enum",    "values": [ "moonlight" ], "default":"moonlight"  },
-  { "id":"eGameStreamHost",           "label":"GAMESTREAM|GENERAL|Game stream host",    "type":"enum",    "values": [ "Nvidia GeForce Experience", "Sunshine", "Open-Stream" ], "default":"Nvidia GeForce Experience"  },
-  { "id":"sNvStreamerPath",           "label":"GAMESTREAM|NVIDIA|nvstreamer path",    "type":"text",    "default":"C:\\Program Files\\NVIDIA Corporation\\NvStreamSrv\\nvstreamer.exe"  },
-  { "id":"sSunshinePath",             "label":"GAMESTREAM|SUNSHINE|sunshine path",    "type":"text",    "default":""  },
-  { "id":"sOpenStreamPath",           "label":"GAMESTREAM|SUNSHINE|sunshine path",    "type":"text",    "default":""  },
+  { "id":"eGameStreamHost",           "label":"GAMESTREAM|GENERAL|Game stream host",    "type":"enum",    "values": [ "GeForce Experience", "Open-Stream", "Sunshine" ], "default":"GeForce Experience"  },
   
-  { "id":"sTwitchClientID",           "label":"SEARCH|Client ID|Twitch",    "type":"text",    "option":"hidden",     "default":""  },
-  { "id":"sTwitchClientSecret",       "label":"SEARCH|Client Secret|Twitch",    "type":"text",    "option":"hidden",     "default":""  },
-  { "id":"sTheGamesDBapikey",         "label":"SEARCH|API KEY|thegamesdb.net",    "type":"text",    "option":"hidden",     "default":"146a546e4a1e764d50dad39bf3f0129fa1609301b81998a15fb6fd243c5827ae"  },
-  { "id":"sRAWGapikey",               "label":"SEARCH|API KEY|RAWG",    "type":"text",    "option":"hidden",     "default":"e4649e88b13b4b2e83c76f5065bd5828"  },
   { "id":"sYouTubeApiKey",            "label":"SEARCH|API KEY|YouTube",    "type":"text",    "option":"hidden",     "default":"AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4"  },
   
   { "id":"ePreferredRatingSystem",    "label":"RATINGS|Preferred Rating System",    "type": "enum",    "values": [ "ESRB", "PEGI" ],    "default": "ESRB"  },  
@@ -46,15 +32,15 @@
   { "id":"bPlatformAsCollection",     "label":"COLLECTIONS|Use platform name as collection (Disable for platform specific libraries)",    "type":"bool",    "default":"True"  },
   
   { "id":"sThemesSource",             "label":"THEMES|MUSIC|Theme music database",    "type": "enum",    "values": [ "none", "Local" ],    "default": "Local"  },
-  { "id":"iMaxThemes",                "label":"-THEMES|MUSIC|Max theme music to collect",    "type":"text",    "default":"0"  },
   { "id":"sSourceThemeDirectory",     "label":"THEMES|Fullpath of source theme music directory",    "type":"text",    "default":""  },
   
-  { "id":"bGetReviews",               "label":"-REVIEWS|Collect reviews",    "type":"bool",    "default":"False"  },
-
   { "id":"bGetExtraObject",           "label":"EXTRAS|Collect trailer object",    "type":"bool",    "default":"False"  },
 
   { "id":"PLEX_URL",                  "label":"ADVANCED SETTINGS\n_____________________________________________________________________________________\nPLEX|Server URL",    "type":"text",    "default":"http://localhost:32400"  },
   { "id":"PLEX_TOKEN",                "label":"PLEX|Server token",    "type":"text",    "option":"hidden",     "default":"",		"secure":"true"  },
+
+  { "id":"app_directory_retroarch",   "label":"APPLICAITON|DIRECTORY|RetroArch",    "type":"text",    "default":""  },
+  { "id":"app_binary_retroarch",      "label":"APPLICAITON|BINARY|RetroArch",    "type":"text",    "default":"retroarch"  },
 
   { "id":"scanner_3do_interactive_multiplayer",           "label":"SCANNER|3DO Interactive Multiplayer",    "type":"bool",    "default":"True"  },
   { "id":"scanner_amstrad_cpc",                           "label":"SCANNER|Amstrad CPC",    "type":"bool",    "default":"True"  },
@@ -299,9 +285,9 @@
   { "id":"core_nintendo_3ds",                             "label":"RETROARCH|CORE|Nintendo 3DS",    "type": "enum",    "values": [ "default", "Citra", "Citra Canary/Experimental" ],    "default": "default"  },
   { "id":"core_nintendo_64",                              "label":"RETROARCH|CORE|Nintendo 64",    "type": "enum",    "values": [ "default", "Mupen64Plus-Next", "Mupen64Plus-Next GLES3", "ParaLLEl N64" ],    "default": "default"  },
   { "id":"core_nintendo_ds",                              "label":"RETROARCH|CORE|Nintendo DS",    "type": "enum",    "values": [ "default", "DeSmuME 2015", "DeSmuME", "melonDS" ],    "default": "default"  },
-  { "id":"core_nintendo_entertainment_system",            "label":"RETROARCH|CORE|Nintendo Entertainment System",    "type": "enum",    "values": [ "default", "bnes", "Emux NES", "FCEUmm", "Mesen", "Nestopia UE", "QuickNES" ],    "default": "default"  },
-  { "id":"core_nintendo_famicom_disk_system",             "label":"RETROARCH|CORE|Nintendo Famicom Disk System",    "type": "enum",    "values": [ "default", "bnes", "Emux NES", "FCEUmm", "Mesen", "Nestopia UE", "QuickNES" ],    "default": "default"  },
-  { "id":"core_nintendo_family_computer",                 "label":"RETROARCH|CORE|Nintendo Family Computer",    "type": "enum",    "values": [ "default", "bnes", "Emux NES", "FCEUmm", "Mesen", "Nestopia UE", "QuickNES" ],    "default": "default"  },
+  { "id":"core_nintendo_entertainment_system",            "label":"RETROARCH|CORE|Nintendo Entertainment System",    "type": "enum",    "values": [ "default", "Emux NES", "FCEUmm", "Mesen", "Nestopia UE", "QuickNES" ],    "default": "default"  },
+  { "id":"core_nintendo_famicom_disk_system",             "label":"RETROARCH|CORE|Nintendo Famicom Disk System",    "type": "enum",    "values": [ "default", "Emux NES", "FCEUmm", "Mesen", "Nestopia UE", "QuickNES" ],    "default": "default"  },
+  { "id":"core_nintendo_family_computer",                 "label":"RETROARCH|CORE|Nintendo Family Computer",    "type": "enum",    "values": [ "default", "Emux NES", "FCEUmm", "Mesen", "Nestopia UE", "QuickNES" ],    "default": "default"  },
   { "id":"core_nintendo_game_and_watch",                  "label":"RETROARCH|CORE|Nintendo Game and Watch",    "type": "enum",    "values": [ "default", "GW" ],    "default": "default"  },
   { "id":"core_nintendo_game_boy",                        "label":"RETROARCH|CORE|Nintendo Game Boy",    "type": "enum",    "values": [ "default", "Emux GB", "fixGB", "Gambatte", "Gearboy", "SameBoy", "TGB Dual", "Mesen-S", "mGBA", "VBA-M", "higan Accuracy", "nSide Balanced" ],    "default": "default"  },
   { "id":"core_nintendo_game_boy_advance",                "label":"RETROARCH|CORE|Nintendo Game Boy Advance",    "type": "enum",    "values": [ "default", "Beetle GBA", "gpSP", "Meteor", "mGBA", "VBA Next", "VBA-M" ],    "default": "default"  },
@@ -348,30 +334,6 @@
   { "id":"core_tomb_raider_classic_engine",               "label":"RETROARCH|CORE|Tomb Raider Classic Engine",    "type": "enum",    "values": [ "default", "OpenLara" ],    "default": "default"  },
   { "id":"core_wolfenstein_3d_engine",                    "label":"RETROARCH|CORE|Wolfenstein 3D Engine",    "type": "enum",    "values": [ "default", "ECWolf" ],    "default": "default"  },
   { "id":"core_wonderswan",                               "label":"RETROARCH|CORE|WonderSwan",    "type": "enum",    "values": [ "default", "Beetle Cygne" ],    "default": "default"  },
-  { "id":"core_wonderswan_color",                         "label":"RETROARCH|CORE|WonderSwan Color",    "type": "enum",    "values": [ "default", "Beetle Cygne" ],    "default": "default"  },
+  { "id":"core_wonderswan_color",                         "label":"RETROARCH|CORE|WonderSwan Color",    "type": "enum",    "values": [ "default", "Beetle Cygne" ],    "default": "default"  }
   
-  { "id":"bRetroArchCacheClean",                          "label":"-RETROARCH|Clean cache occassionally",    "type":"bool",    "default":"True"  },
-  
-  
-  { "id":"sOgXboxIpAddress",		  "label":"\n_____________________________________________________________________________________FUTURE SETTINGS PLACEHOLDER\n_____________________________________________________________________________________-OG XBOX|Xbox IP address",	"type":"text",		"default":""	},
-  { "id":"sOgXboxGamePaths",		  "label":"-OG XBOX|Game folder name on each partition of xbox",		"type":"text",		"default":"Games"	},
-  { "id":"bOgXboxGames",              "label":"-OG XBOX|Include Xbox games in Plex library",    "type":"bool",    "default":"True"  },
-  { "id":"sOgXboxAppPaths",		      "label":"-OG XBOX|Application folder name on each partition of xbox",		"type":"text",		"default":"Apps, Applications"	},
-  { "id":"bOgXboxApps",               "label":"-OG XBOX|Include Xbox applications in Plex library",    "type":"bool",    "default":"True"  },
-  { "id":"sOgXboxDemoPaths",          "label":"-OG XBOX|Demo folder name on each partition of xbox",		"type":"text",		"default":"Demos"	},
-  { "id":"bOgXboxDemos",              "label":"-OG XBOX|Include Xbox demos in Plex library",    "type":"bool",    "default":"True"  },
-  { "id":"sOgXboxPosterSource",       "label":"-OG XBOX|Source for Plex library poster",    "type": "enum",    "values": [ "RetroArcher-Agent", "XBMC4Xbox" ],    "default": "RetroArcher-Agent"  },
-  { "id":"bOgXboxPosterSync",         "label":"-OG XBOX|Sync Plex library posters to XBMC4Xbox",    "type":"bool",    "default":"False"  },
-  { "id":"sHelpPlatform",             "label":"-NOTIFICATIONS|Platform",    "type": "enum",    "values": [ "none", "Discord", "email" ],    "default": "none"  },
-  { "id":"bHelpSendLinks",            "label":"-NOTIFICATIONS|Send help links",    "type":"bool",    "default":"True"  },
-  { "id":"bHelpIncludeLibretro",      "label":"-NOTIFICATIONS|Include libretro core documentation",    "type":"bool",    "default":"True"  },
-  { "id":"bHelpIncludeGameManual",    "label":"-NOTIFICATIONS|Include game manual",    "type":"bool",    "default":"True"  },
-  { "id":"bHelpIncludeGameMaps",      "label":"-NOTIFICATIONS|Include game maps",    "type":"bool",    "default":"True"  },
-  { "id":"bResetSettings",            "label":"-CONFIG|Reset all settings",    "type":"bool",    "default":"False"  },
-  { "id":"bResetFactory",             "label":"-CONFIG|Factory reset this plugin (WARNING: this cannot be undone)",    "type":"bool",    "default":"False"  },
-  { "id":"bAutoInstallApk",           "label":"-CLIENT|Auto install missing apps",    "type":"bool",    "default":"False"  },
-  { "id":"bAutoUpdateApk",            "label":"-CLIENT|Auto update outdated apps",    "type":"bool",    "default":"False"  },
-  { "id":"sUpdateRepository",         "label":"-UPDATER|Repository",    "type":"text",    "default":"https://github.com/ReenigneArcher/RetroArcher.bundle"  },
-  { "id":"sUpdateBranch",             "label":"-UPDATER|Branch",    "type":"text",    "default":"master"  },
-  { "id":"sUpdateAuto",               "label":"-UPDATER|Automatic update (during scanning)",    "type":"bool",    "default":"False"  }
 ]

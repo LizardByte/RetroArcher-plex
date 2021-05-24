@@ -48,6 +48,12 @@ dEncoderMapping = {
     '5' : 'mpeg2video'
 }
 
+dGameStreamHostMapping = {
+    '0' : 'GeForce Experience',
+    '1' : 'Open-Stream',
+    '2' : 'Sunshine'
+}
+
 dDefaultSettings = {
 	'sSourceRomDirectory' : '',
 	
@@ -79,31 +85,24 @@ dDefaultSettings = {
 	'sGameStreamWhiteList' : '',
 	'sGameStreamBlackList' : '',
 	'eGameStreamApp' : 'moonlight',
-	'eGameStreamHost' : 'Nvidia GeForce Experience',
-	'sNvStreamerPath' : 'C:\\Program Files\\NVIDIA Corporation\\NvStreamSrv\\nvstreamer.exe',
-	'sSunshinePath' : '',
-	'sOpenStreamPath' : '',
+	'eGameStreamHost' : '0',
 	
-	'sTwitchClientID' : '',
-	'sTwitchClientSecret' : '',
-	'sTheGamesDBapikey' : '146a546e4a1e764d50dad39bf3f0129fa1609301b81998a15fb6fd243c5827ae',
-	'sRAWGapikey' : 'e4649e88b13b4b2e83c76f5065bd5828',
 	'sYouTubeApiKey' : 'AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4',
 	
 	'ePreferredRatingSystem' : 'ESRB',  
 	
 	'bPlatformAsCollection' : 'True',
 	
-	'sThemesSource' : 'RetroArcher.database',
-	'iMaxThemes' : '0',
+	'sThemesSource' : 'Local',
 	'sSourceThemeDirectory' : '',
-	
-	'bGetReviews' : 'True',
 	
 	'bGetExtraObject' : 'True',
 	
 	'PLEX_URL' : 'http://localhost:32400',
 	'PLEX_TOKEN' : '',
+    
+    'app_directory_retroarch' : '',
+    'app_binary_retroarch' : 'retroarch',
 	
 	#these are needed to ensure we don't scan any unsupported systems
 	'scanner_3do_interactive_multiplayer' : 'True',
@@ -202,31 +201,7 @@ dDefaultSettings = {
 	'scanner_tomb_raider_classic_engine' : 'True',
 	'scanner_wolfenstein_3d_engine' : 'True',
 	'scanner_wonderswan' : 'True',
-	'scanner_wonderswan_color' : 'True',
-	
-	'bRetroArchCacheClean' : 'True',
-	
-	'sOgXboxIpAddress' : '',
-	'sOgXboxGamePaths' : 'Games',
-	'bOgXboxGames' : 'True',
-	'sOgXboxAppPaths' :	'Apps, Applications',
-	'bOgXboxApps' : 'True',
-	'sOgXboxDemoPaths' : 'Demos',
-	'bOgXboxDemos' : 'True',
-	'sOgXboxPosterSource' : 'RetroArcher-Agent',
-	'bOgXboxPosterSync' : 'True',
-	'sHelpPlatform' : 'none',
-	'bHelpSendLinks' : 'True',
-	'bHelpIncludeLibretro' : 'True',
-	'bHelpIncludeGameManual' : 'True',
-	'bHelpIncludeGameMaps' : 'True',
-	'bResetSettings' : 'False',
-	'bResetFactory' : 'False',
-	'bAutoInstallApk' : 'False',
-	'bAutoUpdateApk' : 'False',
-	'sUpdateRepository' : 'https://github.com/ReenigneArcher/RetroArcher.bundle',
-	'sUpdateBranch' : 'master',
-	'sUpdateAuto' : 'False'
+	'scanner_wonderswan_color' : 'True'
 }
 
 dPlatformMapping = {
@@ -236,6 +211,7 @@ dPlatformMapping = {
             'igdb' : 139,
             'thegamesdb' : None
             },
+        'libraryType' : 'Games',
         'romExtensions' : [],
         'romType' : 0,
 		'multiDisk' : False
@@ -246,6 +222,7 @@ dPlatformMapping = {
             'igdb' : 50,
             'thegamesdb' : 25
 			},
+        'libraryType' : 'Games',
         'romExtensions' : ['chd', 'cue', 'iso'],
         'romType' : 0,
 		'multiDisk' : False,
@@ -270,6 +247,7 @@ dPlatformMapping = {
             'igdb' : 116,
             'thegamesdb' : 4944
 			},
+        'libraryType' : 'Games',
         'romExtensions' : [],
         'romType' : 0,
 		'multiDisk' : False
@@ -280,6 +258,7 @@ dPlatformMapping = {
 			'igdb' : 134,
 			'thegamesdb' : 4954
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -290,6 +269,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4976
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -300,6 +280,7 @@ dPlatformMapping = {
 			'igdb' : 132,
 			'thegamesdb' : 4916 #Android
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -310,6 +291,7 @@ dPlatformMapping = {
 			'igdb' : 25,
 			'thegamesdb' : 4914
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['cdt', 'cpr', 'dsk', 'kcr', 'sna', 'tap', 'voc', 'zip'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -339,6 +321,7 @@ dPlatformMapping = {
 			'igdb' : 154,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -349,6 +332,7 @@ dPlatformMapping = {
 			'igdb' : 100,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -359,6 +343,7 @@ dPlatformMapping = {
 			'igdb' : 34,
 			'thegamesdb' : 4916
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -369,6 +354,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4969
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -379,6 +365,7 @@ dPlatformMapping = {
 			'igdb' : 75,
 			'thegamesdb' : 4942
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -389,6 +376,7 @@ dPlatformMapping = {
 			'igdb' : 115,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -399,6 +387,7 @@ dPlatformMapping = {
 			'igdb' : 39,
 			'thegamesdb' : 4915
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -409,6 +398,7 @@ dPlatformMapping = {
 			'igdb' : 14,
 			'thegamesdb' : 37
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -419,6 +409,7 @@ dPlatformMapping = {
 			'igdb' : 52,
 			'thegamesdb' : 23
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['7z', 'ccd', 'chd', 'cmd', 'cue', 'iso', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -518,7 +509,8 @@ dPlatformMapping = {
 			'igdb' : 52,
 			'thegamesdb' : 23
 			},
-				'romExtensions' : ['zip'],
+        'libraryType' : 'Games',
+        'romExtensions' : ['zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -542,6 +534,7 @@ dPlatformMapping = {
 			'igdb' : 52,
 			'thegamesdb' : 23
 			},
+        'libraryType' : 'Games',
         'romExtensions' : ['7z', 'ccd', 'cue', 'iso', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -591,6 +584,7 @@ dPlatformMapping = {
 			'igdb' : 52,
 			'thegamesdb' : 23
 			},
+        'libraryType' : 'Games',
         'romExtensions' : ['7z', 'chd', 'cmd', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -655,6 +649,7 @@ dPlatformMapping = {
 			'igdb' : 59,
 			'thegamesdb' : 22
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['a26', 'bin'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -679,6 +674,7 @@ dPlatformMapping = {
 			'igdb' : 66,
 			'thegamesdb' : 26
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['a52', 'atr', 'atx', 'bin', 'cas', 'cdm', 'xex', 'xfd', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -703,6 +699,7 @@ dPlatformMapping = {
 			'igdb' : 60,
 			'thegamesdb' : 27
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['a78', 'bin'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -727,6 +724,7 @@ dPlatformMapping = {
 			'igdb' : 64,
 			'thegamesdb' : 4943
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['a52', 'atr', 'atx', 'bin', 'cas', 'cdm', 'xex', 'xfd', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -751,6 +749,7 @@ dPlatformMapping = {
 			'igdb' : 62,
 			'thegamesdb' : 28
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['abs', 'bin', 'cof', 'j64', 'jag', 'prg', 'rom'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -775,6 +774,7 @@ dPlatformMapping = {
 			'igdb' : 62,
 			'thegamesdb' : 29
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['abs', 'bin', 'cof', 'j64', 'jag', 'prg', 'rom'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -799,6 +799,7 @@ dPlatformMapping = {
 			'igdb' : 61,
 			'thegamesdb' : 4924
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['lnx', 'o'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -828,6 +829,7 @@ dPlatformMapping = {
 			'igdb' : 63,
 			'thegamesdb' : 4937
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['dim', 'ipf', 'msa', 'st', 'stx', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -852,6 +854,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 30
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['a52', 'atr', 'atx', 'bin', 'cas', 'cdm', 'xex', 'xfd', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -876,6 +879,7 @@ dPlatformMapping = {
 			'igdb' : 140,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -886,6 +890,7 @@ dPlatformMapping = {
 			'igdb' : 145,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -896,6 +901,7 @@ dPlatformMapping = {
 			'igdb' : 146,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -906,6 +912,7 @@ dPlatformMapping = {
 			'igdb' : 147,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -916,6 +923,7 @@ dPlatformMapping = {
 			'igdb' : 148,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -926,6 +934,7 @@ dPlatformMapping = {
 			'igdb' : 141,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -936,6 +945,7 @@ dPlatformMapping = {
 			'igdb' : 144,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -946,6 +956,7 @@ dPlatformMapping = {
 			'igdb' : 143,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -956,6 +967,7 @@ dPlatformMapping = {
 			'igdb' : 91,
 			'thegamesdb' : 4968
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -966,6 +978,7 @@ dPlatformMapping = {
 			'igdb' : 69,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -976,6 +989,7 @@ dPlatformMapping = {
 			'igdb' : 73,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -986,6 +1000,7 @@ dPlatformMapping = {
 			'igdb' : 239,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -996,6 +1011,7 @@ dPlatformMapping = {
 			'igdb' : 107,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1006,6 +1022,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4964
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1016,6 +1033,7 @@ dPlatformMapping = {
 			'igdb' : 6,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['exe'],
 		'romType' : 1,
 		'multiDisk' : False,
@@ -1040,6 +1058,7 @@ dPlatformMapping = {
 			'igdb' : 109,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1050,6 +1069,7 @@ dPlatformMapping = {
 			'igdb' : 6,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['chai', 'chailove'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -1074,6 +1094,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4970
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1084,6 +1105,7 @@ dPlatformMapping = {
 			'igdb' : 68,
 			'thegamesdb' : 31
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -1108,6 +1130,7 @@ dPlatformMapping = {
 			'igdb' : 93,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1118,6 +1141,7 @@ dPlatformMapping = {
 			'igdb' : 15,
 			'thegamesdb' : 40
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'vfl', 'vsf', 'nib', 'nbz', 'lnx'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -1152,6 +1176,7 @@ dPlatformMapping = {
 			'igdb' : 15,
 			'thegamesdb' : 40
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'vfl', 'vsf', 'nib', 'nbz', 'lnx'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -1176,6 +1201,7 @@ dPlatformMapping = {
 			'igdb' : 15,
 			'thegamesdb' : 4946
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'vfl', 'vsf', 'nib', 'nbz'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -1200,6 +1226,7 @@ dPlatformMapping = {
 			'igdb' : 16,
 			'thegamesdb' : 4911
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['adf', 'adz', 'dms', 'fdi', 'ipf', 'hdf', 'hdz', 'lha', 'slave', 'info', 'cue', 'ccd', 'nrg', 'mds', 'iso', 'chd', 'uae', 'zip', '7z'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -1224,6 +1251,7 @@ dPlatformMapping = {
 			'igdb' : 114,
 			'thegamesdb' : 4947
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1234,6 +1262,7 @@ dPlatformMapping = {
 			'igdb' : 158,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1244,6 +1273,7 @@ dPlatformMapping = {
 			'igdb' : 90,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'vfl', 'vsf', 'nib', 'nbz'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -1268,6 +1298,7 @@ dPlatformMapping = {
 			'igdb' : 94,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'vfl', 'vsf', 'nib', 'nbz'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -1292,6 +1323,7 @@ dPlatformMapping = {
 			'igdb' : 71,
 			'thegamesdb' : 4945
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['d64', 'd71', 'd80', 'd81', 'd82', 'g64', 'g41', 'x64', 't64', 'tap', 'prg', 'p00', 'crt', 'bin', 'zip', 'gz', 'd6z', 'd7z', 'd8z', 'g6z', 'g4z', 'x6z', 'cmd', 'vfl', 'vsf', 'nib', 'nbz'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -1316,6 +1348,7 @@ dPlatformMapping = {
 			'igdb' : 164,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1326,6 +1359,7 @@ dPlatformMapping = {
 			'igdb' : 98,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1336,6 +1370,7 @@ dPlatformMapping = {
 			'igdb' : 85,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1346,6 +1381,7 @@ dPlatformMapping = {
 			'igdb' : 6,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['wad'],
 		'romType' : 1,
 		'multiDisk' : False,
@@ -1370,6 +1406,7 @@ dPlatformMapping = {
 			'igdb' : 153,
 			'thegamesdb' : 4952
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1380,6 +1417,7 @@ dPlatformMapping = {
 			'igdb' : 153,
 			'thegamesdb' : 4952
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1390,6 +1428,7 @@ dPlatformMapping = {
 			'igdb' : 238,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1400,6 +1439,7 @@ dPlatformMapping = {
 			'igdb' : 102,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1410,6 +1450,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4963
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1420,16 +1461,18 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4974
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
 		},
-    'Entex Select-A-Game-a-game' : { 
+    'Entex Select-A-Game' : { 
 		'systemNames' : ['Entex Select-A-Game'],
 		'systemIds' : {
 			'igdb' : None,
 			'thegamesdb' : 4973
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1440,6 +1483,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4965
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1450,6 +1494,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4966
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1460,6 +1505,7 @@ dPlatformMapping = {
 			'igdb' : 309,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1470,6 +1516,7 @@ dPlatformMapping = {
 			'igdb' : 236,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1480,6 +1527,7 @@ dPlatformMapping = {
 			'igdb' : 127,
 			'thegamesdb' : 4928
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['bin', 'chf'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -1504,6 +1552,7 @@ dPlatformMapping = {
 			'igdb' : 101,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1514,6 +1563,7 @@ dPlatformMapping = {
 			'igdb' : 118,
 			'thegamesdb' : 4932
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1524,6 +1574,7 @@ dPlatformMapping = {
 			'igdb' : 152,
 			'thegamesdb' : 4978
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1534,6 +1585,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4962
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1544,6 +1596,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4940
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1554,6 +1607,7 @@ dPlatformMapping = {
 			'igdb' : 70,
 			'thegamesdb' : 4939
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['bin', 'vec'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -1578,6 +1632,7 @@ dPlatformMapping = {
 			'igdb' : [170, 203],
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1588,6 +1643,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4951
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1598,6 +1654,7 @@ dPlatformMapping = {
 			'igdb' : 104,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1608,6 +1665,7 @@ dPlatformMapping = {
 			'igdb' : 105,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1618,6 +1676,7 @@ dPlatformMapping = {
 			'igdb' : 111,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1628,6 +1687,7 @@ dPlatformMapping = {
 			'igdb' : 138,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1638,6 +1698,7 @@ dPlatformMapping = {
 			'igdb' : 3,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1648,6 +1709,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['lutro', 'lua'],
 		'romType' : 1,
 		'multiDisk' : False,
@@ -1672,6 +1734,7 @@ dPlatformMapping = {
 			'igdb' : 88,
 			'thegamesdb' : 4961
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1682,6 +1745,7 @@ dPlatformMapping = {
 			'igdb' : 133,
 			'thegamesdb' : 4927
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['bin'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -1706,6 +1770,7 @@ dPlatformMapping = {
 			'igdb' : 67,
 			'thegamesdb' : 32
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['int', 'bin', 'rom'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -1730,6 +1795,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4948
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1740,6 +1806,7 @@ dPlatformMapping = {
 			'igdb' : 112,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1750,6 +1817,7 @@ dPlatformMapping = {
 			'igdb' : 13,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['zip', 'dosz', 'exe', 'conf', 'com', 'bat', 'iso', 'cue', 'ins', 'img', 'ima', 'vhd', 'm3u8'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -1794,6 +1862,7 @@ dPlatformMapping = {
 			'igdb' : 27,
 			'thegamesdb' : 4929
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -1823,6 +1892,7 @@ dPlatformMapping = {
 			'igdb' : 53,
 			'thegamesdb' : 4929
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -1852,6 +1922,7 @@ dPlatformMapping = {
 			'igdb' : 53,
 			'thegamesdb' : 4929
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -1881,6 +1952,7 @@ dPlatformMapping = {
 			'igdb' : 53,
 			'thegamesdb' : 4929
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sg', 'sc'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -1910,6 +1982,7 @@ dPlatformMapping = {
 			'igdb' : 6,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1920,6 +1993,7 @@ dPlatformMapping = {
 			'igdb' : 6,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1930,6 +2004,7 @@ dPlatformMapping = {
 			'igdb' : 11,
 			'thegamesdb' : 14
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1940,6 +2015,7 @@ dPlatformMapping = {
 			'igdb' : 12,
 			'thegamesdb' : 15
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['iso'],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1950,6 +2026,7 @@ dPlatformMapping = {
 			'igdb' : 36,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1960,6 +2037,7 @@ dPlatformMapping = {
 			'igdb' : 49,
 			'thegamesdb' : 4920
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1970,6 +2048,7 @@ dPlatformMapping = {
 			'igdb' : 169,
 			'thegamesdb' : 4981
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1980,6 +2059,7 @@ dPlatformMapping = {
 			'igdb' : 89,
 			'thegamesdb' : 4972
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -1990,6 +2070,7 @@ dPlatformMapping = {
 			'igdb' : 55,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -2000,6 +2081,7 @@ dPlatformMapping = {
 			'igdb' : 157,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -2010,6 +2092,7 @@ dPlatformMapping = {
 			'igdb' : 125,
 			'thegamesdb' : 4933
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['d88', 'u88'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -2034,6 +2117,7 @@ dPlatformMapping = {
 			'igdb' : 149,
 			'thegamesdb' : 4934
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['d98', 'zip', '98d', 'fdi', 'fdd', '2hd', 'tfd', 'd88', '88d', 'hdm', 'xdf', 'dup', 'cmd', 'hdi', 'thd', 'nhd', 'hdd'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -2063,6 +2147,7 @@ dPlatformMapping = {
 			'igdb' : 274,
 			'thegamesdb' : 4930
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['cue', 'ccd', 'toc', 'chd'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -2087,6 +2172,7 @@ dPlatformMapping = {
 			'igdb' : 86,
 			'thegamesdb' : 34
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'chd', 'sgx'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -2121,6 +2207,7 @@ dPlatformMapping = {
 			'igdb' : 150,
 			'thegamesdb' : 4955
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'chd', 'sgx'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -2155,6 +2242,7 @@ dPlatformMapping = {
 			'igdb' : 128,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'chd', 'sgx'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -2188,6 +2276,7 @@ dPlatformMapping = {
 			'igdb' : 86,
 			'thegamesdb' : 34
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'chd', 'sgx'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -2222,6 +2311,7 @@ dPlatformMapping = {
 			'igdb' : 150,
 			'thegamesdb' : 4955
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['pce', 'cue', 'ccd', 'iso', 'img', 'chd', 'sgx'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -2256,6 +2346,7 @@ dPlatformMapping = {
 			'igdb' : 137,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -2266,6 +2357,7 @@ dPlatformMapping = {
 			'igdb' : 37,
 			'thegamesdb' : 4912
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['3ds', '3dsx', 'elf', 'axf', 'cci', 'cxi', 'app'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -2295,6 +2387,7 @@ dPlatformMapping = {
 			'igdb' : 4,
 			'thegamesdb' : 3
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['n64', 'v64', 'z64', 'bin', 'u1', 'ndd', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -2329,6 +2422,7 @@ dPlatformMapping = {
 			'igdb' : 20,
 			'thegamesdb' : 8
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['nds', 'bin'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -2363,6 +2457,7 @@ dPlatformMapping = {
 			'igdb' : 159,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -2373,7 +2468,8 @@ dPlatformMapping = {
 			'igdb' : 18,
 			'thegamesdb' : 7
 			},
-		'romExtensions' : ['nes', 'fds', 'unf', 'unif', 'bin', 'rom'],
+        'libraryType' : 'Games',
+		'romExtensions' : ['nes', 'fds', 'unf', 'unif', 'bin', 'rom', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -2381,17 +2477,12 @@ dPlatformMapping = {
             1 : 'retroarch',
             'retroarch' :
                 {'cores' : {
-                    0 : 'bnes_libretro.dll', #default
-                    1 : 'bnes_libretro.dll', #bnes
-                    2 : 'emux_nes_libretro.dll', #Emux NES
-                    3 : 'fceumm_libretro.dll', #FCEUmm
-                    4 : 'mesen_libretro.dll', #Mesen
-                    5 : 'nestopia_libretro.dll', #Nestopia UE
-                    6 : 'quicknes_libretro.dll', #QuickNES
-                    'bnes_libretro.dll' : {
-                        'coreExtensions' : ['nes'],
-                        'friendlyName' : 'Nintendo - NES / Famicom (bnes)'
-                        },
+                    0 : 'fceumm_libretro.dll', #default
+                    1 : 'emux_nes_libretro.dll', #Emux NES
+                    2 : 'fceumm_libretro.dll', #FCEUmm
+                    3 : 'mesen_libretro.dll', #Mesen
+                    4 : 'nestopia_libretro.dll', #Nestopia UE
+                    5 : 'quicknes_libretro.dll', #QuickNES
                     'emux_nes_libretro.dll' : {
                         'coreExtensions' : ['nes', 'bin', 'rom'],
                         'friendlyName' : 'Nintendo - NES / Famicom (Emux NES)'
@@ -2422,6 +2513,7 @@ dPlatformMapping = {
 			'igdb' : 160,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -2432,7 +2524,8 @@ dPlatformMapping = {
 			'igdb' : 51,
 			'thegamesdb' : 4936
 			},
-		'romExtensions' : ['nes', 'fds', 'unf', 'unif', 'bin', 'rom'],
+        'libraryType' : 'Games',
+		'romExtensions' : ['nes', 'fds', 'unf', 'unif', 'bin', 'rom', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -2440,17 +2533,12 @@ dPlatformMapping = {
             1 : 'retroarch',
             'retroarch' :
                 {'cores' : {
-                    0 : 'bnes_libretro.dll', #default
-                    1 : 'bnes_libretro.dll', #bnes
-                    2 : 'emux_nes_libretro.dll', #Emux NES
-                    3 : 'fceumm_libretro.dll', #FCEUmm
-                    4 : 'mesen_libretro.dll', #Mesen
-                    5 : 'nestopia_libretro.dll', #Nestopia UE
-                    6 : 'quicknes_libretro.dll', #QuickNES
-                    'bnes_libretro.dll' : {
-                        'coreExtensions' : ['nes'],
-                        'friendlyName' : 'Nintendo - NES / Famicom (bnes)'
-                        },
+                    0 : 'fceumm_libretro.dll', #default
+                    1 : 'emux_nes_libretro.dll', #Emux NES
+                    2 : 'fceumm_libretro.dll', #FCEUmm
+                    3 : 'mesen_libretro.dll', #Mesen
+                    4 : 'nestopia_libretro.dll', #Nestopia UE
+                    5 : 'quicknes_libretro.dll', #QuickNES
                     'emux_nes_libretro.dll' : {
                         'coreExtensions' : ['nes', 'bin', 'rom'],
                         'friendlyName' : 'Nintendo - NES / Famicom (Emux NES)'
@@ -2481,7 +2569,8 @@ dPlatformMapping = {
 			'igdb' : 99,
 			'thegamesdb' : None
 			},
-		'romExtensions' : ['nes', 'fds', 'unf', 'unif', 'bin', 'rom'],
+        'libraryType' : 'Games',
+		'romExtensions' : ['nes', 'fds', 'unf', 'unif', 'bin', 'rom', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -2489,17 +2578,12 @@ dPlatformMapping = {
             1 : 'retroarch',
             'retroarch' :
                 {'cores' : {
-                    0 : 'bnes_libretro.dll', #default
-                    1 : 'bnes_libretro.dll', #bnes
-                    2 : 'emux_nes_libretro.dll', #Emux NES
-                    3 : 'fceumm_libretro.dll', #FCEUmm
-                    4 : 'mesen_libretro.dll', #Mesen
-                    5 : 'nestopia_libretro.dll', #Nestopia UE
-                    6 : 'quicknes_libretro.dll', #QuickNES
-                    'bnes_libretro.dll' : {
-                        'coreExtensions' : ['nes'],
-                        'friendlyName' : 'Nintendo - NES / Famicom (bnes)'
-                        },
+                    0 : 'emux_nes_libretro.dll', #default
+                    1 : 'emux_nes_libretro.dll', #Emux NES
+                    2 : 'fceumm_libretro.dll', #FCEUmm
+                    3 : 'mesen_libretro.dll', #Mesen
+                    4 : 'nestopia_libretro.dll', #Nestopia UE
+                    5 : 'quicknes_libretro.dll', #QuickNES
                     'emux_nes_libretro.dll' : {
                         'coreExtensions' : ['nes', 'bin', 'rom'],
                         'friendlyName' : 'Nintendo - NES / Famicom (Emux NES)'
@@ -2530,6 +2614,7 @@ dPlatformMapping = {
 			'igdb' : 307,
 			'thegamesdb' : 4950
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['mgw'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -2554,7 +2639,8 @@ dPlatformMapping = {
 			'igdb' : 33,
 			'thegamesdb' : 4
 			},
-		'romExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc', 'gbs', 'dmg', 'cgb', 'sgb', 'bin', 'rom', 'gba', 'bml'],
+        'libraryType' : 'Games',
+		'romExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc', 'gbs', 'dmg', 'cgb', 'sgb', 'bin', 'rom', 'gba', 'bml', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -2562,10 +2648,10 @@ dPlatformMapping = {
             1 : 'retroarch',
             'retroarch' :
                 {'cores' : {
-                    0 : 'emux_gb_libretro.dll', #default
+                    0 : 'gearboy_libretro.dll', #default
                     1 : 'emux_gb_libretro.dll', #Emux GB
                     2 : 'fixgb_libretro.dll', #fixGB
-                    3 : 'gamebatte_libretro.dll', #Gambatte
+                    3 : 'gambatte_libretro.dll', #Gambatte
                     4 : 'gearboy_libretro.dll', #Gearboy
                     5 : 'sameboy_libretro.dll', #SameBoy
                     6 : 'tgbdual_libretro.dll', #TGB Dual
@@ -2582,7 +2668,7 @@ dPlatformMapping = {
                         'coreExtensions' : ['gb', 'gbc', 'gbs'],
                         'friendlyName' : 'Nintendo - Game Boy / Color (fixGB)'
                         },
-                    'gamebatte_libretro.dll' : {
+                    'gambatte_libretro.dll' : {
                         'coreExtensions' : ['gb', 'gbc', 'dmg'],
                         'friendlyName' : 'Nintendo - Game Boy / Color (Gambatte)'
                         },
@@ -2628,7 +2714,8 @@ dPlatformMapping = {
 			'igdb' : 24,
 			'thegamesdb' : 5
 			},
-		'romExtensions' : ['dmg', 'gb', 'gbc', 'cgb', 'sgb', 'gba', 'agb', 'bin'],
+        'libraryType' : 'Games',
+		'romExtensions' : ['dmg', 'gb', 'gbc', 'cgb', 'sgb', 'gba', 'agb', 'bin', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -2677,7 +2764,8 @@ dPlatformMapping = {
 			'igdb' : 22,
 			'thegamesdb' : 41
 			},
-		'romExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc', 'gbs', 'dmg', 'cgb', 'sgb', 'bin', 'rom', 'gba', 'bml'],
+        'libraryType' : 'Games',
+		'romExtensions' : ['sfc', 'smc', 'fig', 'swc', 'bs', 'gb', 'gbc', 'gbs', 'dmg', 'cgb', 'sgb', 'bin', 'rom', 'gba', 'bml', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -2685,10 +2773,10 @@ dPlatformMapping = {
             1 : 'retroarch',
             'retroarch' :
                 {'cores' : {
-                    0 : 'emux_gb_libretro.dll', #default
+                    0 : 'gambatte_libretro.dll', #default
                     1 : 'emux_gb_libretro.dll', #Emux GB
                     2 : 'fixgb_libretro.dll', #fixGB
-                    3 : 'gamebatte_libretro.dll', #Gambatte
+                    3 : 'gambatte_libretro.dll', #Gambatte
                     4 : 'gearboy_libretro.dll', #Gearboy
                     5 : 'sameboy_libretro.dll', #SameBoy
                     6 : 'tgbdual_libretro.dll', #TGB Dual
@@ -2705,7 +2793,7 @@ dPlatformMapping = {
                         'coreExtensions' : ['gb', 'gbc', 'gbs'],
                         'friendlyName' : 'Nintendo - Game Boy / Color (fixGB)'
                         },
-                    'gamebatte_libretro.dll' : {
+                    'gambatte_libretro.dll' : {
                         'coreExtensions' : ['gb', 'gbc', 'dmg'],
                         'friendlyName' : 'Nintendo - Game Boy / Color (Gambatte)'
                         },
@@ -2751,6 +2839,7 @@ dPlatformMapping = {
 			'igdb' : 21,
 			'thegamesdb' : 2
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['gcm', 'iso', 'wbfs', 'ciso', 'gcz', 'elf', 'dol', 'dff', 'tgc', 'wad', 'rvz'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -2775,6 +2864,7 @@ dPlatformMapping = {
 			'igdb' : 131,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -2785,6 +2875,7 @@ dPlatformMapping = {
 			'igdb' : 166,
 			'thegamesdb' : 4957
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['min'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -2809,7 +2900,8 @@ dPlatformMapping = {
 			'igdb' : 58,
 			'thegamesdb' : 6
 			},
-		'romExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc', 'bs', 'st', 'gb', 'gbc', 'bml', 'rom'],
+        'libraryType' : 'Games',
+		'romExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc', 'bs', 'st', 'gb', 'gbc', 'bml', 'rom', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -2923,7 +3015,8 @@ dPlatformMapping = {
 			'igdb' : 306,
 			'thegamesdb' : None
 			},
-		'romExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc', 'bs', 'st', 'gb', 'gbc', 'bml', 'rom'],
+        'libraryType' : 'Games',
+		'romExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc', 'bs', 'st', 'gb', 'gbc', 'bml', 'rom', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -3037,6 +3130,7 @@ dPlatformMapping = {
 			'igdb' : 130,
 			'thegamesdb' : 4971
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3047,6 +3141,7 @@ dPlatformMapping = {
 			'igdb' : 87,
 			'thegamesdb' : 4918
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['vb', 'vboy', 'bin'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -3071,6 +3166,7 @@ dPlatformMapping = {
 			'igdb' : 47,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3081,6 +3177,7 @@ dPlatformMapping = {
 			'igdb' : 5,
 			'thegamesdb' : 9
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['gcm', 'iso', 'wbfs', 'ciso', 'gcz', 'elf', 'dol', 'dff', 'tgc', 'wad', 'rvz'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -3105,6 +3202,7 @@ dPlatformMapping = {
 			'igdb' : 41,
 			'thegamesdb' : 38
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3115,6 +3213,7 @@ dPlatformMapping = {
 			'igdb' : 56,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3125,6 +3224,7 @@ dPlatformMapping = {
 			'igdb' : 42,
 			'thegamesdb' : 4938
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3135,6 +3235,7 @@ dPlatformMapping = {
 			'igdb' : 122,
 			'thegamesdb' : 4935
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3145,6 +3246,7 @@ dPlatformMapping = {
 			'igdb' : 162,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3155,6 +3257,7 @@ dPlatformMapping = {
 			'igdb' : 113,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3165,6 +3268,7 @@ dPlatformMapping = {
 			'igdb' : 372,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3175,6 +3279,7 @@ dPlatformMapping = {
 			'igdb' : 13,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['game'],
 		'romType' : 1,
 		'multiDisk' : False,
@@ -3199,6 +3304,7 @@ dPlatformMapping = {
 			'igdb' : 72,
 			'thegamesdb' : 4921
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3209,6 +3315,7 @@ dPlatformMapping = {
 			'igdb' : 142,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3219,6 +3326,7 @@ dPlatformMapping = {
 			'igdb' : 95,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3229,6 +3337,7 @@ dPlatformMapping = {
 			'igdb' : 103,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3239,6 +3348,7 @@ dPlatformMapping = {
 			'igdb' : 97,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3249,6 +3359,7 @@ dPlatformMapping = {
 			'igdb' : 96,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3259,6 +3370,7 @@ dPlatformMapping = {
 			'igdb' : 108,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3269,6 +3381,7 @@ dPlatformMapping = {
 			'igdb' : 117,
 			'thegamesdb' : 4917
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3279,6 +3392,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4975
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3289,6 +3403,7 @@ dPlatformMapping = {
 			'igdb' : 110,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3299,6 +3414,7 @@ dPlatformMapping = {
 			'igdb' : 308,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3309,6 +3425,7 @@ dPlatformMapping = {
 			'igdb' : 6,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['pak'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -3333,6 +3450,7 @@ dPlatformMapping = {
 			'igdb' : 6,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['pak'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -3357,6 +3475,7 @@ dPlatformMapping = {
 			'igdb' : 6,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['pk3'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -3381,6 +3500,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4983
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3391,6 +3511,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4967
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3401,6 +3522,7 @@ dPlatformMapping = {
 			'igdb' : 6,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['zip'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -3425,6 +3547,7 @@ dPlatformMapping = {
 			'igdb' : 6,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['ldb'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -3449,6 +3572,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4979
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3459,6 +3583,7 @@ dPlatformMapping = {
 			'igdb' : 52,
 			'thegamesdb' : 23
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3469,6 +3594,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['0', '1', '2', '3', '5', '6', '8', '16', '25', '99', '101', '102', '418', '455', '512', 'scummvm', 'scumm', 'gam', 'z5', 'dat', 'blb', 'z6', 'RAW', 'ROM', 'taf', 'zblorb', 'dcp', '(a)', 'cup', 'HE0', '(A)', 'D$$', 'STK', 'z8', 'hex', 'VMD', 'TGA', 'ITK', 'SCN', 'INF', 'pic', 'Z5', 'z3', 'blorb', 'ulx', 'DAT', 'cas', 'PIC', 'acd', '006', 'SYS', 'alr', 't3', 'gblorb', 'tab', 'AP', 'CRC', 'EXE', 'z4', 'W32', 'MAC', 'mac', 'WIN', '001', '003', '000', 'bin', 'exe', 'asl', 'AVD', 'INI', 'SND', 'cat', 'ANG', 'CUP', 'SYS16', 'img', 'LB', 'TLK', 'MIX', 'VQA', 'RLB', 'FNT', 'win', 'HE1', 'DMU', 'FON', 'SCR', 'TEX', 'HEP', 'DIR', 'DRV', 'MAP', 'a3c', 'GRV', 'CUR', 'OPT', 'gfx', 'ASK', 'LNG', 'ini', 'RSC', 'SPP', 'CC', 'BND', 'LA0', 'TRS', 'add', 'HRS', 'DFW', 'DR1', 'ALD', '004', '002', '005', 'R02', 'R00', 'C00', 'D00', 'GAM', 'IDX', 'ogg', 'TXT', 'GRA', 'BMV', 'H$$', 'MSG', 'VGA', 'PKD', 'OUT', '99 (PG)', 'SAV', 'PAK', 'BIN', 'CPS', 'SHP', 'DXR', 'dxr', 'gmp', 'SNG', 'C35', 'C06', 'WAV', 'SMK', 'wav', 'CAB', 'game', 'Z6', '(b)', 'slg', 'he2', 'he1', 'HE2', 'SYN', 'PAT', 'NUT', 'nl', 'PRC', 'V56', 'SEQ', 'P56', 'AUD', 'FKR', 'EX1', 'rom', 'LIC', '$00', 'ALL', 'LTK', 'txt', 'acx', 'VXD', 'ACX', 'mpc', 'msd', 'ADF', 'nib', 'HELLO', 'dsk', 'xfd', 'woz', 'd$$', 'SET', 'SOL', 'Pat', 'CFG', 'BSF', 'RES', 'IMD', 'LFL', 'SQU', 'rsc', 'BBM', '2 US', 'OVL', 'OVR', '007', 'PNT', 'pat', 'CHK', 'MDT', 'EMC', 'ADV', 'FDT', 'GMC', 'FMC', 'info', 'HPF', 'hpf', 'INE', 'RBT', 'CSC', 'HEB', 'MID', 'lfl', 'LEC', 'HNM', 'QA', '009', 'PRF', 'EGA', 'MHK', 'd64', 'prg', 'LZC', 'flac', 'IMS', 'REC', 'MOR', 'doc', 'HAG', 'AGA', 'BLB', 'TABLE', 'PAL', 'PRG', 'CLG', 'ORB', 'BRO', 'bro', 'PH1', 'DEF', 'IN', 'jpg', 'TOC', 'j2', 'Text', 'CEL', 'he0', 'AVI', '1C', '1c', 'BAK', 'L9', 'CGA', 'HRC', 'mhk', 'RED', 'SM0', 'SM1', 'SOU', 'RRM', 'LIB', " Seuss's  ABC", 'CNV', 'VOC', 'OGG', 'GME', 'GERMAN', 'SHR', 'FRENCH', 'DNR', 'DSK', 'dnr', 'CAT', 'V16', 'cab', 'CLU', 'b25c', 'RL', 'mp3', 'FRM', 'SOG', 'HEX', 'mma', 'st', 'MPC', 'IMG', 'ENC', 'SPR', 'AD', 'C', 'CON', 'PGM', 'Z', 'RL2', 'MMM', 'OBJ', 'ZFS', 'zfs', 'STR', 'z2', 'z1'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -3493,6 +3619,7 @@ dPlatformMapping = {
 			'igdb' : 106,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3503,6 +3630,7 @@ dPlatformMapping = {
 			'igdb' : 30,
 			'thegamesdb' : 33
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['gen', 'smd', 'md', '32x', 'cue', 'iso', 'sms', '68k'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -3527,6 +3655,7 @@ dPlatformMapping = {
 			'igdb' : 78,
 			'thegamesdb' : 21
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', '32x'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -3556,7 +3685,8 @@ dPlatformMapping = {
 			'igdb' : 23,
 			'thegamesdb' : 16
 			},
-		'romExtensions' : ['chd', 'cdi', 'iso', 'elf', 'bin', 'cue', 'gdi', 'lst', 'zip', 'dat', '7z'],
+        'libraryType' : 'Games',
+		'romExtensions' : ['chd', 'cdi', 'iso', 'elf', 'cue', 'gdi', 'lst', 'zip', 'dat', '7z'], #removed bin... use cue files
 		'romType' : 0,
 		'multiDisk' : True,
         'emulators' : {
@@ -3585,6 +3715,7 @@ dPlatformMapping = {
 			'igdb' : 35,
 			'thegamesdb' : 20
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', 'rom', 'col', ],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -3619,7 +3750,8 @@ dPlatformMapping = {
 			'igdb' : 29,
 			'thegamesdb' : 18
 			},
-		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', '32x'],
+        'libraryType' : 'Games',
+		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', '32x', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -3653,7 +3785,8 @@ dPlatformMapping = {
 			'igdb' : 64,
 			'thegamesdb' : 35
 			},
-		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', 'rom', 'col', '32x'],
+        'libraryType' : 'Games',
+		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', 'rom', 'col', '32x', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -3697,7 +3830,8 @@ dPlatformMapping = {
 			'igdb' : 29,
 			'thegamesdb' : 36
 			},
-		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', '32x'],
+        'libraryType' : 'Games',
+		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', '32x', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -3731,6 +3865,7 @@ dPlatformMapping = {
 			'igdb' : 52,
 			'thegamesdb' : 23
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['chd', 'cdi', 'iso', 'elf', 'bin', 'cue', 'gdi', 'lst', 'zip', 'dat', '7z'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -3760,6 +3895,7 @@ dPlatformMapping = {
 			'igdb' : 52,
 			'thegamesdb' : 23
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3770,6 +3906,7 @@ dPlatformMapping = {
 			'igdb' : 339,
 			'thegamesdb' : 4958
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', '32x'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -3799,6 +3936,7 @@ dPlatformMapping = {
 			'igdb' : 32,
 			'thegamesdb' : 17
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['toc', 'ccd', 'chd', 'cue', 'iso', 'mds', 'zip'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -3838,7 +3976,8 @@ dPlatformMapping = {
 			'igdb' : 84,
 			'thegamesdb' : 4949
 			},
-		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', 'rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sc'],
+        'libraryType' : 'Games',
+		'romExtensions' : ['mdx', 'md', 'smd', 'gen', 'cue', 'iso', 'sms', 'bms', 'gg', 'sg', '68k', 'chd', 'rom', 'ri', 'mx1', 'mx2', 'col', 'dsk', 'cas', 'sc', 'zip'],
 		'romType' : 0,
 		'multiDisk' : True,
         'emulators' : {
@@ -3872,6 +4011,7 @@ dPlatformMapping = {
 			'igdb' : 52,
 			'thegamesdb' : 23
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['ccd', 'chd', 'cue', 'iso', 'mds', 'zip'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -3896,6 +4036,7 @@ dPlatformMapping = {
 			'igdb' : 374,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -3906,6 +4047,7 @@ dPlatformMapping = {
 			'igdb' : 77,
 			'thegamesdb' : 4977
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['dx1', 'zip', '2d', '2hd', 'tfd', 'd88', '88d', 'hdm', 'xdf', 'dup', 'tap', 'cmd'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -3930,6 +4072,7 @@ dPlatformMapping = {
 			'igdb' : 121,
 			'thegamesdb' : 4931
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['dim', 'zip', 'img', 'd88', '88d', 'hdm', 'dup', '2hd', 'xdf', 'hdf', 'cmd'],
 		'romType' : 0,
 		'multiDisk' : True,
@@ -3954,6 +4097,7 @@ dPlatformMapping = {
 			'igdb' : 373,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['p', 'tzx', 't81'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -3978,6 +4122,7 @@ dPlatformMapping = {
 			'igdb' : 26,
 			'thegamesdb' : 4913
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['tzx', 'tap', 'z80', 'rzx', 'scl', 'trd'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -4002,6 +4147,7 @@ dPlatformMapping = {
 			'igdb' : 135,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4012,6 +4158,7 @@ dPlatformMapping = {
 			'igdb' : 80,
 			'thegamesdb' : 24
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4022,6 +4169,7 @@ dPlatformMapping = {
 			'igdb' : 136,
 			'thegamesdb' : 4956
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['cue', 'chd'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -4046,6 +4194,7 @@ dPlatformMapping = {
 			'igdb' : 79,
 			'thegamesdb' : 24
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4056,6 +4205,7 @@ dPlatformMapping = {
 			'igdb' : 119,
 			'thegamesdb' : 4922
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['ngp', 'ngc', 'ngpc', 'npc'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -4085,6 +4235,7 @@ dPlatformMapping = {
 			'igdb' : 120,
 			'thegamesdb' : 4923
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['ngp', 'ngc', 'ngpc', 'npc'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -4114,6 +4265,7 @@ dPlatformMapping = {
 			'igdb' : 237,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4124,6 +4276,7 @@ dPlatformMapping = {
 			'igdb' : 7,
 			'thegamesdb' : 10
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['cbn', 'ccd', 'chd', 'cue', 'exe', 'img', 'mdf', 'pbp', 'toc'], #don't include bin during scanning
 		'romType' : 0,
         'multiDisk' : True, #creates and adds m3u
@@ -4163,6 +4316,7 @@ dPlatformMapping = {
 			'igdb' : 8,
 			'thegamesdb' : 11
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['ciso', 'cue', 'elf', 'iso', 'isz', 'cso'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -4192,6 +4346,7 @@ dPlatformMapping = {
 			'igdb' : 9,
 			'thegamesdb' : 12
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4202,6 +4357,7 @@ dPlatformMapping = {
 			'igdb' : 48,
 			'thegamesdb' : 4919
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4212,6 +4368,7 @@ dPlatformMapping = {
 			'igdb' : 167,
 			'thegamesdb' : 4980
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4222,6 +4379,7 @@ dPlatformMapping = {
 			'igdb' : 45,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4232,6 +4390,7 @@ dPlatformMapping = {
 			'igdb' : 38,
 			'thegamesdb' : 13
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['elf', 'iso', 'cso', 'prx', 'pbp'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -4256,6 +4415,7 @@ dPlatformMapping = {
 			'igdb' : 46,
 			'thegamesdb' : 39
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4266,6 +4426,7 @@ dPlatformMapping = {
 			'igdb' : 165,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4276,6 +4437,7 @@ dPlatformMapping = {
 			'igdb' : 6,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['pk3'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -4300,6 +4462,7 @@ dPlatformMapping = {
 			'igdb' : 163,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4310,7 +4473,8 @@ dPlatformMapping = {
 			'igdb' : 19,
 			'thegamesdb' : 6
 			},
-		'romExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc', 'bs', 'st', 'gb', 'gbc', 'bml', 'rom'],
+        'libraryType' : 'Games',
+		'romExtensions' : ['smc', 'fig', 'sfc', 'gd3', 'gd7', 'dx2', 'bsx', 'swc', 'bs', 'st', 'gb', 'gbc', 'bml', 'rom', 'zip'],
 		'romType' : 0,
 		'multiDisk' : False,
         'emulators' : {
@@ -4424,6 +4588,7 @@ dPlatformMapping = {
 			'igdb' : 124,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4434,6 +4599,7 @@ dPlatformMapping = {
 			'igdb' : 126,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4444,6 +4610,7 @@ dPlatformMapping = {
 			'igdb' : 151,
 			'thegamesdb' : 4941
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4454,6 +4621,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4982
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4464,6 +4632,7 @@ dPlatformMapping = {
 			'igdb' : 44,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['prc', 'pqa', 'img'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -4488,16 +4657,18 @@ dPlatformMapping = {
 			'igdb' : 155,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
 		},
-    'Texas Instruments TI-99/4A' : { 
-		'systemNames' : ['Texas Instruments TI-99/4A', 'Texas Instruments TI-99', 'ti-99'],
+    'Texas Instruments TI-99-4A' : { 
+		'systemNames' : ['Texas Instruments TI-99-4A', 'Texas Instruments TI-99', 'ti-99'],
 		'systemIds' : {
 			'igdb' : 129,
 			'thegamesdb' : 4953
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4508,6 +4679,7 @@ dPlatformMapping = {
 			'igdb' : 156,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['fd', 'sap', 'k7', 'm7', 'm5', 'rom'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -4532,6 +4704,7 @@ dPlatformMapping = {
 			'igdb' : 6,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['phd', 'psx', 'tr2'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -4556,6 +4729,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4960
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4566,6 +4740,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4959
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4576,6 +4751,7 @@ dPlatformMapping = {
 			'igdb' : 82,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4586,6 +4762,7 @@ dPlatformMapping = {
 			'igdb' : 161,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4596,6 +4773,7 @@ dPlatformMapping = {
 			'igdb' : 74,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4606,6 +4784,7 @@ dPlatformMapping = {
 			'igdb' : 6,
 			'thegamesdb' : 1
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['wl6', 'n3d', 'sod', 'sdm', 'wl1', 'pk3', 'exe'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -4630,6 +4809,7 @@ dPlatformMapping = {
 			'igdb' : 57,
 			'thegamesdb' : 4925
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['pc2', 'ws', 'wsc'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -4654,6 +4834,7 @@ dPlatformMapping = {
 			'igdb' : 123,
 			'thegamesdb' : 4926
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : ['pc2', 'ws', 'wsc'],
 		'romType' : 0,
 		'multiDisk' : False,
@@ -4678,6 +4859,7 @@ dPlatformMapping = {
 			'igdb' : None,
 			'thegamesdb' : 4984
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
@@ -4688,6 +4870,7 @@ dPlatformMapping = {
 			'igdb' : 240,
 			'thegamesdb' : None
 			},
+        'libraryType' : 'Games',
 		'romExtensions' : [],
 		'romType' : 0,
 		'multiDisk' : False
