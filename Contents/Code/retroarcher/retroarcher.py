@@ -834,7 +834,11 @@ def scanner(paths, SourceRomDir, dataFolders):
                                 if value['multiDisk'] == True:
                                     checks.append(['m3u'])
                                 
-                                dstPath = os.path.join(dataFolders['mediaFolder'], system)
+                                libraryType = value['libraryType']
+                                libPath = os.path.join(dataFolders['mediaFolder'], libraryType)
+                                make_dir(libPath)
+                                print(libPath)
+                                dstPath = os.path.join(dataFolders['mediaFolder'], libraryType, system)
                                 make_dir(dstPath)
                                 print(dstPath)
                                 
@@ -996,8 +1000,8 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                     if ffmpeg_changed == 1:
                                                         makeLink = True
                                                     
-                                                    if makeLink == True:
-                                                        destinationPath = os.path.join(system, romName + '.' + src.rsplit('.', 1)[-1])
+                                                    if makeLink == True and skipRom == False:
+                                                        destinationPath = os.path.join(libraryType, system, romName + '.' + src.rsplit('.', 1)[-1])
                                                         
                                                         videoKey = os.path.join(romName + '.' + src.rsplit('.', 1)[-1])
                                                         
