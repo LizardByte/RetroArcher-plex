@@ -1,5 +1,5 @@
 ### RetroArcher.bundle for Plex Media Server:
-RetroArcher is a gaming plug-in for Plex! Read all instructions before running any scripts.
+RetroArcher is a gaming plug-in for Plex! Read ALL instructions before running any scripts.
 
 ### Prerequisites for server:
  - [Tautulli](https://tautulli.com/)
@@ -27,15 +27,18 @@ RetroArcher is a gaming plug-in for Plex! Read all instructions before running a
 	     - Only supports CPU encoding
 	     - Difficult to configure
  - Linux (coming soon)
-    - [Sunshine](https://github.com/loki-47-6F-64/sunshine/releases)
-	  - Benefits:
-	    - Pair through URL
-	    - Multi-platform support
-      - Cons:
-	    - Only supports CPU encoding
-	    - Difficult to configure
+   - [Sunshine](https://github.com/loki-47-6F-64/sunshine/releases)
+	 - Benefits:
+	   - Pair through URL
+	   - Multi-platform support
+     - Cons:
+	   - Only supports CPU encoding
+	   - Difficult to configure
  - Mac
-    - Not available yet. Open-Stream claims they will support Windows, Linux and Mac, but currently only a release for Windows is available. Their project is open source. If you have the skills maybe you can help them get this working on Mac.
+   - Not available yet. Open-Stream claims they will support Windows, Linux and Mac, but currently only a release for Windows is available. Their project is open source. If you have the skills maybe you can help them get this working on Mac.
+ - Optional (depending on what games you want to play and how)
+   - [RetroArch](https://www.retroarch.com/)
+   - [RPCS3](https://rpcs3.net/) - coming soon
 
 ### Prerequisites for client:
  - Android:
@@ -63,6 +66,27 @@ RetroArcher is a gaming plug-in for Plex! Read all instructions before running a
 	    - Install to default location
 		- Run this from command promp as admin:
 		  `netsh advfirewall firewall set rule group="Remote Scheduled Tasks Management" new enable=Yes`
+    - On the server:
+	  - Open this directory `<plex data folder location>\Plex Media Server\Plug-in Support\Data\com.github.agents.reenignearcher.retroarcher\database`
+	  - Create a file named `secrets.json` if it doesn't exist. The content of the file is below. This process will be improved later (Issue #54)
+```
+{
+  "Plex Username Here" : {
+    "win" : {
+	  "u" : "Windows username here",
+	  "p" : "Windows password here"
+	  },
+	"linux" : {
+	  "u" : "",
+	  "p" : ""
+	  },
+	"mac" : {
+	  "u" : "",
+	  "p" : ""
+	  }
+	}
+}
+```
 
 ### Installation:
 It is recommended to install the [WebTools plugin](http://forums.plex.tv/discussion/288191/webtools-unsupported-appstore/p1).
@@ -79,7 +103,7 @@ After successfully installing WebTools please login and select the
 Not recommended, but possible if you know what you are doing.
 
 Windows
-1. Download the [zipped bundle](https://github.com/ReenigneArcher/RetroArcher.bundle/archive/master.zip) from github,
+1. Download the [zipped bundle](https://github.com/ReenigneArcher/RetroArcher.bundle/archive/main.zip) from github,
 2. Extract it,
 3. Rename it to **RetroArcher.bundle**,
 4. Find the [Plex Media Server data directory](https://support.plex.tv/hc/en-us/articles/202915258-Where-is-the-Plex-Media-Server-data-directory-located)
@@ -89,7 +113,7 @@ Windows
 8. Restart plex again.
 
 Ubuntu
-1. Download the [zipped bundle](https://github.com/ReenigneArcher/RetroArcher.bundle/archive/master.zip) from github,
+1. Download the [zipped bundle](https://github.com/ReenigneArcher/RetroArcher.bundle/archive/main.zip) from github,
 2. Extract it,
 3. Rename it to **RetroArcher.bundle**,
 4. Move to the folder:  `/var/<folder>/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins` where <folder> is "lib" or "snap"
@@ -119,12 +143,13 @@ Ubuntu
 4. The following settings need to be entered
     - ROMS|Fullpath of source rom directory
     - SCANNER|ADVANCED|FFMPEG|Encoder (h264_nvenc is set as default assuming most users will have an nvidia gpu)
-    - LAUNCHER|Moonlight Machine UUID
-    - LAUNCHER|Moonlight App ID (`1` unless using GeForce Experience)
-    - LAUNCHER|Moonlight App Name (`Desktop` unless using GeForce Experience)
-    - GAMESTREAM|GENERAL|White listed users
+    - LAUNCHER|Moonlight Machine UUID - (this setting will be removed in the future, but is needed for now - Issue #47)
+    - LAUNCHER|Moonlight App ID (`1` unless using GeForce Experience) - (this setting will be removed in the future, but is needed for now - Issue #47)
+    - LAUNCHER|Moonlight App Name (`Desktop` unless using GeForce Experience) - (this setting will be removed in the future, but is needed for now - Issue #47)
+    - GAMESTREAM|GENERAL|White listed users (not working yet)
     - PLEX|Server token
-    - Ignore last 3 settings entirely
+	- APPLICAITON|DIRECTORY|RetroArch (the directory where your retroarch config, cores, etc. exist)
+    - Ignore last 3 settings entirely (these are from the broken youtube service for extras  - Issue #14)
 5. Click Save
 6. Disable `Local Media Assets (Movies)`
 
@@ -145,11 +170,12 @@ Ubuntu
 	  - There should be a folder named the same as the platform name (Nintendo 64 for example)
 	  - Video file name is not important
 	  - There can be multiple platform specific videos for each platform. The script will choose a random one if multiple are found.
-    - Random
+    - Main
       - If no game specific or platform start video is found the script will look for generic start videos
 	  - No folders are required in this directory
 	  - Video file name is not important
-	  - There can be multiple platform specific videos for each platform. The script will choose a random one if multiple are found.
+	  - There can be multiple videos in this directory. The script will choose a random one if multiple are found.
+	- Note: No videos are currently provided with the plugin. There is a [repository](https://github.com/ReenigneArcher/RetroArcher.start-videos) dedicated to creating and generating these videos, but need help with theme music and artwork creation.
 4. Install newest version of python
     - Windows (correct the directory as required)
       - `cd /d <plex data folder location>\Plex Media Server\Plug-ins\RetroArcher.bundle\Contents\Code\retroarcher`
@@ -179,10 +205,12 @@ Ubuntu
   - Enable Cinema Trailer (disabled)
   - Enable video preview thumbnails (disabled)
   - Collections: Disabled
+- Notes
+  - In the future I will try to automate this with python-plexapi.
 
 ### Tautulli settings
 1. Open [Notification Agents](http://localhost:8181/settings#tabs_tabs-notification_agents) in Tautulli 
-2. Add a new notification agents
+2. Add a new notification agent
     - Configuration
       - Script Folder: `<plex data folder location>\Plex Media Server\Plug-ins\RetroArcher.bundle\Contents\Code\retroarcher`
       - Script File: `.\retroarcher.py`
@@ -191,14 +219,12 @@ Ubuntu
     - Triggers
       - Playback Start
     - Conditions
-      - Preferred:
-	    - Library Name is `RetroArcher` (change according to your library name)
-	  - Other methods:
-	    - Library Name begins with `RetroArcher` (for those of you who want to have different libraries for each platform... RetroArcher - Nintendo 64)
-	    - Library Name ends with `RetroArcher` (for those of you who want to have different libraries for each platform... Nintendo 64 - RetroArcher)
+      - `File` - `contains` - `com.github.agents.reenignearcher.retroarcher`
     - Arguments
       - Playback Start
 	    - `--launch --user {user} --device {device} --platform {platform} --product {product} --player {player} --ip_address {ip_address} --file {file}`
+- Notes
+  - In the future I will try to automate this with tautulli python api (Issue #48).
 
 ### Moonlight clients
 - Each new moonlight client needs to be paired to the server.
@@ -210,9 +236,11 @@ Ubuntu
 
 ### Additional considerations
 - By providing game streaming to other users on your Plex server you are granting them full access to your machine. There is a plan to add a watchdog to the script to ensure that the emulator remains full-screen and if not, then the stream will be killed. This may not be 100% reliable though, so even when this is implemented there could still be a risk. Allow game streaming with your shared users at your own risk.
+- By granting the server ADB permission to Android devices or other methods to control your devices, you are accepting huge security risk. With or without gamestreaming enabled, this is a risk. Proceed with caution.
 - If you have a large game collection, your Plex data directory may grow significantly in size. It is recommended to have as large as possible of a SSD for use only by your Plex data directory.
 - There is no warranty or anyway to revert your Plex data directory. Make a backup if you are concerned about ever restoring it to it's previous state.
-- This is Windows only currently. There is a plan to support Linux servers with Desktop GUI's, but more work needs to be done on that front.
+- This is Windows only currently. There is a plan to support Linux servers with Desktop GUI's, but more work needs to be done on that front. If you would like to try and run this on Linux, and document what needs to change to get everything working, that could be helpful.
+- While the repository is public now, this plug-in is not released yet. Some settings from the plug-in settings page in Plex are not implemented yet. They will all be implemented before the initial release. Additionally, there will be many bugs, issues, etc. Some I am already aware of. Check the open issues before submitting new ones.
 
 ### Contributors
 - Anyone willing to contribute is always welcome to submit pull requests. You can also reach out on the [Discord](https://discord.gg/d6MpcrbYQs) server.

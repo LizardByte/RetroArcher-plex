@@ -642,14 +642,14 @@ def scanner(paths, SourceRomDir, dataFolders):
     SourceRomDirLength = len(splitall(SourceRomDir))
     
     startVideoDirectory = os.path.join(paths['retroarcherStartVideosDir']) #map to start video directory
-    randomVideoDirectory = os.path.join(startVideoDirectory, 'Random') #map the random videos directory
+    mainVideoDirectory = os.path.join(startVideoDirectory, 'Main') #map the main videos directory
     
     #compare these later
-    randomVideoList = list_videos(randomVideoDirectory)
-    print(randomVideoList)
-    randomMD5List, randomSHA1List = list_hash(randomVideoList)
-    print(randomMD5List)
-    print(randomSHA1List)
+    mainVideoList = list_videos(mainVideoDirectory)
+    print(mainVideoList)
+    mainMD5List, mainSHA1List = list_hash(mainVideoList)
+    print(mainMD5List)
+    print(mainSHA1List)
     
     '''set these as global'''
     #replace these later with database key
@@ -755,20 +755,20 @@ def scanner(paths, SourceRomDir, dataFolders):
             print('KeyError :' + str(e))
             print('database corruption detected')
             useExisting = False
-        if randomMD5List == database['randomVideoHash']:
-            print('random videos are the same as before')
-            randomVideos = 0 #don't use a new video
+        if mainMD5List == database['mainVideoHash']:
+            print('main videos are the same as before')
+            mainVideos = 0 #don't use a new video
         else:
-            database['randomVideoHash'] = randomMD5List
-            print('random videos have changed')
-            randomVideos = 1 #possibly use a new video
+            database['mainVideoHash'] = mainMD5List
+            print('main videos have changed')
+            mainVideos = 1 #possibly use a new video
     
     if useExisting == False: #do not make this an elif statement becuase we may set useExisting to be false in the above if statement!
         print('use existing is false... something wrong with the json file?')
         database = {'ffmpegOverlay' : ffmpegOverlay }
         ffmpeg_changed = 1 #settings changed, re-encode ALL, not really but database is messed up, need to re-make everything.
-        database['randomVideoHash'] = randomMD5List
-        randomVideos = 1 #possibly use a new video
+        database['mainVideoHash'] = mainMD5List
+        mainVideos = 1 #possibly use a new video
         database['romMapping'] = {}
         database['romMapping']['platforms'] = {}
         #print(database)
@@ -956,10 +956,10 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                         
                                                         #try to find a find a random platform start video, then try to find a random non platform start video
                                                         if src == None:
-                                                            startVidDir = [ platformVideoDirectory, randomVideoDirectory ]
-                                                            video_type = ['platform', 'random']
-                                                            typeHashList = [platformMD5List, randomMD5List]
-                                                            typeMakeNew = [platformVideos, randomVideos]
+                                                            startVidDir = [ platformVideoDirectory, mainVideoDirectory ]
+                                                            video_type = ['platform', 'main']
+                                                            typeHashList = [platformMD5List, mainMD5List]
+                                                            typeMakeNew = [platformVideos, mainVideos]
                                                             t = 0
                                                             for videoDir in startVidDir:
                                                                 videoList = list_videos(videoDir)
