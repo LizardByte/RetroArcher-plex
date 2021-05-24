@@ -170,11 +170,12 @@ Ubuntu
 	  - There should be a folder named the same as the platform name (Nintendo 64 for example)
 	  - Video file name is not important
 	  - There can be multiple platform specific videos for each platform. The script will choose a random one if multiple are found.
-    - Random
+    - Main
       - If no game specific or platform start video is found the script will look for generic start videos
 	  - No folders are required in this directory
 	  - Video file name is not important
-	  - There can be multiple platform specific videos for each platform. The script will choose a random one if multiple are found.
+	  - There can be multiple videos in this directory. The script will choose a random one if multiple are found.
+	- Note: No videos are currently provided with the plugin. There is a [repository](https://github.com/ReenigneArcher/RetroArcher.start-videos) dedicated to creating and generating these videos, but need help with theme music and artwork creation.
 4. Install newest version of python
     - Windows (correct the directory as required)
       - `cd /d <plex data folder location>\Plex Media Server\Plug-ins\RetroArcher.bundle\Contents\Code\retroarcher`
