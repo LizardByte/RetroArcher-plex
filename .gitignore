@@ -15,9 +15,17 @@
 Contents/Code/developer
 
 # Ignore Certain Start Videos
-Contents/Resources/StartVideos/Games/
-Contents/Resources/StartVideos/Platforms/
+!Contents/Resources/StartVideos/Games/
+Contents/Resources/StartVideos/Games/*
+!Contents/Resources/StartVideos/Games/.keep
+!Contents/Resources/StartVideos/Platforms/
+Contents/Resources/StartVideos/Platforms/*
+!Contents/Resources/StartVideos/Platforms/.keep
 Contents/Resources/StartVideos/Platforms.bak/
 
 #Ignore these for now until we include vidoes that we have permission to distribute
-Contents/Resources/StartVideos/Random/
+!Contents/Resources/StartVideos/Main/
+Contents/Resources/StartVideos/Main/*
+!Contents/Resources/StartVideos/Main/*.keep
+
+!*.keep
