@@ -14,6 +14,17 @@
   { "id":"iBufferSize",               "label":"SCANNER|ADVANCED|HASHING|Buffer size in kb",    "type":"text",    "default":"65536"  },
   
   { "id":"sSearchSite",               "label":"SEARCH|Database",    "type": "enum",    "values": [ "IGDB" ],    "default": "IGDB"  },
+  { "id":"sIgdbCreds",                "label":"SEARCH|IGDB|json",    "type":"text",    "default":"https://raw.githubusercontent.com/RetroArcher/RetroArcher.proxy/main/igdb.json"  },
+  { "id":"sYouTubeApiKey",            "label":"SEARCH|API KEY|YouTube",    "type":"text",    "option":"hidden",     "default":"AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4"  },
+
+  { "id":"ePreferredRatingSystem",    "label":"RATINGS|Preferred Rating System",    "type": "enum",    "values": [ "ESRB", "PEGI" ],    "default": "ESRB"  },  
+  
+  { "id":"bPlatformAsCollection",     "label":"COLLECTIONS|Use platform name as collection (Disable for platform specific libraries)",    "type":"bool",    "default":"True"  },
+  
+  { "id":"sThemesSource",             "label":"THEMES|MUSIC|Theme music database",    "type": "enum",    "values": [ "none", "Local" ],    "default": "Local"  },
+  { "id":"sSourceThemeDirectory",     "label":"THEMES|Fullpath of source theme music directory",    "type":"text",    "default":""  },
+  
+  { "id":"bGetExtraObject",           "label":"EXTRAS|Collect trailer object",    "type":"bool",    "default":"False"  },
   
   { "id":"sMoonlightPcUuid",          "label":"LAUNCHER|Moonlight Machine UUID",    "type":"text",    "default":""  },
   { "id":"sMoonlightAppId",           "label":"LAUNCHER|Moonlight App ID",    "type":"text",    "default":""  },
@@ -25,17 +36,6 @@
   { "id":"eGameStreamApp",            "label":"GAMESTREAM|GENERAL|Game stream client app",    "type":"enum",    "values": [ "moonlight" ], "default":"moonlight"  },
   { "id":"eGameStreamHost",           "label":"GAMESTREAM|GENERAL|Game stream host",    "type":"enum",    "values": [ "GeForce Experience", "Open-Stream", "Sunshine" ], "default":"GeForce Experience"  },
   
-  { "id":"sYouTubeApiKey",            "label":"SEARCH|API KEY|YouTube",    "type":"text",    "option":"hidden",     "default":"AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4"  },
-  
-  { "id":"ePreferredRatingSystem",    "label":"RATINGS|Preferred Rating System",    "type": "enum",    "values": [ "ESRB", "PEGI" ],    "default": "ESRB"  },  
-  
-  { "id":"bPlatformAsCollection",     "label":"COLLECTIONS|Use platform name as collection (Disable for platform specific libraries)",    "type":"bool",    "default":"True"  },
-  
-  { "id":"sThemesSource",             "label":"THEMES|MUSIC|Theme music database",    "type": "enum",    "values": [ "none", "Local" ],    "default": "Local"  },
-  { "id":"sSourceThemeDirectory",     "label":"THEMES|Fullpath of source theme music directory",    "type":"text",    "default":""  },
-  
-  { "id":"bGetExtraObject",           "label":"EXTRAS|Collect trailer object",    "type":"bool",    "default":"False"  },
-
   { "id":"PLEX_URL",                  "label":"ADVANCED SETTINGS\n_____________________________________________________________________________________\nPLEX|Server URL",    "type":"text",    "default":"http://localhost:32400"  },
   { "id":"PLEX_TOKEN",                "label":"PLEX|Server token",    "type":"text",    "option":"hidden",     "default":"",		"secure":"true"  },
 

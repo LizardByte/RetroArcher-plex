@@ -14,7 +14,7 @@ import xmltodict, json
 PLEX_URL = ''
 PLEX_TOKEN = ''
 
-agent = 'org.github.agent.reenignearcher.retroarcher.xml'
+agent = 'org.github.agent.retroarcher.retroarcher.xml'
 
 # ## CODE BELOW ##
 if not PLEX_URL:
