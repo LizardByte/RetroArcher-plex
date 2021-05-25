@@ -25,7 +25,7 @@ def Start():
   msgContainer = ValidatePrefs();
   if msgContainer.header == 'Error': return
   Log.Debug('### RetroArcher Metadata Agent Started ##############################################################################################################')
-  HTTP.CacheTime          = CACHE_1HOUR * 24
+  HTTP.CacheTime = CACHE_1HOUR * 24
 
 class RetroArcherCommonAgent:
 
