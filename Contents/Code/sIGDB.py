@@ -6,7 +6,7 @@ import json
 import common
 
 def igdb_wrapper():
-    url = 'https://raw.githubusercontent.com/ReenigneArcher/RetroArcher.proxy/main/igdb.json'
+    url = Prefs['sIgdbCreds']
     
     authorization = JSON.ObjectFromURL(url, values=None, headers={}, cacheTime=86400, encoding=None, errors=None, timeout=60, sleep=0)
     

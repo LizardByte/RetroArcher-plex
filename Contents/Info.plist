@@ -8,7 +8,7 @@
   <string>2</string>
 
   <key>CFBundleIdentifier</key>
-  <string>com.github.agents.reenignearcher.retroarcher</string>
+  <string>com.github.agents.retroarcher.retroarcher</string>
 
   <!-- This one does nothing with a value of Always On, but using a value of "daemon" keeps the plugin alive in the background -->	
   <key>PlexPluginMode</key>

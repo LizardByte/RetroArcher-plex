@@ -61,13 +61,13 @@ RetroArcher is a gaming plug-in for Plex! Read ALL instructions before running a
 	 
   - Windows (currently requires Windows as server):
     - One of these 2:
-	  - [RetroArcher.client.windows](https://github.com/ReenigneArcher/RetroArcher.client.windows)
+	  - [RetroArcher.client.windows](https://github.com/RetroArcher/RetroArcher.client.windows)
 	  - [Moonlight-qt](https://github.com/moonlight-stream/moonlight-qt/releases)
 	    - Install to default location
 		- Run this from command promp as admin:
 		  `netsh advfirewall firewall set rule group="Remote Scheduled Tasks Management" new enable=Yes`
     - On the server:
-	  - Open this directory `<plex data folder location>\Plex Media Server\Plug-in Support\Data\com.github.agents.reenignearcher.retroarcher\database`
+	  - Open this directory `<plex data folder location>\Plex Media Server\Plug-in Support\Data\com.github.agents.retroarcher.retroarcher\database`
 	  - Create a file named `secrets.json` if it doesn't exist. The content of the file is below. This process will be improved later (Issue #54)
 ```
 {
@@ -103,7 +103,7 @@ After successfully installing WebTools please login and select the
 Not recommended, but possible if you know what you are doing.
 
 Windows
-1. Download the [zipped bundle](https://github.com/ReenigneArcher/RetroArcher.bundle/archive/main.zip) from github,
+1. Download the [zipped bundle](https://github.com/RetroArcher/RetroArcher.bundle/archive/main.zip) from github,
 2. Extract it,
 3. Rename it to **RetroArcher.bundle**,
 4. Find the [Plex Media Server data directory](https://support.plex.tv/hc/en-us/articles/202915258-Where-is-the-Plex-Media-Server-data-directory-located)
@@ -113,7 +113,7 @@ Windows
 8. Restart plex again.
 
 Ubuntu
-1. Download the [zipped bundle](https://github.com/ReenigneArcher/RetroArcher.bundle/archive/main.zip) from github,
+1. Download the [zipped bundle](https://github.com/RetroArcher/RetroArcher.bundle/archive/main.zip) from github,
 2. Extract it,
 3. Rename it to **RetroArcher.bundle**,
 4. Move to the folder:  `/var/<folder>/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins` where <folder> is "lib" or "snap"
@@ -129,7 +129,7 @@ Ubuntu
     - Click "Add"
     - Browse to C:\windows\system32\mstsc.exe
     - Click "Edit" and rename to "RetroArcher"
-    - Change the BoxArt if you wish (https://github.com/ReenigneArcher/RetroArcher.database/blob/main/Posters/3-4/RetroArcher/RetroArcher.png).
+    - Change the BoxArt if you wish (https://github.com/RetroArcher/RetroArcher.database/blob/main/Posters/3-4/RetroArcher/RetroArcher.png).
     - Open Moonlight on a client app
     - Long press okay on your server name and select `View Details`, make a note of the `Name` and `UUID`, select `OK`
     - Select the server and enter the pairing code on your server
@@ -155,7 +155,7 @@ Ubuntu
 
 ### Scanning roms
 1. Note that valid roms found will have a short video generated.
-    - This video will be placed inside the `<plex data folder location>\Plex Media Server\Plug-in Support\Data\com.github.agents.reenignearcher.retroarcher` directory.
+    - This video will be placed inside the `<plex data folder location>\Plex Media Server\Plug-in Support\Data\com.github.agents.retroarcher.retroarcher` directory.
     - If your start videos are 1080p and 20 seconds in length, they will take approximately 5-6GB per 1000 files.
       - The length of the video can be adjusted in the plug-in settings within Plex. 20 seconds is enough in my testing for Android clients. For Windows clients a longer amount may be desired.
 2. Note that Plex will start collecting meta-data once the videos are added. The metadata collected can take up a lot of space. Most users will have large rom collections, much larger than a standard movie library. Therefore consider that the metadata folder will grow tremendously. I am recommending a separate large SSD for your Plex Data folder only.
@@ -175,7 +175,7 @@ Ubuntu
 	  - No folders are required in this directory
 	  - Video file name is not important
 	  - There can be multiple videos in this directory. The script will choose a random one if multiple are found.
-	- Note: No videos are currently provided with the plugin. There is a [repository](https://github.com/ReenigneArcher/RetroArcher.start-videos) dedicated to creating and generating these videos, but need help with theme music and artwork creation.
+	- Note: No videos are currently provided with the plugin. There is a [repository](https://github.com/RetroArcher/RetroArcher.start-videos) dedicated to creating and generating these videos, but need help with theme music and artwork creation.
 4. Install newest version of python
     - Windows (correct the directory as required)
       - `cd /d <plex data folder location>\Plex Media Server\Plug-ins\RetroArcher.bundle\Contents\Code\retroarcher`
@@ -195,9 +195,9 @@ Ubuntu
   - Language: English (no other languages tested and probably won't work yet)
 - Add folder
   - Single library (preferred):
-    - `<plex data folder location>\Plex Media Server\Plug-in Support\Data\com.github.agents.reenignearcher.retroarcher\media`
+    - `<plex data folder location>\Plex Media Server\Plug-in Support\Data\com.github.agents.retroarcher.retroarcher\media`
   - Library per platform:
-    - `<plex data folder location>\Plex Media Server\Plug-in Support\Data\com.github.agents.reenignearcher.retroarcher\media\<platform name>`
+    - `<plex data folder location>\Plex Media Server\Plug-in Support\Data\com.github.agents.retroarcher.retroarcher\media\<platform name>`
 - Advanced
   - Scanner: Plex Movie Scanner
   - Agent: RetroArcher
@@ -219,7 +219,7 @@ Ubuntu
     - Triggers
       - Playback Start
     - Conditions
-      - `File` - `contains` - `com.github.agents.reenignearcher.retroarcher`
+      - `File` - `contains` - `com.github.agents.retroarcher.retroarcher`
     - Arguments
       - Playback Start
 	    - `--launch --user {user} --device {device} --platform {platform} --product {product} --player {player} --ip_address {ip_address} --file {file}`

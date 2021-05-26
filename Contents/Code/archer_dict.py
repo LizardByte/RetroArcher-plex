@@ -76,6 +76,18 @@ dDefaultSettings = {
 	'iBufferSize' : '65536',
 	
 	'sSearchSite' : 'IGDB',
+    'sIgdbCreds' : 'https://raw.githubusercontent.com/RetroArcher/RetroArcher.proxy/main/igdb.json',
+
+	'sYouTubeApiKey' : 'AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4',
+	
+	'ePreferredRatingSystem' : 'ESRB',  
+	
+	'bPlatformAsCollection' : 'True',
+	
+	'sThemesSource' : 'Local',
+	'sSourceThemeDirectory' : '',
+    
+    'bGetExtraObject' : 'True',
 	
 	'sMoonlightPcUuid' : '',
 	'sMoonlightAppId' : '',
@@ -86,17 +98,6 @@ dDefaultSettings = {
 	'sGameStreamBlackList' : '',
 	'eGameStreamApp' : 'moonlight',
 	'eGameStreamHost' : '0',
-	
-	'sYouTubeApiKey' : 'AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4',
-	
-	'ePreferredRatingSystem' : 'ESRB',  
-	
-	'bPlatformAsCollection' : 'True',
-	
-	'sThemesSource' : 'Local',
-	'sSourceThemeDirectory' : '',
-	
-	'bGetExtraObject' : 'True',
 	
 	'PLEX_URL' : 'http://localhost:32400',
 	'PLEX_TOKEN' : '',

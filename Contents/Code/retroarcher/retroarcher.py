@@ -159,8 +159,11 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
         database = json.load(f)
     
     secretsFile = os.path.join(jsonDir, 'secrets.json')
-    with open(secretsFile) as f:
-        secrets = json.load(f)
+    try:
+        with open(secretsFile) as f:
+            secrets = json.load(f)
+    except FileNotFoundError:
+        pass
     
     #romName = database['mapping'][key]
     
