@@ -144,7 +144,7 @@ def getDataFolders(directory, agent):
     dataFolders['dbFolder'] = os.path.join(directory, 'Plug-in Support', 'Data', agent, 'database')
     return dataFolders
 
-def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, movieName, dataFolders):
+def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId, movieName, dataFolders):
     #convert movieName to romName
     game_name_full = os.path.basename(movieName) #the file name
     system = platformPath(movieName)
@@ -228,9 +228,10 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
         print(core)
         core = archer_dict.dPlatformMapping[system]['emulators'][emulator]['cores'][core]
         print(core)
-        #emulatorCore = os.path.join('cores', archer_dict.dRetroarchCores[core])
         emulatorCore = os.path.join('cores', core)
         print(emulatorCore)
+    else:
+        emulatorCore = ''
     
     fullRomPath = os.path.join(SourceRomDir, romName)
     print(fullRomPath)
@@ -268,14 +269,29 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
         launch = False
     
     if launch == True:
+        UserId_rpcs3 = clientUserId
+        UserId_length = len(UserId_rpcs3)
+        try:
+            int(clientUserId)
+            while UserId_length != 8:
+                if UserId_length < 8:
+                    UserId_rpcs3 = '0%s' % (UserId_rpcs3)
+                else:
+                    UserId_rpcs3 = UserId_rpcs3[1:]
+                UserId_length = len(UserId_rpcs3)
+        except:
+            print('Error: User ID is not an integer')
+
         dSystemPlatformMapping = {
         'win64' : {
             'emulators' : {
                 'retroarch' : {
-                    #'dir' : os.path.join(paths['contentsDir'], 'bin', 'RetroArch', 'win64'),
                     'dir' : applicationDirectory,
-                    #'command' : 'start "RetroArcher" "retroarch.exe" -L "' + emulatorCore + '" "' + fullRomPath + '" '
                     'command' : 'start "RetroArcher" "' + binaryCommand + '" -L "' + emulatorCore + '" "' + fullRomPath + '" '
+                    },
+                'rpcs3' : {
+                    'dir' : applicationDirectory,
+                    'command' : 'start "RetroArcher" "' + binaryCommand + '" --no-gui "' + fullRomPath + '" --user-id ' + UserId_rpcs3
                     }
                 },
             'stream_host' : {
@@ -294,8 +310,12 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
         'win32' : {
             'emulators' : {
                 'retroarch' : {
-                    'dir' : os.path.join(paths['contentsDir'], 'bin', 'RetroArch', 'win64'),
-                    'command' : 'start "RetroArcher" "retroarch.exe" -L "' + emulatorCore + '" "' + fullRomPath + '" '
+                    'dir' : applicationDirectory,
+                    'command' : 'start "RetroArcher" "' + binaryCommand + '" -L "' + emulatorCore + '" "' + fullRomPath + '" '
+                    },
+                'rpcs3' : {
+                    'dir' : applicationDirectory,
+                    'command' : 'start "RetroArcher" "' + binaryCommand + '" --no-gui "' + fullRomPath + '" --user-id ' + UserId_rpcs3
                     }
                 },
             'stream_host' : {
@@ -861,9 +881,25 @@ def scanner(paths, SourceRomDir, dataFolders):
                                         #    time.sleep(2)
                                         for f in files1:
                                             splitFile = f.rsplit('.',1)
-                                            romName = splitFile[0]
-                                            romExtension = splitFile[-1]
+                                            romExtension = splitFile[-1].lower()
                                             #print(romExtension)
+
+                                            #custom system game naming conventions
+                                            if system.lower() == 'sony playstation 3': #rpcs3... can't they just be normal and load an iso?
+                                                ps3Path = os.path.join('ps3_game', 'usrdir')
+                                                if ps3Path in root1.lower():
+                                                    if f.lower() == 'eboot.bin':
+                                                        gameFolder = os.path.split(os.path.join(*splitall(relativePath)[:-2]))[-1]
+                                                        romName = gameFolder.rsplit(' ', 1)[0]
+                                                        #print(romName)
+                                                        #print(f.lower())
+                                                    else:
+                                                        continue
+                                                else:
+                                                    continue
+                                            else:
+                                                romName = splitFile[0]
+
                                             
                                             #figure out which video to use
                                             src = None
@@ -873,7 +909,7 @@ def scanner(paths, SourceRomDir, dataFolders):
                                             y = 0
                                             #while y < len(value['romExtensions']):
                                             while y < len(check):
-                                                if romExtension == check[y]:
+                                                if romExtension == check[y].lower():
                                                     #print(system + ' true')
                                                     #need to adjust multi disk m3u generation
                                                     if any(mds in romName.lower() for mds in multi_disk_search): #https://stackoverflow.com/a/3389611
@@ -1135,9 +1171,9 @@ if __name__ == '__main__':
     parser.add_argument('--device', type=str, nargs='?', required=False, default='', help='Device type passed in from Tautulli.')
     parser.add_argument('--product', type=str, nargs='?', required=False, default='', help='Product type passed in from Tautulli.')
     parser.add_argument('--player', type=str, nargs='?', required=False, default='', help='Player type passed in from Tautulli.')
-    parser.add_argument('--remaining_time', type=str, nargs='?', required=False, default='', help='Remaining time passed in from Tautulli.') #Used to determine when to continue execution of launcher
     parser.add_argument('--file', type=str, nargs='?', required=False, default='', help='Full file path passed in from Tautulli.') #need to parse the filename and match it in the json file to the matching rom file
     parser.add_argument('--user', type=str, nargs='?', required=False, default='', help='Plex User passed in from Tautulli.')
+    parser.add_argument('--user_id', type=str, nargs='?', required=False, default='', help='Plex UserID passed in from Tautulli.')
     
     #arguments for scanner
     parser.add_argument('--scan', action='store_true', required=False, help='Scan the library, update media, and rom mapping.')
@@ -1152,7 +1188,6 @@ if __name__ == '__main__':
     parser.add_argument('--initial_stream', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--stream_local', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--stream_location', type=str, nargs='?', required=False, default='', help='Dev')
-    parser.add_argument('--user_id', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--machine_id', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--media_type', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--title', type=str, nargs='?', required=False, default='', help='Dev')
@@ -1188,6 +1223,7 @@ if __name__ == '__main__':
     parser.add_argument('--poster_thumb', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--poster_title', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--indexes', type=str, nargs='?', required=False, default='', help='Dev')
+    parser.add_argument('--remaining_time', type=str, nargs='?', required=False, default='', help='Dev')
     #parser.add_argument('--remote_access_mapping_state', type=str, nargs='?', required=False, default='', help='Dev')
     #parser.add_argument('--remote_access_mapping_error', type=str, nargs='?', required=False, default='', help='Dev')
     #parser.add_argument('--remote_access_public_address', type=str, nargs='?', required=False, default='', help='Dev')
@@ -1248,6 +1284,7 @@ if __name__ == '__main__':
         clientProduct = opts.product #from tautulli (PlexWeb for example)
         clientPlayer = opts.player #from tautulli (Firefox for example)
         clientUser = opts.user #from tautulli (Firefox for example)
+        clientUserId = opts.user_id
         movieName = opts.file #from tautulli
 
         #integer arguments
@@ -1325,7 +1362,7 @@ if __name__ == '__main__':
         print(serverIP)
         
         if serverIP.rsplit('.',1)[0] == clientIP.rsplit('.',1)[0]:
-            launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, movieName, dataFolders)
+            launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId, movieName, dataFolders)
         else:
             print('beep, bop, boop')
             print('cannot execute scripts on remote client yet')
