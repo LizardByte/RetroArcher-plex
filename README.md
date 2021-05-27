@@ -222,7 +222,7 @@ Ubuntu
       - `File` - `contains` - `com.github.agents.retroarcher.retroarcher`
     - Arguments
       - Playback Start
-	    - `--launch --user {user} --device {device} --platform {platform} --product {product} --player {player} --ip_address {ip_address} --file {file}`
+	    - `--launch --user {user} --user_id {user_id} --device {device} --platform {platform} --product {product} --player {player} --ip_address {ip_address} --file {file}`
 - Notes
   - In the future I will try to automate this with tautulli python api (Issue #48).
 

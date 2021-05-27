@@ -104,6 +104,8 @@ dDefaultSettings = {
     
     'app_directory_retroarch' : '',
     'app_binary_retroarch' : 'retroarch',
+    'app_directory_rpcs3' : '',
+    'app_binary_rpcs3' : 'rpcs3',
 	
 	#these are needed to ensure we don't scan any unsupported systems
 	'scanner_3do_interactive_multiplayer' : 'True',
@@ -194,6 +196,7 @@ dDefaultSettings = {
 	'scanner_snk_neo_geo_pocket_color' : 'True',
 	'scanner_sony_playstation' : 'True',
 	'scanner_sony_playstation_2' : 'True',
+	'scanner_sony_playstation_3' : 'True',
 	'scanner_sony_psp' : 'True',
 	'scanner_star_trek_voyager_engine' : 'True',
 	'scanner_super_nintendo_entertainment_system' : 'True',
@@ -4348,9 +4351,14 @@ dPlatformMapping = {
 			'thegamesdb' : 12
 			},
         'libraryType' : 'Games',
-		'romExtensions' : [],
-		'romType' : 0,
-		'multiDisk' : False
+		'romExtensions' : ['bin'],
+		'romType' : 1,
+		'multiDisk' : False,
+        'emulators' : {
+            0 : 'rpcs3', #agent enums to emulator name
+            1 : 'rpcs3',
+            'rpcs3' : {}
+            }
 		},
     'Sony PlayStation 4' : { 
 		'systemNames' : ['Sony PlayStation 4', 'PlayStation 4', 'PS4'],
