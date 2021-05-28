@@ -39,8 +39,10 @@
   { "id":"PLEX_URL",                  "label":"ADVANCED SETTINGS\n_____________________________________________________________________________________\nPLEX|Server URL",    "type":"text",    "default":"http://localhost:32400"  },
   { "id":"PLEX_TOKEN",                "label":"PLEX|Server token",    "type":"text",    "option":"hidden",     "default":"",		"secure":"true"  },
 
-  { "id":"app_directory_retroarch",   "label":"APPLICAITON|DIRECTORY|RetroArch",    "type":"text",    "default":""  },
-  { "id":"app_binary_retroarch",      "label":"APPLICAITON|BINARY|RetroArch",    "type":"text",    "default":"retroarch"  },
+  { "id":"app_directory_retroarch",   "label":"APPLICATION|DIRECTORY|RetroArch",    "type":"text",    "default":""  },
+  { "id":"app_binary_retroarch",      "label":"APPLICATION|BINARY|RetroArch",    "type":"text",    "default":"retroarch"  },
+  { "id":"app_directory_rpcs3",       "label":"APPLICATION|DIRECTORY|RPCS3",    "type":"text",    "default":""  },
+  { "id":"app_binary_rpcs3",          "label":"APPLICATION|BINARY|RPCS3",    "type":"text",    "default":"rpcs3"  },
 
   { "id":"scanner_3do_interactive_multiplayer",           "label":"SCANNER|3DO Interactive Multiplayer",    "type":"bool",    "default":"True"  },
   { "id":"scanner_amstrad_cpc",                           "label":"SCANNER|Amstrad CPC",    "type":"bool",    "default":"True"  },
@@ -130,6 +132,7 @@
   { "id":"scanner_snk_neo_geo_pocket_color",              "label":"SCANNER|SNK Neo Geo Pocket Color",    "type":"bool",    "default":"True"  },
   { "id":"scanner_sony_playstation",                      "label":"SCANNER|Sony PlayStation",    "type":"bool",    "default":"True"  },
   { "id":"scanner_sony_playstation_2",                    "label":"SCANNER|Sony PlayStation 2",    "type":"bool",    "default":"True"  },
+  { "id":"scanner_sony_playstation_3",                    "label":"SCANNER|Sony PlayStation 3",    "type":"bool",    "default":"True"  },
   { "id":"scanner_sony_psp",                              "label":"SCANNER|Sony PSP",    "type":"bool",    "default":"True"  },
   { "id":"scanner_star_trek_voyager_engine",              "label":"SCANNER|Star Trek Voyager Engine",    "type":"bool",    "default":"True"  },
   { "id":"scanner_super_nintendo_entertainment_system",   "label":"SCANNER|Super Nintendo Entertainment System",    "type":"bool",    "default":"True"  },
@@ -228,6 +231,7 @@
   { "id":"emulator_snk_neo_geo_pocket_color",             "label":"EMULATOR|SNK Neo Geo Pocket Color",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_sony_playstation",                     "label":"EMULATOR|Sony PlayStation",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_sony_playstation_2",                   "label":"EMULATOR|Sony PlayStation 2",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
+  { "id":"emulator_sony_playstation_3",                   "label":"EMULATOR|Sony PlayStation 3",    "type": "enum",    "values": [ "default", "RPCS3" ],    "default": "default"  },
   { "id":"emulator_sony_psp",                             "label":"EMULATOR|Sony PSP",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_star_trek_voyager_engine",             "label":"EMULATOR|Star Trek Voyager Engine",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_super_nintendo_entertainment_system",  "label":"EMULATOR|Super Nintendo Entertainment System",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
