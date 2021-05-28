@@ -37,11 +37,9 @@
   { "id":"sUpdateBranch",             "label":"-UPDATER|Branch",    "type":"text",    "default":"main"  },
   { "id":"sUpdateAuto",               "label":"-UPDATER|Automatic update (during scanning)",    "type":"bool",    "default":"False"  },
 
-  { "id":"app_directory_rpcs3",       "label":"APPLICAITON|DIRECTORY|RPCS3",    "type":"text",    "default":""  },
-  { "id":"app_binary_rpcs3",          "label":"APPLICAITON|BINARY|RPCS3",    "type":"text",    "default":"rpcs3"  },
-  { "id":"app_directory_xemu",        "label":"APPLICAITON|DIRECTORY|Xemu",    "type":"text",    "default":""  },
-  { "id":"app_binary_xemu",           "label":"APPLICAITON|BINARY|Xemu",    "type":"text",    "default":"xemu"  },
-  { "id":"app_directory_xenia",       "label":"APPLICAITON|DIRECTORY|Xenia",    "type":"text",    "default":""  },
-  { "id":"app_binary_xenia",          "label":"APPLICAITON|BINARY|Xenia",    "type":"text",    "default":"xenia"  }
+  { "id":"app_directory_xemu",        "label":"APPLICATION|DIRECTORY|Xemu",    "type":"text",    "default":""  },
+  { "id":"app_binary_xemu",           "label":"APPLICATION|BINARY|Xemu",    "type":"text",    "default":"xemu"  },
+  { "id":"app_directory_xenia",       "label":"APPLICATION|DIRECTORY|Xenia",    "type":"text",    "default":""  },
+  { "id":"app_binary_xenia",          "label":"APPLICATION|BINARY|Xenia",    "type":"text",    "default":"xenia"  }
 
 ]
