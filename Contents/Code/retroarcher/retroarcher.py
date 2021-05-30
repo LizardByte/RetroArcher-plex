@@ -380,26 +380,8 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
         '''
 
 def launchADB(clientIP):
-    #should we kill and launch the server?
-    #does the adbutils automatically start the server if it's not running
     #https://stackoverflow.com/a/37327094/11214013
     
-    adbRanges = [ [5555, 5585], [39433 , 39444] ] #https://www.reddit.com/r/tasker/comments/jbzeg5/adb_wifi_and_android_11_wireless_debugging/
-    adbPortFound = False
-    
-    for adbRange in adbRanges:
-        #for port in range(5555, 5585):
-        if adbPortFound == False:
-            for port in range(adbRange[0], adbRange[-1]):
-                if (port % 2) != 0: #if port is an odd number
-                    if port_check(clientIP, port):
-                        print('port is open: ' + str(port))
-                        adbPort = port
-                        adbPortFound = True
-                        break
-    
-    print(adbPort)
-
     try:
         moonlightPcUuid = settings['PluginPreferences']['sMoonlightPcUuid']
     except KeyError as e:
@@ -419,11 +401,18 @@ def launchADB(clientIP):
         moonlightAppName = archer_dict.dDefaultSettings['sMoonlightAppName']
     '''
     
-    adbAddress = clientIP + ':' + str(adbPort)
-    output = adb.connect(adbAddress)
-    print(output)
-
-    device = adb.device(serial=adbAddress)
+    global scannerIP
+    scannerIP = clientIP
+    
+    adbRanges = [ [5555, 5585], [30000 , 50000] ] #https://www.reddit.com/r/tasker/comments/jbzeg5/adb_wifi_and_android_11_wireless_debugging/
+    for adbRange in adbRanges:
+        adbThreadedScan(adbRange)
+        print(adbPortsFound)
+        adbAddress = adbConnect(clientIP, adbPortsFound)
+        print(adbAddress)
+        if adbAddress != None:
+            device = adb.device(serial=adbAddress)
+            break
 
     #possible apps that can be useful
     packages = {
@@ -471,6 +460,85 @@ def launchADB(clientIP):
     device.shell('am start -W -n com.limelight/com.limelight.ShortcutTrampoline --es "UUID" "' + moonlightPcUuid + '" --es "AppId" "' + str(moonlightAppId) + '"') #open moonlight on client device streaming to server desktop
     
     return True
+
+def adbConnect(clientIP, adbPortsFound):
+    for adbPort in adbPortsFound:
+        adbAddress = clientIP + ':' + str(adbPort)
+        output = adb.connect(adbAddress)
+        print(output)
+        message = output.split(clientIP + ':' + str(adbPort), 1)[0].strip()
+        if message == 'cannot connect to':
+            print('adb connection unsuccessful, trying next port if available')
+        elif message == 'failed to connect to':
+            print('adb connection failed, device is probably not paired... Android 11+ ???, trying next available port anyway')
+        elif message == 'connected to' or message == 'already connected to':
+            print('adb connected on port: %s' % (adbPort))
+            return adbAddress
+        else:
+            print('unknown connection status, trying next available port')
+
+def adbThreadedScan(adbRange):
+    from threading import Thread
+    from queue import Queue
+    
+    # number of threads, feel free to tune this parameter as you wish
+    N_THREADS = 10000
+    # thread queue
+    global q
+    q = Queue()
+    
+    global adbPortsFound
+    adbPortsFound = []
+    for t in range(N_THREADS):
+        #for each thread, start it
+        t = Thread(target=port_scan_thread)
+        #when we set daemon to true, that thread will end when the main thread ends
+        t.daemon = True
+        #start the daemon thread
+        t.start()
+
+    for port in range(adbRange[0], adbRange[-1]):
+        if (port % 2) != 0: #if port is an odd number
+            #for each port, put that port into the queue
+            #to start scanning
+            q.put(port)
+            
+            #if port_scan(clientIP, port):
+            #    print('port is open: ' + str(port))
+            #    adbPortsFound.append(port)
+    q.join() #wait for all ports to finish being scanned
+
+def port_scan(host, port):
+    """
+    determine whether `host` has the `port` open
+    """
+    try:
+        # creates a new socket
+        s = socket.socket()
+        # tries to connect to host using that port
+        s.connect((host, port))
+        # make timeout if you want it a little faster ( less accuracy )
+        # s.settimeout(0.2)
+    except:
+        # cannot connect, port is closed
+        # return false
+        pass
+    else:
+        # the connection was established, port is open!
+        #return True
+        adbPortsFound.append(port)
+    finally:
+        s.close()
+
+def port_scan_thread():
+    while True:
+        # get the port number from the queue
+        port = q.get()
+        # scan that port number
+        port_scan(scannerIP, port)
+        # tells the queue that the scanning for that port 
+        # is done
+        q.task_done()
 
 def launchWindows(clientIP, clientUser, secrets):
     try:
@@ -630,25 +698,6 @@ def platformPath(fullpath):
         dirName = os.path.basename(dirPath)
         x += 1
     return game_platform
-
-def port_check(host, port):
-    """
-    determine whether `host` has the `port` open
-    """
-    # creates a new socket
-    s = socket.socket()
-    try:
-        # tries to connect to host using that port
-        s.connect((host, port))
-        # make timeout if you want it a little faster ( less accuracy )
-        # s.settimeout(0.2)
-    except:
-        # cannot connect, port is closed
-        # return false
-        return False
-    else:
-        # the connection was established, port is open!
-        return True
 
 def scanner(paths, SourceRomDir, dataFolders):
     print('\nPaths: ')
