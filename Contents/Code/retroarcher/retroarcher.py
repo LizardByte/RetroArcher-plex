@@ -403,26 +403,16 @@ def launchADB(clientIP):
     
     global scannerIP
     scannerIP = clientIP
-    adbThreadedScan()
     
-    print(adbPortsFound)
-    
-    for adbPort in adbPortsFound:
-        adbAddress = clientIP + ':' + str(adbPort)
-        output = adb.connect(adbAddress)
-        print(output)
-        message = output.split(clientIP + ':' + str(adbPort), 1)[0].strip()
-        if message == 'cannot connect to':
-            print('adb connection unsuccessful, trying next port if available')
-        elif message == 'failed to connect to':
-            print('adb connection failed, device is probably not paired... Android 11+ ???, trying next available port anyway')
-        elif message == 'connected to':
-            print('adb connected on port: %s' % (adbPort))
+    adbRanges = [ [5555, 5585], [30000 , 50000] ] #https://www.reddit.com/r/tasker/comments/jbzeg5/adb_wifi_and_android_11_wireless_debugging/
+    for adbRange in adbRanges:
+        adbThreadedScan(adbRange)
+        print(adbPortsFound)
+        adbAddress = adbConnect(clientIP, adbPortsFound)
+        print(adbAddress)
+        if adbAddress != None:
+            device = adb.device(serial=adbAddress)
             break
-        else:
-            print('unknown connection status, trying next available port')
-
-    device = adb.device(serial=adbAddress)
 
     #possible apps that can be useful
     packages = {
@@ -471,7 +461,23 @@ def launchADB(clientIP):
     
     return True
 
-def adbThreadedScan():
+def adbConnect(clientIP, adbPortsFound):
+    for adbPort in adbPortsFound:
+        adbAddress = clientIP + ':' + str(adbPort)
+        output = adb.connect(adbAddress)
+        print(output)
+        message = output.split(clientIP + ':' + str(adbPort), 1)[0].strip()
+        if message == 'cannot connect to':
+            print('adb connection unsuccessful, trying next port if available')
+        elif message == 'failed to connect to':
+            print('adb connection failed, device is probably not paired... Android 11+ ???, trying next available port anyway')
+        elif message == 'connected to' or message == 'already connected to':
+            print('adb connected on port: %s' % (adbPort))
+            return adbAddress
+        else:
+            print('unknown connection status, trying next available port')
+
+def adbThreadedScan(adbRange):
     from threading import Thread
     from queue import Queue
     
@@ -480,8 +486,6 @@ def adbThreadedScan():
     # thread queue
     global q
     q = Queue()
-
-    adbRanges = [ [5555, 5585], [30000 , 50000] ] #https://www.reddit.com/r/tasker/comments/jbzeg5/adb_wifi_and_android_11_wireless_debugging/
     
     global adbPortsFound
     adbPortsFound = []
@@ -492,16 +496,16 @@ def adbThreadedScan():
         t.daemon = True
         #start the daemon thread
         t.start()
-    for adbRange in adbRanges:
-        for port in range(adbRange[0], adbRange[-1]):
-            if (port % 2) != 0: #if port is an odd number
-                #for each port, put that port into the queue
-                #to start scanning
-                q.put(port)
-                
-                #if port_scan(clientIP, port):
-                #    print('port is open: ' + str(port))
-                #    adbPortsFound.append(port)
+
+    for port in range(adbRange[0], adbRange[-1]):
+        if (port % 2) != 0: #if port is an odd number
+            #for each port, put that port into the queue
+            #to start scanning
+            q.put(port)
+            
+            #if port_scan(clientIP, port):
+            #    print('port is open: ' + str(port))
+            #    adbPortsFound.append(port)
     q.join() #wait for all ports to finish being scanned
 
 def port_scan(host, port):
