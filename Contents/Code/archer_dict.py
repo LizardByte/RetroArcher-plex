@@ -89,9 +89,9 @@ dDefaultSettings = {
     
     'bGetExtraObject' : 'True',
 	
-	'sMoonlightPcUuid' : '',
-	'sMoonlightAppId' : '',
-	'sMoonlightAppName' : 'RetroArcher',
+	'sMoonlightAppName' : 'Desktop',
+    'sMoonlightAppId' : '',
+    'sMoonlightPcUuid' : '',
 	
 	'bGameStreamEnabled' : 'False',
 	'sGameStreamServerAddress' : 'http://localhost:47989/serverinfo',

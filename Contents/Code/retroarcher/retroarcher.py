@@ -163,8 +163,8 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
     except KeyError as e:
         moonlightPcUuid_override = archer_dict.dDefaultSettings['sMoonlightPcUuid']
     
-    print('override')
-    print(moonlightPcUuid_override)
+    #print('override')
+    #print(moonlightPcUuid_override)
     
     if moonlightPcUuid_override == '' or moonlightPcUuid_override == None:
         try:
@@ -173,23 +173,23 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
             gameStreamServerAddress = archer_dict.dDefaultSettings['sGameStreamServerAddress']
         
         serverInfo = getJson_fromXML(gameStreamServerAddress)
-        print(serverInfo)
-        print(json.dumps(serverInfo, indent=4))
+        #print(serverInfo)
+        #print(json.dumps(serverInfo, indent=4))
         moonlightPcUuid = serverInfo['root']['uniqueid']
     else:
         moonlightPcUuid = moonlightPcUuid_override
     print(moonlightPcUuid)
-    
+
+    try:
+        moonlightAppName = settings['PluginPreferences']['sMoonlightAppName']
+    except KeyError as e:
+        moonlightAppName = archer_dict.dDefaultSettings['sMoonlightAppName']
+
     try:
         moonlightAppId = int(settings['PluginPreferences']['sMoonlightAppId'])
     except KeyError as e:
         print('Error occurred: ' + str(e))
         return
-    
-    try:
-        moonlightAppName = settings['PluginPreferences']['sMoonlightAppName']
-    except KeyError as e:
-        moonlightAppName = archer_dict.dDefaultSettings['sMoonlightAppName']
     
     #convert movieName to romName
     game_name_full = os.path.basename(movieName) #the file name
