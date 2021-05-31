@@ -157,6 +157,14 @@ def getDataFolders(directory, agent):
     return dataFolders
 
 def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId, movieName, dataFolders):
+    #get the gamestream host software
+    try:
+        gamestreamhost = archer_dict.dGameStreamHostMapping[settings['PluginPreferences']['eGameStreamHost']]
+    except KeyError as e:
+        gamestreamhost = archer_dict.dGameStreamHostMapping[archer_dict.dDefaultSettings['eGameStreamHost']]
+    if gamestreamhost == None:
+        gamestreamhost = archer_dict.dGameStreamHostMapping[archer_dict.dDefaultSettings['eGameStreamHost']]
+    
     #get the moonlight uuid, appid, appname
     try:
         moonlightPcUuid_override = settings['PluginPreferences']['sMoonlightPcUuid']
@@ -178,18 +186,53 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
         moonlightPcUuid = serverInfo['root']['uniqueid']
     else:
         moonlightPcUuid = moonlightPcUuid_override
-    print(moonlightPcUuid)
+    #print(moonlightPcUuid)
 
     try:
         moonlightAppName = settings['PluginPreferences']['sMoonlightAppName']
     except KeyError as e:
         moonlightAppName = archer_dict.dDefaultSettings['sMoonlightAppName']
+    if moonlightAppName == None:
+        moonlightAppName = archer_dict.dDefaultSettings['sMoonlightAppName']
 
     try:
-        moonlightAppId = int(settings['PluginPreferences']['sMoonlightAppId'])
+        moonlightAppId_override = int(settings['PluginPreferences']['sMoonlightAppId'])
     except KeyError as e:
-        print('Error occurred: ' + str(e))
-        return
+        moonlightAppId_override = archer_dict.dDefaultSettings['sMoonlightAppId']
+    except TypeError as e:
+        moonlightAppId_override = archer_dict.dDefaultSettings['sMoonlightAppId']
+    
+    if moonlightAppId_override == '' or moonlightAppId_override == None:
+        #print(gamestreamhost)
+        if gamestreamhost == 'GeForce Experience':
+            nvstreamsvc_path = os.path.join(os.path.expandvars('$programdata'), 'NVIDIA Corporation', 'nvstreamsvc')
+            
+            nvsstreamsvrLogs = ['nvstreamsvcCurrent.log', 'nvstreamsvcOld.log']
+            
+            appIdFound = False
+            for log in nvsstreamsvrLogs:
+                if appIdFound == False:
+                    logFile = os.path.join(nvstreamsvc_path, log)
+                    if os.path.isfile(logFile):
+                        with open(logFile, 'r') as f:
+                            logContents = f.read()
+                        #find titles
+                        titleSplit = logContents.split('Title=')
+                        titleCounter = 0
+                        
+                        while titleCounter < len(titleSplit):
+                            if titleSplit[titleCounter].splitlines()[0].lower() == moonlightAppName.lower():
+                                moonlightAppId = titleSplit[titleCounter].split('AppId=', 1)[-1].splitlines()[0]
+                                appIdFound = True
+                                break
+                            titleCounter += 1
+            
+        else:
+            moonlightAppId = '1'
+
+    else:
+        moonlightAppId = moonlightAppId_override
+    #print(moonlightAppId)
     
     #convert movieName to romName
     game_name_full = os.path.basename(movieName) #the file name
@@ -401,13 +444,6 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
         os.system(command)
         
         #kill the stream once the emulator is killed
-        try:
-            gamestreamhost = archer_dict.dGameStreamHostMapping[settings['PluginPreferences']['eGameStreamHost']]
-        except KeyError as e:
-            gamestreamhost = archer_dict.dGameStreamHostMapping[archer_dict.dDefaultSettings['eGameStreamHost']]
-        if gamestreamhost == None:
-            gamestreamhost = archer_dict.dGameStreamHostMapping[archer_dict.dDefaultSettings['eGameStreamHost']]
-        
         '''
         #this is trying to kill streamer process before it's even started... we need to run after retroarch.exe exits
         process = dSystemPlatformMapping[platform]['stream_host'][gamestreamhost]['process']
