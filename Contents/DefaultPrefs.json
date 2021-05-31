@@ -25,12 +25,13 @@
   { "id":"sSourceThemeDirectory",     "label":"THEMES|Fullpath of source theme music directory",    "type":"text",    "default":""  },
   
   { "id":"bGetExtraObject",           "label":"EXTRAS|Collect trailer object",    "type":"bool",    "default":"False"  },
-  
-  { "id":"sMoonlightPcUuid",          "label":"LAUNCHER|Moonlight Machine UUID",    "type":"text",    "default":""  },
+
+  { "id":"sMoonlightAppName",         "label":"LAUNCHER|Moonlight App Name",    "type":"text",    "default":"Desktop"  },  
   { "id":"sMoonlightAppId",           "label":"LAUNCHER|Moonlight App ID",    "type":"text",    "default":""  },
-  { "id":"sMoonlightAppName",         "label":"LAUNCHER|Moonlight App Name",    "type":"text",    "default":"RetroArcher"  },
+  { "id":"sMoonlightPcUuid",          "label":"LAUNCHER|Moonlight Machine UUID",    "type":"text",    "default":""  },
   
   { "id":"bGameStreamEnabled",        "label":"GAMESTREAM|GENERAL|Enable gamestream",    "type":"bool",    "default":"False"  },
+  { "id":"sGameStreamServerAddress",  "label":"GAMESTREAM|GENERAL|Server address",    "type":"text",    "default":"http://localhost:47989/serverinfo"  },
   { "id":"sGameStreamWhiteList",      "label":"GAMESTREAM|GENERAL|White listed users",    "type":"text",    "default":""  },
   { "id":"sGameStreamBlackList",      "label":"GAMESTREAM|GENERAL|Black listed users",    "type":"text",    "default":""  },
   { "id":"eGameStreamApp",            "label":"GAMESTREAM|GENERAL|Game stream client app",    "type":"enum",    "values": [ "moonlight" ], "default":"moonlight"  },
