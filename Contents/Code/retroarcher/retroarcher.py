@@ -5,6 +5,7 @@ import json
 import os
 import random
 import re
+import requests
 import socket
 import sys
 import time
@@ -28,6 +29,17 @@ def get_ip(): #https://stackoverflow.com/a/28950776/11214013
     finally:
         s.close()
     return IP
+
+def getJson_fromXML(url):
+    headers = {
+            'Accept': 'application/xml'
+        }
+    
+    xml = requests.get(url=url, headers=headers).text
+    
+    result = xmltodict.parse(xml)
+    
+    return result
 
 def getPlex():
     from plexapi.server import PlexServer, CONFIG #add plexapi credentials to agent settings (plexapi config will be optional)... need to test... although plexapi was only used to get the settings file originally... do we have another need for plexapi?
@@ -145,6 +157,40 @@ def getDataFolders(directory, agent):
     return dataFolders
 
 def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId, movieName, dataFolders):
+    #get the moonlight uuid, appid, appname
+    try:
+        moonlightPcUuid_override = settings['PluginPreferences']['sMoonlightPcUuid']
+    except KeyError as e:
+        moonlightPcUuid_override = archer_dict.dDefaultSettings['sMoonlightPcUuid']
+    
+    print('override')
+    print(moonlightPcUuid_override)
+    
+    if moonlightPcUuid_override == '' or moonlightPcUuid_override == None:
+        try:
+            gameStreamServerAddress = settings['PluginPreferences']['sGameStreamServerAddress']
+        except KeyError as e:
+            gameStreamServerAddress = archer_dict.dDefaultSettings['sGameStreamServerAddress']
+        
+        serverInfo = getJson_fromXML(gameStreamServerAddress)
+        print(serverInfo)
+        print(json.dumps(serverInfo, indent=4))
+        moonlightPcUuid = serverInfo['root']['uniqueid']
+    else:
+        moonlightPcUuid = moonlightPcUuid_override
+    print(moonlightPcUuid)
+    
+    try:
+        moonlightAppId = int(settings['PluginPreferences']['sMoonlightAppId'])
+    except KeyError as e:
+        print('Error occurred: ' + str(e))
+        return
+    
+    try:
+        moonlightAppName = settings['PluginPreferences']['sMoonlightAppName']
+    except KeyError as e:
+        moonlightAppName = archer_dict.dDefaultSettings['sMoonlightAppName']
+    
     #convert movieName to romName
     game_name_full = os.path.basename(movieName) #the file name
     system = platformPath(movieName)
@@ -256,11 +302,11 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
 
     launch = False
     if clientPlatform.lower() == 'android':
-        launch = launchADB(clientIP)
+        launch = launchADB(clientIP, moonlightPcUuid, moonlightAppId)
     elif clientProduct.lower() == 'plex for windows' and clientPlatform.lower() == 'windows':
-        launch = launchWindows(clientIP, clientUser, secrets)
+        launch = launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secrets)
     elif clientProduct.lower() == 'plex web' and clientDevice.lower() == 'windows':
-        launch = launchWindows(clientIP, clientUser, secrets)
+        launch = launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secrets)
     elif clientPlatform.lower() == 'kodi': #disable for now
         launch = False
     elif clientPlatform.lower() == 'ios': #disable for now
@@ -379,27 +425,8 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                 proc.kill()
         '''
 
-def launchADB(clientIP):
+def launchADB(clientIP, moonlightPcUuid, moonlightAppId):
     #https://stackoverflow.com/a/37327094/11214013
-    
-    try:
-        moonlightPcUuid = settings['PluginPreferences']['sMoonlightPcUuid']
-    except KeyError as e:
-        print('Error occurred: ' + str(e))
-        return
-    
-    try:
-        moonlightAppId = int(settings['PluginPreferences']['sMoonlightAppId'])
-    except KeyError as e:
-        print('Error occurred: ' + str(e))
-        return
-    
-    '''
-    try:
-        moonlightAppName = settings['PluginPreferences']['sMoonlightAppName']
-    except KeyError as e:
-        moonlightAppName = archer_dict.dDefaultSettings['sMoonlightAppName']
-    '''
     
     global scannerIP
     scannerIP = clientIP
@@ -540,26 +567,7 @@ def port_scan_thread():
         # is done
         q.task_done()
 
-def launchWindows(clientIP, clientUser, secrets):
-    try:
-        moonlightPcUuid = settings['PluginPreferences']['sMoonlightPcUuid']
-    except KeyError as e:
-        print('Error occurred: ' + str(e))
-        return
-    
-    '''
-    try:
-        moonlightAppId = int(settings['PluginPreferences']['sMoonlightAppId'])
-    except KeyError as e:
-        print('Error occurred: ' + str(e))
-        return
-    '''
-    
-    try:
-        moonlightAppName = settings['PluginPreferences']['sMoonlightAppName']
-    except KeyError as e:
-        moonlightAppName = archer_dict.dDefaultSettings['sMoonlightAppName']
-    
+def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secrets):
     u = secrets[clientUser]['win']['u']
     p = secrets[clientUser]['win']['p']
     

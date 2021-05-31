@@ -94,6 +94,7 @@ dDefaultSettings = {
 	'sMoonlightAppName' : 'RetroArcher',
 	
 	'bGameStreamEnabled' : 'False',
+	'sGameStreamServerAddress' : 'http://localhost:47989/serverinfo',
 	'sGameStreamWhiteList' : '',
 	'sGameStreamBlackList' : '',
 	'eGameStreamApp' : 'moonlight',
