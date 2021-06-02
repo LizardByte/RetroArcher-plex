@@ -12,6 +12,6 @@ Read the entire [Wiki](../../wiki) **BEFORE** running any scripts.
 [![Facebook Group](https://raw.githubusercontent.com/gauravghongde/social-icons/master/PNG/Black/Facebook_black.png)](https://www.facebook.com/groups/retroracher) 
 
 ## Donate
-[![Patreon](https://raw.githubusercontent.com/gauravghongde/social-icons/master/PNG/Color/Patreon.png)](https://www.patreon.com/ReenigneArcher) 
+[![Patreon](https://raw.githubusercontent.com/gauravghongde/social-icons/master/PNG/Color/Patreon.png)](https://www.patreon.com/RetroArcher) 
 [![Github Sponsors](https://raw.githubusercontent.com/gauravghongde/social-icons/master/PNG/Color/Github.png)](https://github.com/sponsors/ReenigneArcher) 
 [![PayPal](https://raw.githubusercontent.com/gauravghongde/social-icons/master/PNG/Color/PayPal.png)](https://paypal.me/ReenigneArcher) 
