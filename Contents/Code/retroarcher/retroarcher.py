@@ -5,7 +5,6 @@ import json
 import os
 import random
 import re
-import requests
 import socket
 import sys
 import time
@@ -1095,6 +1094,7 @@ if __name__ == '__main__':
     import archer_dict
     
     #module imports (user doesn't need to install)
+    import requests
     import xmltodict
     
     #from module imports
