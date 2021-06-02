@@ -28,4 +28,7 @@ Contents/Resources/StartVideos/Platforms.bak/
 Contents/Resources/StartVideos/Main/*
 !Contents/Resources/StartVideos/Main/*.keep
 
+#Keep any start video named RetroArcher.mp4
+!Contents/Resources/StartVideos/*/RetroArcher.mp4
+
 !*.keep

@@ -1,112 +1,97 @@
 # -*- coding: utf-8 -*-
 #dictionaries
-dSiteShortNames1 = {    0: 'igdb',
-                        1: 'tgdb',
-                        2: 'ss',
-                        3: 'lb',
-                   }
+dSiteShortNames1 = {
+    0 : 'igdb'
+    }
                    
-dSiteShortNames2 = {    'igdb': 0,
-                        'tgdb': 1,
-                        'ss': 2,
-                        'lb': 3,
-                   }
+dSiteShortNames2 = {
+    'igdb' : 0
+   }
 
-dSiteNames2Index = {    'IGDB': 0,
-                        'TheGamesDB': 1,
-                        'ScreenScraper': 2,
-                        'LaunchBox Games Database': 3,
-                   }
-
-dRatings = {
-    'ESRB' : {
-        'igdb' : 1
+dict_enum_agent_map = { #for metadata agent
+    'SearchSite' : { #make sure keys are lowercase
+        'igdb' : 0
+       },
+    'PreferredRatingSystem' : {
+        'ESRB' : {
+            'igdb' : 1
+            },
+        'PEGI' : {
+            'igdb' : 2
+            }
         },
-    'PEGI' : {
-        'igdb' : 2
+    'ThemeSource' : {
+        'none' : '0',
+        'Local' : '1'
         }
     }
 
-#do something different here... maybe combine with dictionary from igdb
-dTHEGAMESDB_rating = {  'EC - Early Childhood' : ['EC', 3],
-                        'E - Everyone' : ['E', 6],
-                        'E10+ - Everyone 10+' : ['E10+', 10],
-                        'T - Teen' : ['T', 13],
-                        'M - Mature 17+' : ['M', 17],
-                        'AO - Adult Only 18+' : ['AO', 18],
-                        'RP - Rating Pending' : ['RP', 18],
-                        'Not Rated' : ['NR', 18],
-                        '' : ['', 18]
-                     }
-
-dEncoderMapping = {
-    '0' : 'h264_nvenc',
-    '1' : 'h264_qsv',
-    '2' : 'h264_videotoolbox',
-    '3' : 'libx264',
-    '4' : 'mpeg2_qsv',
-    '5' : 'mpeg2video'
-}
-
-dGameStreamHostMapping = {
-    '0' : 'GeForce Experience',
-    '1' : 'Open-Stream',
-    '2' : 'Sunshine'
-}
+dict_enum_settings_map = { #for retroarcher script
+    'FfmpegEncoder' : { #used by retroarcher.py so numbers first
+        '0' : 'h264_nvenc',
+        '1' : 'h264_qsv',
+        '2' : 'h264_videotoolbox',
+        '3' : 'libx264',
+        '4' : 'mpeg2_qsv',
+        '5' : 'mpeg2video'
+        },
+    'GameStreamApp' : { #used by retroarcher.py so numbers first
+        '0' : 'moonlight'
+        },
+    'GameStreamHost' : { #used by retroarcher.py so numbers first
+        '0' : 'GeForce Experience',
+        '1' : 'Open-Stream',
+        '2' : 'Sunshine'
+        }
+    }
 
 dDefaultSettings = {
-	'sSourceRomDirectory' : '',
+	'dir_SourceRomDirectory' : '',
 	
-	'lExcludedTerms' : '[BIOS], Action Replay, Game Genie, Game Saver, GameBooster, GameShark',
-	'lIncludeRegions' : '',
-	'lExcludeRegions' : '',
-	'lIncludeLanguages' : '',
-	'lExcludeLanguages' : '',
-	'lExcludeTags' : 'Beta, Demo, Kiosk, Proto',
-	'eFfmpegEncoder' : '0',
-	'iFfmpegThreads' : '1',
-	'iFfmpegLength' : '30',
-	'iFfmpegTextSize' : '24',
-	'sFfmpegTextColor' : 'white',
-	'sFfmpegTextX' : '20',
-	'sFfmpegTextY' : '20',
-	'sFfmpegTextBox' : 'True',
-	'sFfmpegTextBoxColor' : 'black@0.5',
-	'sFfmpegTextBoxBorder' : '5',
-	'iBufferSize' : '65536',
+	'enum_FfmpegEncoder' : '0', #h264_nvenc
+    'int_FfmpegThreads' : '1', #removed from agent settings for now
+	'int_FfmpegLength' : '30',
+	'int_FfmpegTextSize' : '24',
+	'str_FfmpegTextColor' : 'white',
+	'str_FfmpegTextX' : '20',
+	'str_FfmpegTextY' : '20',
+	'bool_FfmpegTextBox' : 'True',
+	'str_FfmpegTextBoxColor' : 'black@0.5',
+	'str_FfmpegTextBoxBorder' : '5',
+	'int_BufferSize' : '65536',
 	
-	'sSearchSite' : 'IGDB',
-    'sIgdbCreds' : 'https://raw.githubusercontent.com/RetroArcher/RetroArcher.proxy/main/igdb.json',
+	'enum_SearchSite' : '0', #IGDB
+    'url_IgdbCreds' : 'https://raw.githubusercontent.com/RetroArcher/RetroArcher.proxy/main/igdb.json',
 
-	'sYouTubeApiKey' : 'AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4',
+	'str_YouTubeApiKey' : 'AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4',
 	
-	'ePreferredRatingSystem' : 'ESRB',  
+	'enum_PreferredRatingSystem' : '0', #ESRB
 	
-	'bPlatformAsCollection' : 'True',
+	'bool_PlatformAsCollection' : 'True',
 	
-	'sThemesSource' : 'Local',
-	'sSourceThemeDirectory' : '',
+	'enum_ThemesSource' : '1', #Local
+	'dir_SourceThemeDirectory' : '',
     
-    'bGetExtraObject' : 'True',
+    'bool_GetExtraObject' : 'True',
 	
-	'sMoonlightAppName' : 'Desktop',
-    'sMoonlightAppId' : '',
-    'sMoonlightPcUuid' : '',
+	'str_MoonlightAppName' : 'Desktop',
+    'str_MoonlightAppId' : '',
+    'str_MoonlightPcUuid' : '',
 	
-	'bGameStreamEnabled' : 'False',
-	'sGameStreamServerAddress' : 'http://localhost:47989/serverinfo',
-	'sGameStreamWhiteList' : '',
-	'sGameStreamBlackList' : '',
-	'eGameStreamApp' : 'moonlight',
-	'eGameStreamHost' : '0',
+	'bool_GameStreamEnabled' : 'False',
+	'url_GameStreamServerAddress' : 'http://localhost:47989/serverinfo',
+	'list_GameStreamWhiteList' : '',
+	'list_GameStreamBlackList' : '',
+	'enum_GameStreamApp' : '0', #moonlight
+	'enum_GameStreamHost' : '0', #GeForce Experience
 	
-	'PLEX_URL' : 'http://localhost:32400',
-	'PLEX_TOKEN' : '',
+	'url_PlexServer' : 'http://localhost:32400',
+	'str_PlexToken' : '',
     
-    'app_directory_retroarch' : '',
-    'app_binary_retroarch' : 'retroarch',
-    'app_directory_rpcs3' : '',
-    'app_binary_rpcs3' : 'rpcs3',
+    'dir_app_retroarch' : '',
+    'str_binary_retroarch' : 'retroarch',
+    'dir_app_rpcs3' : '',
+    'str_binary_rpcs3' : 'rpcs3',
 	
 	#these are needed to ensure we don't scan any unsupported systems
 	'scanner_3do_interactive_multiplayer' : 'True',

@@ -3,8 +3,8 @@ import requests
 from plexapi.server import PlexServer
 
 def setup_plexapi():
-    PLEX_URL = Prefs['PLEX_URL']
-    PLEX_TOKEN = Prefs['PLEX_TOKEN']
+    PLEX_URL = Prefs['url_PlexServer']
+    PLEX_TOKEN = Prefs['str_PlexToken']
 
     Log.Info('Plex url: ' + str(PLEX_URL))
     

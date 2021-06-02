@@ -144,7 +144,7 @@ class RetroArcherCommonAgent:
 
         common.Update(self, metadata, media, lang, force, movie, game)
         
-        if Prefs['sThemesSource'] != 'none':
+        if Prefs['enum_ThemesSource'] != 'none':
             common.Themes(self, metadata, media, lang, force, movie, game)
 
 ### Agent declaration ###############################################################################################################################################
