@@ -44,7 +44,7 @@ def Themes(self, metadata, media, lang, force, movie, game):
         x += 1
     Log.Info(metadata.themes)
     
-    themeDir = Prefs['sSourceThemeDirectory']
+    themeDir = Prefs['dir_SourceThemeDirectory']
     found = False
 
     if themeDir != None:

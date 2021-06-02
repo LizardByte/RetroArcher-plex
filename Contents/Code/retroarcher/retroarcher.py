@@ -42,12 +42,12 @@ def getJson_fromXML(url):
     return result
 
 def getPlex():
-    from plexapi.server import PlexServer, CONFIG #add plexapi credentials to agent settings (plexapi config will be optional)... need to test... although plexapi was only used to get the settings file originally... do we have another need for plexapi?
-    PLEX_URL = '' #get this from agent settings file
-    PLEX_TOKEN = '' #get this from agent settings file
+    from plexapi.server import PlexServer, CONFIG #this was used to get the settings previously... there could be other uses in the future
+    PLEX_URL = Prefs['url_PlexServer']
+    PLEX_TOKEN = Prefs['str_PlexToken']
 
 
-    # ## CODE BELOW ##
+    # ## CODE BELOW ## ... could use the CONFIG option from PlexAPI if user knows what they are doing
     if not PLEX_URL:
         PLEX_URL = CONFIG.data['auth'].get('server_baseurl')
     if not PLEX_TOKEN:
@@ -157,54 +157,20 @@ def getDataFolders(directory, agent):
     return dataFolders
 
 def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId, movieName, dataFolders):
-    #get the gamestream host software
-    try:
-        gamestreamhost = archer_dict.dGameStreamHostMapping[settings['PluginPreferences']['eGameStreamHost']]
-    except KeyError as e:
-        gamestreamhost = archer_dict.dGameStreamHostMapping[archer_dict.dDefaultSettings['eGameStreamHost']]
-    if gamestreamhost == None:
-        gamestreamhost = archer_dict.dGameStreamHostMapping[archer_dict.dDefaultSettings['eGameStreamHost']]
-    
-    #get the moonlight uuid, appid, appname
-    try:
-        moonlightPcUuid_override = settings['PluginPreferences']['sMoonlightPcUuid']
-    except KeyError as e:
-        moonlightPcUuid_override = archer_dict.dDefaultSettings['sMoonlightPcUuid']
-    
-    #print('override')
-    #print(moonlightPcUuid_override)
-    
-    if moonlightPcUuid_override == '' or moonlightPcUuid_override == None:
-        try:
-            gameStreamServerAddress = settings['PluginPreferences']['sGameStreamServerAddress']
-        except KeyError as e:
-            gameStreamServerAddress = archer_dict.dDefaultSettings['sGameStreamServerAddress']
-        
-        serverInfo = getJson_fromXML(gameStreamServerAddress)
+    if Prefs['str_MoonlightPcUuid'] == '' or Prefs['str_MoonlightPcUuid'] == None:
+        serverInfo = getJson_fromXML(Prefs['url_GameStreamServerAddress'])
         #print(serverInfo)
         #print(json.dumps(serverInfo, indent=4))
         moonlightPcUuid = serverInfo['root']['uniqueid']
     else:
-        moonlightPcUuid = moonlightPcUuid_override
+        moonlightPcUuid = Prefs['str_MoonlightPcUuid']
     #print(moonlightPcUuid)
-
-    try:
-        moonlightAppName = settings['PluginPreferences']['sMoonlightAppName']
-    except KeyError as e:
-        moonlightAppName = archer_dict.dDefaultSettings['sMoonlightAppName']
-    if moonlightAppName == None:
-        moonlightAppName = archer_dict.dDefaultSettings['sMoonlightAppName']
-
-    try:
-        moonlightAppId_override = int(settings['PluginPreferences']['sMoonlightAppId'])
-    except KeyError as e:
-        moonlightAppId_override = archer_dict.dDefaultSettings['sMoonlightAppId']
-    except TypeError as e:
-        moonlightAppId_override = archer_dict.dDefaultSettings['sMoonlightAppId']
     
-    if moonlightAppId_override == '' or moonlightAppId_override == None:
+    moonlightAppName = Prefs['str_MoonlightAppName']
+
+    if Prefs['str_MoonlightAppId'] == '' or Prefs['str_MoonlightAppId'] == None:
         #print(gamestreamhost)
-        if gamestreamhost == 'GeForce Experience':
+        if Prefs['enum_GameStreamHost'] == 'GeForce Experience':
             nvstreamsvc_path = os.path.join(os.path.expandvars('$programdata'), 'NVIDIA Corporation', 'nvstreamsvc')
             
             nvsstreamsvrLogs = ['nvstreamsvcCurrent.log', 'nvstreamsvcOld.log']
@@ -231,7 +197,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
             moonlightAppId = '1'
 
     else:
-        moonlightAppId = moonlightAppId_override
+        moonlightAppId = Prefs['str_MoonlightAppId']
     #print(moonlightAppId)
     
     #convert movieName to romName
@@ -264,58 +230,15 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
     print(romName)
     
     systemKey = system.lower().replace(' ', '_')
-    
-    try:
-        emulator = int(settings['PluginPreferences']['emulator_' + systemKey])
-        print('agent setting found')
-    except KeyError as e:
-        #emulator = archer_dict.dDefaultSettings['emulator_' + systemKey]
-        emulator = 0
-        print('default setting found')
-    except TypeError as e:
-        #emulator = archer_dict.dDefaultSettings['emulator_' + systemKey]
-        emulator = 0
-        print('default setting found')
-    print(emulator)
-    emulator = archer_dict.dPlatformMapping[system]['emulators'][emulator]
+
+    emulator = archer_dict.dPlatformMapping[system]['emulators'][Prefs['emulator_' + systemKey]]
     print(emulator)
     
-    try:
-        applicationDirectory = settings['PluginPreferences']['app_directory_' + emulator]
-        print('agent setting found')
-    except KeyError as e:
-        applicationDirectory = archer_dict.dDefaultSettings['app_directory_' + emulator]
-        print('using default setting')
-    except TypeError as e:
-        applicationDirectory = archer_dict.dDefaultSettings['app_directory_' + emulator]
-        print('using default setting')
-    print(applicationDirectory)
-    
-    try:
-        binaryCommand = settings['PluginPreferences']['app_binary_' + emulator]
-        print('agent setting found')
-    except KeyError as e:
-        binaryCommand = archer_dict.dDefaultSettings['app_binary_' + emulator]
-        print('using default setting')
-    except TypeError as e:
-        binaryCommand = archer_dict.dDefaultSettings['app_binary_' + emulator]
-        print('using default setting')
-    print(binaryCommand)
+    applicationDirectory = Prefs['dir_app_' + emulator]
+    binaryCommand = Prefs['str_binary_' + emulator]
     
     if emulator == 'retroarch':
-        try:
-            core = int(settings['PluginPreferences']['core_' + systemKey])
-            print('agent setting found')
-        except KeyError as e:
-            #core = archer_dict.dDefaultSettings['core_' + systemKey]
-            core = 0
-            print('using default setting')
-        except TypeError as e:
-            #core = archer_dict.dDefaultSettings['core_' + systemKey]
-            core = 0
-            print('using default setting')
-        print(core)
-        core = archer_dict.dPlatformMapping[system]['emulators'][emulator]['cores'][core]
+        core = archer_dict.dPlatformMapping[system]['emulators'][emulator]['cores'][Prefs['core_' + systemKey]]
         print(core)
         emulatorCore = os.path.join('cores', core)
         print(emulatorCore)
@@ -324,19 +247,6 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
     
     fullRomPath = os.path.join(SourceRomDir, romName)
     print(fullRomPath)
-    
-    '''
-    #this takes far too long for large isos... I think it isn't needed, we can just open the file
-    #hash the rom file to pre-spinup disk https://stackoverflow.com/a/22058673
-    BUF_SIZE = 65536 # lets read stuff in 64kb chunks! totally arbitrary, change for your app!
-    with open(fullRomPath, 'rb') as f:
-        while True:
-            data = f.read(BUF_SIZE)
-            if not data:
-                break
-    
-    time.sleep(1) # probably make this configurable
-    '''
     
     with open(fullRomPath, 'rb') as f:
         print('We are trying to read the file... to pre-spin up the disk')
@@ -571,10 +481,7 @@ def adbThreadedScan(adbRange):
             #    adbPortsFound.append(port)
     q.join() #wait for all ports to finish being scanned
 
-def port_scan(host, port):
-    """
-    determine whether `host` has the `port` open
-    """
+def port_scan(host, port): #determine whether `host` has the `port` open
     try:
         # creates a new socket
         s = socket.socket()
@@ -633,11 +540,9 @@ def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secre
 
 def list_hash(fileList):
     print(fileList)
-    try:
-        bufferSize = int(settings['PluginPreferences']['iBufferSize'])
-    except KeyError as e:
-        bufferSize = int(archer_dict.dDefaultSettings['iBufferSize'])
-        
+
+    bufferSize = int(Prefs['int_BufferSize'])
+    
     md5 = hashlib.md5()
     sha1 = hashlib.sha1()
     
@@ -685,7 +590,8 @@ def make_link(src, dst, system, romName):
     #print(src, dst)
     
     fontFolder = paths['retroarcherFontDir']
-    fontFile = os.path.join(fontFolder, 'ubuntu', 'Ubuntu-R.ttf').replace('\\', '\\\\')
+    #fontFile = os.path.join(fontFolder, 'ubuntu', 'Ubuntu-R.ttf').replace('\\', '\\\\')
+    fontFile = os.path.join(fontFolder, 'OpenSans', 'OpenSans-Light.ttf').replace('\\', '\\\\')
     
     illegal_characters = [',']
     
@@ -699,8 +605,7 @@ def make_link(src, dst, system, romName):
     for x in illegal_characters:
         romName = romName.replace(x, '\%s' % (x))
     
-    #command = "%s -ss 0 -i \"%s\" -t %s -vf \"drawtext=text='%s': fontfile='fonts/%s': fontcolor=%s: fontsize=%s: box=%s: boxcolor=%s: boxborderw=%s: x=%s: y=%s\" -codec:v %s -codec:a copy \"%s\"" % (ffmpegPath, src, videoLength, romName, fontFile, fontColor, fontSize, border, borderColor, borderSize, fontX, fontY, encoder, dst)
-    command = "%s -ss 0 -i \"%s\" -t %s -vf \"drawtext=text='%s': fontfile='fonts/%s': fontcolor=%s: fontsize=%s: box=%s: boxcolor=%s: boxborderw=%s: x=%s: y=%s\" -codec:v %s -codec:a copy -map_metadata -1 -metadata title=\"%s\" -metadata creation_time=%s -map_chapters -1 \"%s\"" % (ffmpegPath, src, videoLength, romName, fontFile, fontColor, fontSize, border, borderColor, borderSize, fontX, fontY, encoder, title, time, dst)
+    command = "%s -ss 0 -i \"%s\" -t %s -vf \"drawtext=text='%s': fontfile='fonts/%s': fontcolor=%s: fontsize=%s: box=%s: boxcolor=%s: boxborderw=%s: x=%s: y=%s\" -codec:v %s -codec:a copy -map_metadata -1 -metadata title=\"%s\" -metadata creation_time=%s -map_chapters -1 \"%s\"" % (ffmpegPath, src, Prefs['int_FfmpegLength'], romName, fontFile, Prefs['str_FfmpegTextColor'], Prefs['int_FfmpegTextSize'], border, Prefs['str_FfmpegTextBoxColor'], Prefs['str_FfmpegTextBoxBorder'], Prefs['str_FfmpegTextX'], Prefs['str_FfmpegTextY'], Prefs['enum_FfmpegEncoder'], title, time, dst)
     print(command)
     os.system(command)
     
@@ -768,78 +673,23 @@ def scanner(paths, SourceRomDir, dataFolders):
     print(mainSHA1List)
     
     '''set these as global'''
-    #replace these later with database key
-    global ffmpegThreads
-    global encoder
-    global videoLength
-    global fontColor
-    global fontSize
-    global fontX
-    global fontY
     global border
-    global borderColor
-    global borderSize
     
-    '''ffmpeg settings'''
-    try:
-        ffmpegThreads = int(settings['PluginPreferences']['iFfmpegThreads'])
-    except KeyError as e:
-        ffmpegThreads = int(archer_dict.dDefaultSettings['iFfmpegThreads'])
-    try:
-        encoder = archer_dict.dEncoderMapping[settings['PluginPreferences']['eFfmpegEncoder']]
-    except KeyError as e:
-        encoder = archer_dict.dEncoderMapping[archer_dict.dDefaultSettings['eFfmpegEncoder']]
-    if encoder == None:
-        encoder = archer_dict.dEncoderMapping[archer_dict.dDefaultSettings['eFfmpegEncoder']]
-    
-    '''ffmpeg command line options'''
-    try:
-        videoLength = settings['PluginPreferences']['iFfmpegLength']
-    except KeyError as e:
-        videoLength = archer_dict.dDefaultSettings['iFfmpegLength']
-    try:
-        fontColor = settings['PluginPreferences']['sFfmpegTextColor']
-    except KeyError as e:
-        fontColor = archer_dict.dDefaultSettings['sFfmpegTextColor']
-    try:
-        fontSize = settings['PluginPreferences']['iFfmpegTextSize']
-    except KeyError as e:
-        fontSize = archer_dict.dDefaultSettings['iFfmpegTextSize']
-    try:
-        fontX = settings['PluginPreferences']['sFfmpegTextX']
-    except KeyError as e:
-        fontX = archer_dict.dDefaultSettings['sFfmpegTextX']
-    try:
-        fontY = settings['PluginPreferences']['sFfmpegTextY']
-    except KeyError as e:
-        fontY = archer_dict.dDefaultSettings['sFfmpegTextY']
-    try:
-        border = settings['PluginPreferences']['sFfmpegTextBox']
-    except KeyError as e:
-        border = archer_dict.dDefaultSettings['sFfmpegTextBox']
-    try:
-        borderColor = settings['PluginPreferences']['sFfmpegTextBoxColor']
-    except KeyError as e:
-        borderColor = archer_dict.dDefaultSettings['sFfmpegTextBoxColor']
-    try:
-        borderSize = settings['PluginPreferences']['sFfmpegTextBoxBorder']
-    except KeyError as e:
-        borderSize = archer_dict.dDefaultSettings['sFfmpegTextBoxBorder']
-    
-    if border.lower() == 'true':
+    if Prefs['bool_FfmpegTextBox'].lower() == 'true':
         border = str(1)
     else:
         border = str(0)
     
     #compare this to existing settings later
     ffmpegOverlay = {
-        'fontSize' : fontSize,
-        'fontColor' : fontColor,
-        'fontX' : fontX,
-        'fontY' : fontY,
+        'videoLength' : Prefs['int_FfmpegLength'],
+        'fontSize' : Prefs['int_FfmpegTextSize'],
+        'fontColor' : Prefs['str_FfmpegTextColor'],
+        'fontX' : Prefs['str_FfmpegTextX'],
+        'fontY' : Prefs['str_FfmpegTextY'],
         'border' : border,
-        'borderColor' : borderColor,
-        'borderSize' : borderSize
+        'borderColor' : Prefs['str_FfmpegTextBoxColor'],
+        'borderSize' : Prefs['str_FfmpegTextBoxBorder']
         }
     
     '''get the existing json file'''
@@ -889,12 +739,8 @@ def scanner(paths, SourceRomDir, dataFolders):
         database['romMapping']['platforms'] = {}
         #print(database)
     
-    
-    #old
-    #database = {'mapping': {}}
-    
     for root, directories, files in os.walk(SourceRomDir): #https://stackoverflow.com/a/35703223
-        ffmpegPool = Pool(ffmpegThreads)
+        ffmpegPool = Pool(int(Prefs['int_FfmpegThreads']))
         for d in directories:
             if root == SourceRomDir:
                 for key, value in archer_dict.dPlatformMapping.items(): #https://stackoverflow.com/a/51446563
@@ -910,17 +756,14 @@ def scanner(paths, SourceRomDir, dataFolders):
                             print(system)
                             
                             try:
-                                getSystem = settings['PluginPreferences']['scanner_' + system.replace(' ', '_').lower()] #this is a string not bool
-                            except KeyError as e:
-                                try:
-                                    getSystem = archer_dict.dDefaultSettings['scanner_' + system.replace(' ', '_').lower()] #default settings if not in plex saved preferences file
-                                except KeyError as e: #system not in plex settings or default settings (we haven't enabled it yet)
-                                    getSystem = ''
+                                getSystem = Prefs['scanner_' + system.replace(' ', '_').lower()].lower() #this is a string not bool... lowercase the system name, and the value
                             
-                            print(getSystem)
-                            print(type(getSystem))
+                                print(getSystem)
+                                print(type(getSystem))
+                            except KeyError:
+                                getSystem = '' #In case user has folder that is not supported by RetroArcher yet
                             
-                            if getSystem.lower() == 'true':
+                            if getSystem == 'true':
                                 #probably pre-mature until we know if a rom was found, but this should be faster... from here to next for loop
                                 platformVideoDirectory = os.path.join(startVideoDirectory, 'Platforms', system)
                                 
@@ -1101,24 +944,25 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                                     
                                                                     found = 0
                                                                     for extension in videoExtensions:
-                                                                        try:
-                                                                            oldHash = database['romMapping']['platforms'][system]['videos'][romName + extension]['videoHash']
-                                                                            if typeMakeNew[t] == 1 and oldHash in typeHashList[t]:
-                                                                                makeLink = random.choice([True, False])
-                                                                            else:
-                                                                                makeLink = False
-                                                                        except KeyError:
-                                                                            pass
-                                                                        try:
-                                                                            if videoType != database['romMapping']['platforms'][system]['videos'][romName + extension]['videoType']:
-                                                                                print('video type has changed')
-                                                                                makeLink = True
-                                                                                found = 1
-                                                                            else:
-                                                                                print('video type has not changed')
-                                                                                found = 1
-                                                                        except KeyError:
-                                                                            print('video type not found')
+                                                                        if found == 0:
+                                                                            try:
+                                                                                oldHash = database['romMapping']['platforms'][system]['videos'][romName + extension]['videoHash']
+                                                                                if typeMakeNew[t] == 1 and oldHash in typeHashList[t]:
+                                                                                    makeLink = random.choice([True, False])
+                                                                                else:
+                                                                                    makeLink = False
+                                                                            except KeyError:
+                                                                                pass
+                                                                            try:
+                                                                                if videoType != database['romMapping']['platforms'][system]['videos'][romName + extension]['videoType']:
+                                                                                    print('video type has changed')
+                                                                                    makeLink = True
+                                                                                    found = 1
+                                                                                else:
+                                                                                    print('video type has not changed')
+                                                                                    found = 1
+                                                                            except KeyError:
+                                                                                print('video type not found')
                                                                     
                                                                     if found == 0:
                                                                         makeLink = True
@@ -1200,6 +1044,8 @@ def scanner(paths, SourceRomDir, dataFolders):
                                 print('Skipping disabled system')
                             elif getSystem == '':
                                 print('Skipping system not found in agent settings.')
+                            else:
+                                print('Skipping system for unknown reason.')
                         x +=1
     
         ffmpegPool.close()
@@ -1317,13 +1163,6 @@ if __name__ == '__main__':
     parser.add_argument('--poster_title', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--indexes', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--remaining_time', type=str, nargs='?', required=False, default='', help='Dev')
-    #parser.add_argument('--remote_access_mapping_state', type=str, nargs='?', required=False, default='', help='Dev')
-    #parser.add_argument('--remote_access_mapping_error', type=str, nargs='?', required=False, default='', help='Dev')
-    #parser.add_argument('--remote_access_public_address', type=str, nargs='?', required=False, default='', help='Dev')
-    #parser.add_argument('--remote_access_public_port', type=str, nargs='?', required=False, default='', help='Dev')
-    #parser.add_argument('--remote_access_private_address', type=str, nargs='?', required=False, default='', help='Dev')
-    #parser.add_argument('--remote_access_private_port', type=str, nargs='?', required=False, default='', help='Dev')
-    #parser.add_argument('--update_platform', type=str, nargs='?', required=False, default='', help='Dev')
 
     #--user {user} --username {username} --user_email {user_email} --user_thumb {user_thumb} --device {device} --platform {platform} --product {product} --player {player} --initial_stream {initial_stream} --ip_address {ip_address} --remaining_time {remaining_time} --stream_local {stream_local} --stream_location {stream_location} --user_id {user_id} --machine_id {machine_id} --media_type {media_type} --title {title} --library_name {library_name} --year {year} --release_date {release_date} --updated_date {updated_date} --last_viewed_date {last_viewed_date} --studio {studio} --content_rating {content_rating} --directors {directors} --writers {writers} --actors {actors} --genres {genres} --labels {labels} --collections {collections} --summary {summary} --tagline {tagline} --rating {rating} --critic_rating {critic_rating} --audience_rating {audience_rating} --user_rating {user_rating} --duration {duration} --poster_url {poster_url} --plex_id {plex_id} --plex_url {plex_url} --file {file} --filename {filename} --file_size {file_size} --section_id {section_id} --rating_key {rating_key} --art {art} --thumb {thumb} --poster_thumb {poster_thumb} --poster_title {poster_title} --indexes {indexes} --remote_access_mapping_state {remote_access_mapping_state} --remote_access_mapping_error {remote_access_mapping_error} --remote_access_public_address {remote_access_public_address} --remote_access_public_port {remote_access_public_port} --remote_access_private_address {remote_access_private_address} --remote_access_private_port {remote_access_private_port} --update_platform {update_platform}
 
@@ -1352,14 +1191,54 @@ if __name__ == '__main__':
     settingsFile = getSettings(paths['plexDir'], agent)
     #print(settingsFile)
     settings = convertXMLtoJSON(settingsFile)
+    #print('original settings')
     #print(json.dumps(settings, indent=4))
     
-    try:
-        SourceRomDir = os.path.abspath(settings['PluginPreferences']['sSourceRomDirectory'])
-        #print(SourceRomDir)
-    except KeyError as e:
-        print('Error occurred: ' + str(e))
-        sys.exit(1) #No rom directory specified
+    Prefs = {}
+    for key, value in archer_dict.dDefaultSettings.items():
+        try:
+            Prefs[key] = settings['PluginPreferences'][key]
+        except KeyError as e:
+            Prefs[key] = value
+        if Prefs[key] == None:
+            Prefs[key] = value
+        settingSplit = key.split('_', 1)
+        if settingSplit[0] == 'enum':
+            try:
+                Prefs[key] = archer_dict.dict_enum_settings_map[settingSplit[-1]][value]
+            except KeyError as e:
+                pass
+        elif settingSplit[0] == 'list':
+            Prefs[key] = Prefs[key].split(',')
+        elif settingSplit[0] == 'dir':
+            if os.path.isdir(Prefs[key]):
+                pass
+            else:
+                Prefs[key] = None
+                print('Directory does not exist: %s' % (value))
+    
+    #emulator and core settings... not in dDefaultSettings
+    for key, value in settings['PluginPreferences'].items():
+        keySplit = key.split('_')
+        if keySplit[0] == 'emulator' or keySplit[0] == 'core':
+            try:
+                if value == None:
+                    Prefs[key] = 0
+                else:
+                    Prefs[key] = int(value)
+            except KeyError as e:
+                Prefs[key] = 0
+            except TypeError as e: #probably won't ever have this scenario...
+                Prefs[key] = 0
+    
+    #print('Prefs:')
+    #print(json.dumps(Prefs, indent=4))
+    
+    if Prefs['dir_SourceRomDirectory'] == None:
+        print('EXITING: Source Rom Directory does not exist.')
+        sys.exit(1)
+    SourceRomDir = os.path.abspath(Prefs['dir_SourceRomDirectory'])
+    
     
     '''get data folders'''
     dataFolders = getDataFolders(paths['plexDir'], agent)

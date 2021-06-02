@@ -45,9 +45,9 @@ def double_space_replace(string):
     return string
 ########################################################################################################################
 def Search(self, results, media, lang, manual, movie, game_name, game_version, game_platform):
-    site_name = Prefs['sSearchSite']
+    site_name = Prefs['enum_SearchSite']
     Log.Info("common.Search() - Using site: '%s'" % (site_name))
-    site_index = archer_dict.dSiteNames2Index[site_name]
+    site_index = archer_dict.dict_enum_agent_map['SearchSite'][site_name.lower()]
     Log.Info("common.Search() - Using site index: '%s'" % (site_index))
     Log.Info("common.Search() - Game Name: '%s'" % (game_name))
     Log.Info("common.Search() - Game Platform: '%s'" % (game_platform))
@@ -85,7 +85,7 @@ def Update(self, metadata, media, lang, force, movie, game):
         Log.Info("common.Update() - No site found for metadata.id: '%s'" % (metadata.id))
 ########################################################################################################################
 def Themes(self, metadata, media, lang, force, movie, game):
-    if Prefs['sThemesSource'] == 'Local':
+    if Prefs['enum_ThemesSource'] == 'Local':
         sThemeSongs.Themes(self, metadata, media, lang, force, movie, game)
     else:
         Log.Info("common.Themes() - No theme song database selected in options")

@@ -6,7 +6,7 @@ import json
 import common
 
 def igdb_wrapper():
-    url = Prefs['sIgdbCreds']
+    url = Prefs['url_IgdbCreds']
     
     authorization = JSON.ObjectFromURL(url, values=None, headers={}, cacheTime=86400, encoding=None, errors=None, timeout=60, sleep=0)
     
@@ -529,7 +529,7 @@ def Update(self, metadata, media, lang, force, movie, game):
     
     '''content_rating/content_rating_age'''
     #age_ratings --> content rating
-    preferred_rating_system = archer_dict.dRatings[Prefs['ePreferredRatingSystem']]['igdb'] #need to get preference value in same format as value from json
+    preferred_rating_system = archer_dict.dict_enum_agent_map['PreferredRatingSystem'][Prefs['enum_PreferredRatingSystem']]['igdb'] #need to get preference value in same format as value from json
     Log.Info(preferred_rating_system)
 
     jsonKey = 'age_ratings'
@@ -749,7 +749,7 @@ def Update(self, metadata, media, lang, force, movie, game):
         Log.Info('franchises not found')
 
     #platform --> collection
-    if Prefs['bPlatformAsCollection'] == True:
+    if Prefs['bool_PlatformAsCollection'] == True:
         Log.Info('Setting platform as collection')
         metadata.collections.add("Platform: %s" % (platformName))
         Log.Info('Done setting platform as collection')
@@ -760,9 +760,9 @@ def Update(self, metadata, media, lang, force, movie, game):
 
     resolutions = ['maxres', 'standard', 'high', 'medium', 'default']
     try:
-        api_key = Prefs['sYouTubeApiKey']
+        api_key = Prefs['str_YouTubeApiKey']
     except:
-        api_key = archer_dict.dDefaultSettings['sYouTubeApiKey']
+        api_key = archer_dict.dDefaultSettings['str_YouTubeApiKey']
     try:
         result = jsonGame[0][jsonKey]
         #Log.Info(json.dumps(result, indent=2))
