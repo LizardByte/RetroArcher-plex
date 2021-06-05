@@ -50,7 +50,7 @@
 	<string>0</string>
        
   <key>PlexAgentAttributionText</key>
-  <string>RetroArcher is a metadata agent to collect metadata for video games. Scripts are included to build a video library from a specified rom directory. When the videos are played on certain clients (Andoird or Windows), the rom is streamed from the server to the client using a game streaming app (Moonlight).
+  <string>RetroArcher is a gaming plug-in for Plex Media Server! The goal of RetroArcher is to use Plex as a gaming front end interface and then use proven game streaming technology to stream your gameplay to any of your standard Plex clients. Simply put RetroArcher is to video games, what Plex is to multimedia.
   </string>
 </dict>
 </plist>
