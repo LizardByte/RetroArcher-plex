@@ -1205,7 +1205,7 @@ if __name__ == '__main__':
         settingSplit = key.split('_', 1)
         if settingSplit[0] == 'enum':
             try:
-                Prefs[key] = archer_dict.dict_enum_settings_map[settingSplit[-1]][value]
+                Prefs[key] = archer_dict.dict_enum_settings_map[settingSplit[-1]][Prefs[key]]
             except KeyError as e:
                 pass
         elif settingSplit[0] == 'list':
