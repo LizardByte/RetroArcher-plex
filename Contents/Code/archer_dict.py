@@ -2568,7 +2568,7 @@ dPlatformMapping = {
             1 : 'retroarch',
             'retroarch' :
                 {'cores' : {
-                    0 : 'emux_nes_libretro.dll', #default
+                    0 : 'fceumm_libretro.dll', #default
                     1 : 'emux_nes_libretro.dll', #Emux NES
                     2 : 'fceumm_libretro.dll', #FCEUmm
                     3 : 'mesen_libretro.dll', #Mesen
@@ -2713,7 +2713,7 @@ dPlatformMapping = {
             1 : 'retroarch',
             'retroarch' :
                 {'cores' : {
-                    0 : 'mednafen_gba_libretro.dll', #default
+                    0 : 'mgba_libretro.dll', #default
                     1 : 'mednafen_gba_libretro.dll', #Beetle GBA
                     2 : 'gpsp_libretro.dll', #gpSP
                     3 : 'meteor_libretro.dll', #Meteor
@@ -3829,7 +3829,7 @@ dPlatformMapping = {
             1 : 'retroarch',
             'retroarch' :
                 {'cores' : {
-                    0 : 'blastem_libretro.dll', #default
+                    0 : 'genesis_plus_gx_libretro.dll', #default
                     1 : 'blastem_libretro.dll', #BlastEm
                     2 : 'genesis_plus_gx_libretro.dll', #Genesis Plus GX
                     3 : 'picodrive_libretro.dll', #PicoDrive
