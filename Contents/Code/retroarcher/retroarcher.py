@@ -584,7 +584,10 @@ def make_dir(directory):
         pass
 
 def make_link(src, dst, system, romName):
-    ffmpegPath = 'ffmpeg\\ffmpeg'
+    if sys.platform == 'win32':
+        ffmpegPath = 'ffmpeg\\ffmpeg'
+    else:
+        ffmpegPath = 'ffmpeg'
     #print(ffmpegPath)
     #print(src, dst)
     
