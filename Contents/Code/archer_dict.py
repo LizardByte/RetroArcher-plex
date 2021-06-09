@@ -44,11 +44,12 @@ dict_enum_settings_map = { #for retroarcher script
         '2' : 'Sunshine'
         },
     'LogLevel' : {
-        '0' : 10,
-        '1' : 20,
-        '2' : 30,
-        '3' : 40,
-        '4' : 50
+        '0' : 0,
+        '1' : 10,
+        '2' : 20,
+        '3' : 30,
+        '4' : 40,
+        '5' : 50
         }
     }
 
