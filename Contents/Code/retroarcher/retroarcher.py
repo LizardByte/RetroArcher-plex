@@ -382,7 +382,7 @@ def launchADB(clientIP, moonlightPcUuid, moonlightAppId):
 
     #possible apps that can be useful
     packages = {
-            'Moonlight ': {
+            'Moonlight': {
                 'package' : 'com.limelight'
                 }
             }
@@ -403,9 +403,11 @@ def launchADB(clientIP, moonlightPcUuid, moonlightAppId):
     
     #add -W for more silent starting https://developer.android.com/studio/command-line/adb
     #why did -W stop working after a server reboot?
-    device.shell('am start -W -n com.limelight/com.limelight.ShortcutTrampoline --es "UUID" "' + moonlightPcUuid + '" --es "AppId" "' + str(moonlightAppId) + '"') #open moonlight on client device streaming to server desktop
-    
-    return True
+    if packages[Prefs['enum_GameStreamApp']]['installed'] == True:
+        device.shell('am start -W -n com.limelight/com.limelight.ShortcutTrampoline --es "UUID" "' + moonlightPcUuid + '" --es "AppId" "' + str(moonlightAppId) + '"') #open moonlight on client device streaming to server desktop
+        return True
+    else:
+        return False
 
 def adbConnect(clientIP, adbPortsFound):
     for adbPort in adbPortsFound:

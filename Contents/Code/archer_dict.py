@@ -36,7 +36,7 @@ dict_enum_settings_map = { #for retroarcher script
         '5' : 'mpeg2video'
         },
     'GameStreamApp' : { #used by retroarcher.py so numbers first
-        '0' : 'moonlight'
+        '0' : 'Moonlight'
         },
     'GameStreamHost' : { #used by retroarcher.py so numbers first
         '0' : 'GeForce Experience',
