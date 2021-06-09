@@ -36,12 +36,20 @@ dict_enum_settings_map = { #for retroarcher script
         '5' : 'mpeg2video'
         },
     'GameStreamApp' : { #used by retroarcher.py so numbers first
-        '0' : 'moonlight'
+        '0' : 'Moonlight'
         },
     'GameStreamHost' : { #used by retroarcher.py so numbers first
         '0' : 'GeForce Experience',
         '1' : 'Open-Stream',
         '2' : 'Sunshine'
+        },
+    'LogLevel' : {
+        '0' : 0,
+        '1' : 10,
+        '2' : 20,
+        '3' : 30,
+        '4' : 40,
+        '5' : 50
         }
     }
 
@@ -85,6 +93,8 @@ dDefaultSettings = {
 	'enum_GameStreamApp' : '0', #moonlight
 	'enum_GameStreamHost' : '0', #GeForce Experience
 	
+    'enum_LogLevel' : '1',
+    
 	'url_PlexServer' : 'http://localhost:32400',
 	'str_PlexToken' : '',
     
@@ -2568,7 +2578,7 @@ dPlatformMapping = {
             1 : 'retroarch',
             'retroarch' :
                 {'cores' : {
-                    0 : 'emux_nes_libretro.dll', #default
+                    0 : 'fceumm_libretro.dll', #default
                     1 : 'emux_nes_libretro.dll', #Emux NES
                     2 : 'fceumm_libretro.dll', #FCEUmm
                     3 : 'mesen_libretro.dll', #Mesen
@@ -2713,7 +2723,7 @@ dPlatformMapping = {
             1 : 'retroarch',
             'retroarch' :
                 {'cores' : {
-                    0 : 'mednafen_gba_libretro.dll', #default
+                    0 : 'mgba_libretro.dll', #default
                     1 : 'mednafen_gba_libretro.dll', #Beetle GBA
                     2 : 'gpsp_libretro.dll', #gpSP
                     3 : 'meteor_libretro.dll', #Meteor
@@ -3829,7 +3839,7 @@ dPlatformMapping = {
             1 : 'retroarch',
             'retroarch' :
                 {'cores' : {
-                    0 : 'blastem_libretro.dll', #default
+                    0 : 'genesis_plus_gx_libretro.dll', #default
                     1 : 'blastem_libretro.dll', #BlastEm
                     2 : 'genesis_plus_gx_libretro.dll', #Genesis Plus GX
                     3 : 'picodrive_libretro.dll', #PicoDrive
