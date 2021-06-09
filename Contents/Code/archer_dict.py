@@ -42,6 +42,13 @@ dict_enum_settings_map = { #for retroarcher script
         '0' : 'GeForce Experience',
         '1' : 'Open-Stream',
         '2' : 'Sunshine'
+        },
+    'LogLevel' : {
+        '0' : 10,
+        '1' : 20,
+        '2' : 30,
+        '3' : 40,
+        '4' : 50
         }
     }
 
@@ -85,6 +92,8 @@ dDefaultSettings = {
 	'enum_GameStreamApp' : '0', #moonlight
 	'enum_GameStreamHost' : '0', #GeForce Experience
 	
+    'enum_LogLevel' : '1',
+    
 	'url_PlexServer' : 'http://localhost:32400',
 	'str_PlexToken' : '',
     

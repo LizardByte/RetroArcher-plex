@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import logging
 import os
 import random
 import re
@@ -97,7 +98,7 @@ def getPaths():
     paths['retroarcherFontDir'] = os.path.join(paths['contentsDir'], 'Resources', 'Fonts')
     paths['retroarcherFFMPEGDir'] = os.path.join(paths['contentsDir'], 'Resources', 'ffmpeg')
     
-    #print(paths)
+    logging.debug('Paths: %s' % (paths))
     return paths
 
 def getPluginDir():
@@ -105,7 +106,7 @@ def getPluginDir():
         if sys.platform == 'win32':
             #settings = plex.settings.all()
             appdata = plex.settings.LocalAppDataPath
-            #print(appdata)
+            logging.debug('appdata: %s' % (appdata))
             pluginsDir = os.path.join(appdata, 'Plex Media Server', 'Plug-ins')
             
         else:
@@ -113,7 +114,7 @@ def getPluginDir():
             logDir = str(uuid.uuid4())
 
             logs = plex.downloadLogs(savepath=logDir, unpack=True) #https://discord.com/channels/183396325142822912/283629564087762945/795820408766988308
-            #print(logs)
+            logging.debug('logs: %s' % (logs))
 
             os.rename(os.path.join(logDir, 'Plex Media Server.log'), os.path.join(logDir, 'Plex Media Server.0.log'))
 
@@ -126,7 +127,7 @@ def getPluginDir():
 
                     if f.startswith('Plex Media Server.'):
                         if x < 6 and y < 2:
-                            #print(f)
+                            logging.debug('f: %s' % (f))
                             
                             inputFile = open (i, 'rb')
                             data = inputFile.readlines()
@@ -141,7 +142,7 @@ def getPluginDir():
                     os.remove(i)
             os.rmdir(logDir)
 
-        #print(pluginsDir)
+        logging.debug('pluginDir: %s' % (pluginsDir))
         return(pluginsDir)
 
 def getSettings(directory, agent):
@@ -158,17 +159,16 @@ def getDataFolders(directory, agent):
 def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId, movieName, dataFolders):
     if Prefs['str_MoonlightPcUuid'] == '' or Prefs['str_MoonlightPcUuid'] == None:
         serverInfo = getJson_fromXML(Prefs['url_GameStreamServerAddress'])
-        #print(serverInfo)
-        #print(json.dumps(serverInfo, indent=4))
+        logging.debug('serverInfo: %s' % (json.dumps(serverInfo, indent=4)))
         moonlightPcUuid = serverInfo['root']['uniqueid']
     else:
         moonlightPcUuid = Prefs['str_MoonlightPcUuid']
-    #print(moonlightPcUuid)
+    logging.info('moonlightPcUuid: %s' % (moonlightPcUuid))
     
     moonlightAppName = Prefs['str_MoonlightAppName']
 
     if Prefs['str_MoonlightAppId'] == '' or Prefs['str_MoonlightAppId'] == None:
-        #print(gamestreamhost)
+        logging.info('GameStreamHost: %s' % (Prefs['enum_GameStreamHost']))
         if Prefs['enum_GameStreamHost'] == 'GeForce Experience':
             nvstreamsvc_path = os.path.join(os.path.expandvars('$programdata'), 'NVIDIA Corporation', 'nvstreamsvc')
             
@@ -177,9 +177,9 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
             appIdFound = False
             for log in nvsstreamsvrLogs:
                 if appIdFound == False:
-                    logFile = os.path.join(nvstreamsvc_path, log)
-                    if os.path.isfile(logFile):
-                        with open(logFile, 'r') as f:
+                    NVlogFile = os.path.join(nvstreamsvc_path, log)
+                    if os.path.isfile(NVlogFile):
+                        with open(NVlogFile, 'r') as f:
                             logContents = f.read()
                         #find titles
                         titleSplit = logContents.split('Title=')
@@ -197,7 +197,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
 
     else:
         moonlightAppId = Prefs['str_MoonlightAppId']
-    #print(moonlightAppId)
+    logging.info('moonlightAppId: %s' % (moonlightAppId))
     
     #convert movieName to romName
     game_name_full = os.path.basename(movieName) #the file name
@@ -205,7 +205,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
     
     #key = os.path.join(system, game_name_full)
     videoKey = game_name_full
-    print(videoKey)
+    logging.info('videoKey: %s' % (videoKey))
     
     jsonDir = dataFolders['dbFolder']
     jsonFile = os.path.join(jsonDir, 'database.json')
@@ -219,38 +219,33 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
     except FileNotFoundError:
         pass
     
-    #romName = database['mapping'][key]
-    
     romFolder = database['romMapping']['platforms'][system]['videos'][videoKey]['romFolder']
     romFile = database['romMapping']['platforms'][system]['videos'][videoKey]['romFile']
     
     romName = os.path.join(romFolder, romFile)
     
-    print(romName)
+    logging.info('romName: %s' % (romName))
     
     systemKey = system.lower().replace(' ', '_')
 
     emulator = archer_dict.dPlatformMapping[system]['emulators'][Prefs['emulator_' + systemKey]]
-    print(emulator)
+    logging.debug('emulator: %s' % (emulator))
     
     applicationDirectory = Prefs['dir_app_' + emulator]
     binaryCommand = Prefs['str_binary_' + emulator]
     
     if emulator == 'retroarch':
         core = archer_dict.dPlatformMapping[system]['emulators'][emulator]['cores'][Prefs['core_' + systemKey]]
-        print(core)
+        logging.info('core: %s' % (core))
         emulatorCore = os.path.join('cores', core)
-        print(emulatorCore)
+        logging.info('emulatorCore: %s' % (emulatorCore))
     else:
         emulatorCore = ''
     
     fullRomPath = os.path.join(SourceRomDir, romName)
-    print(fullRomPath)
+    logging.info('fullRomPath: %s' % (fullRomPath))
     
-    with open(fullRomPath, 'rb') as f:
-        print('We are trying to read the file... to pre-spin up the disk')
-    
-    print(clientPlatform)
+    logging.info('clientPlatform: %s' % (clientPlatform))
 
     launch = False
     if clientPlatform.lower() == 'android':
@@ -278,7 +273,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                     UserId_rpcs3 = UserId_rpcs3[1:]
                 UserId_length = len(UserId_rpcs3)
         except:
-            print('Error: User ID is not an integer')
+            logging.error('User ID is not an integer: %s' % (clientUserId))
 
         dSystemPlatformMapping = {
         'win64' : {
@@ -337,19 +332,18 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
             import struct
             architecture = struct.calcsize("P")*8 #https://stackoverflow.com/a/1406849
             if architecture == 64:
-                print(str(architecture) + 'bit operating system detected')
                 platform = 'win64'
             elif architecture ==32:
-                print(str(architecture) + 'bit operating system detected')
                 platform = 'win32'
-        print(platform)
+        logging.info('architecture: %s' % (architecture))
+        logging.info('platform: %s' % (platform))
         
         emulatorPath = dSystemPlatformMapping[platform]['emulators'][emulator]['dir']
-        print(emulatorPath)
+        logging.info('emulatorPath: %s' % (emulatorPath))
         os.chdir(emulatorPath)
         
         command = dSystemPlatformMapping[platform]['emulators'][emulator]['command']
-        print(command)
+        logging.debug('command: %s' % (command))
         os.system(command)
         
         #kill the stream once the emulator is killed
@@ -379,9 +373,9 @@ def launchADB(clientIP, moonlightPcUuid, moonlightAppId):
     adbRanges = [ [5555, 5585], [30000 , 50000] ] #https://www.reddit.com/r/tasker/comments/jbzeg5/adb_wifi_and_android_11_wireless_debugging/
     for adbRange in adbRanges:
         adbThreadedScan(adbRange)
-        print(adbPortsFound)
+        logging.info('adbPortsFound: %s' % (adbPortsFound))
         adbAddress = adbConnect(clientIP, adbPortsFound)
-        print(adbAddress)
+        logging.info('adbAddress: %s' % (adbAddress))
         if adbAddress != None:
             device = adb.device(serial=adbAddress)
             break
@@ -390,36 +384,16 @@ def launchADB(clientIP, moonlightPcUuid, moonlightAppId):
     packages = {
             'Moonlight ': {
                 'package' : 'com.limelight'
-                },
-            'Plex ': {
-                'package' : 'com.plexapp.android',
-                'download' : 'https://download.apkpure.com/b/APK/Y29tLnBsZXhhcHAuYW5kcm9pZF84MTcxOTU2ODFfZDAxMGRjOGY?_fn=UGxleCBTdHJlYW0gRnJlZSBNb3ZpZXMgU2hvd3MgTGl2ZSBUViBtb3JlX3Y4LjExLjAuMjIxODZfYXBrcHVyZS5jb20uYXBr&as=0dc1554d0000755f7d529e8d03c1fb505ff4fae0&ai=-1810870732&at=1609890408&_sa=ai%2Cat&k=1be1240d21a33e1767c040576d9c73dc5ff79d68&_p=Y29tLnBsZXhhcHAuYW5kcm9pZA&c=1%7CENTERTAINMENT%7CZGV2PVBsZXglMkMlMjBJbmMuJnQ9YXBrJnM9NDIwMTA3NzUmdm49OC4xMS4wLjIyMTg2JnZjPTgxNzE5NTY4MQ'
-                },
-            'AMD Link ': {
-                'package' : 'com.amd.link'
-                },
-            'GeForce Now ': {
-                'package' : 'com.nvidia.gfn_100021711'
-                },
-            'Nvidia GameStream ': {
-                'package' : 'com.nvidia.gs_100021711'
-                },
-            'Steamlink ': {
-                'package' : 'com.valvesoftware.steamlink'
-                },
-            'Xcloud ': {
-                'package' : 'com.microsoft.xcloud'
-                },
-            'VLC ': {
-                'package' : 'org.videolan.vlc'
                 }
             }
 
     for key in packages:
         if device.shell('pm list packages | grep ' + packages[key]['package']) != '':
-            print(key + 'is installed')
+            packages[key]['installed'] = True
+            logging.info('%s is installed on client device: %s' % (key, packages[key]['package']))
         else:
-            print(key + 'is not installed')
+            packages[key]['installed'] = False
+            logging.info('%s is NOT installed on client device: %s' % (key, packages[key]['package']))
             #try:
             #    if packages[key][1] != '':
             #        installAPK(packages[key]['download'])
@@ -436,18 +410,18 @@ def launchADB(clientIP, moonlightPcUuid, moonlightAppId):
 def adbConnect(clientIP, adbPortsFound):
     for adbPort in adbPortsFound:
         adbAddress = clientIP + ':' + str(adbPort)
-        output = adb.connect(adbAddress)
-        print(output)
-        message = output.split(clientIP + ':' + str(adbPort), 1)[0].strip()
+        adbConnectOutput = adb.connect(adbAddress)
+        logging.debug('adbConnectOutput: %s' % (adbConnectOutput))
+        message = adbConnectOutput.split(clientIP + ':' + str(adbPort), 1)[0].strip()
         if message == 'cannot connect to':
-            print('adb connection unsuccessful, trying next port if available')
+            logging.debug('adb connection unsuccessful, trying next port if available')
         elif message == 'failed to connect to':
-            print('adb connection failed, device is probably not paired... Android 11+ ???, trying next available port anyway')
+            logging.debug('adb connection failed, device is probably not paired... Android 11+ ???, trying next available port anyway')
         elif message == 'connected to' or message == 'already connected to':
-            print('adb connected on port: %s' % (adbPort))
+            logging.info('adb connected on port: %s' % (adbPort))
             return adbAddress
         else:
-            print('unknown connection status, trying next available port')
+            logging.debug('unknown connection status, trying next available port')
 
 def adbThreadedScan(adbRange):
     from threading import Thread
@@ -538,7 +512,7 @@ def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secre
     return True
 
 def list_hash(fileList):
-    print(fileList)
+    logging.debug('fileList: %s' % (fileList))
 
     bufferSize = int(Prefs['int_BufferSize'])
     
@@ -565,11 +539,9 @@ def list_videos(directory):
     videoExtensions = ['.mp4', '.mkv']
     list = []
     if os.path.exists(directory):
-        #print('directory exists')
         for file in os.listdir(directory):
             for extension in videoExtensions:
                 if file.endswith(extension):
-                    #print(file)
                     list.append(os.path.join(directory, file))
     return list
 
@@ -588,19 +560,15 @@ def make_link(src, dst, system, romName):
         ffmpegPath = 'ffmpeg\\ffmpeg'
     else:
         ffmpegPath = 'ffmpeg'
-    #print(ffmpegPath)
-    #print(src, dst)
+    logging.debug('ffmpegPath: %s' % (ffmpegPath))
     
     fontFolder = paths['retroarcherFontDir']
-    #fontFile = os.path.join(fontFolder, 'ubuntu', 'Ubuntu-R.ttf').replace('\\', '\\\\')
     fontFile = os.path.join(fontFolder, 'OpenSans', 'OpenSans-Light.ttf').replace('\\', '\\\\')
     
     illegal_characters = [',']
     
-    #title = romName + ' on ' + system
     title = romName
     time = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
-    print(time)
     
     if os.path.isfile(dst) == True:
         os.remove(dst) #remove destination if it exists already
@@ -608,7 +576,7 @@ def make_link(src, dst, system, romName):
         romName = romName.replace(x, '\%s' % (x))
     
     command = "%s -ss 0 -i \"%s\" -t %s -vf \"drawtext=text='%s': fontfile='fonts/%s': fontcolor=%s: fontsize=%s: box=%s: boxcolor=%s: boxborderw=%s: x=%s: y=%s\" -codec:v %s -codec:a copy -map_metadata -1 -metadata title=\"%s\" -metadata creation_time=%s -map_chapters -1 \"%s\"" % (ffmpegPath, src, Prefs['int_FfmpegLength'], romName, fontFile, Prefs['str_FfmpegTextColor'], Prefs['int_FfmpegTextSize'], border, Prefs['str_FfmpegTextBoxColor'], Prefs['str_FfmpegTextBoxBorder'], Prefs['str_FfmpegTextX'], Prefs['str_FfmpegTextY'], Prefs['enum_FfmpegEncoder'], title, time, dst)
-    print(command)
+    logging.debug('command: %s' % (command))
     os.system(command)
     
     #os.symlink(src[0], dst) #symlinks not picked up by Plex :( ... hence the workaround with ffmpeg
@@ -633,14 +601,11 @@ def platformPath(fullpath):
     dirLength = len(splitall(fullpath))
     dirPath = os.path.dirname(fullpath)
     dirName = os.path.basename(dirPath)
-    #Log.Info(dirLength)
     
     x =  0
     while x < dirLength:
         for key, value in archer_dict.dPlatformMapping.items():
-            #Log.Info(value[0])
             
-            #if dirName == value[0]:
             if dirName == key:
                 x = dirLength
                 game_platform = dirName
@@ -651,14 +616,9 @@ def platformPath(fullpath):
     return game_platform
 
 def scanner(paths, SourceRomDir, dataFolders):
-    print('\nPaths: ')
-    print(paths)
-    
-    print('\nSource Rom Directory: ')
-    print(SourceRomDir)
-    
-    print('\nData Folders:')
-    print(dataFolders)
+    logging.info('paths: %s' % (paths))
+    logging.info('SourceRomDir: %s' % (SourceRomDir))
+    logging.info('dataFolders: %s' % (dataFolders))
     
     videoExtensions = ['.mp4', '.mkv']
     multi_disk_search = [ '(cd', '(disk', '(disc', '(part', '(pt', '(prt' ] #what else do we need in this list?
@@ -669,10 +629,10 @@ def scanner(paths, SourceRomDir, dataFolders):
     
     #compare these later
     mainVideoList = list_videos(mainVideoDirectory)
-    print(mainVideoList)
+    logging.info('mainVideoList: %s' % (mainVideoList))
     mainMD5List, mainSHA1List = list_hash(mainVideoList)
-    print(mainMD5List)
-    print(mainSHA1List)
+    logging.info('mainMD5List: %s' % (mainMD5List))
+    logging.info('mainSHA1List: %s' % (mainSHA1List))
     
     '''set these as global'''
     global border
@@ -713,33 +673,33 @@ def scanner(paths, SourceRomDir, dataFolders):
     if useExisting == True:
         try:
             if ffmpegOverlay == database['ffmpegOverlay']:
-                print('overlay settings did not change')
+                logging.info('ffmpegOverlay settings did not change')
                 ffmpeg_changed = 0 #no changes
             else:
                 database['ffmpegOverlay'] = ffmpegOverlay
-                print('overlay settings changed, re-encoding')
+                logging.info('ffmpegOverlay settings changed, re-encoding everything')
                 ffmpeg_changed = 1 #settings changed, re-encode ALL
         except KeyError as e:
-            print('KeyError :' + str(e))
-            print('database corruption detected')
+            logging.error('KeyError: %s' % (str(e)))
+            logging.error('database corruption detected... database will be re-created')
             useExisting = False
         if mainMD5List == database['mainVideoHash']:
-            print('main videos are the same as before')
+            logging.info('main videos are the same as before')
             mainVideos = 0 #don't use a new video
         else:
             database['mainVideoHash'] = mainMD5List
-            print('main videos have changed')
+            logging.info('main videos have changed')
             mainVideos = 1 #possibly use a new video
     
     if useExisting == False: #do not make this an elif statement becuase we may set useExisting to be false in the above if statement!
         print('use existing is false... something wrong with the json file?')
+        logging.info('cannot use existing database.json... maybe it does not exist yet... maybe it is corrupted...')
         database = {'ffmpegOverlay' : ffmpegOverlay }
         ffmpeg_changed = 1 #settings changed, re-encode ALL, not really but database is messed up, need to re-make everything.
         database['mainVideoHash'] = mainMD5List
         mainVideos = 1 #possibly use a new video
         database['romMapping'] = {}
         database['romMapping']['platforms'] = {}
-        #print(database)
     
     for root, directories, files in os.walk(SourceRomDir): #https://stackoverflow.com/a/35703223
         ffmpegPool = Pool(int(Prefs['int_FfmpegThreads']))
@@ -755,15 +715,14 @@ def scanner(paths, SourceRomDir, dataFolders):
                         if d.lower() == value['systemNames'][x].lower():
                             x = len(value['systemNames'])
                             system = key
-                            print(system)
+                            logging.info('system: %s' % (system))
                             
                             try:
                                 getSystem = Prefs['scanner_' + system.replace(' ', '_').lower()].lower() #this is a string not bool... lowercase the system name, and the value
-                            
-                                print(getSystem)
-                                print(type(getSystem))
+                                logging.info('getSystem for %s: %s' % (system, getSystem))
                             except KeyError:
                                 getSystem = '' #In case user has folder that is not supported by RetroArcher yet
+                                logging.info('System (%s) is not supported yet.' % (system))
                             
                             if getSystem == 'true':
                                 #probably pre-mature until we know if a rom was found, but this should be faster... from here to next for loop
@@ -788,8 +747,8 @@ def scanner(paths, SourceRomDir, dataFolders):
                                 #print(database)
                                 
                                 #rom extensions allowed
-                                print(value['romExtensions'])
-                                print(value['multiDisk'])
+                                #print(value['romExtensions'])
+                                #print(value['multiDisk'])
                                 
                                 checks = [value['romExtensions']]
                                 if value['multiDisk'] == True:
@@ -798,10 +757,10 @@ def scanner(paths, SourceRomDir, dataFolders):
                                 libraryType = value['libraryType']
                                 libPath = os.path.join(dataFolders['mediaFolder'], libraryType)
                                 make_dir(libPath)
-                                print(libPath)
+                                logging.info('libPath: %s' % (libPath))
                                 dstPath = os.path.join(dataFolders['mediaFolder'], libraryType, system)
                                 make_dir(dstPath)
-                                print(dstPath)
+                                logging.info('dstPath: %s' % (dstPath))
                                 
                                 multi_disk_game_list = {}
                                 keys_to_delete = []
@@ -865,18 +824,16 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                             index1 = temp.lower().find(')')
                                                             #print(index1)
                                                             gameName = (romName[0:index0].rstrip() + ' ' + temp[index1+1:].strip()).strip() #probably adjust game name
-                                                            print(gameName)
+                                                            logging.info('gameName: %s' % (gameName))
                                                                 
                                                             try:
                                                                 multi_disk_game_list[gameName]
                                                                 multi_disk_game_list[gameName][len(multi_disk_game_list[gameName])] = f
-                                                                print("game existed: " + f)
+                                                                logging.info('MultiDisk game already in list: %s' % (f))
                                                             except KeyError:
-                                                                print('...\n\n...')
-                                                                
                                                                 matched = 0
                                                                 for title in multi_disk_game_list:
-                                                                    print(title)
+                                                                    logging.debug('MultiDisk game title: %s' % (title))
                                                                     splitExisting = title.split('(')
                                                                     splitGame = gameName.split('(')
                                                                     
@@ -887,11 +844,11 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                                     tempGame = gameName.rsplit('(', 1)[0].strip()
                                                                     
                                                                     if tempExisting == tempGame and lengthGame > 2:
-                                                                        print('these are the same?')
+                                                                        #print('these are the same?')
                                                                         keys_to_delete.append(title)
-                                                                        print(multi_disk_game_list[title])
-                                                                        print(tempExisting)
-                                                                        print(tempGame)
+                                                                        #print(multi_disk_game_list[title])
+                                                                        #print(tempExisting)
+                                                                        #print(tempGame)
                                                                         gameName = tempGame
                                                                         multi_disk_game_list[gameName] = multi_disk_game_list[title]
                                                                         multi_disk_game_list[gameName][len(multi_disk_game_list[gameName])] = f
@@ -901,7 +858,7 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                                 
                                                                 if matched == 0:
                                                                     multi_disk_game_list[gameName] = { 0 : f }
-                                                                    print("game didn't exist: " + f)
+                                                                    logging.info('MultiDisk game being added to the list: %s' % (f))
                                                                 
                                                             skipRom = True
                                                         else:
@@ -922,10 +879,10 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                                 #print(database['romMapping']['platforms'][system]['videos'][romName + extension]['videoHash'])
                                                                 try:
                                                                     if videoHash[0] == database['romMapping']['platforms'][system]['videos'][romName + extension]['videoHash']:
-                                                                        print('hash is equal')
+                                                                        logging.debug('videoHash is equal hash in database: %s' % (videoHash[0]))
                                                                         makeLink = False
                                                                     else:
-                                                                        print('hash is not equal')
+                                                                        logging.debug('videoHash is not equal hash in database: %s' % (videoHash[0]))
                                                                         makeLink = True
                                                                 except KeyError:
                                                                     makeLink = True
@@ -957,14 +914,14 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                                                 pass
                                                                             try:
                                                                                 if videoType != database['romMapping']['platforms'][system]['videos'][romName + extension]['videoType']:
-                                                                                    print('video type has changed')
+                                                                                    logging.info('video type has changed')
                                                                                     makeLink = True
                                                                                     found = 1
                                                                                 else:
-                                                                                    print('video type has not changed')
+                                                                                    logging.info('video type has not changed')
                                                                                     found = 1
                                                                             except KeyError:
-                                                                                print('video type not found')
+                                                                                logging.info('video type not found')
                                                                     
                                                                     if found == 0:
                                                                         makeLink = True
@@ -1008,9 +965,9 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                         make_link(src, dst, system, romName) #enable for testing
                                                         #ffmpegPool.apply_async(make_link, (src, dst, system, romName,)) #disable for testing
                                                     elif skipRom == True:
-                                                        print('Skipping multidisk game image: ' + f)
+                                                        logging.info('Skipping MultiDisk game image: %s' % (f))
                                                     elif makeLink == False:
-                                                        print('no update needed for this rom: ' + f)
+                                                        logging.info('No update needed for this rom: %s' % (f))
                                                 y += 1
                                         if iteration == 0:
                                             #multi disk m3u maker AND ffmpeg generator (so we don't have to scan again).
@@ -1043,11 +1000,11 @@ def scanner(paths, SourceRomDir, dataFolders):
                                         iteration += 1
                                         
                             elif getSystem == 'false':
-                                print('Skipping disabled system')
+                                logging.info('Skipping disabled system: %s' % (system))
                             elif getSystem == '':
-                                print('Skipping system not found in agent settings.')
+                                logging.info('Skipping system not found in agent settings: %s' % (system))
                             else:
-                                print('Skipping system for unknown reason.')
+                                logging.error('Skipping system for unknown reason: %s' % (system))
                         x +=1
     
         ffmpegPool.close()
@@ -1057,7 +1014,7 @@ def scanner(paths, SourceRomDir, dataFolders):
     
     #add some stuff here to remove video files that the rom doesn't exist anymore
     for key in database['romMapping']['platforms']:
-        print(key)
+        pass
 
 def splitall(path): #https://www.oreilly.com/library/view/python-cookbook/0596001673/ch04s16.html
     allparts = []
@@ -1084,9 +1041,16 @@ def quote_remover(string):
     return string
 
 if __name__ == '__main__':
+    logDir = os.path.join(os.path.expanduser('~'), 'RetroArcher')
+    make_dir(logDir)
+    logFile = os.path.join(logDir, 'retroarcher.log')
+
+    logging.basicConfig(filename=logFile,level=logging.DEBUG,format='%(asctime)s :  %(levelname)s - %(message)s') #change the logging level after reading the settings
+
+    logging.info('----retroarcher.py script started----')
+    
     paths = getPaths() #get the paths
-    print(paths)
-    #print(paths['plexDir'])
+    logging.info('paths: %s' % (paths))
     
     #hack for cleaner folder structure and relative imports
     sys.path.append(paths['retroarcherModulesDir'])
@@ -1211,6 +1175,10 @@ if __name__ == '__main__':
                 Prefs[key] = archer_dict.dict_enum_settings_map[settingSplit[-1]][Prefs[key]]
             except KeyError as e:
                 pass
+            if settingSplit[1] == 'LogLevel':
+                logLevel = Prefs[key]
+                logging.basicConfig(filename='retroarcher.log',level=logLevel) #log level should now be whatever is set in the agent or default
+                logging.info('Numeric logging level set to: %s' % (logLevel))
         elif settingSplit[0] == 'list':
             Prefs[key] = Prefs[key].split(',')
         elif settingSplit[0] == 'dir':
@@ -1218,7 +1186,8 @@ if __name__ == '__main__':
                 pass
             else:
                 Prefs[key] = None
-                print('Directory does not exist: %s' % (value))
+                #print('%s directory does not exist: %s' % (key, value))
+                logging.warning('%s directory does not exist: %s' % (key, value))
     
     #emulator and core settings... not in dDefaultSettings
     for key, value in settings['PluginPreferences'].items():
@@ -1238,14 +1207,14 @@ if __name__ == '__main__':
     #print(json.dumps(Prefs, indent=4))
     
     if Prefs['dir_SourceRomDirectory'] == None:
-        print('EXITING: Source Rom Directory does not exist.')
+        logging.critical('Source Rom Directory does not exist or is not set in agent settings.')
         sys.exit(1)
     SourceRomDir = os.path.abspath(Prefs['dir_SourceRomDirectory'])
     
     
     '''get data folders'''
     dataFolders = getDataFolders(paths['plexDir'], agent)
-    print(dataFolders)
+    logging.info('dataFolders: %s' % (dataFolders))
 
     '''script arguments'''
     if scan:
@@ -1334,11 +1303,11 @@ if __name__ == '__main__':
                 f.write(log)
         '''
         serverIP = get_ip()
-        print(serverIP)
+        logging.info('serverIP: %s' % (serverIP))
         
-        if serverIP.rsplit('.',1)[0] == clientIP.rsplit('.',1)[0]:
+        if serverIP.rsplit('.',1)[0] == clientIP.rsplit('.',1)[0]: #this is only checking the very first part of the IP... should we check the next 2 as well?
             launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId, movieName, dataFolders)
         else:
-            print('beep, bop, boop')
-            print('cannot execute scripts on remote client yet')
+            logging.error('Client appears to be a remote client. RetroArcher cannot execute scripts on a remote client yet. If the client really is local to the server, try accessing your Plex server at "http://x.x.x.x:32400/web" instead of "https://app.plex.tv"')
+            sys.exit(1)
 
