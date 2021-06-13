@@ -100,6 +100,8 @@ dDefaultSettings = {
     
     'dir_app_retroarch' : '',
     'str_binary_retroarch' : 'retroarch',
+    'dir_app_cemu' : '',
+    'str_binary_cemu' : 'Cemu',
     'dir_app_rpcs3' : '',
     'str_binary_rpcs3' : 'rpcs3',
 	
@@ -164,6 +166,7 @@ dDefaultSettings = {
 	'scanner_nintendo_super_famicom_satellaview' : 'True',
 	'scanner_nintendo_virtual_boy' : 'True',
 	'scanner_nintendo_wii' : 'True',
+	'scanner_nintendo_wii_u' : 'True',
 	'scanner_outrun_engine' : 'True',
 	'scanner_quake_1_engine' : 'True',
 	'scanner_quake_ii_engine' : 'True',
@@ -3203,9 +3206,14 @@ dPlatformMapping = {
 			'thegamesdb' : 38
 			},
         'libraryType' : 'Games',
-		'romExtensions' : [],
+		'romExtensions' : ['rpx', 'wud'],
 		'romType' : 0,
-		'multiDisk' : False
+		'multiDisk' : False,
+		'emulators' : {
+            0 : 'cemu', #agent enums to emulator name
+            1 : 'cemu',
+            'cemu' : {}
+            }
 		},
     'Nintendo WiiWare' : { 
 		'systemNames' : ['Nintendo WiiWare', 'WiiWare'],
