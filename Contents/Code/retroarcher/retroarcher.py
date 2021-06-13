@@ -6,17 +6,41 @@ import logging
 import os
 import random
 import re
+import shutil
 import socket
 import sys
 import time
+import uuid
 
 from multiprocessing.pool import ThreadPool as Pool
 from datetime import datetime
+
+
+def config_to_dict(configFile):
+    def splitter(line):
+        return line.split('=', 1)
+
+    with open(configFile, 'r') as f:
+        text = f.read().rstrip('\n')
+        header, *data_lines = text.split('\n')
+
+    data = dict(map(splitter, data_lines))
+    
+    return header, data
+
+
+def config_rewrite(configFile, header, data):
+    with open(configFile, 'w') as f:
+        data_lines = list(map('='.join, data.items()))
+        text = '\n'.join([header] + data_lines)
+        f.write(text)
+
 
 def convertXMLtoJSON(filepath):
     inputFile = open (filepath, 'rb')
     j = xmltodict.parse(inputFile)
     return j
+
 
 def get_ip(): #https://stackoverflow.com/a/28950776/11214013
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -30,6 +54,7 @@ def get_ip(): #https://stackoverflow.com/a/28950776/11214013
         s.close()
     return IP
 
+
 def getJson_fromXML(url):
     headers = {
             'Accept': 'application/xml'
@@ -40,6 +65,7 @@ def getJson_fromXML(url):
     result = xmltodict.parse(xml)
     
     return result
+
 
 def getPlex():
     from plexapi.server import PlexServer, CONFIG #this was used to get the settings previously... there could be other uses in the future
@@ -69,6 +95,7 @@ def getPlex():
     account = plex.myPlexAccount()
     
     return plex, account
+
 
 def getPaths():
     #build_directories
@@ -101,6 +128,7 @@ def getPaths():
     logging.debug('Paths: %s' % (paths))
     return paths
 
+
 def getPluginDir():
     def pluginsDir(plex): #alternate methods to get directory... not needed as long as this script doesn't get moved
         if sys.platform == 'win32':
@@ -110,7 +138,6 @@ def getPluginDir():
             pluginsDir = os.path.join(appdata, 'Plex Media Server', 'Plug-ins')
             
         else:
-            import uuid
             logDir = str(uuid.uuid4())
 
             logs = plex.downloadLogs(savepath=logDir, unpack=True) #https://discord.com/channels/183396325142822912/283629564087762945/795820408766988308
@@ -145,9 +172,11 @@ def getPluginDir():
         logging.debug('pluginDir: %s' % (pluginsDir))
         return(pluginsDir)
 
+
 def getSettings(directory, agent):
     settingsFile = os.path.join(directory, 'Plug-in Support', 'Preferences', agent + str('.xml'))
     return settingsFile
+
 
 def getDataFolders(directory, agent):
     dataFolders = {}
@@ -155,6 +184,7 @@ def getDataFolders(directory, agent):
     dataFolders['mediaFolder'] = os.path.join(directory, 'Plug-in Support', 'Data', agent, 'media')
     dataFolders['dbFolder'] = os.path.join(directory, 'Plug-in Support', 'Data', agent, 'database')
     return dataFolders
+
 
 def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId, movieName, dataFolders):
     if Prefs['str_MoonlightPcUuid'] == '' or Prefs['str_MoonlightPcUuid'] == None:
@@ -263,6 +293,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
     
     if launch == True:
         UserId_rpcs3 = clientUserId
+        UserId_cemu = UserId_rpcs3
         UserId_length = len(UserId_rpcs3)
         try:
             int(clientUserId)
@@ -271,6 +302,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                     UserId_rpcs3 = '0%s' % (UserId_rpcs3)
                 else:
                     UserId_rpcs3 = UserId_rpcs3[1:]
+                UserId_cemu = str(int(UserId_rpcs3) + 80000000)
                 UserId_length = len(UserId_rpcs3)
         except:
             logging.error('User ID is not an integer: %s' % (clientUserId))
@@ -278,13 +310,17 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
         dSystemPlatformMapping = {
         'win64' : {
             'emulators' : {
+                'cemu' : {
+                    'dir' : applicationDirectory,
+                    'command' : 'start "RetroArcher" "%s" --fullscreen --game "%s" --account %s' % (binaryCommand, fullRomPath, UserId_cemu)
+                    },
                 'retroarch' : {
                     'dir' : applicationDirectory,
-                    'command' : 'start "RetroArcher" "' + binaryCommand + '" -L "' + emulatorCore + '" "' + fullRomPath + '" '
+                    'command' : 'start "RetroArcher" "%s" -L "%s" "%s"' % (binaryCommand, emulatorCore, fullRomPath)
                     },
                 'rpcs3' : {
                     'dir' : applicationDirectory,
-                    'command' : 'start "RetroArcher" "' + binaryCommand + '" --no-gui "' + fullRomPath + '" --user-id ' + UserId_rpcs3
+                    'command' : 'start "RetroArcher" "%s" --no-gui "%s" --user-id %s' % (binaryCommand, fullRomPath, UserId_rpcs3)
                     }
                 },
             'stream_host' : {
@@ -302,13 +338,17 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
             },
         'win32' : {
             'emulators' : {
+                'cemu' : {
+                    'dir' : applicationDirectory,
+                    'command' : 'start "RetroArcher" "%s" --fullscreen --game "%s" --account %s' % (binaryCommand, fullRomPath, UserId_cemu)
+                    },
                 'retroarch' : {
                     'dir' : applicationDirectory,
-                    'command' : 'start "RetroArcher" "' + binaryCommand + '" -L "' + emulatorCore + '" "' + fullRomPath + '" '
+                    'command' : 'start "RetroArcher" "%s" -L "%s" "%s"' % (binaryCommand, emulatorCore, fullRomPath)
                     },
                 'rpcs3' : {
                     'dir' : applicationDirectory,
-                    'command' : 'start "RetroArcher" "' + binaryCommand + '" --no-gui "' + fullRomPath + '" --user-id ' + UserId_rpcs3
+                    'command' : 'start "RetroArcher" "%s" --no-gui "%s" --user-id %s' % (binaryCommand, fullRomPath, UserId_rpcs3)
                     }
                 },
             'stream_host' : {
@@ -342,6 +382,32 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
         logging.info('emulatorPath: %s' % (emulatorPath))
         os.chdir(emulatorPath)
         
+        #verify/create user profile folder and file for cemu
+        if emulator == 'cemu':
+            userProfilePath_cemu = os.path.join(emulatorPath, 'mlc01', 'usr', 'save', 'system', 'act', UserId_cemu)
+            userProfileFile_cemu = os.path.join(userProfilePath_cemu, 'account.dat')
+            
+            userProfilePathExists_cemu = os.path.isdir(userProfilePath_cemu)
+            userProfileFileExists_cemu = os.path.isfile(userProfileFile_cemu)
+            
+            if userProfilePathExists_cemu == False or userProfileFileExists_cemu == False: #we need to create the user profile
+                default_cemu_account_file = os.path.join(emulatorPath, 'mlc01', 'usr', 'save', 'system', 'act', '80000001', 'account.dat')
+                if os.path.isfile(default_cemu_account_file) == True:
+                    make_dir(userProfilePath_cemu)
+                    copy_file(default_cemu_account_file, userProfileFile_cemu)
+                userProfileFileExists_cemu = os.path.isfile(userProfileFile_cemu)
+                if userProfileFileExists_cemu == True:
+                    #need to parse and replace some stuff in the file
+                    header, data = config_to_dict(userProfileFile_cemu)
+                    
+                    data['PersistentId'] = UserId_cemu
+                    data['Uuid'] = str(uuid.uuid1()).replace('-', '')
+                    
+                    config_rewrite(userProfileFile_cemu, header, data)
+                else:
+                    logging.critial('Failed to create cemu user profile. Exiting.')
+                    sys.exit()
+        
         command = dSystemPlatformMapping[platform]['emulators'][emulator]['command']
         logging.debug('command: %s' % (command))
         os.system(command)
@@ -363,6 +429,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                 p = psutil.Process(proc.pid)
                 proc.kill()
         '''
+
 
 def launchADB(clientIP, moonlightPcUuid, moonlightAppId):
     #https://stackoverflow.com/a/37327094/11214013
@@ -409,6 +476,7 @@ def launchADB(clientIP, moonlightPcUuid, moonlightAppId):
     else:
         return False
 
+
 def adbConnect(clientIP, adbPortsFound):
     for adbPort in adbPortsFound:
         adbAddress = clientIP + ':' + str(adbPort)
@@ -424,6 +492,7 @@ def adbConnect(clientIP, adbPortsFound):
             return adbAddress
         else:
             logging.debug('unknown connection status, trying next available port')
+
 
 def adbThreadedScan(adbRange):
     from threading import Thread
@@ -456,6 +525,7 @@ def adbThreadedScan(adbRange):
             #    adbPortsFound.append(port)
     q.join() #wait for all ports to finish being scanned
 
+
 def port_scan(host, port): #determine whether `host` has the `port` open
     try:
         # creates a new socket
@@ -475,6 +545,7 @@ def port_scan(host, port): #determine whether `host` has the `port` open
     finally:
         s.close()
 
+
 def port_scan_thread():
     while True:
         # get the port number from the queue
@@ -484,6 +555,7 @@ def port_scan_thread():
         # tells the queue that the scanning for that port 
         # is done
         q.task_done()
+
 
 def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secrets):
     u = secrets[clientUser]['win']['u']
@@ -513,6 +585,7 @@ def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secre
     
     return True
 
+
 def list_hash(fileList):
     logging.debug('fileList: %s' % (fileList))
 
@@ -537,6 +610,7 @@ def list_hash(fileList):
     
     return sorted(md5List), sorted(sha1List)
 
+
 def list_videos(directory):
     videoExtensions = ['.mp4', '.mkv']
     list = []
@@ -547,15 +621,25 @@ def list_videos(directory):
                     list.append(os.path.join(directory, file))
     return list
 
+
 def lockServer():
     if sys.platform == 'win32':
         os.system('rundll32.exe user32.dll,LockWorkStation')    
+
 
 def make_dir(directory):
     try:
         os.mkdir(directory, mode=0o777)
     except:
         pass
+
+
+def copy_file(src, dst):
+    try:
+        shutil.copy2(src, dst)
+    except:
+        pass
+
 
 def make_link(src, dst, system, romName):
     if sys.platform == 'win32':
@@ -599,6 +683,7 @@ def make_link(src, dst, system, romName):
             make_link(src, dst)
     '''
 
+
 def platformPath(fullpath):
     dirLength = len(splitall(fullpath))
     dirPath = os.path.dirname(fullpath)
@@ -616,6 +701,7 @@ def platformPath(fullpath):
         dirName = os.path.basename(dirPath)
         x += 1
     return game_platform
+
 
 def scanner(paths, SourceRomDir, dataFolders):
     logging.info('paths: %s' % (paths))
@@ -789,13 +875,29 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                 if ps3Path in root1.lower():
                                                     if f.lower() == 'eboot.bin':
                                                         gameFolder = os.path.split(os.path.join(*splitall(relativePath)[:-2]))[-1]
-                                                        romName = gameFolder.rsplit(' ', 1)[0]
+                                                        romName = gameFolder.rsplit(' ', 1)[0] #title id separates game name... no brackets?
                                                         #print(romName)
                                                         #print(f.lower())
                                                     else:
                                                         continue
                                                 else:
                                                     continue
+                                            elif system.lower() == 'nintendo wii u': #cemu... need to get the folder name
+                                                y = 0
+                                                while y < len(check):
+                                                    if romExtension == check[y].lower() and romExtension == 'rpx':
+                                                        gameFolder = os.path.split(os.path.join(*splitall(relativePath)[:-1]))[-1]
+                                                        romName = gameFolder.rsplit(' [', 1)[0]
+                                                        #print(romName)
+                                                        #print(f.lower())
+                                                        print(gameFolder)
+                                                        print(romName)
+                                                    elif romExtension == check[y].lower() and romExtension == 'wud':
+                                                        gameFolder = os.path.split(os.path.join(*splitall(relativePath)))[-1]
+                                                        romName = gameFolder.rsplit(' [', 1)[0]
+                                                        print(gameFolder)
+                                                        print(romName)
+                                                    y += 1
                                             else:
                                                 romName = splitFile[0]
 
@@ -1018,6 +1120,7 @@ def scanner(paths, SourceRomDir, dataFolders):
     for key in database['romMapping']['platforms']:
         pass
 
+
 def splitall(path): #https://www.oreilly.com/library/view/python-cookbook/0596001673/ch04s16.html
     allparts = []
     while 1:
@@ -1033,6 +1136,7 @@ def splitall(path): #https://www.oreilly.com/library/view/python-cookbook/059600
             allparts.insert(0, parts[1])
     return allparts
 
+
 def quote_remover(string):
     if string.startswith('"') and string.endswith('"'):
         string = string[1:-1]
@@ -1041,6 +1145,7 @@ def quote_remover(string):
     else:
         string = string
     return string
+
 
 if __name__ == '__main__':
     logDir = os.path.join(os.path.expanduser('~'), 'RetroArcher')
@@ -1087,7 +1192,7 @@ if __name__ == '__main__':
     parser.add_argument('--scan', action='store_true', required=False, help='Scan the library, update media, and rom mapping.')
     
     #arguments for automatic update
-    parser.add_argument('--update', action='store_true', required=False, help='Update plu-in from github.')
+    parser.add_argument('--update', action='store_true', required=False, help='Update plug-in from github.')
 
     #testing args from tautulli
     parser.add_argument('--username', type=str, nargs='?', required=False, default='', help='Dev')
