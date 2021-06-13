@@ -44,6 +44,8 @@
 
   { "id":"dir_app_retroarch",            "label":"APPLICATION|DIRECTORY|RetroArch",    "type":"text",    "default":""  },
   { "id":"str_binary_retroarch",         "label":"APPLICATION|BINARY|RetroArch",    "type":"text",    "default":"retroarch"  },
+  { "id":"dir_app_cemu",                 "label":"APPLICATION|DIRECTORY|CEMU",    "type":"text",    "default":""  },
+  { "id":"str_binary_cemu",              "label":"APPLICATION|BINARY|CEMU",    "type":"text",    "default":"Cemu"  },
   { "id":"dir_app_rpcs3",                "label":"APPLICATION|DIRECTORY|RPCS3",    "type":"text",    "default":""  },
   { "id":"str_binary_rpcs3",             "label":"APPLICATION|BINARY|RPCS3",    "type":"text",    "default":"rpcs3"  },
 
@@ -107,6 +109,7 @@
   { "id":"scanner_nintendo_super_famicom_satellaview",    "label":"SCANNER|Nintendo Super Famicom Satellaview",    "type":"bool",    "default":"True"  },
   { "id":"scanner_nintendo_virtual_boy",                  "label":"SCANNER|Nintendo Virtual Boy",    "type":"bool",    "default":"True"  },
   { "id":"scanner_nintendo_wii",                          "label":"SCANNER|Nintendo Wii",    "type":"bool",    "default":"True"  },
+  { "id":"scanner_nintendo_wii_u",                        "label":"SCANNER|Nintendo Wii U",    "type":"bool",    "default":"True"  },
   { "id":"scanner_outrun_engine",                         "label":"SCANNER|OutRun Engine",    "type":"bool",    "default":"True"  },
   { "id":"scanner_quake_1_engine",                        "label":"SCANNER|Quake 1 Engine",    "type":"bool",    "default":"True"  },
   { "id":"scanner_quake_ii_engine",                       "label":"SCANNER|Quake II Engine",    "type":"bool",    "default":"True"  },
@@ -206,6 +209,7 @@
   { "id":"emulator_nintendo_super_famicom_satellaview",   "label":"EMULATOR|Nintendo Super Famicom Satellaview",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_nintendo_virtual_boy",                 "label":"EMULATOR|Nintendo Virtual Boy",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_nintendo_wii",                         "label":"EMULATOR|Nintendo Wii",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
+  { "id":"emulator_nintendo_wii_u",                       "label":"EMULATOR|Nintendo Wii U",    "type": "enum",    "values": [ "default", "CEMU" ],    "default": "default"  },
   { "id":"emulator_outrun_engine",                        "label":"EMULATOR|OutRun Engine",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },  
   { "id":"emulator_quake_1_engine",                       "label":"EMULATOR|Quake 1 Engine",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },  
   { "id":"emulator_quake_ii_engine",                      "label":"EMULATOR|Quake II Engine",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },  
