@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Github Discussions
+    url: https://github.com/RetroArcher/RetroArcher.bundle/discussions
+    about: General discussion, support, feature requests and more!
   - name: Discord support
     url: https://discord.gg/d6MpcrbYQs
     about: Ask question about RetroArcher in Discord
