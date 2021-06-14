@@ -402,6 +402,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                     
                     data['PersistentId'] = UserId_cemu
                     data['Uuid'] = str(uuid.uuid1()).replace('-', '')
+                    data['TransferableIdBase'] = '2000004%s' % (data['Uuid'][-8:])
                     
                     config_rewrite(userProfileFile_cemu, header, data)
                 else:
