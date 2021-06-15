@@ -85,6 +85,7 @@ dDefaultSettings = {
 	'str_MoonlightAppName' : 'Desktop',
     'str_MoonlightAppId' : '',
     'str_MoonlightPcUuid' : '',
+    'int_PortScanThreads' : '200',
 	
 	'bool_GameStreamEnabled' : 'False',
 	'url_GameStreamServerAddress' : 'http://localhost:47989/serverinfo',
