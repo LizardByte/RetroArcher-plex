@@ -29,6 +29,7 @@
   { "id":"str_MoonlightAppName",         "label":"LAUNCHER|Moonlight App Name",    "type":"text",    "default":"Desktop"  },  
   { "id":"str_MoonlightAppId",           "label":"LAUNCHER|Moonlight App ID",    "type":"text",    "default":""  },
   { "id":"str_MoonlightPcUuid",          "label":"LAUNCHER|Moonlight Machine UUID",    "type":"text",    "default":""  },
+  { "id":"int_PortScanThreads",          "label":"LAUNCHER|Port Scan Threads",    "type":"text",    "default":"200"  },
   
   { "id":"bool_GameStreamEnabled",       "label":"GAMESTREAM|GENERAL|Enable gamestream",    "type":"bool",    "default":"False"  },
   { "id":"url_GameStreamServerAddress",  "label":"GAMESTREAM|GENERAL|Server address",    "type":"text",    "default":"http://localhost:47989/serverinfo"  },

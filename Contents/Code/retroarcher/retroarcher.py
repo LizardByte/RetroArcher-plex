@@ -402,6 +402,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                     
                     data['PersistentId'] = UserId_cemu
                     data['Uuid'] = str(uuid.uuid1()).replace('-', '')
+                    data['TransferableIdBase'] = '2000004%s' % (data['Uuid'][-8:])
                     
                     config_rewrite(userProfileFile_cemu, header, data)
                 else:
@@ -499,7 +500,14 @@ def adbThreadedScan(adbRange):
     from queue import Queue
     
     # number of threads, feel free to tune this parameter as you wish
-    N_THREADS = 10000
+    rangeThreads = adbRange[-1] - adbRange[0]
+    logging.info('rangeThreads: %s' % (rangeThreads))
+    prefThreads = Prefs['int_PortScanThreads']
+    logging.info('prefThreads: %s' % (prefThreads))
+    if rangeThreads < prefThreads:
+        N_THREADS = rangeThreads
+    else:
+        N_THREADS = prefThreads
     # thread queue
     global q
     q = Queue()
@@ -507,12 +515,16 @@ def adbThreadedScan(adbRange):
     global adbPortsFound
     adbPortsFound = []
     for t in range(N_THREADS):
-        #for each thread, start it
-        t = Thread(target=port_scan_thread)
-        #when we set daemon to true, that thread will end when the main thread ends
-        t.daemon = True
-        #start the daemon thread
-        t.start()
+        try:
+            #for each thread, start it
+            t = Thread(target=port_scan_thread)
+            #when we set daemon to true, that thread will end when the main thread ends
+            t.daemon = True
+            #start the daemon thread
+            t.start()
+        except RuntimeError as e:
+            logging.error(e)
+            break
 
     for port in range(adbRange[0], adbRange[-1]):
         if (port % 2) != 0: #if port is an odd number
@@ -589,7 +601,7 @@ def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secre
 def list_hash(fileList):
     logging.debug('fileList: %s' % (fileList))
 
-    bufferSize = int(Prefs['int_BufferSize'])
+    bufferSize = Prefs['int_BufferSize']
     
     md5 = hashlib.md5()
     sha1 = hashlib.sha1()
@@ -661,7 +673,7 @@ def make_link(src, dst, system, romName):
     for x in illegal_characters:
         romName = romName.replace(x, '\%s' % (x))
     
-    command = "%s -ss 0 -i \"%s\" -t %s -vf \"drawtext=text='%s': fontfile='fonts/%s': fontcolor=%s: fontsize=%s: box=%s: boxcolor=%s: boxborderw=%s: x=%s: y=%s\" -codec:v %s -codec:a copy -map_metadata -1 -metadata title=\"%s\" -metadata creation_time=%s -map_chapters -1 \"%s\"" % (ffmpegPath, src, Prefs['int_FfmpegLength'], romName, fontFile, Prefs['str_FfmpegTextColor'], Prefs['int_FfmpegTextSize'], border, Prefs['str_FfmpegTextBoxColor'], Prefs['str_FfmpegTextBoxBorder'], Prefs['str_FfmpegTextX'], Prefs['str_FfmpegTextY'], Prefs['enum_FfmpegEncoder'], title, time, dst)
+    command = "%s -ss 0 -i \"%s\" -t %s -vf \"drawtext=text='%s': fontfile='fonts/%s': fontcolor=%s: fontsize=%s: box=%s: boxcolor=%s: boxborderw=%s: x=%s: y=%s\" -codec:v %s -codec:a copy -map_metadata -1 -metadata title=\"%s\" -metadata creation_time=%s -map_chapters -1 \"%s\"" % (ffmpegPath, src, str(Prefs['int_FfmpegLength']), romName, fontFile, Prefs['str_FfmpegTextColor'], str(Prefs['int_FfmpegTextSize']), border, Prefs['str_FfmpegTextBoxColor'], Prefs['str_FfmpegTextBoxBorder'], Prefs['str_FfmpegTextX'], Prefs['str_FfmpegTextY'], Prefs['enum_FfmpegEncoder'], title, time, dst)
     logging.debug('command: %s' % (command))
     os.system(command)
     
@@ -732,8 +744,8 @@ def scanner(paths, SourceRomDir, dataFolders):
     
     #compare this to existing settings later
     ffmpegOverlay = {
-        'videoLength' : Prefs['int_FfmpegLength'],
-        'fontSize' : Prefs['int_FfmpegTextSize'],
+        'videoLength' : str(Prefs['int_FfmpegLength']),
+        'fontSize' : str(Prefs['int_FfmpegTextSize']),
         'fontColor' : Prefs['str_FfmpegTextColor'],
         'fontX' : Prefs['str_FfmpegTextX'],
         'fontY' : Prefs['str_FfmpegTextY'],
@@ -790,7 +802,7 @@ def scanner(paths, SourceRomDir, dataFolders):
         database['romMapping']['platforms'] = {}
     
     for root, directories, files in os.walk(SourceRomDir): #https://stackoverflow.com/a/35703223
-        ffmpegPool = Pool(int(Prefs['int_FfmpegThreads']))
+        ffmpegPool = Pool(Prefs['int_FfmpegThreads'])
         for d in directories:
             if root == SourceRomDir:
                 for key, value in archer_dict.dPlatformMapping.items(): #https://stackoverflow.com/a/51446563
@@ -1286,6 +1298,8 @@ if __name__ == '__main__':
                 logLevel = Prefs[key]
                 logging.basicConfig(filename='retroarcher.log',level=logLevel) #log level should now be whatever is set in the agent or default
                 logging.info('Numeric logging level set to: %s' % (logLevel))
+        elif settingSplit[0] == 'int':
+            Prefs[key] = int(Prefs[key])
         elif settingSplit[0] == 'list':
             Prefs[key] = Prefs[key].split(',')
         elif settingSplit[0] == 'dir':
