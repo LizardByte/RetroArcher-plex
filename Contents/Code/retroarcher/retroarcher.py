@@ -406,7 +406,8 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                 header, data = config_to_dict(userProfileFile_cemu)
                 
                 data['PersistentId'] = UserId_cemu
-                data['Uuid'] = str(uuid.uuid1()).replace('-', '')
+                if data['Uuid'] == 'e9df01108a453a2c90e94adc35c9528a': #this is the default Uuid value... if equal to this, then change it, otherwise leave it alone
+                    data['Uuid'] = str(uuid.uuid1()).replace('-', '')
                 data['TransferableIdBase'] = '2000004%s' % (data['Uuid'][-8:])
                 
                 mii_name_max_length = 10
