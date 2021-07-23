@@ -5,6 +5,10 @@
 *__pycache__
 *.pyc
 
+# Ignore PyCharm files
+.idea/
+venv/
+
 # Ignore log files
 *.log
 
