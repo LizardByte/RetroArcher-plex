@@ -5,9 +5,9 @@ import json
 import logging
 import os
 import random
-import re
 import shutil
 import socket
+import subprocess
 import sys
 import time
 import uuid
@@ -593,28 +593,20 @@ def port_scan_thread():
 def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secrets):
     u = secrets[clientUser]['win']['u']
     p = secrets[clientUser]['win']['p']
-    
-    batFile = os.path.join(paths['contentsDir'], 'bin', 'Moonlight-qt', 'win', 'launcher.bat')
-    command = '"%s" %s %s %s %s %s' % (batFile, clientIP, moonlightPcUuid, moonlightAppName, u, p)
-    os.system(command)
-    
-    #schtasks /create /TN "\RetroArcher launcher" /s "192.168.1.13" /sc onlogon /tr "C:\Program Files\Moonlight Game Streaming\Moonlight.exe stream Archer RetroArcher" /f /u "" /p ""
-    
-    #schtasks /run /TN "\RetroArcher launcher" /s "192.168.1.13" /u "" /p ""
-    
-    #schtasks /delete /TN "\RetroArcher launcher" /s "192.168.1.13" /u "" /p "" /f
-    
-    #create = 'schtasks /create /TN "\\RetroArcher launcher" /s "%s" /sc onlogon /tr "C:\\Program Files\\Moonlight Game Streaming\\Moonlight.exe stream %s %s" /f /u "%s" /p "%s"' % (clientIP, moonlightPcUuid, moonlightAppName, u, p)
-    #print(create)
-    #os.system(create)
-    
-    #run = 'schtasks /run /TN "\\RetroArcher launcher" /s "%s" /u "%s" /p "%s"' % (clientIP, u, p)
-    #print(run)
-    #os.system(run)
-    
-    #delete = 'schtasks /delete /TN "\\RetroArcher launcher" /s "%s" /u "%s" /p "%s" /f' % (clientIP, u, p)
-    #print(delete)
-    #os.system(delete)
+
+    command_list = [
+        ['schtasks', '/create', '/TN', '\RetroArcher launcher', '/s', clientIP, '/sc', 'onlogon', '/tr', f'C:\Program Files\Moonlight Game Streaming\Moonlight.exe stream {moonlightPcUuid} {moonlightAppName}', '/f', '/u', u, '/p', p],
+        ['schtasks', '/run', '/TN', '\RetroArcher launcher', '/s', clientIP, '/u', u, '/p', p],
+        ['schtasks', '/delete', '/TN', '\RetroArcher launcher', '/s', clientIP, '/u', u, '/p', p, '/f']
+    ]
+
+    for command_args in command_list:
+        try:
+            proc = subprocess.run(command_args, check=True)
+        except subprocess.CalledProcessError as cpe:
+            # error handling
+            logging.info('subprocess error: %s' % (cpe))
+            sys.exit(1)
     
     return True
 
