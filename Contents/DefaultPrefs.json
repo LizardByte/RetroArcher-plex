@@ -15,7 +15,7 @@
   
   { "id":"enum_SearchSite",              "label":"SEARCH|Database",    "type": "enum",    "values": [ "IGDB" ],    "default": "IGDB"  },
   { "id":"url_IgdbCreds",                "label":"SEARCH|IGDB|json",    "type":"text",    "default":"https://raw.githubusercontent.com/RetroArcher/RetroArcher.proxy/main/igdb.json"  },
-  { "id":"str_YouTubeApiKey",            "label":"SEARCH|API KEY|YouTube",    "type":"text",    "option":"hidden",     "default":"AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4"  },
+  { "id":"str_YouTubeApiKey",            "label":"SEARCH|API KEY|YouTube",    "type":"text",    "option":"hidden",     "secure":"true",    "default":"AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4"  },
 
   { "id":"enum_PreferredRatingSystem",   "label":"RATINGS|Preferred Rating System",    "type": "enum",    "values": [ "ESRB", "PEGI" ],    "default": "ESRB"  },  
   
