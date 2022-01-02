@@ -57,7 +57,6 @@ dDefaultSettings = {
 	'dir_SourceRomDirectory' : '',
 	
 	'enum_FfmpegEncoder' : '0', #h264_nvenc
-    'int_FfmpegThreads' : '1', #removed from agent settings for now
 	'int_FfmpegLength' : '30',
 	'int_FfmpegTextSize' : '24',
 	'str_FfmpegTextColor' : 'white',
@@ -136,7 +135,7 @@ dDefaultSettings = {
 	'scanner_fairchild_channel_f' : 'True',
 	'scanner_gce_vectrex' : 'True',
 	'scanner_lua_engine' : 'True',
-	'scanner_magnovox_odyssey_2' : 'True',
+	'scanner_magnavox_odyssey_2' : 'True',
 	'scanner_mattel_intellivision' : 'True',
 	'scanner_microsoft_dos' : 'True',
 	'scanner_microsoft_msx' : 'True',

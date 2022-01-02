@@ -5,9 +5,9 @@ import json
 import logging
 import os
 import random
-import re
 import shutil
 import socket
+import subprocess
 import sys
 import time
 import uuid
@@ -186,7 +186,7 @@ def getDataFolders(directory, agent):
     return dataFolders
 
 
-def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId, movieName, dataFolders):
+def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId, clientUserName, movieName, dataFolders):
     if Prefs['str_MoonlightPcUuid'] == '' or Prefs['str_MoonlightPcUuid'] == None:
         serverInfo = getJson_fromXML(Prefs['url_GameStreamServerAddress'])
         logging.debug('serverInfo: %s' % (json.dumps(serverInfo, indent=4)))
@@ -395,19 +395,40 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                 if os.path.isfile(default_cemu_account_file) == True:
                     make_dir(userProfilePath_cemu)
                     copy_file(default_cemu_account_file, userProfileFile_cemu)
-                userProfileFileExists_cemu = os.path.isfile(userProfileFile_cemu)
-                if userProfileFileExists_cemu == True:
-                    #need to parse and replace some stuff in the file
-                    header, data = config_to_dict(userProfileFile_cemu)
-                    
-                    data['PersistentId'] = UserId_cemu
-                    data['Uuid'] = str(uuid.uuid1()).replace('-', '')
-                    data['TransferableIdBase'] = '2000004%s' % (data['Uuid'][-8:])
-                    
-                    config_rewrite(userProfileFile_cemu, header, data)
                 else:
-                    logging.critial('Failed to create cemu user profile. Exiting.')
+                    logging.critial('Failed to copy default cemu user profile. Exiting.')
                     sys.exit()
+            
+            #rewrite the account file everytime (so user never needs to delete the file when we make changes/improvements
+            userProfileFileExists_cemu = os.path.isfile(userProfileFile_cemu)
+            if userProfileFileExists_cemu == True:
+                #need to parse and replace some stuff in the file
+                header, data = config_to_dict(userProfileFile_cemu)
+                
+                data['PersistentId'] = UserId_cemu
+                if data['Uuid'] == 'e9df01108a453a2c90e94adc35c9528a': #this is the default Uuid value... if equal to this, then change it, otherwise leave it alone
+                    data['Uuid'] = str(uuid.uuid1()).replace('-', '')
+                data['TransferableIdBase'] = '2000004%s' % (data['Uuid'][-8:])
+                
+                mii_name_max_length = 10
+                x = 0
+                data['MiiName'] = ''
+                data['MiiData'] = '010001100000cc6f030034330100010001000100010001000100'
+                while x < mii_name_max_length:
+                    try:
+                        data['MiiName'] += '00'
+                        data['MiiName'] += clientUserName[x].encode('utf-8').hex()
+                        
+                        data['MiiData'] += '00'
+                        data['MiiData'] += clientUserName[x].encode('utf-8').hex()
+                    except IndexError:
+                        data['MiiName'] += '0000'
+                        data['MiiData'] += '0100'
+                    x += 1
+                data['MiiName'] += '0000'
+                data['MiiData'] += '0100%s' % ('010001000100010001000106010001000100010001000100010001000100010001000100010001000100010001000100')
+                
+                config_rewrite(userProfileFile_cemu, header, data)
         
         command = dSystemPlatformMapping[platform]['emulators'][emulator]['command']
         logging.debug('command: %s' % (command))
@@ -572,28 +593,20 @@ def port_scan_thread():
 def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secrets):
     u = secrets[clientUser]['win']['u']
     p = secrets[clientUser]['win']['p']
-    
-    batFile = os.path.join(paths['contentsDir'], 'bin', 'Moonlight-qt', 'win', 'launcher.bat')
-    command = '"%s" %s %s %s %s %s' % (batFile, clientIP, moonlightPcUuid, moonlightAppName, u, p)
-    os.system(command)
-    
-    #schtasks /create /TN "\RetroArcher launcher" /s "192.168.1.13" /sc onlogon /tr "C:\Program Files\Moonlight Game Streaming\Moonlight.exe stream Archer RetroArcher" /f /u "" /p ""
-    
-    #schtasks /run /TN "\RetroArcher launcher" /s "192.168.1.13" /u "" /p ""
-    
-    #schtasks /delete /TN "\RetroArcher launcher" /s "192.168.1.13" /u "" /p "" /f
-    
-    #create = 'schtasks /create /TN "\\RetroArcher launcher" /s "%s" /sc onlogon /tr "C:\\Program Files\\Moonlight Game Streaming\\Moonlight.exe stream %s %s" /f /u "%s" /p "%s"' % (clientIP, moonlightPcUuid, moonlightAppName, u, p)
-    #print(create)
-    #os.system(create)
-    
-    #run = 'schtasks /run /TN "\\RetroArcher launcher" /s "%s" /u "%s" /p "%s"' % (clientIP, u, p)
-    #print(run)
-    #os.system(run)
-    
-    #delete = 'schtasks /delete /TN "\\RetroArcher launcher" /s "%s" /u "%s" /p "%s" /f' % (clientIP, u, p)
-    #print(delete)
-    #os.system(delete)
+
+    command_list = [
+        ['schtasks', '/create', '/TN', '\RetroArcher launcher', '/s', clientIP, '/sc', 'onlogon', '/tr', f'C:\Program Files\Moonlight Game Streaming\Moonlight.exe stream {moonlightPcUuid} {moonlightAppName}', '/f', '/u', u, '/p', p],
+        ['schtasks', '/run', '/TN', '\RetroArcher launcher', '/s', clientIP, '/u', u, '/p', p],
+        ['schtasks', '/delete', '/TN', '\RetroArcher launcher', '/s', clientIP, '/u', u, '/p', p, '/f']
+    ]
+
+    for command_args in command_list:
+        try:
+            proc = subprocess.run(command_args, check=True)
+        except subprocess.CalledProcessError as cpe:
+            # error handling
+            logging.info('subprocess error: %s' % (cpe))
+            sys.exit(1)
     
     return True
 
@@ -1350,6 +1363,7 @@ if __name__ == '__main__':
         clientPlayer = opts.player #from tautulli (Firefox for example)
         clientUser = opts.user #from tautulli (Firefox for example)
         clientUserId = opts.user_id
+        clientUserName = opts.username
         movieName = opts.file #from tautulli
 
         #integer arguments
@@ -1427,7 +1441,7 @@ if __name__ == '__main__':
         logging.info('serverIP: %s' % (serverIP))
         
         if serverIP.rsplit('.',1)[0] == clientIP.rsplit('.',1)[0]: #this is only checking the very first part of the IP... should we check the next 2 as well?
-            launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId, movieName, dataFolders)
+            launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId, clientUserName, movieName, dataFolders)
         else:
             logging.error('Client appears to be a remote client. RetroArcher cannot execute scripts on a remote client yet. If the client really is local to the server, try accessing your Plex server at "http://x.x.x.x:32400/web" instead of "https://app.plex.tv"')
             sys.exit(1)

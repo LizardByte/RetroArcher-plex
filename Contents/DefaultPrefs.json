@@ -15,7 +15,7 @@
   
   { "id":"enum_SearchSite",              "label":"SEARCH|Database",    "type": "enum",    "values": [ "IGDB" ],    "default": "IGDB"  },
   { "id":"url_IgdbCreds",                "label":"SEARCH|IGDB|json",    "type":"text",    "default":"https://raw.githubusercontent.com/RetroArcher/RetroArcher.proxy/main/igdb.json"  },
-  { "id":"str_YouTubeApiKey",            "label":"SEARCH|API KEY|YouTube",    "type":"text",    "option":"hidden",     "default":"AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4"  },
+  { "id":"str_YouTubeApiKey",            "label":"SEARCH|API KEY|YouTube",    "type":"text",    "option":"hidden",     "secure":"true",    "default":"AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4"  },
 
   { "id":"enum_PreferredRatingSystem",   "label":"RATINGS|Preferred Rating System",    "type": "enum",    "values": [ "ESRB", "PEGI" ],    "default": "ESRB"  },  
   
@@ -275,7 +275,7 @@
   { "id":"core_commodore_pet",                            "label":"RETROARCH|CORE|Commodore PET",    "type": "enum",    "values": [ "default", "VICE xpet" ],    "default": "default"  },
   { "id":"core_commodore_plus_4",                         "label":"RETROARCH|CORE|Commodore Plus 4",    "type": "enum",    "values": [ "default", "VICE xplus4" ],    "default": "default"  },
   { "id":"core_commodore_vic-20",                         "label":"RETROARCH|CORE|Commodore VIC-20",    "type": "enum",    "values": [ "default", "VICE xvic" ],    "default": "default"  },
-  { "id":"core_doom_engine",                              "label":"RETROARCH|CORE|Doom Engine",    "type": "enum",    "values": [ "default", "boom3", "boom 3 xp", "PrBoom" ],    "default": "PrBoom"  },
+  { "id":"core_doom_engine",                              "label":"RETROARCH|CORE|Doom Engine",    "type": "enum",    "values": [ "default", "boom3", "boom 3 xp", "PrBoom" ],    "default": "default"  },
   { "id":"core_fairchild_channel_f",                      "label":"RETROARCH|CORE|Fairchild Channel F",    "type": "enum",    "values": [ "default", "FreeChaF" ],    "default": "default"  },
   { "id":"core_gce_vectrex",                              "label":"RETROARCH|CORE|GCE Vectrex",    "type": "enum",    "values": [ "default", "vecx" ],    "default": "default"  },
   { "id":"core_lua_engine",                               "label":"RETROARCH|CORE|Lua Engine",    "type": "enum",    "values": [ "default", "Lutro" ],    "default": "default"  },

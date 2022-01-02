@@ -470,12 +470,22 @@ def Update(self, metadata, media, lang, force, movie, game):
     try:
         #metadata.rating = jsonGame[0]['total_rating'] / 10 #combined rating
         metadata.rating = jsonGame[0]['aggregated_rating'] / 10 #critic rating
+        if metadata.rating >= 5.0:
+            rating_image = 'rating_up.png'
+        else:
+            rating_image = 'rating_down.png'
+        metadata.rating_image = '/:/plugins/com.github.agents.retroarcher.retroarcher/resources/%s' % rating_image
     except KeyError:
         Log.Info('critic rating not found')
     
     '''audience rating'''
     try:
         metadata.audience_rating = jsonGame[0]['rating'] / 10 #audience rating
+        if metadata.audience_rating >= 5.0:
+            rating_image = 'rating_up.png'
+        else:
+            rating_image = 'rating_down.png'
+        metadata.audience_rating_image = '/:/plugins/com.github.agents.retroarcher.retroarcher/resources/%s' % rating_image
     except KeyError:
         Log.Info('audience rating not found')
     
