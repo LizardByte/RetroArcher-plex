@@ -2,30 +2,82 @@
 
 ### Imports ###
 import os
+import requests
 import urllib
 
 # Archer Modules #
 import archer_dict
 import common
 
-def ValidatePrefs(): #     a = sum(getattr(t, name, 0) for name in "xyz")
+
+def ValidatePrefs():
+    """Returns message as response when save request is made"""
     
-    MessageContainer ('Test', 'This message is a test')
+    error_message = ''
     
     try:
-        [Prefs[key] for key in archer_dict.dDefaultSettings]
+        for key in archer_dict.dDefaultSettings:
+            Prefs[key]
+            Log.Debug(key)
+            Log.Debug(Prefs[key])
     except:
-        Log.Error("DefaultPrefs.json invalid" )
-        return MessageContainer ('Error', "Value '%s' missing from 'DefaultPrefs.json', update it" % key)
+        Log.Error("Setting '%s' missing from 'DefaultPrefs.json'" % key)
+        error_message += "Setting '%s' missing from 'DefaultPrefs.json'<br/>" % key
+    
+    for key in archer_dict.dDefaultSettings:
+        if key.startswith('int_'):
+            try:
+                int(Prefs[key])
+            except:
+                Log.Error("Setting '%s' must be an integer; Value '%s'" % (key, Prefs[key]))
+                error_message += "Setting '%s' must be an integer; Value '%s'<br/>" % (key, Prefs[key])
+        elif key.startswith('bool_') or key.startswith('scanner_'):
+            if Prefs[key] != True and Prefs[key] != False:
+                Log.Error("Setting '%s' must be True or False; Value '%s'" % (key, Prefs[key]))
+                error_message += "Setting '%s' must be True or False; Value '%s'<br/>" % (key, Prefs[key])
+        if key.startswith('str_'):
+            try:
+                str(Prefs[key])
+            except:
+                Log.Error("Setting '%s' must be a string; Value '%s'" % (key, Prefs[key]))
+                error_message += "Setting '%s' must be a string; Value '%s'<br/>" % (key, Prefs[key])
+        if key.startswith('dir_'):
+            dir = Prefs[key]
+            if dir:
+                if not os.path.isdir(dir):
+                    Log.Error("Setting '%s' directory does not exist; Value '%s'" % (key, Prefs[key]))
+                    error_message += "Setting '%s' directory does not exist; Value '%s'<br/>" % (key, Prefs[key])
+            else:
+                Log.Error("Setting '%s' directory is blank; Value '%s'" % (key, Prefs[key]))
+                error_message += "Setting '%s' directory is blank; Value '%s'<br/>" % (key, Prefs[key])
+        if key.startswith('url_'):
+            url = Prefs[key]
+            if url:
+                try:
+                    status_code = requests.get(url).status_code
+                    if status_code != 200:
+                        Log.Error("Setting '%s' url returned a non 200 status code; Value '%s'" % (key, Prefs[key]))
+                        error_message += "Setting '%s' url returned a non 200 status code; Value '%s'<br/>" % (key, Prefs[key])
+                except Exception as e:
+                    Log.Error("Setting '%s' url returned an exception; Exception '%s'" % (key, e))
+                    error_message += "Setting '%s' url returned an exception; Exception '%s'<br/>" % (key, e)
+            else:
+                Log.Error("Setting '%s' url is blank; Value '%s'" % (key, Prefs[key]))
+                error_message += "Setting '%s' url is blank; Value '%s'<br/>" % (key, Prefs[key])
+                
+    if error_message != '':
+        return MessageContainer ('Error', error_message)
     else:
         Log.Info ("DefaultPrefs.json is valid")
         return MessageContainer ('Success', 'RetroArcher - Provided preference values are ok')
-    
+
+
 def Start():
   msgContainer = ValidatePrefs();
   if msgContainer.header == 'Error': return
   Log.Debug('### RetroArcher Metadata Agent Started ##############################################################################################################')
   HTTP.CacheTime = CACHE_1HOUR * 24
+
 
 class RetroArcherCommonAgent:
 
