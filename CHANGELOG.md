@@ -2,20 +2,20 @@
 
 ## v1.1.2 (2022-01-02)
 
-* * Clients:
+* Clients:
   * Fix: Use python subprocess to connect to Windows clients 
-* Emulators:
-  * Fix: Improve Cemu user profile creation
-  * Fix: Default core for Doom Engine updated in `DefaultPrefs.json`
-* Metadata:
-  * Add: Rating images in metadata xml file (not shown in clients) 
-  * Remove: YouTube URL Service (broken)
-* Preferences:
-  * Fix: Preference validation
+  * Emulators:
+    * Fix: Improve Cemu user profile creation
+    * Fix: Default core for Doom Engine updated in `DefaultPrefs.json`
+  * Metadata:
+    * Add: Rating images in metadata xml file (not shown in clients) 
+    * Remove: YouTube URL Service (broken)
+  * Preferences:
+    * Fix: Preference validation
 
 ## v1.1.1 (2021-06-14)
 
-* * Clients:
+* Clients:
   * Add: Setting to control number of threads during ADB port scan 
   * Fix: Improve ADB port scanning 
 * Emulators:
