@@ -275,7 +275,7 @@
   { "id":"core_commodore_pet",                            "label":"RETROARCH|CORE|Commodore PET",    "type": "enum",    "values": [ "default", "VICE xpet" ],    "default": "default"  },
   { "id":"core_commodore_plus_4",                         "label":"RETROARCH|CORE|Commodore Plus 4",    "type": "enum",    "values": [ "default", "VICE xplus4" ],    "default": "default"  },
   { "id":"core_commodore_vic-20",                         "label":"RETROARCH|CORE|Commodore VIC-20",    "type": "enum",    "values": [ "default", "VICE xvic" ],    "default": "default"  },
-  { "id":"core_doom_engine",                              "label":"RETROARCH|CORE|Doom Engine",    "type": "enum",    "values": [ "default", "boom3", "boom 3 xp", "PrBoom" ],    "default": "PrBoom"  },
+  { "id":"core_doom_engine",                              "label":"RETROARCH|CORE|Doom Engine",    "type": "enum",    "values": [ "default", "boom3", "boom 3 xp", "PrBoom" ],    "default": "default"  },
   { "id":"core_fairchild_channel_f",                      "label":"RETROARCH|CORE|Fairchild Channel F",    "type": "enum",    "values": [ "default", "FreeChaF" ],    "default": "default"  },
   { "id":"core_gce_vectrex",                              "label":"RETROARCH|CORE|GCE Vectrex",    "type": "enum",    "values": [ "default", "vecx" ],    "default": "default"  },
   { "id":"core_lua_engine",                               "label":"RETROARCH|CORE|Lua Engine",    "type": "enum",    "values": [ "default", "Lutro" ],    "default": "default"  },
