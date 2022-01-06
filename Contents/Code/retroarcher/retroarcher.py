@@ -648,63 +648,9 @@ def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secre
 
 
 def launchXbox(clientIP, secrets=None):
-    app = web.Application()
-    app.add_routes([web.get("/auth/callback", auth_callback)])
-    runner = web.AppRunner(app)
+    launch_status = xbox_main(clientIP=clientIP, secrets=secrets, launch_client=True)
 
-    loop.run_until_complete(runner.setup())
-    site = web.TCPSite(runner, "localhost", int(Prefs['int_XboxAuthRedirectPort']))
-    loop.run_until_complete(site.start())
-    xbl_client = loop.run_until_complete(
-        xbox_async_main(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, TOKENS_FILE)
-    )
-
-    consoles = await xbl_client.smartglass.get_console_list(True)
-    if consoles.status.error_code.lower() != 'ok':
-        logging.error('xbox console status error: %s' % (consoles.status.error_message))
-        sys.exit(1)
-
-    console_count = len(consoles.result)
-
-    for console in consoles.result:
-        if console_count > 1:
-            if secrets:
-                console_ip = secrets[console.id]
-                if console_ip != clientIP:
-                    continue
-            else:
-                logging.error('xbox_auth.json file required when you have more than one xbox on your account')
-                sys.exit(1)
-
-        console_status = await xbl_client.smartglass.get_console_status(console.id)
-
-        if console_status.power_state.value.lower() != 'on':
-            continue
-
-        console_remote_management = console_status.remote_management_enabled  # True or False
-
-        # get list of installed apps
-        installed_apps = await xbl_client.smartglass.get_installed_apps(console.id)
-
-        moonlight_installed = False
-        plex_installed = False
-        for app in installed_apps.result:
-            if app.name.lower() == 'moonlight uwp':
-                moonlight_installed = True
-                one_store_product_id = app.one_store_product_id
-            elif app.name.lower() == 'plex':
-                plex_installed = True
-
-        # launch moonlight
-        if console_remote_management and moonlight_installed and plex_installed:
-            # press B button, stop the video
-            await xbl_client.smartglass.press_button(console.id, 'B')
-
-            await xbl_client.smartglass.launch_app(console.id, one_store_product_id)
-            return True
-
-    logging.error('no suitable xbox console found')
-    return False
+    return launch_status
 
 
 def list_hash(fileList):
@@ -1311,7 +1257,7 @@ def quote_remover(string):
     return string
 
 
-def xbox_main():
+def xbox_main(clientIP=None, secrets=None, launch_client=None):
     app = web.Application()
     app.add_routes([web.get("/auth/callback", auth_callback)])
     runner = web.AppRunner(app)
@@ -1320,13 +1266,14 @@ def xbox_main():
     site = web.TCPSite(runner, "localhost", int(Prefs['int_XboxAuthRedirectPort']))
     loop.run_until_complete(site.start())
     xbl_client = loop.run_until_complete(
-        xbox_async_main(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, TOKENS_FILE)
+        xbox_async_main(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, TOKENS_FILE, clientIP, secrets, launch_client)
     )
 
     return xbl_client
 
 
-async def xbox_async_main(client_id: str, client_secret: str, redirect_uri: str, token_filepath: str):
+async def xbox_async_main(client_id: str, client_secret: str, redirect_uri: str, token_filepath: str,
+                          clientIP=None, secrets=None, launch_client=False):
     async with ClientSession() as session:
         auth_mgr = AuthenticationManager(session, client_id, client_secret, redirect_uri)
 
@@ -1349,7 +1296,57 @@ async def xbox_async_main(client_id: str, client_secret: str, redirect_uri: str,
 
         xbl_client = XboxLiveClient(auth_mgr)
 
-        return xbl_client
+        if launch_client:
+            consoles = await xbl_client.smartglass.get_console_list(True)
+            if consoles.status.error_code.lower() != 'ok':
+                logging.error('xbox console status error: %s' % (consoles.status.error_message))
+                sys.exit(1)
+
+            console_count = len(consoles.result)
+
+            for console in consoles.result:
+                if console_count > 1:
+                    if secrets:
+                        console_ip = secrets[console.id]
+                        if console_ip != clientIP:
+                            continue
+                    else:
+                        logging.error('xbox_auth.json file required when you have more than one xbox on your account')
+                        sys.exit(1)
+
+                console_status = await xbl_client.smartglass.get_console_status(console.id)
+
+                if console_status.power_state.value.lower() != 'on':
+                    continue
+
+                console_remote_management = console_status.remote_management_enabled  # True or False
+
+                # get list of installed apps
+                installed_apps = await xbl_client.smartglass.get_installed_apps(console.id)
+
+                moonlight_installed = False
+                plex_installed = False
+                for app in installed_apps.result:
+                    if app.name.lower() == 'moonlight uwp':
+                        moonlight_installed = True
+                        one_store_product_id = app.one_store_product_id
+                    elif app.name.lower() == 'plex':
+                        plex_installed = True
+
+                # launch moonlight
+                if console_remote_management and moonlight_installed and plex_installed:
+                    # press B button, stop the video
+                    button = InputKeyType('B')
+                    await xbl_client.smartglass.press_button(console.id, button)
+
+                    await xbl_client.smartglass.launch_app(console.id, one_store_product_id)
+                    return True
+
+            logging.error('no suitable xbox console found')
+            return False
+
+        else:
+            return xbl_client
 
 
 if __name__ == '__main__':
@@ -1381,6 +1378,7 @@ if __name__ == '__main__':
 
     from aiohttp import ClientSession, web  # xbox client
     from xbox.webapi.api.client import XboxLiveClient
+    from xbox.webapi.api.provider.smartglass.models import (InputKeyType)
     from xbox.webapi.authentication.manager import AuthenticationManager
     from xbox.webapi.authentication.models import OAuth2TokenResponse
     from xbox.webapi.scripts import CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, TOKENS_FILE
