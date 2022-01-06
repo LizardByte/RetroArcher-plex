@@ -80,6 +80,7 @@ dDefaultSettings = {
     'url_GameStreamServerAddress': 'http://localhost:47989/serverinfo',
     'enum_GameStreamApp': '0',  # moonlight
     'enum_GameStreamHost': '0',  # GeForce Experience
+    'int_XboxAuthRedirectPort': '8080',
     'url_PlexServer': 'http://localhost:32400',
     'str_PlexToken': '',
     'dir_app_retroarch': '',
