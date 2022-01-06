@@ -16,13 +16,6 @@ import webbrowser
 from multiprocessing.pool import ThreadPool as Pool
 from datetime import datetime
 
-# xbox client
-from aiohttp import ClientSession, web
-from xbox.webapi.api.client import XboxLiveClient
-from xbox.webapi.authentication.manager import AuthenticationManager
-from xbox.webapi.authentication.models import OAuth2TokenResponse
-from xbox.webapi.scripts import CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, TOKENS_FILE
-
 queue = asyncio.Queue(1)
 
 
@@ -1379,6 +1372,12 @@ if __name__ == '__main__':
 
     # from module imports
     from adbutils import adb  # https://github.com/openatx/adbutils
+
+    from aiohttp import ClientSession, web  # xbox client
+    from xbox.webapi.api.client import XboxLiveClient
+    from xbox.webapi.authentication.manager import AuthenticationManager
+    from xbox.webapi.authentication.models import OAuth2TokenResponse
+    from xbox.webapi.scripts import CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, TOKENS_FILE
 
     # argparse
     parser = argparse.ArgumentParser(
