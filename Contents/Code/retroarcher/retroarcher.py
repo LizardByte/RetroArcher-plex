@@ -308,7 +308,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                 secrets = json.load(f)
         except FileNotFoundError:
             pass
-        launch = loop.run_until_complete(launchXbox(clientIP, secrets))
+        launch = launchXbox(clientIP, secrets)
     elif clientPlatform.lower() == 'ios':  # disable for now
         launch = False
     else:
@@ -647,7 +647,7 @@ def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secre
     return True
 
 
-async def launchXbox(clientIP, secrets=None):
+def launchXbox(clientIP, secrets=None):
     app = web.Application()
     app.add_routes([web.get("/auth/callback", auth_callback)])
     runner = web.AppRunner(app)
@@ -658,7 +658,7 @@ async def launchXbox(clientIP, secrets=None):
     xbl_client = loop.run_until_complete(
         xbox_async_main(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, TOKENS_FILE)
     )
-    
+
     consoles = await xbl_client.smartglass.get_console_list(True)
     if consoles.status.error_code.lower() != 'ok':
         logging.error('xbox console status error: %s' % (consoles.status.error_message))
