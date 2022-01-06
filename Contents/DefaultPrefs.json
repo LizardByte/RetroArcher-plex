@@ -1,7 +1,5 @@
-
 [
   { "id":"dir_SourceRomDirectory",       "label":"ROMS|Fullpath of source rom directory",    "type":"text",    "default":""  },
-  
   { "id":"enum_FfmpegEncoder",           "label":"SCANNER|ADVANCED|FFMPEG|Encoder",    "type":"enum",    "values": [ "h264_nvenc", "h264_qsv", "h264_videotoolbox", "libx264", "mpeg2_qsv", "mpeg2video" ], "default":"h264_nvenc"  },
   { "id":"int_FfmpegLength",             "label":"SCANNER|ADVANCED|FFMPEG|Encoding length in seconds",    "type":"text",    "default":"30"  },
   { "id":"int_FfmpegTextSize",           "label":"SCANNER|ADVANCED|FFMPEG|Text size",    "type":"text",    "default":"24"  },
@@ -12,44 +10,30 @@
   { "id":"str_FfmpegTextBoxColor",       "label":"SCANNER|ADVANCED|FFMPEG|Text box color",    "type":"text",    "default":"black@0.5"  },
   { "id":"str_FfmpegTextBoxBorder",      "label":"SCANNER|ADVANCED|FFMPEG|Text box border size",    "type":"text",    "default":"5"  },
   { "id":"int_BufferSize",               "label":"SCANNER|ADVANCED|HASHING|Buffer size in kb",    "type":"text",    "default":"65536"  },
-  
   { "id":"enum_SearchSite",              "label":"SEARCH|Database",    "type": "enum",    "values": [ "IGDB" ],    "default": "IGDB"  },
   { "id":"url_IgdbCreds",                "label":"SEARCH|IGDB|json",    "type":"text",    "default":"https://raw.githubusercontent.com/RetroArcher/RetroArcher.proxy/main/igdb.json"  },
   { "id":"str_YouTubeApiKey",            "label":"SEARCH|API KEY|YouTube",    "type":"text",    "option":"hidden",     "secure":"true",    "default":"AIzaSyCYss6qpH_Ru6XHSiuUTEJU6r5G63IDJ-4"  },
-
-  { "id":"enum_PreferredRatingSystem",   "label":"RATINGS|Preferred Rating System",    "type": "enum",    "values": [ "ESRB", "PEGI" ],    "default": "ESRB"  },  
-  
+  { "id":"enum_PreferredRatingSystem",   "label":"RATINGS|Preferred Rating System",    "type": "enum",    "values": [ "ESRB", "PEGI" ],    "default": "ESRB"  },
   { "id":"bool_PlatformAsCollection",    "label":"COLLECTIONS|Use platform name as collection (Disable for platform specific libraries)",    "type":"bool",    "default":"True"  },
-  
   { "id":"enum_ThemesSource",            "label":"THEMES|MUSIC|Theme music database",    "type": "enum",    "values": [ "none", "Local" ],    "default": "Local"  },
   { "id":"dir_SourceThemeDirectory",     "label":"THEMES|Fullpath of source theme music directory",    "type":"text",    "default":""  },
-  
   { "id":"bool_GetExtraObject",          "label":"EXTRAS|Collect trailer object",    "type":"bool",    "default":"False"  },
-
   { "id":"str_MoonlightAppName",         "label":"LAUNCHER|Moonlight App Name",    "type":"text",    "default":"Desktop"  },  
   { "id":"str_MoonlightAppId",           "label":"LAUNCHER|Moonlight App ID",    "type":"text",    "default":""  },
   { "id":"str_MoonlightPcUuid",          "label":"LAUNCHER|Moonlight Machine UUID",    "type":"text",    "default":""  },
   { "id":"int_PortScanThreads",          "label":"LAUNCHER|Port Scan Threads",    "type":"text",    "default":"200"  },
-  
-  { "id":"bool_GameStreamEnabled",       "label":"GAMESTREAM|GENERAL|Enable gamestream",    "type":"bool",    "default":"False"  },
   { "id":"url_GameStreamServerAddress",  "label":"GAMESTREAM|GENERAL|Server address",    "type":"text",    "default":"http://localhost:47989/serverinfo"  },
-  { "id":"list_GameStreamWhiteList",     "label":"GAMESTREAM|GENERAL|White listed users",    "type":"text",    "default":""  },
-  { "id":"list_GameStreamBlackList",     "label":"GAMESTREAM|GENERAL|Black listed users",    "type":"text",    "default":""  },
   { "id":"enum_GameStreamApp",           "label":"GAMESTREAM|GENERAL|Game stream client app",    "type":"enum",    "values": [ "Moonlight" ], "default":"Moonlight"  },
   { "id":"enum_GameStreamHost",          "label":"GAMESTREAM|GENERAL|Game stream host",    "type":"enum",    "values": [ "GeForce Experience", "Open-Stream", "Sunshine" ], "default":"GeForce Experience"  },
-
-  { "id":"enum_LogLevel",                "label":"LOGGING|Log level",    "type":"enum",    "values": [ "NONE", "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" ], "default":"INFO"  },
-  
+  { "id":"int_XboxAuthRedirectPort",     "label":"CLIENTS|Port to use for Xbox Authentication Redirect",    "type":"text",    "default":"8080"  },
   { "id":"url_PlexServer",               "label":"ADVANCED SETTINGS\n_____________________________________________________________________________________\nPLEX|Server URL",    "type":"text",    "default":"http://localhost:32400"  },
   { "id":"str_PlexToken",                "label":"PLEX|Server token",    "type":"text",    "option":"hidden",     "default":"",		"secure":"true"  },
-
   { "id":"dir_app_retroarch",            "label":"APPLICATION|DIRECTORY|RetroArch",    "type":"text",    "default":""  },
   { "id":"str_binary_retroarch",         "label":"APPLICATION|BINARY|RetroArch",    "type":"text",    "default":"retroarch"  },
   { "id":"dir_app_cemu",                 "label":"APPLICATION|DIRECTORY|CEMU",    "type":"text",    "default":""  },
   { "id":"str_binary_cemu",              "label":"APPLICATION|BINARY|CEMU",    "type":"text",    "default":"Cemu"  },
   { "id":"dir_app_rpcs3",                "label":"APPLICATION|DIRECTORY|RPCS3",    "type":"text",    "default":""  },
   { "id":"str_binary_rpcs3",             "label":"APPLICATION|BINARY|RPCS3",    "type":"text",    "default":"rpcs3"  },
-
   { "id":"scanner_3do_interactive_multiplayer",           "label":"SCANNER|3DO Interactive Multiplayer",    "type":"bool",    "default":"True"  },
   { "id":"scanner_amstrad_cpc",                           "label":"SCANNER|Amstrad CPC",    "type":"bool",    "default":"True"  },
   { "id":"scanner_arcade",                                "label":"SCANNER|Arcade",    "type":"bool",    "default":"True"  },
@@ -149,7 +133,6 @@
   { "id":"scanner_wolfenstein_3d_engine",                 "label":"SCANNER|Wolfenstein 3D Engine",    "type":"bool",    "default":"True"  },
   { "id":"scanner_wonderswan",                            "label":"SCANNER|Wonderswan",    "type":"bool",    "default":"True"  },
   { "id":"scanner_wonderswan_color",                      "label":"SCANNER|Wonderswan Color",    "type":"bool",    "default":"True"  },
-
   { "id":"emulator_3do_interactive_multiplayer",          "label":"EMULATOR|3DO Interactive Multiplayer",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_amstrad_cpc",                          "label":"EMULATOR|Amstrad CPC",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_arcade",                               "label":"EMULATOR|Arcade",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
@@ -249,7 +232,6 @@
   { "id":"emulator_wolfenstein_3d_engine",                "label":"EMULATOR|Wolfenstein 3D Engine",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_wonderswan",                           "label":"EMULATOR|WonderSwan",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
   { "id":"emulator_wonderswan_color",                     "label":"EMULATOR|WonderSwan Color",    "type": "enum",    "values": [ "default", "Retroarch" ],    "default": "default"  },
-
   { "id":"core_3do_interactive_multiplayer",              "label":"RETROARCH|CORE|3DO Interactive Multiplayer",    "type": "enum",    "values": [ "default", "Opera" ],    "default": "default"  },
   { "id":"core_amstrad_cpc",                              "label":"RETROARCH|CORE|Amstrad CPC",    "type": "enum",    "values": [ "default", "Caprice32", "CrocoDS" ],    "default": "default"  },
   { "id":"core_arcade",                                   "label":"RETROARCH|CORE|Arcade",    "type": "enum",    "values": [ "default", "Daphne", "FB Alpha 2012 CPS-1", "FB Alpha 2012 CPS-2", "FB Alpha 2012 CPS-3", "FB Alpha 2012 Neo Geo", "FB Alpha 2012", "FinalBurn Neo", "HBMAME", "MAME - Current", "MAME 2000", "MAME 2003 Midway", "MAME 2003", "MAME 2003-Plus", "MAME 2010", "MAME 2015", "MAME 2016" ],    "default": "default"  },
@@ -347,5 +329,4 @@
   { "id":"core_wolfenstein_3d_engine",                    "label":"RETROARCH|CORE|Wolfenstein 3D Engine",    "type": "enum",    "values": [ "default", "ECWolf" ],    "default": "default"  },
   { "id":"core_wonderswan",                               "label":"RETROARCH|CORE|WonderSwan",    "type": "enum",    "values": [ "default", "Beetle Cygne" ],    "default": "default"  },
   { "id":"core_wonderswan_color",                         "label":"RETROARCH|CORE|WonderSwan Color",    "type": "enum",    "values": [ "default", "Beetle Cygne" ],    "default": "default"  }
-  
 ]
