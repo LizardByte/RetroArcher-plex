@@ -310,7 +310,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                 secrets = json.load(f)
         except FileNotFoundError:
             pass
-        launch = launchXbox(clientIP, secrets)
+        launch = await launchXbox(clientIP, secrets)
     elif clientPlatform.lower() == 'ios':  # disable for now
         launch = False
     else:
@@ -1333,7 +1333,6 @@ async def xbox_async_main(client_id: str, client_secret: str, redirect_uri: str,
         # Request new ones if they are not valid
         if not (auth_mgr.xsts_token and auth_mgr.xsts_token.is_valid()):
             auth_url = auth_mgr.generate_authorization_url()
-            print(auth_url)
             webbrowser.open(auth_url)
             code = await queue.get()
             await auth_mgr.request_tokens(code)
