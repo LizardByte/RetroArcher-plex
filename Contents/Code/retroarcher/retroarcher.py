@@ -656,7 +656,7 @@ def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secre
     return True
 
 
-def launchXbox(clientIP, secrets=None):
+async def launchXbox(clientIP, secrets=None):
     xbl_client = xbox_main()
     consoles = await xbl_client.smartglass.get_console_list(True)
     if consoles.status.error_code.lower() != 'ok':
@@ -696,6 +696,9 @@ def launchXbox(clientIP, secrets=None):
 
         # launch moonlight
         if console_remote_management and moonlight_installed and plex_installed:
+            # press B button, stop the video
+            await xbl_client.smartglass.press_button(console.id, 'B')
+
             await xbl_client.smartglass.launch_app(console.id, one_store_product_id)
             return True
 
