@@ -648,7 +648,17 @@ def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secre
 
 
 async def launchXbox(clientIP, secrets=None):
-    xbl_client = xbox_main()
+    app = web.Application()
+    app.add_routes([web.get("/auth/callback", auth_callback)])
+    runner = web.AppRunner(app)
+
+    loop.run_until_complete(runner.setup())
+    site = web.TCPSite(runner, "localhost", int(Prefs['int_XboxAuthRedirectPort']))
+    loop.run_until_complete(site.start())
+    xbl_client = loop.run_until_complete(
+        xbox_async_main(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, TOKENS_FILE)
+    )
+    
     consoles = await xbl_client.smartglass.get_console_list(True)
     if consoles.status.error_code.lower() != 'ok':
         logging.error('xbox console status error: %s' % (consoles.status.error_message))
