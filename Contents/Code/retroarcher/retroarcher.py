@@ -204,7 +204,7 @@ def getDataFolders(directory, agent):
     return dataFolders
 
 
-def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId,
+async def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId,
              clientUserName, movieName, dataFolders):
     if Prefs['str_MoonlightPcUuid'] == '' or Prefs['str_MoonlightPcUuid'] == None:
         serverInfo = getJson_fromXML(Prefs['url_GameStreamServerAddress'])
