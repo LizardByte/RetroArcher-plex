@@ -302,13 +302,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
     elif clientProduct.lower() == 'plex web' and clientDevice.lower() == 'windows':
         launch = launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secrets)
     elif clientPlatform.lower() == 'xbox':
-        secretsFile = os.path.join(jsonDir, 'xbox.json')
-        try:
-            with open(secretsFile) as f:
-                secrets = json.load(f)
-        except FileNotFoundError:
-            pass
-        launch = launchXbox(clientIP, secrets)
+        launch = launchXbox(clientIP)
     elif clientPlatform.lower() == 'ios':  # disable for now
         launch = False
     else:
@@ -336,7 +330,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                     'cemu': {
                         'dir': applicationDirectory,
                         'command': 'start "RetroArcher" "%s" --fullscreen --game "%s" --account %s' % (
-                        binaryCommand, fullRomPath, UserId_cemu)
+                            binaryCommand, fullRomPath, UserId_cemu)
                     },
                     'retroarch': {
                         'dir': applicationDirectory,
@@ -345,7 +339,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                     'rpcs3': {
                         'dir': applicationDirectory,
                         'command': 'start "RetroArcher" "%s" --no-gui "%s" --user-id %s' % (
-                        binaryCommand, fullRomPath, UserId_rpcs3)
+                            binaryCommand, fullRomPath, UserId_rpcs3)
                     }
                 },
                 'stream_host': {
@@ -366,7 +360,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                     'cemu': {
                         'dir': applicationDirectory,
                         'command': 'start "RetroArcher" "%s" --fullscreen --game "%s" --account %s' % (
-                        binaryCommand, fullRomPath, UserId_cemu)
+                            binaryCommand, fullRomPath, UserId_cemu)
                     },
                     'retroarch': {
                         'dir': applicationDirectory,
@@ -375,7 +369,7 @@ def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer
                     'rpcs3': {
                         'dir': applicationDirectory,
                         'command': 'start "RetroArcher" "%s" --no-gui "%s" --user-id %s' % (
-                        binaryCommand, fullRomPath, UserId_rpcs3)
+                            binaryCommand, fullRomPath, UserId_rpcs3)
                     }
                 },
                 'stream_host': {
@@ -647,8 +641,61 @@ def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secre
     return True
 
 
-def launchXbox(clientIP, secrets=None):
-    launch_status = xbox_main(clientIP=clientIP, secrets=secrets, launch_client=True)
+def launchXbox(clientIP):
+    # # first start xbox-rest-server
+    # base_url = f"http://localhost:{Prefs['enum_XboxAuthRedirectPort']}"
+    #
+    # headers = {
+    #     'accept': 'application/json'
+    # }
+    # url = f"{base_url}/device/?addr={clientIP}"
+    #
+    # proc = subprocess.Popen([sys.executable,
+    #                          os.path.join(os.path.dirname(os.path.realpath(__file__)), 'xbox_rest_server.py'),
+    #                          '--port', str(Prefs['enum_XboxAuthRedirectPort']),
+    #                          ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    #
+    # # make sure the xbox-rest-server is responding
+    # counter = 0
+    #
+    # while counter < 30:
+    #     try:
+    #         test_resp = requests.get(url=base_url, headers=headers)
+    #         if test_resp.status_code == 200:
+    #             break
+    #     except:
+    #         pass
+    #     time.sleep(1)
+    #     counter += 1
+    #
+    # try:
+    #     resp = requests.get(url=url, headers=headers)
+    # except requests.exceptions.ConnectionError:
+    #     logging.debug(proc.communicate())
+    #     logging.debug(proc.stdout)
+    #     logging.debug(proc.stderr)
+    #     return False
+    #
+    # # kill the xbox-rest-server
+    # proc.kill()
+    #
+    # if resp.status_code != 200:
+    #     return False
+    #
+    # console_info = resp.json()[0]
+
+    console_info = XboxDiscovery().discover(addr=clientIP, server_port=int(Prefs['int_XboxAuthRedirectPort']))[0]
+
+    try:
+        if console_info['address'] == clientIP:
+            logging.info(f'Found matching Xbox: {console_info["name"]}')
+            console_liveid = console_info['liveid']
+        else:
+            return False
+    except KeyError:
+        return False
+
+    launch_status = xbox_main(console_liveid=console_liveid, launch_client=True)
 
     return launch_status
 
@@ -729,9 +776,9 @@ def make_link(src, dst, system, romName):
         romName = romName.replace(x, '\%s' % (x))
 
     command = "%s -ss 0 -i \"%s\" -t %s -vf \"drawtext=text='%s': fontfile='fonts/%s': fontcolor=%s: fontsize=%s: box=%s: boxcolor=%s: boxborderw=%s: x=%s: y=%s\" -codec:v %s -codec:a copy -map_metadata -1 -metadata title=\"%s\" -metadata creation_time=%s -map_chapters -1 \"%s\"" % (
-    ffmpegPath, src, str(Prefs['int_FfmpegLength']), romName, fontFile, Prefs['str_FfmpegTextColor'],
-    str(Prefs['int_FfmpegTextSize']), border, Prefs['str_FfmpegTextBoxColor'], Prefs['str_FfmpegTextBoxBorder'],
-    Prefs['str_FfmpegTextX'], Prefs['str_FfmpegTextY'], Prefs['enum_FfmpegEncoder'], title, time, dst)
+        ffmpegPath, src, str(Prefs['int_FfmpegLength']), romName, fontFile, Prefs['str_FfmpegTextColor'],
+        str(Prefs['int_FfmpegTextSize']), border, Prefs['str_FfmpegTextBoxColor'], Prefs['str_FfmpegTextBoxBorder'],
+        Prefs['str_FfmpegTextX'], Prefs['str_FfmpegTextY'], Prefs['enum_FfmpegEncoder'], title, time, dst)
     logging.debug('command: %s' % (command))
     os.system(command)
 
@@ -947,7 +994,8 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                 if ps3Path in root1.lower():
                                                     if f.lower() == 'eboot.bin':
                                                         gameFolder = \
-                                                        os.path.split(os.path.join(*splitall(relativePath)[:-2]))[-1]
+                                                            os.path.split(os.path.join(*splitall(relativePath)[:-2]))[
+                                                                -1]
                                                         romName = gameFolder.rsplit(' ', 1)[
                                                             0]  # title id separates game name... no brackets?
                                                         # print(romName)
@@ -961,7 +1009,8 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                 while y < len(check):
                                                     if romExtension == check[y].lower() and romExtension == 'rpx':
                                                         gameFolder = \
-                                                        os.path.split(os.path.join(*splitall(relativePath)[:-1]))[-1]
+                                                            os.path.split(os.path.join(*splitall(relativePath)[:-1]))[
+                                                                -1]
                                                         romName = gameFolder.rsplit(' [', 1)[0]
                                                         # print(romName)
                                                         # print(f.lower())
@@ -969,7 +1018,7 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                         print(romName)
                                                     elif romExtension == check[y].lower() and romExtension == 'wud':
                                                         gameFolder = \
-                                                        os.path.split(os.path.join(*splitall(relativePath)))[-1]
+                                                            os.path.split(os.path.join(*splitall(relativePath)))[-1]
                                                         romName = gameFolder.rsplit(' [', 1)[0]
                                                         print(gameFolder)
                                                         print(romName)
@@ -1033,7 +1082,7 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                                         # print(tempGame)
                                                                         gameName = tempGame
                                                                         multi_disk_game_list[gameName] = \
-                                                                        multi_disk_game_list[title]
+                                                                            multi_disk_game_list[title]
                                                                         multi_disk_game_list[gameName][
                                                                             len(multi_disk_game_list[gameName])] = f
                                                                         matched = 1
@@ -1071,12 +1120,12 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                                                 'videoHash']:
                                                                         logging.debug(
                                                                             'videoHash is equal hash in database: %s' % (
-                                                                            videoHash[0]))
+                                                                                videoHash[0]))
                                                                         makeLink = False
                                                                     else:
                                                                         logging.debug(
                                                                             'videoHash is not equal hash in database: %s' % (
-                                                                            videoHash[0]))
+                                                                                videoHash[0]))
                                                                         makeLink = True
                                                                 except KeyError:
                                                                     makeLink = True
@@ -1101,9 +1150,10 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                                         if found == 0:
                                                                             try:
                                                                                 oldHash = \
-                                                                                database['romMapping']['platforms'][
-                                                                                    system]['videos'][
-                                                                                    romName + extension]['videoHash']
+                                                                                    database['romMapping']['platforms'][
+                                                                                        system]['videos'][
+                                                                                        romName + extension][
+                                                                                        'videoHash']
                                                                                 if typeMakeNew[t] == 1 and oldHash in \
                                                                                         typeHashList[t]:
                                                                                     makeLink = random.choice(
@@ -1257,7 +1307,7 @@ def quote_remover(string):
     return string
 
 
-def xbox_main(clientIP=None, secrets=None, launch_client=None):
+def xbox_main(console_liveid=None, launch_client=None):
     app = web.Application()
     app.add_routes([web.get("/auth/callback", auth_callback)])
     runner = web.AppRunner(app)
@@ -1266,14 +1316,14 @@ def xbox_main(clientIP=None, secrets=None, launch_client=None):
     site = web.TCPSite(runner, "localhost", int(Prefs['int_XboxAuthRedirectPort']))
     loop.run_until_complete(site.start())
     xbl_client = loop.run_until_complete(
-        xbox_async_main(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, TOKENS_FILE, clientIP, secrets, launch_client)
+        xbox_async_main(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, TOKENS_FILE, console_liveid, launch_client)
     )
 
     return xbl_client
 
 
 async def xbox_async_main(client_id: str, client_secret: str, redirect_uri: str, token_filepath: str,
-                          clientIP=None, secrets=None, launch_client=False):
+                          console_liveid=None, launch_client=False):
     async with ClientSession() as session:
         auth_mgr = AuthenticationManager(session, client_id, client_secret, redirect_uri)
 
@@ -1302,45 +1352,38 @@ async def xbox_async_main(client_id: str, client_secret: str, redirect_uri: str,
                 logging.error('xbox console status error: %s' % (consoles.status.error_message))
                 sys.exit(1)
 
-            console_count = len(consoles.result)
-
             for console in consoles.result:
-                if console_count > 1:
-                    if secrets:
-                        console_ip = secrets[console.id]
-                        if console_ip != clientIP:
-                            continue
-                    else:
-                        logging.error('xbox_auth.json file required when you have more than one xbox on your account')
-                        sys.exit(1)
-
-                console_status = await xbl_client.smartglass.get_console_status(console.id)
-
-                if console_status.power_state.value.lower() != 'on':
+                if console.id != console_liveid:
                     continue
 
-                console_remote_management = console_status.remote_management_enabled  # True or False
+                logging.info('Found matching xbox on account')
+
+                console_status = await xbl_client.smartglass.get_console_status(console.id)
 
                 # get list of installed apps
                 installed_apps = await xbl_client.smartglass.get_installed_apps(console.id)
 
                 moonlight_installed = False
-                plex_installed = False
+                # plex_installed = False
                 for app in installed_apps.result:
                     if app.name.lower() == 'moonlight uwp':
                         moonlight_installed = True
                         one_store_product_id = app.one_store_product_id
-                    elif app.name.lower() == 'plex':
-                        plex_installed = True
+                    # elif app.name.lower() == 'plex':
+                    # plex_installed = True
 
                 # launch moonlight
-                if console_remote_management and moonlight_installed and plex_installed:
+                if moonlight_installed:
                     # press B button, stop the video
                     button = InputKeyType('B')
                     await xbl_client.smartglass.press_button(console.id, button)
 
                     await xbl_client.smartglass.launch_app(console.id, one_store_product_id)
                     return True
+                else:
+                    logging.error(
+                        'Moonlight is not installed on xbox, install it: https://www.microsoft.com/store/apps/9MW1BS08ZBTH')
+                    return False
 
             logging.error('no suitable xbox console found')
             return False
@@ -1362,8 +1405,8 @@ if __name__ == '__main__':
     logging.info('paths: %s' % (paths))
 
     # hack for cleaner folder structure and relative imports
+    sys.path.append(paths['scriptDir'])
     sys.path.append(paths['retroarcherModulesDir'])
-    sys.path.append(paths['agentModulesDir'])
     sys.path.append(paths['codeDir'])
 
     # agent imports
@@ -1382,6 +1425,9 @@ if __name__ == '__main__':
     from xbox.webapi.authentication.manager import AuthenticationManager
     from xbox.webapi.authentication.models import OAuth2TokenResponse
     from xbox.webapi.scripts import CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, TOKENS_FILE
+
+    # local imports
+    from XboxDiscovery import XboxDiscovery
 
     loop = asyncio.get_event_loop()
     queue = asyncio.Queue(1)
