@@ -21,11 +21,11 @@ jobs:
           python-version: '2.7'
       - name: Set up Python 2.7 Dependencies
         run: |
-          echo Installing Plex Agent Requirements
-          set install_dir=Contents\Libraries\Shared
+          echo "Installing Plex Agent Requirements"
+          echo Contents\Libraries\Shared >> $env:TARGET_DIR
           python --version
-          python -m pip install --upgrade pip==20.3
-          pip install --target=%install_dir% -r %install_dir%\requirements.txt
+          python -m pip install --upgrade pip==20.3.4
+          pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}\requirements.txt
       - name: Test Plex Agent
         run: |
           python --version
@@ -36,11 +36,11 @@ jobs:
           python-version: '3.9'
       - name: Set up Python 3.9 Dependencies
         run: |
-          echo Installing RetroArcher Requirements
-          set install_dir=Contents\Libraries\Modules
+          echo "Installing RetroArcher Requirements"
+          echo Contents\Libraries\Modules >> $env:TARGET_DIR
           python --version
           python -m pip install --upgrade pip
-          pip install --target=%install_dir% -r %install_dir%\requirements.txt
+          pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}\requirements.txt
       - name: Test RetroArcher
         run: |
           python --version
@@ -49,6 +49,7 @@ jobs:
         run: |
           echo Event Name: $GITHUB_EVENT_NAME
       - name: Upload Artifacts
+        if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
         uses: actions/upload-artifact@v2
         with:
           name: RetroArcher.bundle
