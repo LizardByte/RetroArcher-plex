@@ -1,5 +1,4 @@
 igdb-api-v4==0.0.5  # version 0.0.4 had f-strings which are incompatible with Python 2.7
-#git+https://github.com/twitchtv/igdb-api-python.git@b2d0460c01ddc5ad96970b033d74b4c8ab5bff41#igdb-api-v4  # minimum commit to use
 #PlexAPI==4.2.0  # modified version to support Python 2.7 AND uploading theme songs, wait until https://github.com/pkkid/python-plexapi/pull/864 is merged/released before modifying again
 requests<=2.27  # 2.27 is last version supporting Python 2.7
 rsa==4.7
