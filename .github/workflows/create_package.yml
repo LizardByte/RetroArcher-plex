@@ -15,10 +15,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python 2.7
+      - name: Install Python 2.7
         uses: actions/setup-python@v2
         with:
           python-version: '2.7'
+      - name: Set up Python 2.7 Dependencies
         run: |
           echo Installing Plex Agent Requirements
           set install_dir=Contents\Libraries\Shared
@@ -29,10 +30,11 @@ jobs:
         run: |
           python --version
           python Contents\Code\__init__.py
-      - name: Set up Python 3.9
+      - name: Install Python 3.9
         uses: actions/setup-python@v2
         with:
           python-version: '3.9'
+      - name: Set up Python 3.9 Dependencies
         run: |
           echo Installing RetroArcher Requirements
           set install_dir=Contents\Libraries\Modules
