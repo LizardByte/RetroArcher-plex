@@ -4,6 +4,8 @@ on:
   pull_request:
     branches: [master, nightly]
     types: [opened, synchronize, edited, reopened]
+  push:
+    branches: [master, nightly, add-repo-actions]
   workflow_dispatch:
 
 jobs:
