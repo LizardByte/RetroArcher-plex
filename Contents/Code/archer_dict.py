@@ -42,14 +42,6 @@ dict_enum_settings_map = {  # for retroarcher script
         '0': 'GeForce Experience',
         '1': 'Open-Stream',
         '2': 'Sunshine'
-    },
-    'LogLevel': {
-        '0': 0,
-        '1': 10,
-        '2': 20,
-        '3': 30,
-        '4': 40,
-        '5': 50
     }
 }
 
