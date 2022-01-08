@@ -1,0 +1,51 @@
+name: Create Package
+
+on:
+  pull_request:
+    branches: [master, nightly]
+    types: [opened, synchronize, edited, reopened]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: windows-2019
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 2.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: '2.7'
+        run: |
+          echo Installing Plex Agent Requirements
+          set install_dir=Contents\Libraries\Shared
+          python --version
+          python -m pip install --upgrade pip
+          pip install --target=%install_dir% -r %install_dir%\requirements.txt
+      - name: Test Plex Agent
+        run: |
+          python --version
+          python Contents\Code\__init__.py
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+        run: |
+          echo Installing RetroArcher Requirements
+          set install_dir=Contents\Libraries\Modules
+          python --version
+          python -m pip install --upgrade pip
+          pip install --target=%install_dir% -r %install_dir%\requirements.txt
+      - name: Test RetroArcher
+        run: |
+          python --version
+          python Contents\Code\retroarcher\retroarcher.py
+      - name: Workflow Info
+        run: |
+          echo Event Name: $GITHUB_EVENT_NAME
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: RetroArcher.bundle
+          path: *
