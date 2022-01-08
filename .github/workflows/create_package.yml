@@ -20,9 +20,10 @@ jobs:
         with:
           python-version: '2.7'
       - name: Set up Python 2.7 Dependencies
+        env:
+          TARGET_DIR: Contents\Libraries\Shared
         run: |
           echo "Installing Plex Agent Requirements"
-          echo Contents\Libraries\Shared >> $env:TARGET_DIR
           python --version
           python -m pip install --upgrade pip==20.3.4
           pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}\requirements.txt
@@ -35,9 +36,10 @@ jobs:
         with:
           python-version: '3.9'
       - name: Set up Python 3.9 Dependencies
+        env:
+          TARGET_DIR: Contents\Libraries\Modules
         run: |
           echo "Installing RetroArcher Requirements"
-          echo Contents\Libraries\Modules >> $env:TARGET_DIR
           python --version
           python -m pip install --upgrade pip
           pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}\requirements.txt
