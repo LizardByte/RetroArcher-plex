@@ -25,8 +25,8 @@ jobs:
         run: |
           echo "Installing Plex Agent Requirements"
           python --version
-          python -m pip install --upgrade pip==20.3.4
-          pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}\requirements.txt
+          python -m pip --no-python-version-warning --disable-pip-version-check install --upgrade pip==20.3.4
+          pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}\requirements.txt  --no-warn-script-location --ignore-requires-python
       - name: Test Plex Agent
         run: |
           python --version
@@ -42,7 +42,7 @@ jobs:
           echo "Installing RetroArcher Requirements"
           python --version
           python -m pip install --upgrade pip
-          pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}\requirements.txt
+          pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}\requirements.txt --no-warn-script-location
       - name: Test RetroArcher
         run: |
           python --version
