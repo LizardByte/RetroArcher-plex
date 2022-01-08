@@ -24,7 +24,7 @@ jobs:
           echo Installing Plex Agent Requirements
           set install_dir=Contents\Libraries\Shared
           python --version
-          python -m pip install --upgrade pip=20.3
+          python -m pip install --upgrade pip==20.3
           pip install --target=%install_dir% -r %install_dir%\requirements.txt
       - name: Test Plex Agent
         run: |

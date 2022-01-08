@@ -1,7 +1,7 @@
-adbutils=0.8.3  # retroarcher.py
-cryptography=36.0.1  # XboxDiscovery.py
-plexapi=4.2.0  # (can most likely be removed)
-requests=2.25.1
-urllib3=1.26.2  # requests AND rertroarcher.py (can be removed)
-xbox-webapi=2.0.11
-xmltodict=0.12.0
+adbutils==0.8.3  # retroarcher.py
+cryptography==36.0.1  # XboxDiscovery.py
+plexapi==4.2.0  # (can most likely be removed)
+requests==2.25.1
+urllib3==1.26.2  # requests AND rertroarcher.py (can be removed)
+xbox-webapi==2.0.11
+xmltodict==0.12.0
