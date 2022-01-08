@@ -1,1 +1,0 @@
-python -u simplehttpserver.py

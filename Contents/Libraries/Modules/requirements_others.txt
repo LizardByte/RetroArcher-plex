@@ -1,0 +1,25 @@
+aiohttp  # xbox-webapi
+aiosignal
+apkutils2=1.0.0
+appdirs
+async_timeout
+attr
+attrs
+cffi  # cryptography
+charset_normalizer  # requests
+cigam
+deprecation=2.1.0
+ecdsa
+frozenlist
+idna  # requests
+ms_cv
+multidict
+packaging=20.8
+pycparser  # cffi
+pydantic
+retry=0.9.2
+six=1.15.0
+uiautomator2=2.12.1
+wayback_machine_archiver=1.9.1  # not used
+whichcraft=0.6.1
+yarl
