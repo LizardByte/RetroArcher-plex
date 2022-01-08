@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
-
-### Imports ###
 import os
-import requests
-import urllib
+import sys
 
-# Archer Modules #
+# imports from Libraries\Shared
+try:
+    import requests
+    import urllib
+except ImportError:
+    sys.path.append(os.path.join('Contents', 'Libraries', 'Shared'))
+    import requests
+    import urllib
+
+# local imports
 import archer_dict
 import common
 
