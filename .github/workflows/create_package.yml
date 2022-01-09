@@ -50,9 +50,12 @@ jobs:
       - name: Workflow Info
         run: |
           echo Event Name: $GITHUB_EVENT_NAME
+      - name: Package Windows
+        run: |
+          7z a RetroArcher.bundle.zip *
       - name: Upload Artifacts
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ github.repository }}
-          path: /**
+          name: Windows
+          path: RetroArcher.budnle.zip
