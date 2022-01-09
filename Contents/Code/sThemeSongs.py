@@ -2,6 +2,10 @@
 import os
 import json
 
+# plex globals
+from plex_builtins import *
+
+# local imports
 import hPlexAPI
 
 #url = 'https://raw.githubusercontent.com/ReenigneArcher/RetroArcher.database/main/themeSongs.json'
