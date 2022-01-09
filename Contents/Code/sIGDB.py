@@ -6,8 +6,8 @@ import json
 import requests
 from igdb.wrapper import IGDBWrapper
 
-# plex globals
-from plex_builtins import *
+# plex debugging
+from plexagents.builtins import *
 
 # local imports
 import common

@@ -2,8 +2,8 @@
 import requests
 from plexapi.server import PlexServer
 
-# plex globals
-from plex_builtins import *
+# plex debugging
+from plexagents.builtins import *
 
 def setup_plexapi():
     PLEX_URL = Prefs['url_PlexServer']
