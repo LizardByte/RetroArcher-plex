@@ -1595,10 +1595,11 @@ if __name__ == '__main__':
     # print('Prefs:')
     # print(json.dumps(Prefs, indent=4))
 
-    if Prefs['dir_SourceRomDirectory'] == None:
-        logging.critical('Source Rom Directory does not exist or is not set in agent settings.')
-        sys.exit(1)
-    SourceRomDir = os.path.abspath(Prefs['dir_SourceRomDirectory'])
+    if launch or scan:
+        if Prefs['dir_SourceRomDirectory'] == None:
+            logging.critical('Source Rom Directory does not exist or is not set in agent settings.')
+            sys.exit(1)
+        SourceRomDir = os.path.abspath(Prefs['dir_SourceRomDirectory'])
 
     '''get data folders'''
     dataFolders = getDataFolders(paths['plexDir'], agent)
