@@ -1547,6 +1547,11 @@ if __name__ == '__main__':
     # print('original settings')
     # print(json.dumps(settings, indent=4))
 
+    try:
+        settings['PluginPreferences']
+    except KeyError:
+        settings['PluginPreferences'] = {}
+
     Prefs = {}
     for key, value in archer_dict.dDefaultSettings.items():
         try:
@@ -1561,11 +1566,6 @@ if __name__ == '__main__':
                 Prefs[key] = archer_dict.dict_enum_settings_map[settingSplit[-1]][Prefs[key]]
             except KeyError as e:
                 pass
-            if settingSplit[1] == 'LogLevel':
-                logLevel = Prefs[key]
-                logging.basicConfig(filename='retroarcher.log',
-                                    level=logLevel)  # log level should now be whatever is set in the agent or default
-                logging.info('Numeric logging level set to: %s' % (logLevel))
         elif settingSplit[0] == 'int':
             Prefs[key] = int(Prefs[key])
         elif settingSplit[0] == 'list':
