@@ -17,7 +17,7 @@ plex_globals = [
     'HTTP',
     'InterviewObject',
     'JSON',
-    'Locales',
+    'Locale',
     'Log',
     'MessageContainer',
     'MetadataSearchResult',
