@@ -2,6 +2,7 @@
 import os
 import sys
 
+print(globals())
 # imports from Libraries\Shared
 try:
     import requests
@@ -14,6 +15,7 @@ except ImportError:
     import urllib
 
     from nop import NOP
+print(globals())
 
 
 # plex globals
@@ -57,6 +59,7 @@ plex_constants = {
 }
 for name, value in plex_constants.items():
     plex_test(name)
+print(globals())
 
 # local imports
 import archer_dict
