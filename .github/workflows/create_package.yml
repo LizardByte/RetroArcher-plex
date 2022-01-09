@@ -25,7 +25,7 @@ jobs:
         run: |
           echo "Installing Plex Agent Requirements"
           python --version
-          python -m pip --no-python-version-warning --disable-pip-version-check install --upgrade pip==20.3.4
+          python -m pip --no-python-version-warning --disable-pip-version-check install --upgrade pip==20.3.4 setuptools
           pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}\requirements.txt  --no-warn-script-location --ignore-requires-python
       - name: Test Plex Agent
         run: |
