@@ -54,10 +54,10 @@ def config_rewrite(configFile, header, data):
 def convertXMLtoJSON(filepath):
     try:
         inputFile = open(filepath, 'rb')
+        j = xmltodict.parse(inputFile)
     except FileNotFoundError:
-        import io
-        inputFile = io.BytesIO()
-    j = xmltodict.parse(inputFile)
+        j = {}
+
     return j
 
 
