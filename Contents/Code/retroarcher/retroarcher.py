@@ -1550,7 +1550,7 @@ if __name__ == '__main__':
     try:
         settings['PluginPreferences']
     except KeyError:
-        settings['PluginPreferences'] = {}
+        settings = {'PluginPreferences': {}}
 
     Prefs = {}
     for key, value in archer_dict.dDefaultSettings.items():
