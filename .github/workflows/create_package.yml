@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-windows:
+  build:
     strategy:
       fail-fast: false
       matrix:
@@ -28,12 +28,12 @@ jobs:
 
       - name: Set up Python 2.7 Dependencies
         env:
-          TARGET_DIR: Contents\Libraries\Shared
+          TARGET_DIR: ./Contents/Libraries/Shared
         run: |
           echo "Installing Plex Agent Requirements"
           python --version
           python -m pip --no-python-version-warning --disable-pip-version-check install --upgrade pip==20.3.4 setuptools
-          pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}\requirements.txt  --no-warn-script-location --ignore-requires-python
+          pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}/requirements.txt  --no-warn-script-location --ignore-requires-python
 
       - name: Test Plex Agent
         run: |
@@ -47,12 +47,12 @@ jobs:
 
       - name: Set up Python 3.9 Dependencies
         env:
-          TARGET_DIR: Contents\Libraries\Modules
+          TARGET_DIR: ./Contents/Libraries/Modules
         run: |
           echo "Installing RetroArcher Requirements"
           python --version
           python -m pip install --upgrade pip
-          pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}\requirements.txt --no-warn-script-location
+          pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}/requirements.txt --no-warn-script-location
 
       - name: Test RetroArcher
         run: |
