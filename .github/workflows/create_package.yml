@@ -57,14 +57,14 @@ jobs:
 
       - name: Package Windows
         run: |
-          7z a ${{ github.repository }}.zip *
+          7z a RetroArcher.bundle.zip *
 
       - name: Upload Artifacts
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
         uses: actions/upload-artifact@v2  # https://github.com/actions/upload-artifact
         with:
-          name: ${{ github.repository }}
-          path: ${{ github.repository }}.zip
+          name: RetroArcher.bundle
+          path: RetroArcher.bundle.zip
 
       - name: Parse Changelog Entry
         if: ${{ github.ref == 'refs/heads/master' }}
