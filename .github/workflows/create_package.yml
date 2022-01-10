@@ -59,17 +59,15 @@ jobs:
           python --version
           python ./Contents/Code/retroarcher/retroarcher.py
 
-      - name: Package
-        run: |
-          cd ..
-          7z "-xr!*.git" "-xr!*.pyc" "-xr!__pycache__" a "./RetroArcher.bundle/RetroArcher.bundle-${{ runner.os }}.zip" "RetroArcher.bundle"
-
       - name: Upload Artifacts
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
         uses: actions/upload-artifact@v2  # https://github.com/actions/upload-artifact
         with:
           name: RetroArcher.bundle-${{ runner.os }}
-          path: RetroArcher.bundle-${{ runner.os }}.zip
+          #path: RetroArcher.bundle-${{ runner.os }}.zip
+          path: |
+            ${{ github.workspace }}/**/*
+            !${{ github.workspace }}/.git
 
       - name: Parse Changelog Entry
         if: ${{ github.ref == 'refs/heads/master' }}
@@ -92,6 +90,12 @@ jobs:
           echo Changelog Version: "${{ steps.changelog.outputs.version }}"
           echo Last Released Version: "${{ steps.last_release.tag_name }}"
           exit 1
+
+      - name: Package Release
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        run: |
+          cd ..
+          7z "-xr!*.git" "-xr!*.pyc" "-xr!__pycache__" a "./RetroArcher.bundle/RetroArcher.bundle-${{ runner.os }}.zip" "RetroArcher.bundle"
 
       - name: Create/Update GitHub Release
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
