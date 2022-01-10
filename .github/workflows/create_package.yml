@@ -38,7 +38,7 @@ jobs:
       - name: Test Plex Agent
         run: |
           python --version
-          python Contents\Code\__init__.py
+          python ./Contents/Code/__init__.py
 
       - name: Install Python 3.9
         uses: actions/setup-python@v2  # https://github.com/actions/setup-python
@@ -57,7 +57,7 @@ jobs:
       - name: Test RetroArcher
         run: |
           python --version
-          python Contents\Code\retroarcher\retroarcher.py
+          python ./Contents/Code/retroarcher/retroarcher.py
 
       - name: Package
         run: |
