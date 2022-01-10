@@ -5,20 +5,23 @@ on:
     branches: [master, nightly]
     types: [opened, synchronize, edited, reopened]
   push:
-    branches: [master, nightly, add-repo-actions]
+    branches: [master]
   workflow_dispatch:
 
 jobs:
-  build:
+  build-windows:
 
     runs-on: windows-2019
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Install Python 2.7
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v2  # https://github.com/actions/setup-python
         with:
           python-version: '2.7'
+
       - name: Set up Python 2.7 Dependencies
         env:
           TARGET_DIR: Contents\Libraries\Shared
@@ -27,14 +30,17 @@ jobs:
           python --version
           python -m pip --no-python-version-warning --disable-pip-version-check install --upgrade pip==20.3.4 setuptools
           pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}\requirements.txt  --no-warn-script-location --ignore-requires-python
+
       - name: Test Plex Agent
         run: |
           python --version
           python Contents\Code\__init__.py
+
       - name: Install Python 3.9
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v2  # https://github.com/actions/setup-python
         with:
           python-version: '3.9'
+
       - name: Set up Python 3.9 Dependencies
         env:
           TARGET_DIR: Contents\Libraries\Modules
@@ -43,19 +49,52 @@ jobs:
           python --version
           python -m pip install --upgrade pip
           pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}\requirements.txt --no-warn-script-location
+
       - name: Test RetroArcher
         run: |
           python --version
           python Contents\Code\retroarcher\retroarcher.py
-      - name: Workflow Info
-        run: |
-          echo Event Name: $GITHUB_EVENT_NAME
+
       - name: Package Windows
         run: |
-          7z a RetroArcher.bundle.zip *
+          7z a ${{ github.repository }}.zip *
+
       - name: Upload Artifacts
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2  # https://github.com/actions/upload-artifact
         with:
-          name: Windows
-          path: RetroArcher.budnle.zip
+          name: ${{ github.repository }}
+          path: ${{ github.repository }}.zip
+
+      - name: Parse Changelog Entry
+        if: ${{ github.ref == 'refs/heads/master' }}
+        id: changelog
+        uses: coditory/changelog-parser@v1  # https://github.com/coditory/changelog-parser
+
+      - name: Get last release
+        if: ${{ github.ref == 'refs/heads/master' }}
+        id: last_release
+        uses: InsonusK/get-latest-release@v1.0.1  # https://github.com/InsonusK/get-latest-release
+        with:
+          myToken: ${{ github.token }}
+          exclude_types: "draft|prerelease"
+          view_top: 1
+
+      - name: Changelog Version
+        if: ${{ github.ref == 'refs/heads/master' && ( steps.changelog.outputs.version == steps.last_release.tag_name ) }}
+        # fail the workflow because the versions match
+        run: |
+          echo Changelog Version: "${{ steps.changelog.outputs.version }}"
+          echo Last Released Version: "${{ steps.last_release.tag_name }}"
+          exit 1
+
+      - name: Create/Update GitHub Release
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        uses: ncipollo/release-action@v1  # https://github.com/ncipollo/release-action
+        with:
+          name: Release ${{ steps.changelog.outputs.version }}
+          tag: ${{ steps.changelog.outputs.version }}
+          artifacts: "*.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allowUpdated: true
+          body: ${{ steps.changelog.outputs.description }}

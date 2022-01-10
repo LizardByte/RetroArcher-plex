@@ -1,54 +1,45 @@
 # Changelog
 
-## v1.1.2 (2022-01-02)
+## [1.1.2] - 2022-01-02
+### Added
+- (Metadata) Rating images in metadata xml file (not shown in clients)
+### Changed
+- (Clients) Use python subprocess to connect to Windows clients
+- (Emulators) Improve Cemu user profile creation
+- (Emulators) Default core for Doom Engine updated in `DefaultPrefs.json`
+- (Settings) Preference validation
+### Removed 
+- (Metadata) YouTube URL Service (broken)
 
-* Clients:
-  * Fix: Use python subprocess to connect to Windows clients 
-* Emulators:
-  * Fix: Improve Cemu user profile creation
-  * Fix: Default core for Doom Engine updated in `DefaultPrefs.json`
-* Metadata:
-  * Add: Rating images in metadata xml file (not shown in clients) 
-  * Remove: YouTube URL Service (broken)
-* Preferences:
-  * Fix: Preference validation
+## [1.1.1] - 2021-06-14
+### Added
+- (Clients) Setting to control number of threads during ADB port scan 
+### Changed
+- (Clients) Improve ADB port scanning 
+- (Emulators) Improve Cemu account.dat file creation
 
-## v1.1.1 (2021-06-14)
+## [1.1.0] - 2021-06-13
+### Added
+- (Emulators) Nintendo Wii U platform
+- (Emulators) Cemu emulator support
+### Changed
+- (Misc.) General code cleanup
 
-* Clients:
-  * Add: Setting to control number of threads during ADB port scan 
-  * Fix: Improve ADB port scanning 
-* Emulators:
-  * Fix: Improve Cemu account.dat file creation
+## [1.0.2] - 2021-06-08
+### Added
+- (Misc.) Feature Upvote system (Closes #40)
+### Changed
+- (Clients) Do not attempt to launch Moonlight on Android if it's not installed
+- (Emulators) Changed default core for Nintendo Family Computer 
+- (Emulators) Changed default core for Nintendo Game Boy Advance
+- (Emulators) Changed default core for Sega Mega Drive
+- (Logging) Improve `retroarcher.py` logging 
+- (Misc.) Updated issue template
 
-## v1.1.0 (2021-06-13)
+## [1.0.1] - 2021-06-05
+### Changed
+- (Settings) Enum settings would not use values specified in agent settings
 
-* Emulators:
-  * Add: Nintendo Wii U platform
-  * Add: Cemu emulator support
-* Misc:
-  * Fix: General code cleanup
-
-## v1.0.2 (2021-06-08)
-
-* Clients:
-  * Fix: Do not attempt to launch Moonlight on Android if it's not installed 
-* Emulators:
-  * Fix: Changed default core for Nintendo Family Computer 
-  * Fix: Changed default core for Nintendo Game Boy Advance
-  * Fix: Changed default core for Sega Mega Drive
-* Logging:
-  * Fix: Improve `retroarcher.py` logging 
-* Misc:
-  * Add: Feature Upvote system (Closes #40)
-  * Fix: Updated issue template
-
-## v1.0.1 (2021-06-05)
-
-* Settings:
-  * Fix: Enum settings would not use values specified in agent settings
-
-## v1.0.0 (2021-06-04)
-
-* Misc:
-  * Initial release
+## [1.0.0] - 2021-06-04
+### Added
+- (Misc.) Initial release
