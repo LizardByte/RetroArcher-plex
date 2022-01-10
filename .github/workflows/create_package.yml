@@ -69,7 +69,7 @@ jobs:
         uses: actions/upload-artifact@v2  # https://github.com/actions/upload-artifact
         with:
           name: RetroArcher.bundle-${{ runner.os }}
-          path: RetroArcher.bundle-${{ runner.os }}.zip
+          path: ../RetroArcher.bundle-${{ runner.os }}.zip
 
       - name: Parse Changelog Entry
         if: ${{ github.ref == 'refs/heads/master' }}
@@ -99,7 +99,7 @@ jobs:
         with:
           name: Release ${{ steps.changelog.outputs.version }}
           tag: ${{ steps.changelog.outputs.version }}
-          artifacts: "*.zip"
+          artifacts: "../RetroArcher.bundle-${{ runner.os }}.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdated: true
           body: ${{ steps.changelog.outputs.description }}
