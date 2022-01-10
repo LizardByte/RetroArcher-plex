@@ -61,7 +61,7 @@ jobs:
 
       - name: Package
         run: |
-          7z -xr!.git -xr!*.pyc -xr!__pycache__ a RetroArcher.bundle-${{ runner.os }}.zip *
+          7z "-xr!.git" "-xr!*.pyc" "-xr!__pycache__" a "RetroArcher.bundle-${{ runner.os }}.zip" *
 
       - name: Upload Artifacts
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
