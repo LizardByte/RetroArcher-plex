@@ -9,6 +9,25 @@ on:
   workflow_dispatch:
 
 jobs:
+  check_changelog:
+    name: Check Changelog
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Verify Changelog
+      id: verify_changelog
+      if: ${{ github.ref == 'refs/heads/master' || github.base_ref == 'master' }}
+      # base_ref for pull request check, ref for push
+      uses: RetroArcher/actions/verify_changelog@master
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    outputs:
+      next_version: ${{ steps.verify_changelog.outputs.changelog_parser_version }}
+      last_version: ${{ steps.verify_changelog.outputs.latest_release_tag_name }}
+      release_body:  ${{ steps.verify_changelog.outputs.changelog_parser_description }}
+
   build:
     strategy:
       fail-fast: false
@@ -16,6 +35,7 @@ jobs:
         os: [windows-2019, ubuntu-20.04, macos-10.15]
 
     runs-on: ${{ matrix.os }}
+    needs: check_changelog
 
     steps:
       - name: Checkout
@@ -64,46 +84,24 @@ jobs:
         uses: actions/upload-artifact@v2  # https://github.com/actions/upload-artifact
         with:
           name: RetroArcher.bundle-${{ runner.os }}
-          #path: RetroArcher.bundle-${{ runner.os }}.zip
           path: |
-            ${{ github.workspace }}/**/*
-            !${{ github.workspace }}/.git
+            */RetroArcher.bundle/
+            !*.git*
 
-      - name: Parse Changelog Entry
-        if: ${{ github.ref == 'refs/heads/master' }}
-        id: changelog
-        uses: coditory/changelog-parser@v1  # https://github.com/coditory/changelog-parser
-
-      - name: Get last release
-        if: ${{ github.ref == 'refs/heads/master' }}
-        id: last_release
-        uses: InsonusK/get-latest-release@v1.0.1  # https://github.com/InsonusK/get-latest-release
-        with:
-          myToken: ${{ github.token }}
-          exclude_types: "draft|prerelease"
-          view_top: 1
-
-      - name: Changelog Version
-        if: ${{ github.ref == 'refs/heads/master' && ( steps.changelog.outputs.version == steps.last_release.tag_name ) }}
-        # fail the workflow because the versions match
-        run: |
-          echo Changelog Version: "${{ steps.changelog.outputs.version }}"
-          echo Last Released Version: "${{ steps.last_release.tag_name }}"
-          exit 1
 
       - name: Package Release
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         run: |
           cd ..
-          7z "-xr!*.git" "-xr!*.pyc" "-xr!__pycache__" a "./RetroArcher.bundle/RetroArcher.bundle-${{ runner.os }}.zip" "RetroArcher.bundle"
+          7z "-xr!*.git*" "-xr!*.pyc" "-xr!__pycache__" a "./RetroArcher.bundle/RetroArcher.bundle-${{ runner.os }}.zip" "RetroArcher.bundle"
 
       - name: Create/Update GitHub Release
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         uses: ncipollo/release-action@v1  # https://github.com/ncipollo/release-action
         with:
-          name: Release ${{ steps.changelog.outputs.version }}
-          tag: ${{ steps.changelog.outputs.version }}
+          name: ${{ needs.check_changelog.outputs.next_version }}
+          tag: ${{ needs.check_changelog.outputs.next_version }}
           artifacts: "*.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdated: true
-          body: ${{ steps.changelog.outputs.description }}
+          body: ${{ needs.check_changelog.outputs.release_body }}
