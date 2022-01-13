@@ -82,7 +82,7 @@ jobs:
       - name: Setup Artifact Path
         run: |
           cd ..
-          move "./RetroArcher.bundle" "${{ github.workspace }}"
+          copy "./RetroArcher.bundle" "${{ github.workspace }}"
 
       - name: Upload Artifacts
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
