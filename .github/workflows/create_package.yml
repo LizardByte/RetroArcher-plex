@@ -79,6 +79,11 @@ jobs:
           python --version
           python ./Contents/Code/retroarcher/retroarcher.py
 
+      - name: Setup Artifact Path
+        run: |
+          cd ..
+          move "./RetroArcher.bundle" "${{ github.workspace }}"
+
       - name: Upload Artifacts
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
         uses: actions/upload-artifact@v2  # https://github.com/actions/upload-artifact
@@ -92,8 +97,7 @@ jobs:
       - name: Package Release
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         run: |
-          cd ..
-          7z "-xr!*.git*" "-xr!*.pyc" "-xr!__pycache__" a "./RetroArcher.bundle/RetroArcher.bundle-${{ runner.os }}.zip" "RetroArcher.bundle"
+          7z "-xr!*.git*" "-xr!*.pyc" "-xr!__pycache__" a "./RetroArcher.bundle-${{ runner.os }}.zip" "RetroArcher.bundle"
 
       - name: Create/Update GitHub Release
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
