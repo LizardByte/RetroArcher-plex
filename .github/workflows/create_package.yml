@@ -80,19 +80,20 @@ jobs:
           python ./Contents/Code/retroarcher/retroarcher.py
 
       - name: Setup Artifact Path
+        shell: powershell
         run: |
           cd ..
-          copy "./RetroArcher.bundle" "${{ github.workspace }}"
+          Rename-Item -Path "RetroArcher.bundle" -NewName "RetroArcher.bundle/RetroArcher.bundle"
 
       - name: Upload Artifacts
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
         uses: actions/upload-artifact@v2  # https://github.com/actions/upload-artifact
         with:
           name: RetroArcher.bundle-${{ runner.os }}
+          if-no-files-found: error  # 'warn' or 'ignore' are also available, defaults to `warn`
           path: |
-            */RetroArcher.bundle/
+            /RetroArcher.bundle/
             !*.git*
-
 
       - name: Package Release
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
