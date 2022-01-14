@@ -85,36 +85,6 @@ def getJson_fromXML(url):
     return result
 
 
-def getPlex():
-    from plexapi.server import PlexServer, \
-        CONFIG  # this was used to get the settings previously... there could be other uses in the future
-    PLEX_URL = Prefs['url_PlexServer']
-    PLEX_TOKEN = Prefs['str_PlexToken']
-
-    # ## CODE BELOW ## ... could use the CONFIG option from PlexAPI if user knows what they are doing
-    if not PLEX_URL:
-        PLEX_URL = CONFIG.data['auth'].get('server_baseurl')
-    if not PLEX_TOKEN:
-        PLEX_TOKEN = CONFIG.data['auth'].get('server_token')
-
-    sess = requests.Session()
-    # Ignore verifying the SSL certificate
-    sess.verify = False  # '/path/to/certfile'
-    # If verify is set to a path to a directory,
-    # the directory must have been processed using the c_rehash utility supplied
-    # with OpenSSL.
-    if sess.verify is False:
-        # Disable the warning that the request is insecure, we know that...
-        import urllib3
-        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-    # create the plexapi server
-    plex = PlexServer(PLEX_URL, PLEX_TOKEN, session=sess)
-    account = plex.myPlexAccount()
-
-    return plex, account
-
-
 def getPaths():
     # build_directories
     paths = {}
@@ -145,51 +115,6 @@ def getPaths():
 
     logging.debug('Paths: %s' % (paths))
     return paths
-
-
-def getPluginDir():
-    def pluginsDir(plex):  # alternate methods to get directory... not needed as long as this script doesn't get moved
-        if sys.platform == 'win32':
-            # settings = plex.settings.all()
-            appdata = plex.settings.LocalAppDataPath
-            logging.debug('appdata: %s' % (appdata))
-            pluginsDir = os.path.join(appdata, 'Plex Media Server', 'Plug-ins')
-
-        else:
-            logDir = str(uuid.uuid4())
-
-            logs = plex.downloadLogs(savepath=logDir,
-                                     unpack=True)  # https://discord.com/channels/183396325142822912/283629564087762945/795820408766988308
-            logging.debug('logs: %s' % (logs))
-
-            os.rename(os.path.join(logDir, 'Plex Media Server.log'), os.path.join(logDir, 'Plex Media Server.0.log'))
-
-            x = 0
-            y = 0
-            for root, dir, files in os.walk(logDir):  # https://stackoverflow.com/a/35703223
-                for f in files:
-
-                    i = os.path.join(logDir, f)
-
-                    if f.startswith('Plex Media Server.'):
-                        if x < 6 and y < 2:
-                            logging.debug('f: %s' % (f))
-
-                            inputFile = open(i, 'rb')
-                            data = inputFile.readlines()
-                            inputFile.close()
-
-                            # for line in data: #https://thispointer.com/5-different-ways-to-read-a-file-line-by-line-in-python/
-                            for line in data:  # https://thispointer.com/5-different-ways-to-read-a-file-line-by-line-in-python/
-                                if 'Scanning for plug-ins in' in line.decode('UTF-8'):
-                                    pluginsDir = os.path.abspath(line.decode('UTF-8').split('"')[-2])
-                                    y += 1
-                            x += 1
-                    os.remove(i)
-            os.rmdir(logDir)
-
-        logging.debug('pluginDir: %s' % (pluginsDir))
-        return (pluginsDir)
 
 
 def getSettings(directory, agent):
@@ -737,11 +662,6 @@ def list_videos(directory):
                 if file.endswith(extension):
                     list.append(os.path.join(directory, file))
     return list
-
-
-def lockServer():
-    if sys.platform == 'win32':
-        os.system('rundll32.exe user32.dll,LockWorkStation')
 
 
 def make_dir(directory):
@@ -1294,16 +1214,6 @@ def splitall(path):  # https://www.oreilly.com/library/view/python-cookbook/0596
             path = parts[0]
             allparts.insert(0, parts[1])
     return allparts
-
-
-def quote_remover(string):
-    if string.startswith('"') and string.endswith('"'):
-        string = string[1:-1]
-    elif string.startswith("'") and string.endswith("'"):
-        string = string[1:-1]
-    else:
-        string = string
-    return string
 
 
 def xbox_main(console_liveid=None, launch_client=None):
