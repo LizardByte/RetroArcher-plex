@@ -82,8 +82,7 @@ jobs:
       - name: Setup Artifact Path
         shell: pwsh
         run: |
-          cd ..
-          Get-ChildItem RetroArcher.bundle/* | Rename-Item -NewName { $_.Name -replace 'RetroArcher.bundle','RetroArcher.bundle/RetroArcher.bundle' }
+          Get-ChildItem * | Rename-Item -NewName { "RetroArcher.bundle/" + $_.Name }
 
       - name: Upload Artifacts
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
