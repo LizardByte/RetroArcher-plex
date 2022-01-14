@@ -15,9 +15,6 @@ venv/
 # Ignore backup files
 *.bak
 
-#Ignore developer scripts
-Contents/Code/developer
-
 # Ignore Certain Start Videos
 !Contents/Resources/StartVideos/Games/
 Contents/Resources/StartVideos/Games/*
@@ -27,12 +24,21 @@ Contents/Resources/StartVideos/Platforms/*
 !Contents/Resources/StartVideos/Platforms/.keep
 Contents/Resources/StartVideos/Platforms.bak/
 
-#Ignore these for now until we include vidoes that we have permission to distribute
+# Ignore these for now until we include vidoes that we have permission to distribute
 !Contents/Resources/StartVideos/Main/
 Contents/Resources/StartVideos/Main/*
 !Contents/Resources/StartVideos/Main/*.keep
 
-#Keep any start video named RetroArcher.mp4
+# Keep any start video named RetroArcher.mp4
 !Contents/Resources/StartVideos/*/RetroArcher.mp4
 
+# Keep empty directories
 !*.keep
+
+# Remove python modules
+Contents/Libraries/Modules/
+Contents/Libraries/Shared/
+
+# Keep plexapi and requirements.txt
+!Contents/Libraries/Shared/plexapi/*
+!*requirements.txt
