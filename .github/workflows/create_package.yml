@@ -95,7 +95,9 @@ jobs:
           if-no-files-found: error  # 'warn' or 'ignore' are also available, defaults to `warn`
           path: |
             ${{ github.workspace }}
-            !*.git*
+            !**.git*
+            !**.pyc
+            !**__pycache__
 
       - name: Package Release
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
