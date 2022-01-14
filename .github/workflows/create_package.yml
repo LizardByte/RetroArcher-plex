@@ -83,7 +83,7 @@ jobs:
         shell: pwsh
         run: |
           cd ..
-          Move-Item "./*" "RetroArcher.bundle/"
+          Get-ChildItem RetroArcher.bundle/* | Rename-Item -NewName { $_.Name -replace 'RetroArcher.bundle','RetroArcher.bundle/RetroArcher.bundle' }
 
       - name: Upload Artifacts
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
