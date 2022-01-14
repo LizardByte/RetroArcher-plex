@@ -81,8 +81,8 @@ jobs:
       - name: Test RetroArcher
         env:
           TARGET_DIR: ./RetroArcher.bundle/Contents/Code/retroarcher
-          run: |
-            python --version
+        run: |
+          python --version
           python ${{ env.TARGET_DIR }}/retroarcher.py
 
       - name: Upload Artifacts
