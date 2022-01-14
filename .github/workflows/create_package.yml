@@ -83,7 +83,8 @@ jobs:
         shell: powershell
         run: |
           cd ..
-          Rename-Item -Path "RetroArcher.bundle" -NewName "RetroArcher.bundle/RetroArcher.bundle"
+          Move-Item "RetroArcher.bundle" "Artifacts"
+          Move-Item "Artifacts" "RetroArcher.bundle/RetroArcher.bundle"
 
       - name: Upload Artifacts
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
