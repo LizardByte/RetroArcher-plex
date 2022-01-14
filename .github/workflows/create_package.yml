@@ -59,8 +59,9 @@ jobs:
 
       - name: Test Plex Agent
         env:
-          TARGET_DIR: ./RetroArcher.bundle/Contents/Code
+          TARGET_DIR: ./Contents/Code
         run: |
+          cd RetroArcher.bundle
           python --version
           python ${{ env.TARGET_DIR }}/__init__.py
 
@@ -80,8 +81,9 @@ jobs:
 
       - name: Test RetroArcher
         env:
-          TARGET_DIR: ./RetroArcher.bundle/Contents/Code/retroarcher
+          TARGET_DIR: ./Contents/Code/retroarcher
         run: |
+          cd RetroArcher.bundle
           python --version
           python ${{ env.TARGET_DIR }}/retroarcher.py
 
