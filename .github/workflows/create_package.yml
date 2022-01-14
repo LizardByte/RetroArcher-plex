@@ -40,6 +40,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          path: RetroArcher.bundle
 
       - name: Install Python 2.7
         uses: actions/setup-python@v2  # https://github.com/actions/setup-python
@@ -48,7 +50,7 @@ jobs:
 
       - name: Set up Python 2.7 Dependencies
         env:
-          TARGET_DIR: ./Contents/Libraries/Shared
+          TARGET_DIR: ./RetroArcher.bundle/Contents/Libraries/Shared
         run: |
           echo "Installing Plex Agent Requirements"
           python --version
@@ -56,9 +58,11 @@ jobs:
           pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}/requirements.txt  --no-warn-script-location --ignore-requires-python
 
       - name: Test Plex Agent
+        env:
+          TARGET_DIR: ./RetroArcher.bundle/Contents/Code
         run: |
           python --version
-          python ./Contents/Code/__init__.py
+          python ${{ env.TARGET_DIR }}/__init__.py
 
       - name: Install Python 3.9
         uses: actions/setup-python@v2  # https://github.com/actions/setup-python
@@ -67,7 +71,7 @@ jobs:
 
       - name: Set up Python 3.9 Dependencies
         env:
-          TARGET_DIR: ./Contents/Libraries/Modules
+          TARGET_DIR: ./RetroArcher.bundle/Contents/Libraries/Modules
         run: |
           echo "Installing RetroArcher Requirements"
           python --version
@@ -75,19 +79,11 @@ jobs:
           pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}/requirements.txt --no-warn-script-location
 
       - name: Test RetroArcher
-        run: |
-          python --version
-          python ./Contents/Code/retroarcher/retroarcher.py
-
-      - name: Setup Artifact Path
-        shell: pwsh
-        run: |
-          $source = '${{ github.workspace }}'
-          $dest = '${{ github.workspace }}/RetroArcher.bundle'
-          Get-ChildItem $source -Recurse -Exclude .git*, *.pyc, __pycache__ | ForEach-Object {
-              $newPath = $_.FullName -replace [regex]::Escape($source),$dest
-              Move-Item $_ -Destination $newPath -Force
-          }
+        env:
+          TARGET_DIR: ./RetroArcher.bundle/Contents/Code/retroarcher
+          run: |
+            python --version
+          python ${{ env.TARGET_DIR }}/retroarcher.py
 
       - name: Upload Artifacts
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
