@@ -94,7 +94,7 @@ jobs:
           name: RetroArcher.bundle-${{ runner.os }}
           if-no-files-found: error  # 'warn' or 'ignore' are also available, defaults to `warn`
           path: |
-            /RetroArcher.bundle/
+            ${{ github.workspace }}
             !*.git*
 
       - name: Package Release
