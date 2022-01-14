@@ -13,7 +13,6 @@ import time
 import uuid
 import webbrowser
 
-from multiprocessing.pool import ThreadPool as Pool
 from datetime import datetime
 
 
@@ -911,7 +910,6 @@ def scanner(paths, SourceRomDir, dataFolders):
         database['romMapping']['platforms'] = {}
 
     for root, directories, files in os.walk(SourceRomDir):  # https://stackoverflow.com/a/35703223
-        ffmpegPool = Pool(Prefs['int_FfmpegThreads'])
         for d in directories:
             if root == SourceRomDir:
                 for key, value in archer_dict.dPlatformMapping.items():  # https://stackoverflow.com/a/51446563
@@ -1230,7 +1228,7 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                         # print(dst)
 
                                                         make_link(src, dst, system, romName)  # enable for testing
-                                                        # ffmpegPool.apply_async(make_link, (src, dst, system, romName,)) #disable for testing
+
                                                     elif skipRom == True:
                                                         logging.info('Skipping MultiDisk game image: %s' % (f))
                                                     elif makeLink == False:
@@ -1274,9 +1272,6 @@ def scanner(paths, SourceRomDir, dataFolders):
                             else:
                                 logging.error('Skipping system for unknown reason: %s' % (system))
                         x += 1
-
-        ffmpegPool.close()
-        ffmpegPool.join()
 
     # print(database)
 
