@@ -1,9 +1,45 @@
+# -*- coding: utf-8 -*-
 import datetime
-import requests
-from igdb.wrapper import IGDBWrapper
 import json
 
+# imports from Libraries\Shared
+import requests
+from igdb.wrapper import IGDBWrapper
+
+# plex debugging
+from plexagents.builtins import *
+
+# local imports
 import common
+
+
+class Extras:
+    type_order = ['trailer', 'teaser', 'gameplay', 'interview']
+
+    type_map = {
+        'trailer': TrailerObject,
+        'teaser': TrailerObject,
+        'gameplay': OtherObject,
+        'interview': InterviewObject
+    }
+
+    '''
+    #known object types
+    #https://github.com/contrary-cat/LocalTVExtras.bundle/blob/284985343edf2b64e475602210804410fba4fadc/Contents/Code/__init__.py
+    #https://github.com/piplongrun/TrailerAddict.bundle/blob/master/Contents/Code/__init__.py
+    BehindTheScenesObject
+    DeletedSceneObject
+    FeaturetteObject
+    InterviewObject
+    OtherObject
+    SceneOrSampleObject
+    ShortObject
+    TrailerObject
+
+    #possible object types
+    ExtraObject
+    '''
+
 
 def igdb_wrapper():
     url = Prefs['url_IgdbCreds']
@@ -13,6 +49,7 @@ def igdb_wrapper():
     wrapper = IGDBWrapper(authorization['client_id'], authorization['access_token'])
 
     return wrapper
+
 
 def get_youtube(id, api_key):
     base_url = 'https://www.googleapis.com/youtube/v3/videos?id='
@@ -26,13 +63,16 @@ def get_youtube(id, api_key):
     result = load_json(url, headers)
     return result
 
+
 def load_json(url, headers):
     result = requests.get(url=url, headers=headers).json()
     return result
 
+
 def post_json(url, headers):
     result = requests.post(url=url, data=headers).json()
     return result
+
 
 def year(timestamp):
     timestamp = datetime.datetime.fromtimestamp(timestamp)
@@ -154,30 +194,6 @@ igdb_enums = {
     }
 }
 
-type_order = ['trailer', 'teaser', 'gameplay', 'interview']
-type_map = {
-    'trailer': TrailerObject,
-    'teaser': TrailerObject,
-    'gameplay': OtherObject,
-    'interview': InterviewObject
-}
-
-'''
-#known object types
-#https://github.com/contrary-cat/LocalTVExtras.bundle/blob/284985343edf2b64e475602210804410fba4fadc/Contents/Code/__init__.py
-#https://github.com/piplongrun/TrailerAddict.bundle/blob/master/Contents/Code/__init__.py
-BehindTheScenesObject
-DeletedSceneObject
-FeaturetteObject
-InterviewObject
-OtherObject
-SceneOrSampleObject
-ShortObject
-TrailerObject
-
-#possible object types
-ExtraObject
-'''
 
 def Search(self, results, media, lang, manual, movie, game_name, game_version, game_platform, site_index):
     gamePlatform = game_platform
@@ -417,6 +433,7 @@ def Search(self, results, media, lang, manual, movie, game_name, game_version, g
     Log.Info(results)
     
     results.Sort('score', descending=True)
+
 
 def Update(self, metadata, media, lang, force, movie, game):
     Log.Info(game)
@@ -808,9 +825,9 @@ def Update(self, metadata, media, lang, force, movie, game):
                 
                 extra_type = ''
                 
-                for extraType in type_order:
+                for extraType in Extras.type_order:
                     if extraType in igdb_name.lower() or extraType in video_title.lower():
-                        extra_type = type_map[extraType]
+                        extra_type = Extras.type_map[extraType]
                         Log.Info(extraType)
                         break
 
@@ -893,4 +910,3 @@ def Update(self, metadata, media, lang, force, movie, game):
     #clear these
     metadata.directors.clear()
     metadata.producers.clear()
-

@@ -1,20 +1,29 @@
 # -*- coding: utf-8 -*-
-
-### Imports ###
 import os
-import requests
-import urllib
+import sys
 
-# Archer Modules #
+# imports from Libraries\Shared
+try:
+    import requests
+    import urllib
+except ImportError:
+    sys.path.append(os.path.join('Contents', 'Libraries', 'Shared'))
+    import requests
+    import urllib
+
+# plex debugging
+from plexagents.builtins import *
+
+# local imports
 import archer_dict
 import common
 
 
 def ValidatePrefs():
     """Returns message as response when save request is made"""
-    
+
     error_message = ''
-    
+
     try:
         for key in archer_dict.dDefaultSettings:
             Prefs[key]
@@ -23,7 +32,7 @@ def ValidatePrefs():
     except:
         Log.Error("Setting '%s' missing from 'DefaultPrefs.json'" % key)
         error_message += "Setting '%s' missing from 'DefaultPrefs.json'<br/>" % key
-    
+
     for key in archer_dict.dDefaultSettings:
         if key.startswith('int_'):
             try:
@@ -64,7 +73,7 @@ def ValidatePrefs():
             else:
                 Log.Error("Setting '%s' url is blank; Value '%s'" % (key, Prefs[key]))
                 error_message += "Setting '%s' url is blank; Value '%s'<br/>" % (key, Prefs[key])
-                
+
     if error_message != '':
         return MessageContainer ('Error', error_message)
     else:
@@ -91,40 +100,40 @@ class RetroArcherCommonAgent:
         if orig_title.startswith("clear-cache"):   HTTP.ClearCache()  ### Clear Plex http cache manually by searching a serie named "clear-cache" ###
         Log.Info("search() - Title: '%s', name: '%s', filename: '%s', manual:'%s'" % (orig_title, media.name, media.filename, str(manual)))  #if media.filename is not None: filename = String.Unquote(media.filename) #auto match only
         Log.Info("search() - Orig_Title: '%s', Name: '%s', Year: '%s', Filename: '%s', Manual:'%s'" % (orig_title, media.name, media.year, media.filename, str(manual)))  #if media.filename is not None: filename = String.Unquote(media.filename) #auto match only
-        
+
         fullpath = media.items[0].parts[0].file
         Log.Info(fullpath)
-        
+
         game_name_full = os.path.basename(fullpath) #the file name
         Log.Info(game_name_full)
-        
+
         game_version = game_name_full.rsplit('.', 1)[0].split('(', 1)[-1].strip()
         if game_version != game_name_full.rsplit('.', 1)[0]:
             game_version = '(' + game_version
         else:
             game_version = ''
         Log.Info(game_version)
-        
+
         game_platform = common.platformPath(fullpath)
         Log.Info(game_platform)
-        
+
         if media.filename is not None: #do this when first initiating a fix match or automatch
             #fullpath = urllib.unquote(media.filename) #the full path of the video file... this only works on auto search
-            
+
             game_name = game_name_full.rsplit('.', 1)[0].split('(', 1)[0].strip()
-        
+
         else: #do this when perfoming a manual search
             game_name = media.name
-        
+
         Log.Info(game_name)
-        
+
         Log.Info("__init__.Search() - Fullpath: '%s' Filename: '%s', Title: '%s', Version: '%s', Platform: '%s'" % (fullpath, game_name_full, game_name, game_version, game_platform))
-        
+
         common.Search(self, results, media, lang, manual, movie, game_name, game_version, game_platform)
-            
+
         #sort the results by score
         results.Sort('score', descending=True)
-            
+
     ### Update the Metadata ##################################################################################################################################
     def Update(self, metadata, media, lang, force, movie):
         Log.Debug('--- Update Begin -------------------------------------------------------------------------------------------')
@@ -150,30 +159,30 @@ class RetroArcherCommonAgent:
                 y +=1
             x +=1
         '''
-        
+
         rating_key = media.id # rating key whoop whoop!!!
         Log.Info(rating_key)
-        
+
         fullpath = media.items[0].parts[0].file
         Log.Info(fullpath)
         Log.Info(type(fullpath))
-        
+
         game_name_full = os.path.basename(fullpath) #the file name
         Log.Info(game_name_full)
-        
+
         game_name = game_name_full.rsplit('.',1)[0] #the file name
         Log.Info(game_name)
-        
+
         game_version = game_name_full.rsplit('.', 1)[0].split('(', 1)[-1].strip()
         if game_version != game_name_full.rsplit('.', 1)[0]:
             game_version = '(' + game_version
         else:
             game_version = ''
         Log.Info(game_version)
-        
+
         game_platform = common.platformPath(fullpath)
         Log.Info(game_platform)
-        
+
         #parameters
         full_id = common.GetListOfSubstrings( metadata.id, '{', '}' )
         #game_name = full_id[0]
@@ -183,19 +192,19 @@ class RetroArcherCommonAgent:
         site_short = site_id.split('-', 1)[0]
         site_index = archer_dict.dSiteShortNames2[site_short]
         id = site_id.split('-', 1)[1]
-        
+
         #can't do this or all versions with same igdb id get combined
         #site_short = metadata.id.split('-', 1)[0]
         #site_index = archer_dict.dSiteShortNames2[site_short]
         #id = metadata.id.split('-', 1)[1]
-        
+
         Log.Info("init.Update() - site_index: '%s', site_short: '%s', id: '%s'" % (site_index, site_short, id))
         Log.Info("init.Update() - game_platform: '%s'" % (game_platform))
-        
+
         game = [site_index, id, game_name, game_version, game_platform]
 
         common.Update(self, metadata, media, lang, force, movie, game)
-        
+
         if Prefs['enum_ThemesSource'] != 'none':
             common.Themes(self, metadata, media, lang, force, movie, game)
 

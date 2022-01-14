@@ -1,6 +1,7 @@
-#imports
+# plex debugging
+from plexagents.builtins import *
 
-#agent modules
+# local imports
 import archer_dict
 import sIGDB
 import sThemeSongs
