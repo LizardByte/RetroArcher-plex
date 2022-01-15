@@ -8,6 +8,7 @@
 - (Releases) Added Linux release (Development Only)
 - (Releases) Added Mac release (Development Only)
 ### Changed
+- (Info) Improved info/attribution in agent settings
 - (Scanner) Fixed issue with scanning introduced in v1.1.2 - Fixes [#116](https://github.com/RetroArcher/RetroArcher.bundle/issues/116)
 ### Removed
 - (Repository) Removed dependencies, now installed during the build process
