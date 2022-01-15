@@ -1,6 +1,6 @@
 # Changelog
 
-## [v1.2.0 - 2022-01-14]
+## [1.2.0 - 2022-01-14]
 ### Added
 - (Clients) Added Xbox One/One X + Series S/X as clients (Experimental) - Closes [#2](https://github.com/RetroArcher/RetroArcher.bundle/issues/2)
 - (Repository) Added PR checks
@@ -12,7 +12,7 @@
 ### Removed
 - (Repository) Removed dependencies, now installed during the build process
 
-## [v1.1.2] - 2022-01-02
+## [1.1.2] - 2022-01-02
 ### Added
 - (Metadata) Rating images in metadata xml file (not shown in clients)
 ### Changed
@@ -23,21 +23,21 @@
 ### Removed 
 - (Metadata) YouTube URL Service (broken)
 
-## [v1.1.1] - 2021-06-14
+## [1.1.1] - 2021-06-14
 ### Added
 - (Clients) Setting to control number of threads during ADB port scan
 ### Changed
 - (Clients) Improve ADB port scanning
 - (Emulators) Improve Cemu account.dat file creation
 
-## [v1.1.0] - 2021-06-13
+## [1.1.0] - 2021-06-13
 ### Added
 - (Emulators) Nintendo Wii U platform
 - (Emulators) Cemu emulator support
 ### Changed
 - (Misc.) General code cleanup
 
-## [v1.0.2] - 2021-06-08
+## [1.0.2] - 2021-06-08
 ### Added
 - (Misc.) Feature Upvote system (Closes #40)
 ### Changed
@@ -48,10 +48,10 @@
 - (Logging) Improve `retroarcher.py` logging
 - (Misc.) Updated issue template
 
-## [v1.0.1] - 2021-06-05
+## [1.0.1] - 2021-06-05
 ### Changed
 - (Settings) Enum settings would not use values specified in agent settings
 
-## [v1.0.0] - 2021-06-04
+## [1.0.0] - 2021-06-04
 ### Added
 - (Misc.) Initial release
