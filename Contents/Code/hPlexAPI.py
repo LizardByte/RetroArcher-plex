@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
+# plex debugging
+import sys
+if 'plexscripthost' not in sys.executable.lower():
+    from plexagents.builtins import *
+
 import requests
 from plexapi.server import PlexServer
 
-# plex debugging
-from plexagents.builtins import *
 
 def setup_plexapi():
     PLEX_URL = Prefs['url_PlexServer']

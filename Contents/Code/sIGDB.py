@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
+# plex debugging
+import sys
+if 'plexscripthost' not in sys.executable.lower():
+    from plexagents.builtins import *
+
 import datetime
 import json
 
 # imports from Libraries\Shared
 import requests
 from igdb.wrapper import IGDBWrapper
-
-# plex debugging
-from plexagents.builtins import *
 
 # local imports
 import common

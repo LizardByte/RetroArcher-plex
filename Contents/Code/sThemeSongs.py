@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+# plex debugging
+import sys
+if 'plexscripthost' not in sys.executable.lower():
+    from plexagents.builtins import *
+
 import os
 import json
-
-# plex debugging
-from plexagents.builtins import *
 
 # local imports
 import hPlexAPI

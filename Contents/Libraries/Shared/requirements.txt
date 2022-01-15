@@ -1,4 +1,4 @@
-git+https://github.com/PyArcher/plexagents.git#egg=plexagents
+git+https://github.com/ReenigneArcher/plexagents.git#egg=plexagents
 #igdb-api-v4==0.0.5  # version 0.0.4 had f-strings, version 0.0.5 has incompatible type hints
 git+https://github.com/twitchtv/igdb-api-python.git@e03c2f08f66d6935087a89afa8be026586cf5631#egg=igdb-api-v4  # minimum commit to use
 nop==0.1.1

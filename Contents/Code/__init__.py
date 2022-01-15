@@ -4,15 +4,18 @@ import sys
 
 # imports from Libraries\Shared
 try:
+    # these imports will succeed when running in plex
     import requests
     import urllib
 except ImportError:
+    # when running outside of plex we must append the path
     sys.path.append(os.path.join('Contents', 'Libraries', 'Shared'))
     import requests
     import urllib
 
 # plex debugging
-from plexagents.builtins import *
+if 'plexscripthost' not in sys.executable.lower():
+    from plexagents.builtins import *
 
 # local imports
 import archer_dict
