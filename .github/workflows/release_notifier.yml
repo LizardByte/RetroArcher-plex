@@ -2,7 +2,7 @@ name: Release Notifications
 
 on:
   release:
-    types: [created]  # `published` or `released` does not work with ncipollo/release-action
+    types: [published]
     # https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#onevent_nametypes
 
 jobs:
