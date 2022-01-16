@@ -111,6 +111,6 @@ jobs:
           name: ${{ needs.check_changelog.outputs.next_version }}
           tag: ${{ needs.check_changelog.outputs.next_version }}
           artifacts: "*.zip"
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT }}
           allowUpdates: true
           body: ${{ needs.check_changelog.outputs.release_body }}
