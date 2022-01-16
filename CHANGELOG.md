@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.2.0 - 2022-01-14]
+## [1.2.0] - 2022-01-15
 ### Added
 - (Clients) Added Xbox One/One X + Series S/X as clients (Experimental) - Closes [#2](https://github.com/RetroArcher/RetroArcher.bundle/issues/2)
 - (Repository) Added PR checks
