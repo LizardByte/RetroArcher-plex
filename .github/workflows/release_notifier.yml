@@ -13,6 +13,8 @@ jobs:
         uses: sarisia/actions-status-discord@v1  # https://github.com/sarisia/actions-status-discord
         with:
           webhook: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
+          nodetail: true
+          nofail: false
           username: ${{ secrets.DISCORD_USERNAME }}
           avatar_url: ${{ secrets.ORG_LOGO_URL }}
           title: ${{ github.event.repository.name }} ${{ github.ref }} Released
@@ -20,7 +22,7 @@ jobs:
           color: 0xFF4500
 
   facebook_group:
-    runs-on: ubunut-latest
+    runs-on: ubuntu-latest
     steps:
       - name: facebook-post-action
         uses: ReenigneArcher/facebook-post-action@v1  # https://github.com/ReenigneArcher/facebook-post-action
@@ -34,7 +36,7 @@ jobs:
           url: ${{ github.event.release.html_url }}
 
   facebook_page:
-    runs-on: ubunut-latest
+    runs-on: ubuntu-latest
     steps:
       - name: facebook-post-action
         uses: ReenigneArcher/facebook-post-action@v1  # https://github.com/ReenigneArcher/facebook-post-action
