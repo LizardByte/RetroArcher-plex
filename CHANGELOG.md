@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.2.1] - 2022-01-18
+### Added
+- (Launcher) - Stream process now killed when emulator is closed
+### Changed
+- (General) - Refactor and clean up `retroarcher.py`
+- (Launcher) - Emulator now runs in python subprocess
+- (Scanner) - Fixed issue that may cause scanner error when ffmpeg settings changed
+- (Scanner) - ffmpeg now runs in subprocess
+### Breaking
+- (Tautulli) - Notification arguments must be updated
+
 ## [1.2.0] - 2022-01-15
 ### Added
 - (Clients) Added Xbox One/One X + Series S/X as clients (Experimental) - Closes [#2](https://github.com/RetroArcher/RetroArcher.bundle/issues/2)

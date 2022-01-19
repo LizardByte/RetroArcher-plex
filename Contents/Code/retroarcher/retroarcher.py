@@ -30,11 +30,11 @@ async def auth_callback(request):
     )
 
 
-def config_to_dict(configFile):
+def config_to_dict(config_file):
     def splitter(line):
         return line.split('=', 1)
 
-    with open(configFile, 'r') as f:
+    with open(config_file, 'r') as f:
         text = f.read().rstrip('\n')
         header, *data_lines = text.split('\n')
 
@@ -43,37 +43,24 @@ def config_to_dict(configFile):
     return header, data
 
 
-def config_rewrite(configFile, header, data):
-    with open(configFile, 'w') as f:
+def config_rewrite(config_file, header, data):
+    with open(config_file, 'w') as f:
         data_lines = list(map('='.join, data.items()))
         text = '\n'.join([header] + data_lines)
         f.write(text)
 
 
-def convertXMLtoJSON(filepath):
+def convert_xml_to_json(filepath):
     try:
-        inputFile = open(filepath, 'rb')
-        j = xmltodict.parse(inputFile)
+        input_file = open(filepath, 'rb')
+        j = xmltodict.parse(input_file)
     except FileNotFoundError:
         j = {}
 
     return j
 
 
-def get_ip():  # https://stackoverflow.com/a/28950776/11214013
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    try:
-        # doesn't even have to be reachable
-        s.connect(('10.255.255.255', 1))
-        IP = s.getsockname()[0]
-    except Exception:
-        IP = '127.0.0.1'
-    finally:
-        s.close()
-    return IP
-
-
-def getJson_fromXML(url):
+def get_json_from_xml(url):
     headers = {
         'Accept': 'application/xml'
     }
@@ -85,9 +72,9 @@ def getJson_fromXML(url):
     return result
 
 
-def getPaths():
+def get_paths():
     # build_directories
-    paths = {}
+    path_dict = {}
     script = os.path.realpath(__file__)  # get current script directory
 
     paths_to_get = {
@@ -100,327 +87,310 @@ def getPaths():
         6: 'plexDir',
         7: 'appDir'
     }
-    for key in paths_to_get:
-        if key == 0:
-            paths['script'] = script
+    for path_to_get in paths_to_get:
+        if path_to_get == 0:
+            path_dict['script'] = script
         else:
-            path = os.path.dirname(paths[paths_to_get[key - 1]])
-            paths[paths_to_get[key]] = path
+            path = os.path.dirname(path_dict[paths_to_get[path_to_get - 1]])
+            path_dict[paths_to_get[path_to_get]] = path
 
-    paths['agentModulesDir'] = os.path.join(paths['contentsDir'], 'Libraries', 'Shared')
-    paths['retroarcherModulesDir'] = os.path.join(paths['contentsDir'], 'Libraries', 'Modules')
-    paths['retroarcherStartVideosDir'] = os.path.join(paths['contentsDir'], 'Resources', 'StartVideos')
-    paths['retroarcherFontDir'] = os.path.join(paths['contentsDir'], 'Resources', 'Fonts')
-    paths['retroarcherFFMPEGDir'] = os.path.join(paths['contentsDir'], 'Resources', 'ffmpeg')
+    path_dict['agentModulesDir'] = os.path.join(path_dict['contentsDir'], 'Libraries', 'Shared')
+    path_dict['retroarcherModulesDir'] = os.path.join(path_dict['contentsDir'], 'Libraries', 'Modules')
+    path_dict['retroarcherStartVideosDir'] = os.path.join(path_dict['contentsDir'], 'Resources', 'StartVideos')
+    path_dict['retroarcherFontDir'] = os.path.join(path_dict['contentsDir'], 'Resources', 'Fonts')
+    path_dict['retroarcherFFMPEGDir'] = os.path.join(path_dict['contentsDir'], 'Resources', 'ffmpeg')
 
-    logging.debug('Paths: %s' % (paths))
-    return paths
-
-
-def getSettings(directory, agent):
-    settingsFile = os.path.join(directory, 'Plug-in Support', 'Preferences', agent + str('.xml'))
-    return settingsFile
+    logging.debug(f'Paths: {path_dict}')
+    return path_dict
 
 
-def getDataFolders(directory, agent):
-    dataFolders = {}
-    dataFolders['dataFolder'] = os.path.join(directory, 'Plug-in Support', 'Data', agent)
-    dataFolders['mediaFolder'] = os.path.join(directory, 'Plug-in Support', 'Data', agent, 'media')
-    dataFolders['dbFolder'] = os.path.join(directory, 'Plug-in Support', 'Data', agent, 'database')
-    return dataFolders
+def get_settings(directory, plugin):
+    settings_file_name = os.path.join(directory, 'Plug-in Support', 'Preferences', f'{plugin}.xml')
+    return settings_file_name
 
 
-def launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId,
-             clientUserName, movieName, dataFolders):
-    if Prefs['str_MoonlightPcUuid'] == '' or Prefs['str_MoonlightPcUuid'] == None:
-        serverInfo = getJson_fromXML(Prefs['url_GameStreamServerAddress'])
-        logging.debug('serverInfo: %s' % (json.dumps(serverInfo, indent=4)))
-        moonlightPcUuid = serverInfo['root']['uniqueid']
+def get_data_folders(directory, plugin):
+    folders = {
+        'dataFolder': os.path.join(directory, 'Plug-in Support', 'Data', plugin),
+        'mediaFolder': os.path.join(directory, 'Plug-in Support', 'Data', plugin, 'media'),
+        'dbFolder': os.path.join(directory, 'Plug-in Support', 'Data', plugin, 'database')
+    }
+    return folders
+
+
+def launcher():
+    # kill any lingering emulator processes
+    emulator_processes = ['cemu', 'cemu.exe', 'retroarch', 'retroarch.exe', 'rpcs3', 'rpcs3.exe']
+
+    for proc in psutil.process_iter():
+        if proc.name().lower() in emulator_processes:
+            proc.kill()
+
+    # get server/moonlight info
+    if not Prefs['str_MoonlightPcUuid']:
+        server_info = get_json_from_xml(Prefs['url_GameStreamServerAddress'])
+        logging.debug('server_info: %s' % (json.dumps(server_info, indent=4)))
+        moonlight_pc_uuid = server_info['root']['uniqueid']
     else:
-        moonlightPcUuid = Prefs['str_MoonlightPcUuid']
-    logging.info('moonlightPcUuid: %s' % (moonlightPcUuid))
+        moonlight_pc_uuid = Prefs['str_MoonlightPcUuid']
+    logging.info(f'moonlight_pc_uuid: {moonlight_pc_uuid}')
 
-    moonlightAppName = Prefs['str_MoonlightAppName']
+    moonlight_app_name = Prefs['str_MoonlightAppName']
 
-    if Prefs['str_MoonlightAppId'] == '' or Prefs['str_MoonlightAppId'] == None:
+    moonlight_app_id = Prefs['str_MoonlightAppId']
+
+    if not Prefs['str_MoonlightAppId']:
         logging.info('GameStreamHost: %s' % (Prefs['enum_GameStreamHost']))
         if Prefs['enum_GameStreamHost'] == 'GeForce Experience':
             nvstreamsvc_path = os.path.join(os.path.expandvars('$programdata'), 'NVIDIA Corporation', 'nvstreamsvc')
 
-            nvsstreamsvrLogs = ['nvstreamsvcCurrent.log', 'nvstreamsvcOld.log']
+            nvsstreamsvr_logs = ['nvstreamsvcCurrent.log', 'nvstreamsvcOld.log']
 
-            appIdFound = False
-            for log in nvsstreamsvrLogs:
-                if appIdFound == False:
-                    NVlogFile = os.path.join(nvstreamsvc_path, log)
-                    if os.path.isfile(NVlogFile):
-                        with open(NVlogFile, 'r') as f:
-                            logContents = f.read()
+            app_id_found = False
+            for log in nvsstreamsvr_logs:
+                if not app_id_found:
+                    nv_log_file = os.path.join(nvstreamsvc_path, log)
+                    if os.path.isfile(nv_log_file):
+                        with open(nv_log_file, 'r') as f:
+                            log_contents = f.read()
                         # find titles
-                        titleSplit = logContents.split('Title=')
-                        titleCounter = 0
+                        title_split = log_contents.split('Title=')
+                        title_counter = 0
 
-                        while titleCounter < len(titleSplit):
-                            if titleSplit[titleCounter].splitlines()[0].lower() == moonlightAppName.lower():
-                                moonlightAppId = titleSplit[titleCounter].split('AppId=', 1)[-1].splitlines()[0]
-                                appIdFound = True
+                        while title_counter < len(title_split):
+                            if title_split[title_counter].splitlines()[0].lower() == moonlight_app_name.lower():
+                                moonlight_app_id = title_split[title_counter].split('AppId=', 1)[-1].splitlines()[0]
+                                app_id_found = True
                                 break
-                            titleCounter += 1
+                            title_counter += 1
 
         else:
-            moonlightAppId = '1'
+            moonlight_app_id = '1'
 
-    else:
-        moonlightAppId = Prefs['str_MoonlightAppId']
-    logging.info('moonlightAppId: %s' % (moonlightAppId))
+    logging.info(f'moonlight_app_id: {moonlight_app_id}')
 
-    # convert movieName to romName
-    game_name_full = os.path.basename(movieName)  # the file name
-    system = platformPath(movieName)
+    # convert movie_name to rom_name
+    game_name_full = os.path.basename(movie_name)  # the file name
+    system = platform_path(movie_name)
 
     # key = os.path.join(system, game_name_full)
-    videoKey = game_name_full
-    logging.info('videoKey: %s' % (videoKey))
+    video_key = game_name_full
+    logging.info(f'video_key: {video_key}')
 
-    jsonDir = dataFolders['dbFolder']
-    jsonFile = os.path.join(jsonDir, 'database.json')
-    with open(jsonFile) as f:
+    json_dir = data_folders['dbFolder']
+    json_file = os.path.join(json_dir, 'database.json')
+    with open(json_file) as f:
         database = json.load(f)
 
-    secretsFile = os.path.join(jsonDir, 'secrets.json')
+    secrets_file = os.path.join(json_dir, 'secrets.json')
     try:
-        with open(secretsFile) as f:
+        with open(secrets_file) as f:
             secrets = json.load(f)
     except FileNotFoundError:
         pass
 
-    romFolder = database['romMapping']['platforms'][system]['videos'][videoKey]['romFolder']
-    romFile = database['romMapping']['platforms'][system]['videos'][videoKey]['romFile']
+    rom_folder = database['romMapping']['platforms'][system]['videos'][video_key]['romFolder']
+    rom_file = database['romMapping']['platforms'][system]['videos'][video_key]['romFile']
 
-    romName = os.path.join(romFolder, romFile)
+    rom_name = os.path.join(rom_folder, rom_file)
 
-    logging.info('romName: %s' % (romName))
+    logging.info(f'rom_name: {rom_name}')
 
-    systemKey = system.lower().replace(' ', '_')
+    system_key = system.lower().replace(' ', '_')
 
-    emulator = archer_dict.dPlatformMapping[system]['emulators'][Prefs['emulator_' + systemKey]]
-    logging.debug('emulator: %s' % (emulator))
+    emulator = archer_dict.dPlatformMapping[system]['emulators'][Prefs[f'emulator_{system_key}']]
+    logging.debug(f'emulator: {emulator}')
 
-    applicationDirectory = Prefs['dir_app_' + emulator]
-    binaryCommand = Prefs['str_binary_' + emulator]
+    application_directory = Prefs[f'dir_app_{emulator}']
+    binary_command = Prefs[f'str_binary_{emulator}']
 
     if emulator == 'retroarch':
-        core = archer_dict.dPlatformMapping[system]['emulators'][emulator]['cores'][Prefs['core_' + systemKey]]
-        logging.info('core: %s' % (core))
-        emulatorCore = os.path.join('cores', core)
-        logging.info('emulatorCore: %s' % (emulatorCore))
+        core = archer_dict.dPlatformMapping[system]['emulators'][emulator]['cores'][Prefs[f'core_{system_key}']]
+        logging.info(f'core: {core}')
+        emulator_core = os.path.join('cores', core)
+        logging.info(f'emulator_core: {emulator_core}')
     else:
-        emulatorCore = ''
+        emulator_core = ''
 
-    fullRomPath = os.path.join(SourceRomDir, romName)
-    logging.info('fullRomPath: %s' % (fullRomPath))
+    full_rom_path = os.path.join(source_rom_dir, rom_name)
+    logging.info(f'full_rom_path: {full_rom_path}')
 
-    logging.info('clientPlatform: %s' % (clientPlatform))
+    user_id_rpcs3 = client_user_id
+    user_id_cemu = client_user_id
+    user_id_temp = client_user_id
+    user_id_length = len(client_user_id)
+    try:
+        int(user_id_temp)
+        while user_id_length != 8:
+            if user_id_length < 8:
+                user_id_temp = f'0{user_id_temp}'
+            else:
+                user_id_temp = user_id_temp[1:]
+            user_id_rpcs3 = user_id_temp
+            user_id_cemu = str(int(user_id_temp) + 80000000)
+            user_id_length = len(user_id_temp)
+    except TypeError:
+        logging.error(f'User ID is not an integer: {client_user_id}')
 
-    launch = False
-    if clientPlatform.lower() == 'android':
-        launch = launchADB(clientIP, moonlightPcUuid, moonlightAppId)
-    elif clientProduct.lower() == 'plex for windows' and clientPlatform.lower() == 'windows':
-        launch = launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secrets)
-    elif clientProduct.lower() == 'plex web' and clientDevice.lower() == 'windows':
-        launch = launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secrets)
-    elif clientPlatform.lower() == 'xbox':
-        launch = launchXbox(clientIP)
-    elif clientPlatform.lower() == 'ios':  # disable for now
-        launch = False
-    else:
-        launch = False
-
-    if launch == True:
-        UserId_rpcs3 = clientUserId
-        UserId_cemu = UserId_rpcs3
-        UserId_length = len(UserId_rpcs3)
-        try:
-            int(clientUserId)
-            while UserId_length != 8:
-                if UserId_length < 8:
-                    UserId_rpcs3 = '0%s' % (UserId_rpcs3)
-                else:
-                    UserId_rpcs3 = UserId_rpcs3[1:]
-                UserId_cemu = str(int(UserId_rpcs3) + 80000000)
-                UserId_length = len(UserId_rpcs3)
-        except:
-            logging.error('User ID is not an integer: %s' % (clientUserId))
-
-        dSystemPlatformMapping = {
-            'win64': {
-                'emulators': {
-                    'cemu': {
-                        'dir': applicationDirectory,
-                        'command': 'start "RetroArcher" "%s" --fullscreen --game "%s" --account %s' % (
-                            binaryCommand, fullRomPath, UserId_cemu)
-                    },
-                    'retroarch': {
-                        'dir': applicationDirectory,
-                        'command': 'start "RetroArcher" "%s" -L "%s" "%s"' % (binaryCommand, emulatorCore, fullRomPath)
-                    },
-                    'rpcs3': {
-                        'dir': applicationDirectory,
-                        'command': 'start "RetroArcher" "%s" --no-gui "%s" --user-id %s' % (
-                            binaryCommand, fullRomPath, UserId_rpcs3)
-                    }
+    system_platform_mapping = {
+        'win32': {
+            'emulators': {
+                'cemu': {
+                    'dir': application_directory,
+                    'command': [binary_command, '--fullscreen', '--game', full_rom_path, '--account', user_id_cemu]
                 },
-                'stream_host': {
-                    'GeForce Experience': {
-                        'process': 'nvstreamer.exe',
-                    },
-                    'OpenStream': {
-                        'process': 'openstream.exe'
-                    },
-                    'Sunshine': {
-                        'process': 'sunshine.exe'
-                    }
+                'retroarch': {
+                    'dir': application_directory,
+                    'command': [binary_command, '-L', emulator_core, full_rom_path]
                 },
-                'kill_command': 'taskkill /F /IM'
+                'rpcs3': {
+                    'dir': application_directory,
+                    'command': [binary_command, '--no-gui', full_rom_path, '--user-id', user_id_rpcs3]
+                }
             },
-            'win32': {
-                'emulators': {
-                    'cemu': {
-                        'dir': applicationDirectory,
-                        'command': 'start "RetroArcher" "%s" --fullscreen --game "%s" --account %s' % (
-                            binaryCommand, fullRomPath, UserId_cemu)
-                    },
-                    'retroarch': {
-                        'dir': applicationDirectory,
-                        'command': 'start "RetroArcher" "%s" -L "%s" "%s"' % (binaryCommand, emulatorCore, fullRomPath)
-                    },
-                    'rpcs3': {
-                        'dir': applicationDirectory,
-                        'command': 'start "RetroArcher" "%s" --no-gui "%s" --user-id %s' % (
-                            binaryCommand, fullRomPath, UserId_rpcs3)
-                    }
+            'stream_host': {
+                'GeForce Experience': {
+                    'process': 'nvstreamer.exe',
                 },
-                'stream_host': {
-                    'GeForce Experience': {
-                        'process': 'nvstreamer.exe',
-                    },
-                    'Open-Stream': {
-                        'process': 'openstream.exe'
-                    },
-                    'Sunshine': {
-                        'process': 'sunshine.exe'
-                    }
+                'OpenStream': {
+                    'process': 'openstream.exe'
                 },
-                'kill_command': 'taskkill /f /im'
+                'Sunshine': {
+                    'process': 'sunshine.exe'
+                }
             }
-            # 'linux' : 'tbd',
-            # 'macOS' : 'tbd'
         }
+        # 'linux' : 'tbd',
+        # 'macOS' : 'tbd'
+    }
 
-        if sys.platform == 'win32':  # if windows determine if 32 bit or 64 bit
-            import struct
-            architecture = struct.calcsize("P") * 8  # https://stackoverflow.com/a/1406849
-            if architecture == 64:
-                platform = 'win64'
-            elif architecture == 32:
-                platform = 'win32'
-        logging.info('architecture: %s' % (architecture))
-        logging.info('platform: %s' % (platform))
+    platform = sys.platform
+    logging.info(f'platform: {platform}')
 
-        emulatorPath = dSystemPlatformMapping[platform]['emulators'][emulator]['dir']
-        logging.info('emulatorPath: %s' % (emulatorPath))
-        os.chdir(emulatorPath)
+    try:
+        system_platform_mapping[platform]
+    except KeyError:
+        logging.critical(f'system os not support: {platform}')
+        sys.exit(1)
 
-        # verify/create user profile folder and file for cemu
-        if emulator == 'cemu':
-            userProfilePath_cemu = os.path.join(emulatorPath, 'mlc01', 'usr', 'save', 'system', 'act', UserId_cemu)
-            userProfileFile_cemu = os.path.join(userProfilePath_cemu, 'account.dat')
+    emulator_path = os.path.join(system_platform_mapping[platform]['emulators'][emulator]['dir'])
+    logging.info(f'emulator_path: {emulator_path}')
 
-            userProfilePathExists_cemu = os.path.isdir(userProfilePath_cemu)
-            userProfileFileExists_cemu = os.path.isfile(userProfileFile_cemu)
+    # verify/create user profile folder and file for cemu
+    if emulator == 'cemu':
+        user_profile_path_cemu = os.path.join(emulator_path, 'mlc01', 'usr', 'save', 'system', 'act', user_id_cemu)
+        user_profile_file_cemu = os.path.join(user_profile_path_cemu, 'account.dat')
 
-            if userProfilePathExists_cemu == False or userProfileFileExists_cemu == False:  # we need to create the user profile
-                default_cemu_account_file = os.path.join(emulatorPath, 'mlc01', 'usr', 'save', 'system', 'act',
-                                                         '80000001', 'account.dat')
-                if os.path.isfile(default_cemu_account_file) == True:
-                    make_dir(userProfilePath_cemu)
-                    copy_file(default_cemu_account_file, userProfileFile_cemu)
-                else:
-                    logging.critial('Failed to copy default cemu user profile. Exiting.')
-                    sys.exit()
+        user_profile_path_exists_cemu = os.path.isdir(user_profile_path_cemu)
+        user_profile_file_exists_cemu = os.path.isfile(user_profile_file_cemu)
 
-            # rewrite the account file everytime (so user never needs to delete the file when we make changes/improvements
-            userProfileFileExists_cemu = os.path.isfile(userProfileFile_cemu)
-            if userProfileFileExists_cemu == True:
-                # need to parse and replace some stuff in the file
-                header, data = config_to_dict(userProfileFile_cemu)
+        # create the user profile if it doesn't exist
+        if not user_profile_path_exists_cemu or not user_profile_file_exists_cemu:
+            default_cemu_account_file = os.path.join(emulator_path, 'mlc01', 'usr', 'save', 'system', 'act',
+                                                     '80000001', 'account.dat')
+            if os.path.isfile(default_cemu_account_file):
+                make_dir(user_profile_path_cemu)
+                copy_file(default_cemu_account_file, user_profile_file_cemu)
+            else:
+                logging.critical('Failed to copy default cemu user profile. Exiting.')
+                sys.exit()
 
-                data['PersistentId'] = UserId_cemu
-                if data[
-                    'Uuid'] == 'e9df01108a453a2c90e94adc35c9528a':  # this is the default Uuid value... if equal to this, then change it, otherwise leave it alone
-                    data['Uuid'] = str(uuid.uuid1()).replace('-', '')
-                data['TransferableIdBase'] = '2000004%s' % (data['Uuid'][-8:])
+        # rewrite the account file everytime
+        user_profile_file_exists_cemu = os.path.isfile(user_profile_file_cemu)
+        if user_profile_file_exists_cemu:
+            # parse and replace some stuff in the file
+            header, data = config_to_dict(user_profile_file_cemu)
 
-                mii_name_max_length = 10
-                x = 0
-                data['MiiName'] = ''
-                data['MiiData'] = '010001100000cc6f030034330100010001000100010001000100'
-                while x < mii_name_max_length:
-                    try:
-                        data['MiiName'] += '00'
-                        data['MiiName'] += clientUserName[x].encode('utf-8').hex()
+            data['PersistentId'] = user_id_cemu
 
-                        data['MiiData'] += '00'
-                        data['MiiData'] += clientUserName[x].encode('utf-8').hex()
-                    except IndexError:
-                        data['MiiName'] += '0000'
-                        data['MiiData'] += '0100'
-                    x += 1
-                data['MiiName'] += '0000'
-                data['MiiData'] += '0100%s' % (
-                    '010001000100010001000106010001000100010001000100010001000100010001000100010001000100010001000100')
+            # check if Uuid is the same as the default Uuid value
+            # if equal to this, then change it, otherwise leave it alone
+            if data['Uuid'] == 'e9df01108a453a2c90e94adc35c9528a':
+                data['Uuid'] = str(uuid.uuid1()).replace('-', '')
+            data['TransferableIdBase'] = '2000004%s' % (data['Uuid'][-8:])
 
-                config_rewrite(userProfileFile_cemu, header, data)
+            mii_name_max_length = 10
+            mii_loop_counter = 0
+            data['MiiName'] = ''
+            data['MiiData'] = '010001100000cc6f030034330100010001000100010001000100'
+            while mii_loop_counter < mii_name_max_length:
+                try:
+                    data['MiiName'] += '00'
+                    data['MiiName'] += client_user_name[mii_loop_counter].encode('utf-8').hex()
 
-        command = dSystemPlatformMapping[platform]['emulators'][emulator]['command']
-        logging.debug('command: %s' % (command))
-        os.system(command)
+                    data['MiiData'] += '00'
+                    data['MiiData'] += client_user_name[mii_loop_counter].encode('utf-8').hex()
+                except IndexError:
+                    data['MiiName'] += '0000'
+                    data['MiiData'] += '0100'
+                mii_loop_counter += 1
+            data['MiiName'] += '0000'
+            data['MiiData'] += '0100%s' % (
+                '010001000100010001000106010001000100010001000100010001000100010001000100010001000100010001000100')
+
+            config_rewrite(config_file=user_profile_file_cemu, header=header, data=data)
+
+    # probably should replace client_platform with client_device
+    if client_platform.lower() == 'android' or client_device.lower() == 'android':
+        launch_status = launch_adb(moonlight_pc_uuid, moonlight_app_id)
+    elif client_platform.lower() == 'windows' or client_device.lower() == 'windows':
+        launch_status = launch_windows(moonlight_pc_uuid, moonlight_app_name, secrets)
+    elif client_platform.lower() == 'xbox':
+        launch_status = launch_xbox()
+    elif client_platform.lower() == 'atv':  # apple tv
+        launch_status = launch_ios()
+    else:
+        launch_status = False
+
+    if launch_status:
+        command = system_platform_mapping[platform]['emulators'][emulator]['command']
+        logging.debug(f'command: {command}')
+
+        # start the emulator
+        try:
+            emu_proc = subprocess.Popen(args=command, cwd=emulator_path, shell=True)
+        except subprocess.CalledProcessError as cpe:
+            # error handling
+            logging.info(f'subprocess error: {cpe}')
+            sys.exit(1)
 
         # kill the stream once the emulator is killed
-        '''
-        #this is trying to kill streamer process before it's even started... we need to run after retroarch.exe exits
-        process = dSystemPlatformMapping[platform]['stream_host'][gamestreamhost]['process']
-        print(process)
-        command = '%s %s' % (dSystemPlatformMapping[platform]['kill_command'], process)
-        print(command)
-        print(os.system(command))
-        '''
+        stream_process = system_platform_mapping[platform]['stream_host'][Prefs['enum_GameStreamHost']]['process']
 
-        '''
-        import psutil
-        for proc in psutil.process_iter():
-            if proc.name == process:
-                p = psutil.Process(proc.pid)
-                proc.kill()
-        '''
+        while emu_proc.poll() is None:
+            pass
+        if emu_proc.poll() is not None:
+            logging.debug('emulator subprocess is complete')
+            for proc in psutil.process_iter():
+                if proc.name().lower() == stream_process.lower():
+                    logging.debug('stream_process match found, attempting to end stream process')
+                    proc.kill()
+                    break
+
+        return
 
 
-def launchADB(clientIP, moonlightPcUuid, moonlightAppId):
+def launch_adb(moonlight_pc_uuid, moonlight_app_id):
     # https://stackoverflow.com/a/37327094/11214013
 
-    global scannerIP
-    scannerIP = clientIP
+    adb_ranges = [
+        [5555, 5585],  # Android version < 11
+        [30000, 50000]  # https://www.reddit.com/r/tasker/comments/jbzeg5/adb_wifi_and_android_11_wireless_debugging/
+    ]
 
-    adbRanges = [[5555, 5585], [30000,
-                                50000]]  # https://www.reddit.com/r/tasker/comments/jbzeg5/adb_wifi_and_android_11_wireless_debugging/
-    for adbRange in adbRanges:
-        adbThreadedScan(adbRange)
-        logging.info('adbPortsFound: %s' % (adbPortsFound))
-        adbAddress = adbConnect(clientIP, adbPortsFound)
-        logging.info('adbAddress: %s' % (adbAddress))
-        if adbAddress != None:
-            device = adb.device(serial=adbAddress)
+    device = None
+    for adb_range in adb_ranges:
+        adb_threaded_scan(adb_range)
+        logging.info(f'adb_ports_found: {adb_ports_found}')
+        adb_address = adb_connect(adb_ports_found)
+        logging.info(f'adb_address: {adb_address}')
+        if adb_address:
+            device = adb.device(serial=adb_address)
             break
+
+    if not device:
+        logging.error('no adb device found, exiting')
+        sys.exit(1)
 
     # possible apps that can be useful
     packages = {
@@ -429,69 +399,57 @@ def launchADB(clientIP, moonlightPcUuid, moonlightAppId):
         }
     }
 
-    for key in packages:
-        if device.shell('pm list packages | grep ' + packages[key]['package']) != '':
-            packages[key]['installed'] = True
-            logging.info('%s is installed on client device: %s' % (key, packages[key]['package']))
+    for package in packages:
+        if device.shell('pm list packages | grep ' + packages[package]['package']):
+            packages[package]['installed'] = True
+            logging.info(f'{package} is installed on client device: {packages[package]["package"]}')
         else:
-            packages[key]['installed'] = False
-            logging.info('%s is NOT installed on client device: %s' % (key, packages[key]['package']))
-            # try:
-            #    if packages[key][1] != '':
-            #        installAPK(packages[key]['download'])
-            # except:
-            #    pass
-            # maybe we want to auto install some apks?
+            packages[package]['installed'] = False
+            logging.info(f'{package} is NOT installed on client device: {packages[package]["package"]}')
 
     # add -W for more silent starting https://developer.android.com/studio/command-line/adb
     # why did -W stop working after a server reboot?
-    if packages[Prefs['enum_GameStreamApp']]['installed'] == True:
+    if packages[Prefs['enum_GameStreamApp']]['installed']:
+        # open moonlight on client device streaming from server desktop
         device.shell(
-            'am start -W -n com.limelight/com.limelight.ShortcutTrampoline --es "UUID" "' + moonlightPcUuid + '" --es "AppId" "' + str(
-                moonlightAppId) + '"')  # open moonlight on client device streaming to server desktop
+            f'am start -W -n com.limelight/com.limelight.ShortcutTrampoline --es "UUID" "{moonlight_pc_uuid}" --es "AppId" "{moonlight_app_id}"')
         return True
     else:
         return False
 
 
-def adbConnect(clientIP, adbPortsFound):
-    for adbPort in adbPortsFound:
-        adbAddress = clientIP + ':' + str(adbPort)
-        adbConnectOutput = adb.connect(adbAddress)
-        logging.debug('adbConnectOutput: %s' % (adbConnectOutput))
-        message = adbConnectOutput.split(clientIP + ':' + str(adbPort), 1)[0].strip()
-        if message == 'cannot connect to':
-            logging.debug('adb connection unsuccessful, trying next port if available')
-        elif message == 'failed to connect to':
-            logging.debug(
-                'adb connection failed, device is probably not paired... Android 11+ ???, trying next available port anyway')
-        elif message == 'connected to' or message == 'already connected to':
-            logging.info('adb connected on port: %s' % (adbPort))
-            return adbAddress
-        else:
-            logging.debug('unknown connection status, trying next available port')
+def adb_connect(ports):
+    for adb_port in ports:
+        adb_address = f'{client_ip}:{adb_port}'
+        adb_connect_output = adb.connect(adb_address)
+        logging.debug(f'adb_connect_output: {adb_connect_output}')
+        message = adb_connect_output.split(f'{client_ip}:{adb_port}', 1)[0].strip().lower()
+        if message == 'connected to' or message == 'already connected to':
+            logging.info(f'adb connected on port: {adb_port}')
+            return adb_address
+    return False
 
 
-def adbThreadedScan(adbRange):
+def adb_threaded_scan(port_range):
     from threading import Thread
     from queue import Queue
 
     # number of threads, feel free to tune this parameter as you wish
-    rangeThreads = adbRange[-1] - adbRange[0]
-    logging.info('rangeThreads: %s' % (rangeThreads))
-    prefThreads = Prefs['int_PortScanThreads']
-    logging.info('prefThreads: %s' % (prefThreads))
-    if rangeThreads < prefThreads:
-        N_THREADS = rangeThreads
+    range_threads = port_range[-1] - port_range[0]
+    logging.info(f'range_threads: {range_threads}')
+    pref_threads = Prefs['int_PortScanThreads']
+    logging.info(f'pref_threads: {pref_threads}')
+    if range_threads < pref_threads:
+        n_threads = range_threads
     else:
-        N_THREADS = prefThreads
+        n_threads = pref_threads
     # thread queue
     global q
     q = Queue()
 
-    global adbPortsFound
-    adbPortsFound = []
-    for t in range(N_THREADS):
+    global adb_ports_found
+    adb_ports_found = []
+    for t in range(n_threads):
         try:
             # for each thread, start it
             t = Thread(target=port_scan_thread)
@@ -503,34 +461,31 @@ def adbThreadedScan(adbRange):
             logging.error(e)
             break
 
-    for port in range(adbRange[0], adbRange[-1]):
+    for port in range(port_range[0], port_range[-1]):
         if (port % 2) != 0:  # if port is an odd number
             # for each port, put that port into the queue
             # to start scanning
             q.put(port)
 
-            # if port_scan(clientIP, port):
-            #    print('port is open: ' + str(port))
-            #    adbPortsFound.append(port)
     q.join()  # wait for all ports to finish being scanned
 
 
-def port_scan(host, port):  # determine whether `host` has the `port` open
+def port_scan(port):  # determine whether `host` has the `port` open
+    # creates a new socket
+    s = socket.socket()
+
     try:
-        # creates a new socket
-        s = socket.socket()
         # tries to connect to host using that port
-        s.connect((host, port))
+        s.connect((client_ip, port))
         # make timeout if you want it a little faster ( less accuracy )
-        # s.settimeout(0.2)
-    except:
+        s.settimeout(0.2)
+    except ConnectionRefusedError:
         # cannot connect, port is closed
-        # return false
         pass
     else:
         # the connection was established, port is open!
         # return True
-        adbPortsFound.append(port)
+        adb_ports_found.append(port)
     finally:
         s.close()
 
@@ -540,22 +495,30 @@ def port_scan_thread():
         # get the port number from the queue
         port = q.get()
         # scan that port number
-        port_scan(scannerIP, port)
+        port_scan(port=port)
         # tells the queue that the scanning for that port 
         # is done
         q.task_done()
 
 
-def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secrets):
-    u = secrets[clientUser]['win']['u']
-    p = secrets[clientUser]['win']['p']
+def launch_ios():
+    # listing and launching of installed apps seems to be possible with this library https://github.com/postlund/pyatv
+    # no device available to setup and test with so returning False for now
+    # PRs are welcome or send me a test device :D
+    return False
+
+
+def launch_windows(moonlight_pc_uuid, moonlight_app_name, secrets):
+    u = secrets[client_user]['win']['u']
+    p = secrets[client_user]['win']['p']
 
     command_list = [
-        ['schtasks', '/create', '/TN', '\RetroArcher launcher', '/s', clientIP, '/sc', 'onlogon', '/tr',
-         f'C:\Program Files\Moonlight Game Streaming\Moonlight.exe stream {moonlightPcUuid} {moonlightAppName}', '/f',
+        ['schtasks', '/create', '/TN', r'\RetroArcher launcher', '/s', client_ip, '/sc', 'onlogon', '/tr',
+         rf'C:\Program Files\Moonlight Game Streaming\Moonlight.exe stream {moonlight_pc_uuid} {moonlight_app_name}',
+         '/f',
          '/u', u, '/p', p],
-        ['schtasks', '/run', '/TN', '\RetroArcher launcher', '/s', clientIP, '/u', u, '/p', p],
-        ['schtasks', '/delete', '/TN', '\RetroArcher launcher', '/s', clientIP, '/u', u, '/p', p, '/f']
+        ['schtasks', '/run', '/TN', r'\RetroArcher launcher', '/s', client_ip, '/u', u, '/p', p],
+        ['schtasks', '/delete', '/TN', r'\RetroArcher launcher', '/s', client_ip, '/u', u, '/p', p, '/f']
     ]
 
     for command_args in command_list:
@@ -563,59 +526,17 @@ def launchWindows(clientIP, moonlightPcUuid, moonlightAppName, clientUser, secre
             proc = subprocess.run(command_args, check=True)
         except subprocess.CalledProcessError as cpe:
             # error handling
-            logging.info('subprocess error: %s' % (cpe))
+            logging.info(f'subprocess error: {cpe}')
             sys.exit(1)
 
     return True
 
 
-def launchXbox(clientIP):
-    # # first start xbox-rest-server
-    # base_url = f"http://localhost:{Prefs['enum_XboxAuthRedirectPort']}"
-    #
-    # headers = {
-    #     'accept': 'application/json'
-    # }
-    # url = f"{base_url}/device/?addr={clientIP}"
-    #
-    # proc = subprocess.Popen([sys.executable,
-    #                          os.path.join(os.path.dirname(os.path.realpath(__file__)), 'xbox_rest_server.py'),
-    #                          '--port', str(Prefs['enum_XboxAuthRedirectPort']),
-    #                          ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    #
-    # # make sure the xbox-rest-server is responding
-    # counter = 0
-    #
-    # while counter < 30:
-    #     try:
-    #         test_resp = requests.get(url=base_url, headers=headers)
-    #         if test_resp.status_code == 200:
-    #             break
-    #     except:
-    #         pass
-    #     time.sleep(1)
-    #     counter += 1
-    #
-    # try:
-    #     resp = requests.get(url=url, headers=headers)
-    # except requests.exceptions.ConnectionError:
-    #     logging.debug(proc.communicate())
-    #     logging.debug(proc.stdout)
-    #     logging.debug(proc.stderr)
-    #     return False
-    #
-    # # kill the xbox-rest-server
-    # proc.kill()
-    #
-    # if resp.status_code != 200:
-    #     return False
-    #
-    # console_info = resp.json()[0]
-
-    console_info = XboxDiscovery().discover(addr=clientIP, server_port=int(Prefs['int_XboxAuthRedirectPort']))[0]
+def launch_xbox():
+    console_info = XboxDiscovery().discover(addr=client_ip, server_port=int(Prefs['int_XboxAuthRedirectPort']))[0]
 
     try:
-        if console_info['address'] == clientIP:
+        if console_info['address'] == client_ip:
             logging.info(f'Found matching Xbox: {console_info["name"]}')
             console_liveid = console_info['liveid']
         else:
@@ -628,40 +549,40 @@ def launchXbox(clientIP):
     return launch_status
 
 
-def list_hash(fileList):
-    logging.debug('fileList: %s' % (fileList))
+def list_hash(file_list):
+    logging.debug(f'file_list: {file_list}')
 
-    bufferSize = Prefs['int_BufferSize']
+    buffer_size = Prefs['int_BufferSize']
 
     md5 = hashlib.md5()
     sha1 = hashlib.sha1()
 
-    md5List = []
-    sha1List = []
+    md5_list = []
+    sha1_list = []
 
-    for x in fileList:
+    for x in file_list:
         with open(x, 'rb') as f:
             while True:
-                data = f.read(bufferSize)
+                data = f.read(buffer_size)
                 if not data:
                     break
                 md5.update(data)
                 sha1.update(data)
-        md5List.append(md5.hexdigest())
-        sha1List.append(sha1.hexdigest())
+        md5_list.append(md5.hexdigest())
+        sha1_list.append(sha1.hexdigest())
 
-    return sorted(md5List), sorted(sha1List)
+    return sorted(md5_list), sorted(sha1_list)
 
 
 def list_videos(directory):
-    videoExtensions = ['.mp4', '.mkv']
-    list = []
+    video_extensions = ['.mp4', '.mkv']
+    video_list = []
     if os.path.exists(directory):
         for file in os.listdir(directory):
-            for extension in videoExtensions:
+            for extension in video_extensions:
                 if file.endswith(extension):
-                    list.append(os.path.join(directory, file))
-    return list
+                    video_list.append(os.path.join(directory, file))
+    return video_list
 
 
 def make_dir(directory):
@@ -678,32 +599,27 @@ def copy_file(src, dst):
         pass
 
 
-def make_link(src, dst, system, romName):
-    if sys.platform == 'win32':
-        ffmpegPath = 'ffmpeg\\ffmpeg'
-    else:
-        ffmpegPath = 'ffmpeg'
-    logging.debug('ffmpegPath: %s' % (ffmpegPath))
-
-    fontFolder = paths['retroarcherFontDir']
-    fontFile = os.path.join(fontFolder, 'OpenSans', 'OpenSans-Light.ttf').replace('\\', '\\\\')
+def make_video(src, dst, rom_name):
+    font_folder = paths['retroarcherFontDir']
+    font_file = os.path.join(font_folder, 'OpenSans', 'OpenSans-Light.ttf').replace('\\', '\\\\')
 
     illegal_characters = [',']
 
-    title = romName
-    time = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+    title = rom_name
+    current_time = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
 
-    if os.path.isfile(dst) == True:
+    if os.path.isfile(dst):
         os.remove(dst)  # remove destination if it exists already
-    for x in illegal_characters:
-        romName = romName.replace(x, '\%s' % (x))
+    for character in illegal_characters:
+        rom_name = rom_name.replace(character, f'\\{character}')
 
-    command = "%s -ss 0 -i \"%s\" -t %s -vf \"drawtext=text='%s': fontfile='fonts/%s': fontcolor=%s: fontsize=%s: box=%s: boxcolor=%s: boxborderw=%s: x=%s: y=%s\" -codec:v %s -codec:a copy -map_metadata -1 -metadata title=\"%s\" -metadata creation_time=%s -map_chapters -1 \"%s\"" % (
-        ffmpegPath, src, str(Prefs['int_FfmpegLength']), romName, fontFile, Prefs['str_FfmpegTextColor'],
-        str(Prefs['int_FfmpegTextSize']), border, Prefs['str_FfmpegTextBoxColor'], Prefs['str_FfmpegTextBoxBorder'],
-        Prefs['str_FfmpegTextX'], Prefs['str_FfmpegTextY'], Prefs['enum_FfmpegEncoder'], title, time, dst)
-    logging.debug('command: %s' % (command))
-    os.system(command)
+    command = f"ffmpeg -ss 0 -i \"{src}\" -t {ffmpeg_overlay['videoLength']} -vf \"drawtext=text='{rom_name}': fontfile='fonts/{font_file}': fontcolor={ffmpeg_overlay['fontColor']}: fontsize={ffmpeg_overlay['fontSize']}: box={ffmpeg_overlay['border']}: boxcolor={ffmpeg_overlay['borderColor']}: boxborderw={ffmpeg_overlay['borderSize']}: x={ffmpeg_overlay['fontX']}: y={ffmpeg_overlay['fontY']}\" -codec:v {Prefs['enum_FfmpegEncoder']} -codec:a copy -map_metadata -1 -metadata title=\"{title}\" -metadata creation_time={current_time} -map_chapters -1 \"{dst}\""
+    logging.debug(f'command: {command}')
+
+    if sys.platform == 'win32':
+        ffmpeg_proc = subprocess.run(command, cwd='ffmpeg')
+    else:
+        ffmpeg_proc = subprocess.run(command)
 
     # os.symlink(src[0], dst) #symlinks not picked up by Plex :( ... hence the workaround with ffmpeg
     '''
@@ -712,7 +628,7 @@ def make_link(src, dst, system, romName):
     except FileExistsError:
         print('FileExistsError')
         os.remove(dst)
-        make_link(src, dst)
+        make_video(src, dst)
     except OSError as e:
         print('OSError' + str(e))
         if str(e).startswith('[WinError 1142] An attempt was made to create more links on a file than the file system supports:'):
@@ -720,58 +636,60 @@ def make_link(src, dst, system, romName):
             os.remove(src)
             #fix src[1] if we end up making hardlinks again
             os.system('copy "' + src[1] +'" "' +src + '"') #we will not link to a new file (although with the same name) according to this https://unix.stackexchange.com/a/50188, explains why when we delete the original source the links still work
-            make_link(src, dst)
+            make_video(src, dst)
     '''
 
 
-def platformPath(fullpath):
-    dirLength = len(splitall(fullpath))
-    dirPath = os.path.dirname(fullpath)
-    dirName = os.path.basename(dirPath)
+def platform_path(full_path):
+    dir_length = len(split_all(full_path))
+    dir_path = os.path.dirname(full_path)
+    dir_name = os.path.basename(dir_path)
 
-    x = 0
-    while x < dirLength:
-        for key, value in archer_dict.dPlatformMapping.items():
+    game_platform = None
 
-            if dirName == key:
-                x = dirLength
-                game_platform = dirName
+    counter = 0
+    while counter < dir_length:
+        for platform_key, platform_value in archer_dict.dPlatformMapping.items():
+
+            if dir_name == platform_key:
+                counter = dir_length
+                game_platform = dir_name
                 break
-        dirPath = os.path.dirname(dirPath)
-        dirName = os.path.basename(dirPath)
-        x += 1
-    return game_platform
+        dir_path = os.path.dirname(dir_path)
+        dir_name = os.path.basename(dir_path)
+        counter += 1
+
+    if game_platform:
+        return game_platform
 
 
-def scanner(paths, SourceRomDir, dataFolders):
-    logging.info('paths: %s' % (paths))
-    logging.info('SourceRomDir: %s' % (SourceRomDir))
-    logging.info('dataFolders: %s' % (dataFolders))
+def scanner(path_dict):
+    logging.info(f'path_dict: {path_dict}')
+    logging.info(f'source_rom_dir: {source_rom_dir}')
+    logging.info(f'data_folders: {data_folders}')
 
-    videoExtensions = ['.mp4', '.mkv']
-    multi_disk_search = ['(cd', '(disk', '(disc', '(part', '(pt', '(prt']  # what else do we need in this list?
-    SourceRomDirLength = len(splitall(SourceRomDir))
+    video_extensions = ['.mp4', '.mkv']
+    multi_disk_search = ['(cd', '(disk', '(disc', '(part', '(pt', '(prt']  # used to determine if rom is part of group
+    source_rom_dir_length = len(split_all(source_rom_dir))
 
-    startVideoDirectory = os.path.join(paths['retroarcherStartVideosDir'])  # map to start video directory
-    mainVideoDirectory = os.path.join(startVideoDirectory, 'Main')  # map the main videos directory
+    start_video_directory = os.path.join(path_dict['retroarcherStartVideosDir'])  # map to start video directory
+    main_video_directory = os.path.join(start_video_directory, 'Main')  # map the main videos directory
 
     # compare these later
-    mainVideoList = list_videos(mainVideoDirectory)
-    logging.info('mainVideoList: %s' % (mainVideoList))
-    mainMD5List, mainSHA1List = list_hash(mainVideoList)
-    logging.info('mainMD5List: %s' % (mainMD5List))
-    logging.info('mainSHA1List: %s' % (mainSHA1List))
-
-    '''set these as global'''
-    global border
+    main_video_list = list_videos(main_video_directory)
+    logging.info(f'main_video_list: {main_video_list}')
+    main_md5_list, main_sha1_list = list_hash(main_video_list)
+    logging.info(f'main_md5_list: {main_md5_list}')
+    logging.info(f'main_sha1_list: {main_sha1_list}')
 
     if Prefs['bool_FfmpegTextBox'].lower() == 'true':
         border = str(1)
     else:
         border = str(0)
 
+    global ffmpeg_overlay
     # compare this to existing settings later
-    ffmpegOverlay = {
+    ffmpeg_overlay = {
         'videoLength': str(Prefs['int_FfmpegLength']),
         'fontSize': str(Prefs['int_FfmpegTextSize']),
         'fontColor': Prefs['str_FfmpegTextColor'],
@@ -784,80 +702,80 @@ def scanner(paths, SourceRomDir, dataFolders):
 
     '''get the existing json file'''
     # create data folders
-    jsonDir = dataFolders['dbFolder']
-    mediaDir = dataFolders['mediaFolder']
-    make_dir(jsonDir)
-    make_dir(mediaDir)
+    json_dir = data_folders['dbFolder']
+    media_dir = data_folders['mediaFolder']
+    make_dir(json_dir)
+    make_dir(media_dir)
 
-    # try to read the existing jsonFile
-    jsonFile = os.path.join(jsonDir, 'database.json')
+    # try to read the existing json_file
+    json_file = os.path.join(json_dir, 'database.json')
     try:
-        with open(jsonFile) as f:
+        with open(json_file) as f:
             database = json.load(f)
-        useExisting = True
+        use_existing = True
     except:
-        useExisting = False
+        use_existing = False
 
-    if useExisting == True:
+    ffmpeg_changed = 0
+    if use_existing:
         try:
-            if ffmpegOverlay == database['ffmpegOverlay']:
-                logging.info('ffmpegOverlay settings did not change')
+            if ffmpeg_overlay == database['ffmpegOverlay']:
+                logging.info('ffmpeg_overlay settings did not change')
                 ffmpeg_changed = 0  # no changes
             else:
-                database['ffmpegOverlay'] = ffmpegOverlay
-                logging.info('ffmpegOverlay settings changed, re-encoding everything')
+                database['ffmpegOverlay'] = ffmpeg_overlay
+                logging.info('ffmpeg_overlay settings changed, re-encoding everything')
                 ffmpeg_changed = 1  # settings changed, re-encode ALL
-        except KeyError as e:
-            logging.error('KeyError: %s' % (str(e)))
+        except KeyError as key_error:
+            use_existing = False
+            logging.error(f'KeyError: {key_error}')
             logging.error('database corruption detected... database will be re-created')
-            useExisting = False
-        if mainMD5List == database['mainVideoHash']:
+        if main_md5_list == database['mainVideoHash']:
             logging.info('main videos are the same as before')
-            mainVideos = 0  # don't use a new video
+            main_videos = 0  # don't use a new video
         else:
-            database['mainVideoHash'] = mainMD5List
+            database['mainVideoHash'] = main_md5_list
             logging.info('main videos have changed')
-            mainVideos = 1  # possibly use a new video
+            main_videos = 1  # possibly use a new video
 
-    if useExisting == False:  # do not make this an elif statement becuase we may set useExisting to be false in the above if statement!
-        print('use existing is false... something wrong with the json file?')
-        logging.info('cannot use existing database.json... maybe it does not exist yet... maybe it is corrupted...')
-        database = {'ffmpegOverlay': ffmpegOverlay}
-        ffmpeg_changed = 1  # settings changed, re-encode ALL, not really but database is messed up, need to re-make everything.
-        database['mainVideoHash'] = mainMD5List
-        mainVideos = 1  # possibly use a new video
+    if not use_existing:
+        logging.debug(f'use existing: {use_existing}')
+        database = {
+            'ffmpeg_overlay': ffmpeg_overlay
+        }
+        ffmpeg_changed = 1  # this forces re-encoding of everything
+        database['mainVideoHash'] = main_md5_list
+        main_videos = 1  # possibly use a new video
         database['romMapping'] = {}
         database['romMapping']['platforms'] = {}
 
-    for root, directories, files in os.walk(SourceRomDir):  # https://stackoverflow.com/a/35703223
+    for root, directories, files in os.walk(source_rom_dir):  # https://stackoverflow.com/a/35703223
         for d in directories:
-            if root == SourceRomDir:
-                for key, value in archer_dict.dPlatformMapping.items():  # https://stackoverflow.com/a/51446563
-                    # print(value)
-                    # print(value['systemNames'])
+            if root == source_rom_dir:
+                for platform_key, platform_value in archer_dict.dPlatformMapping.items():
+                    # https://stackoverflow.com/a/51446563
 
-                    x = 0
-                    while x < len(value['systemNames']):
+                    system_name_counter = 0
+                    while system_name_counter < len(platform_value['systemNames']):
 
-                        if d.lower() == value['systemNames'][x].lower():
-                            x = len(value['systemNames'])
-                            system = key
-                            logging.info('system: %s' % (system))
+                        if d.lower() == platform_value['systemNames'][system_name_counter].lower():
+                            system = platform_key
+                            logging.info(f'system: {system}')
 
                             try:
-                                getSystem = Prefs['scanner_' + system.replace(' ',
-                                                                              '_').lower()].lower()  # this is a string not bool... lowercase the system name, and the value
-                                logging.info('getSystem for %s: %s' % (system, getSystem))
+                                # this is a string not bool... lowercase the system name, and the value
+                                get_system = Prefs[f'scanner_{system.replace(" ", "_").lower()}'].lower()
+                                logging.info(f'get_system for {system}: {get_system}')
                             except KeyError:
-                                getSystem = ''  # In case user has folder that is not supported by RetroArcher yet
-                                logging.info('System (%s) is not supported yet.' % (system))
+                                get_system = ''  # In case user has folder that is not supported by RetroArcher yet
+                                logging.info(f'System ({system}) is not supported yet.')
 
-                            if getSystem == 'true':
-                                # probably pre-mature until we know if a rom was found, but this should be faster... from here to next for loop
-                                platformVideoDirectory = os.path.join(startVideoDirectory, 'Platforms', system)
+                            if get_system == 'true':
+                                # probably pre-mature until we know if a rom was found, but this should be faster
+                                platform_video_directory = os.path.join(start_video_directory, 'Platforms', system)
 
-                                platformVideoList = list_videos(platformVideoDirectory)
-                                platformMD5List, platformSHA1List = list_hash(platformVideoList)
+                                platform_video_list = list_videos(platform_video_directory)
+                                platform_md5_list, platform_sha1_list = list_hash(platform_video_list)
 
                                 try:
                                     database['romMapping']['platforms'][system]
@@ -867,256 +785,243 @@ def scanner(paths, SourceRomDir, dataFolders):
                                     database['romMapping']['platforms'][system]['platformVideoHash']
                                 except KeyError:
                                     database['romMapping']['platforms'][system]['platformVideoHash'] = {}
-                                if platformMD5List != database['romMapping']['platforms'][system]['platformVideoHash']:
-                                    database['romMapping']['platforms'][system]['platformVideoHash'] = platformMD5List
-                                    platformVideos = 1  # possibly use a new platform video
+                                if platform_md5_list != database['romMapping']['platforms'][system][
+                                    'platformVideoHash']:
+                                    database['romMapping']['platforms'][system]['platformVideoHash'] = platform_md5_list
+                                    platform_videos = 1  # possibly use a new platform video
                                 else:
-                                    platformVideos = 0  # don't use a new platform video
-                                # print(database)
+                                    platform_videos = 0  # don't use a new platform video
 
-                                # rom extensions allowed
-                                # print(value['romExtensions'])
-                                # print(value['multiDisk'])
+                                checks = [platform_value['romExtensions']]
+                                if platform_value['multiDisk']:
+                                    if 'm3u' not in checks:
+                                        checks.append(['m3u'])
 
-                                checks = [value['romExtensions']]
-                                if value['multiDisk'] == True:
-                                    checks.append(['m3u'])
-
-                                libraryType = value['libraryType']
-                                libPath = os.path.join(dataFolders['mediaFolder'], libraryType)
-                                make_dir(libPath)
-                                logging.info('libPath: %s' % (libPath))
-                                dstPath = os.path.join(dataFolders['mediaFolder'], libraryType, system)
-                                make_dir(dstPath)
-                                logging.info('dstPath: %s' % (dstPath))
+                                library_type = platform_value['libraryType']
+                                lib_path = os.path.join(data_folders['mediaFolder'], library_type)
+                                make_dir(lib_path)
+                                logging.info(f'lib_path: {lib_path}')
+                                dst_path = os.path.join(data_folders['mediaFolder'], library_type, system)
+                                make_dir(dst_path)
+                                logging.info(f'dst_path: {dst_path}')
 
                                 multi_disk_game_list = {}
                                 keys_to_delete = []
 
                                 for root1, directories1, files1 in os.walk(os.path.join(root, d)):
-                                    relativePath = os.path.join(*splitall(root1)[
-                                                                 SourceRomDirLength:])  # https://blog.finxter.com/python-join-list-as-path/#:~:text=path.join()%20method%20takes%20one%20or%20more%20path%20arguments,to%20unpack%20the%20list%20into%20the%20argument%20list.
+                                    relative_path = os.path.join(*split_all(root1)[source_rom_dir_length:])
+                                    # https://blog.finxter.com/python-join-list-as-path/
 
                                     iteration = 0
                                     for check in checks:
-                                        # if iteration == 1:
-                                        #    print('starting m3u files now')
-                                        #    time.sleep(2)
-                                        # else:
-                                        #    print('starting normal roms now')
-                                        #    time.sleep(2)
                                         for f in files1:
-                                            splitFile = f.rsplit('.', 1)
-                                            romExtension = splitFile[-1].lower()
-                                            # print(romExtension)
+                                            split_file = f.rsplit('.', 1)
+                                            rom_extension = split_file[-1].lower()
+
+                                            # standard method
+                                            rom_name = split_file[0]
 
                                             # custom system game naming conventions
-                                            if system.lower() == 'sony playstation 3':  # rpcs3... can't they just be normal and load an iso?
-                                                ps3Path = os.path.join('ps3_game', 'usrdir')
-                                                if ps3Path in root1.lower():
+                                            if system.lower() == 'sony playstation 3':
+                                                # rpcs3... loads a specific file from a specific sub directory
+
+                                                ps3_path = os.path.join('ps3_game', 'usrdir')
+                                                if ps3_path in root1.lower():
                                                     if f.lower() == 'eboot.bin':
-                                                        gameFolder = \
-                                                            os.path.split(os.path.join(*splitall(relativePath)[:-2]))[
+                                                        game_folder = \
+                                                            os.path.split(os.path.join(*split_all(relative_path)[:-2]))[
                                                                 -1]
-                                                        romName = gameFolder.rsplit(' ', 1)[
-                                                            0]  # title id separates game name... no brackets?
-                                                        # print(romName)
-                                                        # print(f.lower())
+
+                                                        rom_name = game_folder.rsplit(' ', 1)[0]
+                                                        # title id separates game name... no brackets?
+
                                                     else:
                                                         continue
                                                 else:
                                                     continue
-                                            elif system.lower() == 'nintendo wii u':  # cemu... need to get the folder name
+                                            elif system.lower() == 'nintendo wii u':
+                                                # cemu... need folder name
                                                 y = 0
                                                 while y < len(check):
-                                                    if romExtension == check[y].lower() and romExtension == 'rpx':
-                                                        gameFolder = \
-                                                            os.path.split(os.path.join(*splitall(relativePath)[:-1]))[
+                                                    if rom_extension == check[y].lower() and rom_extension == 'rpx':
+                                                        game_folder = \
+                                                            os.path.split(os.path.join(*split_all(relative_path)[:-1]))[
                                                                 -1]
-                                                        romName = gameFolder.rsplit(' [', 1)[0]
-                                                        # print(romName)
-                                                        # print(f.lower())
-                                                        print(gameFolder)
-                                                        print(romName)
-                                                    elif romExtension == check[y].lower() and romExtension == 'wud':
-                                                        gameFolder = \
-                                                            os.path.split(os.path.join(*splitall(relativePath)))[-1]
-                                                        romName = gameFolder.rsplit(' [', 1)[0]
-                                                        print(gameFolder)
-                                                        print(romName)
+                                                        rom_name = game_folder.rsplit(' [', 1)[0]
+
+                                                    elif rom_extension == check[y].lower() and rom_extension == 'wud':
+                                                        game_folder = \
+                                                            os.path.split(os.path.join(*split_all(relative_path)))[-1]
+                                                        rom_name = game_folder.rsplit(' [', 1)[0]
+
                                                     y += 1
-                                            else:
-                                                romName = splitFile[0]
 
                                             # figure out which video to use
                                             src = None
-                                            isGame = False
-                                            skipRom = False
+                                            is_game = False
+                                            skip_rom = False
 
                                             y = 0
                                             # while y < len(value['romExtensions']):
                                             while y < len(check):
-                                                if romExtension == check[y].lower():
-                                                    # print(system + ' true')
-                                                    # need to adjust multi disk m3u generation
-                                                    if any(mds in romName.lower() for mds in
-                                                           multi_disk_search):  # https://stackoverflow.com/a/3389611
+                                                if rom_extension == check[y].lower():
+                                                    make_link = False
+
+                                                    if any(mds in rom_name.lower() for mds in multi_disk_search):
+                                                        # https://stackoverflow.com/a/3389611
+
                                                         for mds in multi_disk_search:
-                                                            if mds in romName.lower():
-                                                                # print(mds)
+                                                            if mds in rom_name.lower():
+                                                                # this sets variable mds
                                                                 break
 
-                                                        if value['multiDisk'] == True:
-                                                            index0 = romName.lower().find(mds)
-                                                            # print(index0)
-                                                            temp = romName[index0:]
-                                                            # print(romName)
-                                                            # print(temp)
+                                                        if platform_value['multiDisk']:
+                                                            index0 = rom_name.lower().find(mds)
+                                                            temp = rom_name[index0:]
+
                                                             index1 = temp.lower().find(')')
-                                                            # print(index1)
-                                                            gameName = (romName[0:index0].rstrip() + ' ' + temp[
-                                                                                                           index1 + 1:].strip()).strip()  # probably adjust game name
-                                                            logging.info('gameName: %s' % (gameName))
+
+                                                            game_name = f'{rom_name[0:index0].rstrip()} {temp[index1 + 1:].strip()}'.strip()
+                                                            logging.info(f'game_name: {game_name}')
 
                                                             try:
-                                                                multi_disk_game_list[gameName]
-                                                                multi_disk_game_list[gameName][
-                                                                    len(multi_disk_game_list[gameName])] = f
-                                                                logging.info('MultiDisk game already in list: %s' % (f))
+                                                                multi_disk_game_list[game_name]
                                                             except KeyError:
                                                                 matched = 0
                                                                 for title in multi_disk_game_list:
-                                                                    logging.debug('MultiDisk game title: %s' % (title))
-                                                                    splitExisting = title.split('(')
-                                                                    splitGame = gameName.split('(')
+                                                                    logging.debug(f'MultiDisk game title: {title}')
+                                                                    split_existing = title.split('(')
+                                                                    split_game = game_name.split('(')
 
-                                                                    lengthExisting = len(splitExisting)
-                                                                    lengthGame = len(splitGame)
+                                                                    length_game = len(split_game)
 
-                                                                    tempExisting = title.rsplit('(', 1)[0].strip()
-                                                                    tempGame = gameName.rsplit('(', 1)[0].strip()
+                                                                    temp_existing = title.rsplit('(', 1)[0].strip()
+                                                                    temp_game = game_name.rsplit('(', 1)[0].strip()
 
-                                                                    if tempExisting == tempGame and lengthGame > 2:
-                                                                        # print('these are the same?')
+                                                                    if temp_existing == temp_game and length_game > 2:
+                                                                        # these are the same
                                                                         keys_to_delete.append(title)
-                                                                        # print(multi_disk_game_list[title])
-                                                                        # print(tempExisting)
-                                                                        # print(tempGame)
-                                                                        gameName = tempGame
-                                                                        multi_disk_game_list[gameName] = \
+
+                                                                        game_name = temp_game
+                                                                        multi_disk_game_list[game_name] = \
                                                                             multi_disk_game_list[title]
-                                                                        multi_disk_game_list[gameName][
-                                                                            len(multi_disk_game_list[gameName])] = f
+                                                                        multi_disk_game_list[game_name][
+                                                                            len(multi_disk_game_list[game_name])] = f
                                                                         matched = 1
                                                                         time.sleep(2)
                                                                         break
 
                                                                 if matched == 0:
-                                                                    multi_disk_game_list[gameName] = {0: f}
+                                                                    multi_disk_game_list[game_name] = {
+                                                                        0: f
+                                                                    }
                                                                     logging.info(
-                                                                        'MultiDisk game being added to the list: %s' % (
-                                                                            f))
+                                                                        f'MultiDisk game being added to the list: {f}')
+                                                            else:
+                                                                multi_disk_game_list[game_name][
+                                                                    len(multi_disk_game_list[game_name])] = f
+                                                                logging.info(f'MultiDisk game already in list: {f}')
 
-                                                            skipRom = True
+                                                            skip_rom = True
                                                         else:
-                                                            isGame = True
+                                                            is_game = True
                                                     else:
-                                                        isGame = True
+                                                        is_game = True
 
-                                                    if isGame == True and skipRom == False:
+                                                    if is_game and not skip_rom:
                                                         # try to find a game specific start video
-                                                        for extension in videoExtensions:
-                                                            tempFile = os.path.join(startVideoDirectory, 'Games',
-                                                                                    system, romName + extension)
-                                                            if os.path.isfile(tempFile):
-                                                                src = tempFile
-                                                                videoType = 'game'
+                                                        for extension in video_extensions:
+                                                            temp_file = os.path.join(start_video_directory, 'Games',
+                                                                                     system, f'{rom_name}{extension}')
+                                                            if os.path.isfile(temp_file):
+                                                                src = temp_file
+                                                                video_type = 'game'
 
-                                                                videoHash, junk = list_hash([src])
-                                                                # print(videoHash[0])
-                                                                # print(database['romMapping']['platforms'][system]['videos'][romName + extension]['videoHash'])
+                                                                video_hash, junk = list_hash([src])
                                                                 try:
-                                                                    if videoHash[0] == \
-                                                                            database['romMapping']['platforms'][system][
-                                                                                'videos'][romName + extension][
-                                                                                'videoHash']:
+                                                                    if video_hash[0] == database['romMapping'][
+                                                                            'platforms'][system]['videos'][
+                                                                            f'{rom_name}{extension}']['videoHash']:
                                                                         logging.debug(
-                                                                            'videoHash is equal hash in database: %s' % (
-                                                                                videoHash[0]))
-                                                                        makeLink = False
+                                                                            f'videoHash is equal hash in database: {video_hash[0]}')
+                                                                        make_link = False
                                                                     else:
                                                                         logging.debug(
-                                                                            'videoHash is not equal hash in database: %s' % (
-                                                                                videoHash[0]))
-                                                                        makeLink = True
+                                                                            f'videoHash is not equal hash in database: {video_hash[0]}')
+                                                                        make_link = True
                                                                 except KeyError:
-                                                                    makeLink = True
+                                                                    make_link = True
                                                                 break
 
-                                                        # try to find a find a random platform start video, then try to find a random non platform start video
-                                                        if src == None:
-                                                            startVidDir = [platformVideoDirectory, mainVideoDirectory]
+                                                        # try to find a find a random platform start video
+                                                        # then try to find a random non platform start video
+                                                        if src is None:
+                                                            start_vid_dir = [
+                                                                platform_video_directory,
+                                                                main_video_directory
+                                                            ]
+
                                                             video_type = ['platform', 'main']
-                                                            typeHashList = [platformMD5List, mainMD5List]
-                                                            typeMakeNew = [platformVideos, mainVideos]
+                                                            type_hash_list = [platform_md5_list, main_md5_list]
+                                                            type_make_new = [platform_videos, main_videos]
                                                             t = 0
-                                                            for videoDir in startVidDir:
-                                                                videoList = list_videos(videoDir)
-                                                                if len(videoList) > 0:
-                                                                    src = os.path.join(videoDir,
-                                                                                       random.choice(videoList))
-                                                                    videoType = video_type[t]
+                                                            for video_dir in start_vid_dir:
+                                                                video_list = list_videos(video_dir)
+                                                                if len(video_list) > 0:
+                                                                    src = os.path.join(video_dir,
+                                                                                       random.choice(video_list))
+                                                                    video_type = video_type[t]
 
                                                                     found = 0
-                                                                    for extension in videoExtensions:
-                                                                        if found == 0:
-                                                                            try:
-                                                                                oldHash = \
-                                                                                    database['romMapping']['platforms'][
-                                                                                        system]['videos'][
-                                                                                        romName + extension][
-                                                                                        'videoHash']
-                                                                                if typeMakeNew[t] == 1 and oldHash in \
-                                                                                        typeHashList[t]:
-                                                                                    makeLink = random.choice(
-                                                                                        [True, False])
-                                                                                else:
-                                                                                    makeLink = False
-                                                                            except KeyError:
-                                                                                pass
-                                                                            try:
-                                                                                if videoType != database['romMapping'][
+                                                                    for extension in video_extensions:
+                                                                        try:
+                                                                            old_hash = \
+                                                                                database['romMapping']['platforms'][
+                                                                                    system]['videos'][
+                                                                                    f'{rom_name}{extension}'][
+                                                                                    'videoHash']
+                                                                            if type_make_new[t] == 1 and old_hash in \
+                                                                                    type_hash_list[t]:
+                                                                                make_link = random.choice([True, False])
+                                                                            else:
+                                                                                make_link = False
+                                                                        except KeyError:
+                                                                            pass
+                                                                        try:
+                                                                            if video_type != database['romMapping'][
                                                                                     'platforms'][system]['videos'][
-                                                                                    romName + extension]['videoType']:
-                                                                                    logging.info(
-                                                                                        'video type has changed')
-                                                                                    makeLink = True
-                                                                                    found = 1
-                                                                                else:
-                                                                                    logging.info(
-                                                                                        'video type has not changed')
-                                                                                    found = 1
-                                                                            except KeyError:
-                                                                                logging.info('video type not found')
+                                                                                    f'{rom_name}{extension}'][
+                                                                                    'videoType']:
+
+                                                                                logging.info(
+                                                                                    'video type has changed')
+                                                                                make_link = True
+                                                                                found = 1
+                                                                                break
+                                                                            else:
+                                                                                logging.info(
+                                                                                    'video type has not changed')
+                                                                                found = 1
+                                                                                break
+                                                                        except KeyError:
+                                                                            logging.info('video type not found')
 
                                                                     if found == 0:
-                                                                        makeLink = True
+                                                                        make_link = True
 
-                                                                    if makeLink == True:
-                                                                        videoHash, junk = list_hash([src])
+                                                                    video_hash, junk = list_hash([src])
 
                                                                     break
                                                                 t += 1
 
                                                     if ffmpeg_changed == 1:
-                                                        makeLink = True
+                                                        make_link = True
 
-                                                    if makeLink == True and skipRom == False:
-                                                        destinationPath = os.path.join(libraryType, system,
-                                                                                       romName + '.' +
-                                                                                       src.rsplit('.', 1)[-1])
+                                                    if make_link and not skip_rom:
+                                                        destination_path = os.path.join(library_type, system,
+                                                                                        f'{rom_name}.{src.rsplit(".", 1)[-1]}')
 
-                                                        videoKey = os.path.join(romName + '.' + src.rsplit('.', 1)[-1])
+                                                        video_key = os.path.join(f'{rom_name}.{src.rsplit(".", 1)[-1]}')
 
                                                         try:
                                                             database['romMapping']['platforms'][system]['videos']
@@ -1124,96 +1029,97 @@ def scanner(paths, SourceRomDir, dataFolders):
                                                             database['romMapping']['platforms'][system]['videos'] = {}
                                                         try:
                                                             database['romMapping']['platforms'][system]['videos'][
-                                                                videoKey]
+                                                                video_key]
                                                         except KeyError:
                                                             database['romMapping']['platforms'][system]['videos'][
-                                                                videoKey] = {}
+                                                                video_key] = {}
 
-                                                        database['romMapping']['platforms'][system]['videos'][videoKey][
-                                                            'romFolder'] = relativePath
-                                                        database['romMapping']['platforms'][system]['videos'][videoKey][
-                                                            'romFile'] = f
-                                                        database['romMapping']['platforms'][system]['videos'][videoKey][
-                                                            'videoType'] = videoType
-                                                        database['romMapping']['platforms'][system]['videos'][videoKey][
-                                                            'videoHash'] = videoHash[
-                                                            0]  # just a single item, so don't need whole list
+                                                        database['romMapping']['platforms'][system]['videos'][
+                                                            video_key]['romFolder'] = relative_path
+                                                        database['romMapping']['platforms'][system]['videos'][
+                                                            video_key]['romFile'] = f
+                                                        database['romMapping']['platforms'][system]['videos'][
+                                                            video_key]['videoType'] = video_type
+                                                        database['romMapping']['platforms'][system]['videos'][
+                                                            video_key]['videoHash'] = video_hash[0]
+                                                        # just a single item, so don't need whole list
 
-                                                        # print(database)
-                                                        jsonFile = os.path.join(jsonDir, 'database.json')
-                                                        with open(jsonFile, 'w') as f:
-                                                            json.dump(database, f)
+                                                        # write database file
+                                                        json_file = os.path.join(json_dir, 'database.json')
+                                                        with open(json_file, 'w') as database_file:
+                                                            json.dump(database, database_file)
 
-                                                        dst = os.path.join(dataFolders['mediaFolder'], destinationPath)
-                                                        # print(dst)
+                                                        dst = os.path.join(data_folders['mediaFolder'],
+                                                                           destination_path)
 
-                                                        make_link(src, dst, system, romName)  # enable for testing
+                                                        make_video(src, dst, rom_name)
 
-                                                    elif skipRom == True:
-                                                        logging.info('Skipping MultiDisk game image: %s' % (f))
-                                                    elif makeLink == False:
-                                                        logging.info('No update needed for this rom: %s' % (f))
+                                                    elif skip_rom:
+                                                        logging.info(f'Skipping MultiDisk game image: {f}')
+                                                    elif not make_link:
+                                                        logging.info(f'No update needed for this rom: {f}')
                                                 y += 1
                                         if iteration == 0:
-                                            # multi disk m3u maker AND ffmpeg generator (so we don't have to scan again).
-                                            for keyX, valueX in multi_disk_game_list.items():
+                                            # makes m3u files
+                                            # generates ffmpeg videos
+                                            for game, rom_file in multi_disk_game_list.items():
                                                 make_m3u = 1
 
-                                                romName = keyX
+                                                rom_name = game
 
                                                 for titles in keys_to_delete:
-                                                    if titles == keyX:
+                                                    if titles == game:
                                                         make_m3u = 0
                                                         break
 
                                                 if make_m3u == 1:
-                                                    f = romName + '.m3u'
-                                                    fileContents = ''
-                                                    # print(romName)
-                                                    m3uPath = os.path.join(root, d, f)
-                                                    for keyY, valueY in valueX.items():
-                                                        diskNumber = keyY
-                                                        fileContents += valueY + '\n'
-                                                        # print(diskNumber)
-                                                    # print(fileContents)
+                                                    f = f'{rom_name}.m3u'
+                                                    file_contents = ''
 
-                                                # write the m3u
-                                                if fileContents != '':
-                                                    with open(m3uPath, 'w',
-                                                              encoding='utf-8') as m3u:  # https://stackoverflow.com/a/35086151/11214013
-                                                        m3u.write(fileContents)
+                                                    m3u_path = os.path.join(root, d, f)
+                                                    for disk, contents in rom_file.items():
+                                                        disk_number = disk
+                                                        file_contents += f'{contents}\n'
+
+                                                    # write the m3u
+                                                    if file_contents != '':
+                                                        with open(m3u_path, 'w', encoding='utf-8') as m3u_file:
+                                                            # https://stackoverflow.com/a/35086151/11214013
+                                                            m3u_file.write(file_contents)
 
                                         iteration += 1
 
-                            elif getSystem == 'false':
-                                logging.info('Skipping disabled system: %s' % (system))
-                            elif getSystem == '':
-                                logging.info('Skipping system not found in agent settings: %s' % (system))
+                            elif get_system == 'false':
+                                logging.info(f'Skipping disabled system: {system}')
+                            elif get_system == '':
+                                logging.info(f'Skipping system not found in agent settings: {system}')
                             else:
-                                logging.error('Skipping system for unknown reason: %s' % (system))
-                        x += 1
+                                logging.error(f'Skipping system for unknown reason: {system}')
 
-    # print(database)
+                            break
 
-    # add some stuff here to remove video files that the rom doesn't exist anymore
-    for key in database['romMapping']['platforms']:
+                        system_name_counter += 1
+
+    for platform_key in database['romMapping']['platforms']:
+        # to do
+        # add some stuff here to remove video files that the rom doesn't exist anymore
         pass
 
 
-def splitall(path):  # https://www.oreilly.com/library/view/python-cookbook/0596001673/ch04s16.html
-    allparts = []
+def split_all(path):  # https://www.oreilly.com/library/view/python-cookbook/0596001673/ch04s16.html
+    all_parts = []
     while 1:
         parts = os.path.split(path)
         if parts[0] == path:  # sentinel for absolute paths
-            allparts.insert(0, parts[0])
+            all_parts.insert(0, parts[0])
             break
         elif parts[1] == path:  # sentinel for relative paths
-            allparts.insert(0, parts[1])
+            all_parts.insert(0, parts[1])
             break
         else:
             path = parts[0]
-            allparts.insert(0, parts[1])
-    return allparts
+            all_parts.insert(0, parts[1])
+    return all_parts
 
 
 def xbox_main(console_liveid=None, launch_client=None):
@@ -1258,7 +1164,7 @@ async def xbox_async_main(client_id: str, client_secret: str, redirect_uri: str,
         if launch_client:
             consoles = await xbl_client.smartglass.get_console_list(True)
             if consoles.status.error_code.lower() != 'ok':
-                logging.error('xbox console status error: %s' % (consoles.status.error_message))
+                logging.error(f'xbox console status error: {consoles.status.error_message}')
                 sys.exit(1)
 
             for console in consoles.result:
@@ -1278,8 +1184,7 @@ async def xbox_async_main(client_id: str, client_secret: str, redirect_uri: str,
                     if app.name.lower() == 'moonlight uwp':
                         moonlight_installed = True
                         one_store_product_id = app.one_store_product_id
-                    # elif app.name.lower() == 'plex':
-                    # plex_installed = True
+                        break
 
                 # launch moonlight
                 if moonlight_installed:
@@ -1290,8 +1195,8 @@ async def xbox_async_main(client_id: str, client_secret: str, redirect_uri: str,
                     await xbl_client.smartglass.launch_app(console.id, one_store_product_id)
                     return True
                 else:
-                    logging.error(
-                        'Moonlight is not installed on xbox, install it: https://www.microsoft.com/store/apps/9MW1BS08ZBTH')
+                    logging.error('Moonlight is not installed on xbox.')
+                    logging.error('Moonlight purchase/install link: https://www.microsoft.com/store/apps/9MW1BS08ZBTH')
                     return False
 
             logging.error('no suitable xbox console found')
@@ -1310,8 +1215,8 @@ if __name__ == '__main__':
 
     logging.info('----retroarcher.py script started----')
 
-    paths = getPaths()  # get the paths
-    logging.info('paths: %s' % (paths))
+    paths = get_paths()  # get the paths
+    logging.info(f'paths: {paths}')
 
     # hack for cleaner folder structure and relative imports
     sys.path.append(paths['scriptDir'])
@@ -1322,6 +1227,7 @@ if __name__ == '__main__':
     import archer_dict
 
     # module imports (user doesn't need to install)
+    import psutil
     import requests
     import xmltodict
 
@@ -1350,6 +1256,7 @@ if __name__ == '__main__':
     parser.add_argument('--launch', action='store_true', required=False, help='Launch the rom from Tautulli.')
     parser.add_argument('--ip_address', type=str, nargs='?', required=False, default='',
                         help='IP address of client device.')
+    parser.add_argument('--stream_local', type=str, nargs='?', required=False, default='', help='1 if stream is local')
     parser.add_argument('--platform', type=str, nargs='?', required=False, default='',
                         help='Platform type passed in from Tautulli. Example: Android')
     parser.add_argument('--device', type=str, nargs='?', required=False, default='',
@@ -1373,15 +1280,14 @@ if __name__ == '__main__':
     parser.add_argument('--xbox_auth', action='store_true', required=False,
                         help='Obtain token for xbox or renew token.')
 
-    # arguments for automatic update
-    parser.add_argument('--update', action='store_true', required=False, help='Update plug-in from github.')
+    # arguments for updating requirements
+    parser.add_argument('--update', action='store_true', required=False, help='To do.')  # to do
 
     # testing args from tautulli
     parser.add_argument('--username', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--user_email', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--user_thumb', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--initial_stream', type=str, nargs='?', required=False, default='', help='Dev')
-    parser.add_argument('--stream_local', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--stream_location', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--machine_id', type=str, nargs='?', required=False, default='', help='Dev')
     parser.add_argument('--media_type', type=str, nargs='?', required=False, default='', help='Dev')
@@ -1433,24 +1339,24 @@ if __name__ == '__main__':
     # get the plugin identifier from Plex
     infoFile = os.path.join(os.path.abspath(paths['contentsDir']), 'Info.plist')
     # print(infoFile)
-    info = convertXMLtoJSON(infoFile)
+    info = convert_xml_to_json(infoFile)
     # print(json.dumps(info, indent=4))
-    x = 0
-    for key in info['plist']['dict'][
-        'key']:  # get the agent name (maybe useful for if users want to switch and try different branches while keeping original settings)
-        if key == 'CFBundleIdentifier':
-            agent = info['plist']['dict']['string'][x]
-            # print(agent)
-            break
-        x += 1
 
-    '''settings from agent'''
-    # get the agent settings (use it for this script as well)
-    settingsFile = getSettings(paths['plexDir'], agent)
-    # print(settingsFile)
-    settings = convertXMLtoJSON(settingsFile)
-    # print('original settings')
-    # print(json.dumps(settings, indent=4))
+    agent = 'com.github.agents.retroarcher.retroarcher'
+
+    plist_counter = 0
+    try:
+        for plist_key in info['plist']['dict']['key']:  # get the agent name
+            if plist_key == 'CFBundleIdentifier':
+                agent = info['plist']['dict']['string'][plist_counter]
+                break
+            plist_counter += 1
+    except KeyError:
+        pass
+
+    # settings from agent
+    settings_file = get_settings(paths['plexDir'], agent)
+    settings = convert_xml_to_json(settings_file)
 
     try:
         settings['PluginPreferences']
@@ -1458,94 +1364,89 @@ if __name__ == '__main__':
         settings = {'PluginPreferences': {}}
 
     Prefs = {}
-    for key, value in archer_dict.dDefaultSettings.items():
+    for prefs_key, prefs_value in archer_dict.dDefaultSettings.items():
         try:
-            Prefs[key] = settings['PluginPreferences'][key]
-        except KeyError as e:
-            Prefs[key] = value
-        if Prefs[key] == None:
-            Prefs[key] = value
-        settingSplit = key.split('_', 1)
+            Prefs[prefs_key] = settings['PluginPreferences'][prefs_key]
+        except KeyError:
+            Prefs[prefs_key] = prefs_value
+        if not Prefs[prefs_key]:
+            Prefs[prefs_key] = prefs_value
+        settingSplit = prefs_key.split('_', 1)
         if settingSplit[0] == 'enum':
             try:
-                Prefs[key] = archer_dict.dict_enum_settings_map[settingSplit[-1]][Prefs[key]]
-            except KeyError as e:
+                Prefs[prefs_key] = archer_dict.dict_enum_settings_map[settingSplit[-1]][Prefs[prefs_key]]
+            except KeyError:
                 pass
         elif settingSplit[0] == 'int':
-            Prefs[key] = int(Prefs[key])
+            Prefs[prefs_key] = int(Prefs[prefs_key])
         elif settingSplit[0] == 'list':
-            Prefs[key] = Prefs[key].split(',')
+            Prefs[prefs_key] = Prefs[prefs_key].split(',')
         elif settingSplit[0] == 'dir':
-            if os.path.isdir(Prefs[key]):
+            if os.path.isdir(Prefs[prefs_key]):
                 pass
             else:
-                Prefs[key] = None
-                # print('%s directory does not exist: %s' % (key, value))
-                logging.warning('%s directory does not exist: %s' % (key, value))
+                Prefs[prefs_key] = None
+                logging.warning(f'{prefs_key} directory does not exist: {prefs_value}')
 
     # emulator and core settings... not in dDefaultSettings
-    for key, value in settings['PluginPreferences'].items():
-        keySplit = key.split('_')
+    for prefs_key, prefs_value in settings['PluginPreferences'].items():
+        keySplit = prefs_key.split('_')
         if keySplit[0] == 'emulator' or keySplit[0] == 'core':
             try:
-                if value == None:
-                    Prefs[key] = 0
+                if not prefs_value:
+                    Prefs[prefs_key] = 0
                 else:
-                    Prefs[key] = int(value)
-            except KeyError as e:
-                Prefs[key] = 0
-            except TypeError as e:  # probably won't ever have this scenario...
-                Prefs[key] = 0
-
-    # print('Prefs:')
-    # print(json.dumps(Prefs, indent=4))
+                    Prefs[prefs_key] = int(prefs_value)
+            except KeyError:
+                Prefs[prefs_key] = 0
+            except TypeError:  # probably won't ever have this scenario
+                Prefs[prefs_key] = 0
 
     if launch or scan:
-        if Prefs['dir_SourceRomDirectory'] == None:
-            logging.critical('Source Rom Directory does not exist or is not set in agent settings.')
+        if not Prefs['dir_SourceRomDirectory']:
+            logging.critical('Source Rom Directory is not set in agent settings.')
             sys.exit(1)
-        SourceRomDir = os.path.abspath(Prefs['dir_SourceRomDirectory'])
+        source_rom_dir = os.path.abspath(Prefs['dir_SourceRomDirectory'])
 
     '''get data folders'''
-    dataFolders = getDataFolders(paths['plexDir'], agent)
-    logging.info('dataFolders: %s' % (dataFolders))
+    data_folders = get_data_folders(directory=paths['plexDir'], plugin=agent)
+    logging.info(f'data_folders: {data_folders}')
 
     '''script arguments'''
     if not launch:
         if scan:
-            scanner(paths, SourceRomDir, dataFolders)
+            scanner(paths)
 
         if xbox_auth:
             xbox_main()
 
     elif launch:
-        # string agruments
-        clientPlatform = opts.platform  # from tautulli (Android or Firefox for example)
-        clientIP = opts.ip_address  # from tautulli
-        clientDevice = opts.device  # from tautulli (Windows for example)
-        clientProduct = opts.product  # from tautulli (PlexWeb for example)
-        clientPlayer = opts.player  # from tautulli (Firefox for example)
-        clientUser = opts.user  # from tautulli (Firefox for example)
-        clientUserId = opts.user_id
-        clientUserName = opts.username
-        movieName = opts.file  # from tautulli
+        # string arguments
+        client_platform = opts.platform  # from tautulli (Android or Firefox for example)
+        logging.info(f'client_platform: {client_platform}')
+        client_ip = opts.ip_address  # from tautulli
+        logging.info(f'client_ip: {client_ip}')
+        client_device = opts.device  # from tautulli (Windows for example)
+        logging.info(f'client_device: {client_device}')
+        client_product = opts.product  # from tautulli (PlexWeb for example)
+        logging.info(f'client_product: {client_product}')
+        client_player = opts.player  # from tautulli (Firefox for example)
+        logging.info(f'client_player: {client_player}')
+        client_user = opts.user  # from tautulli (Firefox for example)
+        logging.info(f'client_user: {client_user}')
+        client_user_id = opts.user_id
+        logging.info(f'client_user_id: {client_user_id}')
+        client_user_name = opts.username
+        logging.info(f'client_user_name: {client_user_name}')
+        movie_name = opts.file  # from tautulli
+        logging.info(f'movie_name: {movie_name}')
+        stream_local = opts.stream_local  # from tautulli
+        logging.info(f'stream_local: {stream_local}')
 
-        # integer arguments
-        timeRemaining = opts.remaining_time.split(':')  # from tautulli... why returning 00:00:00 ?
-        try:
-            countdown = (int(timeRemaining[0]) * 3600) + (int(timeRemaining[1]) * 60) + (
-                int(timeRemaining[2]))  # seconds remaining
-        except:
-            countdown = 0
-
-        serverIP = get_ip()
-        logging.info('serverIP: %s' % (serverIP))
-
-        # this is only checking the very first part of the IP... should we check the next 2 as well?
-        if serverIP.rsplit('.', 1)[0] == clientIP.rsplit('.', 1)[0]:
-            launcher(clientIP, clientPlatform, clientDevice, clientProduct, clientPlayer, clientUser, clientUserId,
-                     clientUserName, movieName, dataFolders)
+        if stream_local:
+            launcher()
         else:
-            logging.error(
-                'Client appears to be a remote client. RetroArcher cannot execute scripts on a remote client yet. If the client really is local to the server, try accessing your Plex server at "http://x.x.x.x:32400/web" instead of "https://app.plex.tv"')
+            logging.error('Client appears to be a remote client.')
+            logging.error('RetroArcher cannot execute scripts on a remote client yet.')
+            logging.error('Try using "http://x.x.x.x:32400/web" instead of "https://app.plex.tv"')
             sys.exit(1)

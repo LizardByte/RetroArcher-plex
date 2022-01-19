@@ -1,5 +1,6 @@
 adbutils==0.8.3
 cryptography==36.0.1  # XboxDiscovery.py
+psutil==5.9.0
 requests==2.25.1
 xbox-webapi==2.0.11
 xmltodict==0.12.0
