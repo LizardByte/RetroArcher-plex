@@ -8,6 +8,8 @@
 - (Launcher) - Emulator now runs in python subprocess
 - (Scanner) - Fixed issue that may cause scanner error when ffmpeg settings changed
 - (Scanner) - ffmpeg now runs in subprocess
+### Breaking
+- (Tautulli) - Notification arguments must be updated
 
 ## [1.2.0] - 2022-01-15
 ### Added
