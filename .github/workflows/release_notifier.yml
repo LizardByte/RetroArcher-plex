@@ -17,7 +17,7 @@ jobs:
           nofail: false
           username: ${{ secrets.DISCORD_USERNAME }}
           avatar_url: ${{ secrets.ORG_LOGO_URL }}
-          title: ${{ github.event.repository.name }} ${{ github.ref }} Released
+          title: ${{ github.event.repository.name }} ${{ github.ref_name }} Released
           description: ${{ github.event.release.body }}
           color: 0xFF4500
 
@@ -30,7 +30,7 @@ jobs:
           page_id: ${{ secrets.FACEBOOK_GROUP_ID }}
           access_token: ${{ secrets.FACEBOOK_ACCESS_TOKEN }}
           message: |
-            ${{ github.event.repository.name }} ${{ github.ref }} Released
+            ${{ github.event.repository.name }} ${{ github.ref_name }} Released
 
             ${{ github.event.release.body }}
           url: ${{ github.event.release.html_url }}
@@ -44,7 +44,7 @@ jobs:
           page_id: ${{ secrets.FACEBOOK_PAGE_ID }}
           access_token: ${{ secrets.FACEBOOK_ACCESS_TOKEN }}
           message: |
-            ${{ github.event.repository.name }} ${{ github.ref }} Released
+            ${{ github.event.repository.name }} ${{ github.ref_name }} Released
 
             ${{ github.event.release.body }}
           url: ${{ github.event.release.html_url }}
@@ -60,7 +60,7 @@ jobs:
           app-id: ${{ secrets.REDDIT_CLIENT_ID }}
           app-secret: ${{ secrets.REDDIT_CLIENT_SECRET }}
           subreddit: ${{ secrets.REDDIT_SUBREDDIT }}  # Submit to /r/RetroArcher
-          title: ${{ github.event.repository.name }} ${{ github.ref }} Released
+          title: ${{ github.event.repository.name }} ${{ github.ref_name }} Released
           url: ${{ github.event.release.html_url }}
           flair-id: 2c5c66f8-627d-11eb-b58f-0eb22ac1892b  # https://www.reddit.com/r/retroarcher/api/link_flair.json
           comment: ${{ github.event.release.body }}
