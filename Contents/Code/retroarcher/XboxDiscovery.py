@@ -1,7 +1,7 @@
 import sys
 
 import retroarcher
-paths = retroarcher.getPaths()
+paths = retroarcher.get_paths()
 sys.path.append(paths['retroarcherModulesDir'])
 
 # xbox-smartglass-core cannot bind the socket on Windows at this point https://github.com/OpenXbox/xbox-smartglass-core-python/blob/96e1e0a45db347f66101c3df5eec3f7cb92d1236/xbox/sg/console.py#L165
