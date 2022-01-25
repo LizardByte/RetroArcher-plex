@@ -601,7 +601,11 @@ def copy_file(src, dst):
 
 def make_video(src, dst, rom_name):
     font_folder = paths['retroarcherFontDir']
-    font_file = os.path.join(font_folder, 'OpenSans', 'OpenSans-Light.ttf').replace('\\', '\\\\')
+    font_file = os.path.join(font_folder, 'OpenSans', 'OpenSans-Light.ttf')
+
+    # ffmpeg formatting for font files is a little bit weird
+    # https://stackoverflow.com/a/57512653/11214013
+    font_file = font_file.replace('\\', '/').replace(':', '\\\\:')
 
     illegal_characters = [',']
 
@@ -613,7 +617,7 @@ def make_video(src, dst, rom_name):
     for character in illegal_characters:
         rom_name = rom_name.replace(character, f'\\{character}')
 
-    command = f"ffmpeg -ss 0 -i \"{src}\" -t {ffmpeg_overlay['videoLength']} -vf \"drawtext=text='{rom_name}': fontfile='fonts/{font_file}': fontcolor={ffmpeg_overlay['fontColor']}: fontsize={ffmpeg_overlay['fontSize']}: box={ffmpeg_overlay['border']}: boxcolor={ffmpeg_overlay['borderColor']}: boxborderw={ffmpeg_overlay['borderSize']}: x={ffmpeg_overlay['fontX']}: y={ffmpeg_overlay['fontY']}\" -codec:v {Prefs['enum_FfmpegEncoder']} -codec:a copy -map_metadata -1 -metadata title=\"{title}\" -metadata creation_time={current_time} -map_chapters -1 \"{dst}\""
+    command = f"ffmpeg -ss 0 -i \"{src}\" -t {ffmpeg_overlay['videoLength']} -vf \"drawtext=text='{rom_name}': fontfile='{font_file}': fontcolor={ffmpeg_overlay['fontColor']}: fontsize={ffmpeg_overlay['fontSize']}: box={ffmpeg_overlay['border']}: boxcolor={ffmpeg_overlay['borderColor']}: boxborderw={ffmpeg_overlay['borderSize']}: x={ffmpeg_overlay['fontX']}: y={ffmpeg_overlay['fontY']}\" -codec:v {Prefs['enum_FfmpegEncoder']} -codec:a copy -map_metadata -1 -metadata title=\"{title}\" -metadata creation_time={current_time} -map_chapters -1 \"{dst}\""
     logging.debug(f'command: {command}')
 
     if sys.platform == 'win32':
