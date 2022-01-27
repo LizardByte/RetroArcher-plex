@@ -617,13 +617,29 @@ def make_video(src, dst, rom_name):
     for character in illegal_characters:
         rom_name = rom_name.replace(character, f'\\{character}')
 
-    command = f"ffmpeg -ss 0 -i \"{src}\" -t {ffmpeg_overlay['videoLength']} -vf \"drawtext=text='{rom_name}': fontfile='{font_file}': fontcolor={ffmpeg_overlay['fontColor']}: fontsize={ffmpeg_overlay['fontSize']}: box={ffmpeg_overlay['border']}: boxcolor={ffmpeg_overlay['borderColor']}: boxborderw={ffmpeg_overlay['borderSize']}: x={ffmpeg_overlay['fontX']}: y={ffmpeg_overlay['fontY']}\" -codec:v {Prefs['enum_FfmpegEncoder']} -codec:a copy -map_metadata -1 -metadata title=\"{title}\" -metadata creation_time={current_time} -map_chapters -1 \"{dst}\""
-    logging.debug(f'command: {command}')
-
     if sys.platform == 'win32':
-        ffmpeg_proc = subprocess.run(command, cwd='ffmpeg')
+        ff_executable = os.path.join(paths['retroarcherFFMPEGDir'], 'ffmpeg')
     else:
-        ffmpeg_proc = subprocess.run(command)
+        ff_executable = 'ffmpeg'
+
+    ff = FFmpeg(
+        executable=ff_executable,
+        inputs={src: ['-ss', '0']},
+        outputs={dst: [
+            '-t', ffmpeg_overlay['videoLength'], '-vf',
+
+            f"drawtext=text='{rom_name}': fontfile='{font_file}': fontcolor={ffmpeg_overlay['fontColor']}: \
+            fontsize={ffmpeg_overlay['fontSize']}: box={ffmpeg_overlay['border']}: \
+            boxcolor={ffmpeg_overlay['borderColor']}: boxborderw={ffmpeg_overlay['borderSize']}: \
+            x={ffmpeg_overlay['fontX']}: y={ffmpeg_overlay['fontY']}",
+
+            '-codec:v', Prefs['enum_FfmpegEncoder'], '-codec:a', 'copy', '-map_metadata', '-1', '-metadata',
+            f'title={title}', '-metadata', f'creation_time={current_time}', '-map_chapters', '-1'
+            ]
+        }
+    )
+    logging.debug(ff.cmd)
+    ffmpeg_proc = ff.run()
 
     # os.symlink(src[0], dst) #symlinks not picked up by Plex :( ... hence the workaround with ffmpeg
     '''
@@ -1237,6 +1253,7 @@ if __name__ == '__main__':
 
     # from module imports
     from adbutils import adb  # https://github.com/openatx/adbutils
+    from ffmpy import FFmpeg  # ffmpeg wrapper
 
     from aiohttp import ClientSession, web  # xbox client
     from xbox.webapi.api.client import XboxLiveClient
