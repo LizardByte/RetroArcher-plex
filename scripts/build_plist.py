@@ -1,7 +1,7 @@
 import os
 import plistlib
 
-version = os.getenv('BUILD_VERSION', "development build")
+version = os.getenv('BUILD_VERSION', os.getenv('GITHUB_SHA', 'development build'))
 
 if not version:
     version = "development build"
