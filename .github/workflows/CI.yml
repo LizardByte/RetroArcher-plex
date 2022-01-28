@@ -74,7 +74,7 @@ jobs:
         env:
           BUILD_VERSION: ${{ needs.check_changelog.outputs.next_version }}
         run: |
-          python ./scripts/build_plist.py
+          python scripts/build_plist.py
 
       - name: Set up Python 3.9 Dependencies
         env:
