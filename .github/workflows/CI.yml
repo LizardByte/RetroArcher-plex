@@ -73,6 +73,7 @@ jobs:
       - name: Build plist
         env:
           BUILD_VERSION: ${{ needs.check_changelog.outputs.next_version }}
+          GIT_SHA: ${GITHUB_SHA::8}
         run: |
           cd RetroArcher.bundle
           python scripts/build_plist.py

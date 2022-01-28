@@ -1,10 +1,12 @@
 import os
 import plistlib
 
-version = os.getenv('BUILD_VERSION', os.getenv('GITHUB_SHA', 'development build'))
+version = os.getenv('BUILD_VERSION', os.getenv('GIT_SHA', 'development build'))
+print(f'version: {version}')
 
 if not version:
     version = "development build"
+print(f'version: {version}')
 
 if version == "development build":
     checked = '<i class="fas fa-fw fa-times-circle" style="color:red"></i>'
@@ -39,7 +41,7 @@ pl = dict(
             <table>
                 <tr>
                     <td>Version:  %s</td>
-                    <td>%s</td><!-- Brackets with version number indicate pre RetroArcher.X integration -->
+                    <td>%s</td>
                     <td>| <a href="https://github.com/RetroArcher/RetroArcher.bundle/releases/latest" target="_blank">Releases</a></td>
                 </tr>
             </table>
