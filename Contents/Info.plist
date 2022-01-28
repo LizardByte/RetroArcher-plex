@@ -29,8 +29,8 @@
             <br>
             <table>
                 <tr>
-                    <td>Version:  &#9989;</td>
-                    <td>[v1.2.1]</td><!-- Brackets with version number indicate pre RetroArcher.X integration -->
+                    <td>Version:  <i class="fas fa-fw fa-times-circle" style="color:red"></i></td>
+                    <td>source</td>
                     <td>| <a href="https://github.com/RetroArcher/RetroArcher.bundle/releases/latest" target="_blank">Releases</a></td>
                 </tr>
             </table>
