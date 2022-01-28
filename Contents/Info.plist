@@ -4,7 +4,6 @@
 <dict>
     <key>CFBundleIdentifier</key>
     <string>com.github.agents.retroarcher.retroarcher</string>
-
     <key>PlexAgentAttributionText</key>
 	<string>
         <![CDATA[
@@ -69,45 +68,25 @@
             </script>
         ]]>
 	</string>
-
     <key>PlexFrameworkVersion</key>
     <string>2</string>
-
-    <!-- This one does nothing with a value of Always On, but using a value of "daemon" keeps the plugin alive in the background -->
     <key>PlexPluginMode</key>
     <string>Agent</string>
-
-    <!-- List any client platforms supported in the plugin. -->
-    <!-- Possible values are * for all platforms, MacOSX, Windows, Linux, Roku, Android, iOS, Safari, Firefox, Chrome, LGTV, Samsung, PlexConnect and Plex Home Theater -->
     <key>PlexClientPlatforms</key>
     <string></string>
-
-    <!-- List any client platforms not supported in the plugin. -->
     <key>PlexClientPlatformExclusions</key>
     <string></string>
-
-    <!-- possible string values are the proper ISO two letter code for the country -->
-    <!-- A full list of values are available at http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 -->
     <key>PlexPluginRegions</key>
     <array>
         <string></string>
     </array>
-
-    <!-- DEBUG OPTIONAL KEYS -->
-    <!-- possible values are 0 and 1. Setting it to "1" rather than "0" turns on debug logging -->
     <key>PlexPluginDebug</key>
     <array><string>1</string>
 	</array>
-
-    <!-- this allows channels to access some python methods which are otherwise blocked, as well as import external code libraries, and interact with the PMS HTTP API -->
     <key>PlexPluginCodePolicy</key>
     <string>Elevated</string>
-
-    <!-- This key is used to show that the plugin is an agent. possible values are agent -->
     <key>PlexPluginClass</key>
     <string>agent</string>
-
-    <!-- This is used to send plugin log statements directly to stout when running PMS from the command line. Rarely used anymore-->
     <key>PlexPluginConsoleLogging</key>
     <string>0</string>
 </dict>
