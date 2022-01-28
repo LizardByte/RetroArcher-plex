@@ -3,6 +3,9 @@ import plistlib
 
 version = os.getenv('BUILD_VERSION', "development build")
 
+if not version:
+    version = "development build"
+
 if version == "development build":
     checked = '<i class="fas fa-fw fa-times-circle" style="color:red"></i>'
 else:
