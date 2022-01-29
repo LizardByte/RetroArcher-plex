@@ -10,6 +10,9 @@ from plexapi.server import PlexServer
 
 
 def setup_plexapi():
+    """
+    Create and return the Plex server object.
+    """
     plex_url = Prefs['url_PlexServer']
     plex_token = Prefs['str_PlexToken']
 
@@ -37,6 +40,9 @@ def setup_plexapi():
 
 
 def add_themes(theme_list, rating_key):
+    """
+    For each theme in the theme_list, upload it to the Plex server for the specific rating key supplied.
+    """
     plex = setup_plexapi()
     
     if plex:
