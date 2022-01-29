@@ -8,15 +8,13 @@ commit = os.getenv('GITHUB_SHA', 'development build')
 print(f'commit: {commit}')
 
 if not version:
+    checked = '<i class="fas fa-fw fa-times-circle" style="color:red"></i>'
     if commit != 'development build':
         version = commit[0:7]
         print(f'using commit as version: {version}')
     else:
         version = commit
         print(f'unknown version: {version}')
-
-if version == "development build":
-    checked = '<i class="fas fa-fw fa-times-circle" style="color:red"></i>'
 else:
     checked = '<i class="fas fa-fw fa-check-circle" style="color:green"></i>'
 
