@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-# plex debugging
 import sys
+# plex debugging
 if 'plexscripthost' not in sys.executable.lower():
-    from plexagents.builtins import Prefs, Log
+    from plexagents.builtins import Log, Prefs
 
 import requests
 import urllib3
