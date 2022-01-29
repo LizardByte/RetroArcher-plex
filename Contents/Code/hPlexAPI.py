@@ -2,22 +2,23 @@
 # plex debugging
 import sys
 if 'plexscripthost' not in sys.executable.lower():
-    from plexagents.builtins import *
+    from plexagents.builtins import Prefs, Log
 
 import requests
+import urllib3
 from plexapi.server import PlexServer
 
 
 def setup_plexapi():
-    PLEX_URL = Prefs['url_PlexServer']
-    PLEX_TOKEN = Prefs['str_PlexToken']
+    plex_url = Prefs['url_PlexServer']
+    plex_token = Prefs['str_PlexToken']
 
-    Log.Info('Plex url: ' + str(PLEX_URL))
+    Log.Info('Plex url: ' + str(plex_url))
     
-    if PLEX_TOKEN == None:
+    if not plex_token:
         Log.Info('Plex token not set in agent settings, cannot proceed')
         return False
-    Log.Info('Plex token is set in settins!')
+    Log.Info('Plex token is set in settings!')
 
     sess = requests.Session()
     # Ignore verifying the SSL certificate
@@ -27,22 +28,19 @@ def setup_plexapi():
     # with OpenSSL.
     if sess.verify is False:
         # Disable the warning that the request is insecure, we know that...
-        import urllib3
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-    #create the plexapi server
-    plex = PlexServer(PLEX_URL, PLEX_TOKEN, session=sess)
-    #account = plex.myPlexAccount()
+    # create the plex server object
+    plex = PlexServer(plex_url, plex_token, session=sess)
 
     return plex
+
 
 def add_themes(theme_list, rating_key):
     plex = setup_plexapi()
     
-    if plex != False:
-        for x in theme_list:
-            Log.Info(x)
+    if plex:
+        for theme_file in theme_list:
+            Log.Info(theme_file)
             plex_item = plex.fetchItem(int(rating_key))
-            plex_item.uploadTheme(filepath=x)
-            #plex_item.uploadTheme(url=x)
-
+            plex_item.uploadTheme(filepath=theme_file)  # to upload from url use 'url=theme_url' instead
