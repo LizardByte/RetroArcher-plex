@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.2] - 2022-01-28
+### Changed
+- (CI) - Plist file now generated during build time
+- (Dependencies) - Bump plexapi to 4.9.1 (custom version for Python 2.7 with Theme support)
+- (Scanner) - Fixed issue with ffmpeg binary not being found in some cases
+### Removed
+- (Resources) - Removed Ubuntu font (not used)
+
 ## [1.2.1] - 2022-01-18
 ### Added
 - (Launcher) - Stream process now killed when emulator is closed
