@@ -1,12 +1,19 @@
 import os
 import plistlib
 
-version = os.getenv('BUILD_VERSION', os.getenv('GIT_SHA', 'development build'))
+version = os.getenv('BUILD_VERSION', None)
 print(f'version: {version}')
 
+commit = os.getenv('GITHUB_SHA', 'development build')
+print(f'commit: {commit}')
+
 if not version:
-    version = "development build"
-print(f'version: {version}')
+    if commit != 'development build':
+        version = commit[0:7]
+        print(f'using commit as version: {version}')
+    else:
+        version = commit
+        print(f'unknown version: {version}')
 
 if version == "development build":
     checked = '<i class="fas fa-fw fa-times-circle" style="color:red"></i>'
