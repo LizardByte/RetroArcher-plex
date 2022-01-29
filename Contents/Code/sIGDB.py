@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
-# plex debugging
 import sys
+# plex debugging
 if 'plexscripthost' not in sys.executable.lower():
-    from plexagents.builtins import *
+    from plexagents.builtins import Log, Prefs, Proxy, Util
+    from plexagents.builtins import MetadataSearchResult
+    from plexagents.builtins import HTTP, JSON
+    from plexagents.builtins import InterviewObject, OtherObject, TrailerObject
 
 import datetime
 import json
@@ -12,6 +15,7 @@ import requests
 from igdb.wrapper import IGDBWrapper
 
 # local imports
+import archer_dict
 import common
 
 

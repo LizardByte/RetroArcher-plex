@@ -1,23 +1,27 @@
 # -*- coding: utf-8 -*-
-# plex debugging
 import sys
+# plex debugging
 if 'plexscripthost' not in sys.executable.lower():
-    from plexagents.builtins import *
+    from plexagents.builtins import Log, Prefs
 
 import requests
+import urllib3
 from plexapi.server import PlexServer
 
 
 def setup_plexapi():
-    PLEX_URL = Prefs['url_PlexServer']
-    PLEX_TOKEN = Prefs['str_PlexToken']
+    """
+    Create and return the Plex server object.
+    """
+    plex_url = Prefs['url_PlexServer']
+    plex_token = Prefs['str_PlexToken']
 
-    Log.Info('Plex url: ' + str(PLEX_URL))
+    Log.Info('Plex url: ' + str(plex_url))
     
-    if PLEX_TOKEN == None:
+    if not plex_token:
         Log.Info('Plex token not set in agent settings, cannot proceed')
         return False
-    Log.Info('Plex token is set in settins!')
+    Log.Info('Plex token is set in settings!')
 
     sess = requests.Session()
     # Ignore verifying the SSL certificate
@@ -27,22 +31,22 @@ def setup_plexapi():
     # with OpenSSL.
     if sess.verify is False:
         # Disable the warning that the request is insecure, we know that...
-        import urllib3
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-    #create the plexapi server
-    plex = PlexServer(PLEX_URL, PLEX_TOKEN, session=sess)
-    #account = plex.myPlexAccount()
+    # create the plex server object
+    plex = PlexServer(plex_url, plex_token, session=sess)
 
     return plex
 
+
 def add_themes(theme_list, rating_key):
+    """
+    For each theme in the theme_list, upload it to the Plex server for the specific rating key supplied.
+    """
     plex = setup_plexapi()
     
-    if plex != False:
-        for x in theme_list:
-            Log.Info(x)
+    if plex:
+        for theme_file in theme_list:
+            Log.Info(theme_file)
             plex_item = plex.fetchItem(int(rating_key))
-            plex_item.uploadTheme(filepath=x)
-            #plex_item.uploadTheme(url=x)
-
+            plex_item.uploadTheme(filepath=theme_file)  # to upload from url use 'url=theme_url' instead

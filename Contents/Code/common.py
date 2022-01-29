@@ -1,7 +1,7 @@
-# plex debugging
 import sys
+# plex debugging
 if 'plexscripthost' not in sys.executable.lower():
-    from plexagents.builtins import *
+    from plexagents.builtins import Log, Prefs
 
 # local imports
 import archer_dict
