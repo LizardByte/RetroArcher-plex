@@ -39,6 +39,5 @@ Contents/Resources/StartVideos/Main/*
 Contents/Libraries/Modules/
 Contents/Libraries/Shared/
 
-# Keep plexapi and requirements.txt
-!Contents/Libraries/Shared/plexapi/*
+# Keep requirements.txt files
 !*requirements.txt
