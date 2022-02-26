@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.3] - 2022-02-25
+### Fixed
+- (Dependencies) - Fixed issue with package excluding some dependencies
+
 ## [1.2.2] - 2022-01-28
 ### Changed
 - (CI) - Plist file now generated during build time
