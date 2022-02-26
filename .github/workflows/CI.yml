@@ -111,7 +111,7 @@ jobs:
       - name: Package Release
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         run: |
-          7z "-xr!*.git*" "-xr!*.pyc" "-xr!__pycache__" "-xr!RetroArcher.bundle/scripts" a "./RetroArcher.bundle-${{ runner.os }}.zip" "RetroArcher.bundle"
+          7z "-xr!*.git*" "-xr!*.pyc" "-xr!__pycache__" "-x!scripts" a "./RetroArcher.bundle-${{ runner.os }}.zip" "RetroArcher.bundle"
 
       - name: Create/Update GitHub Release
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
