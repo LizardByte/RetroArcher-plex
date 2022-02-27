@@ -87,6 +87,13 @@ jobs:
           python -m pip install --upgrade pip setuptools
           python -m pip install --target=${{ env.TARGET_DIR }} -r ${{ env.TARGET_DIR }}/requirements.txt --no-warn-script-location
 
+      - name: Overwrite ADB Binaries
+        run: |
+          echo "Overwriting Latest ADB Binaries"
+          cd RetroArcher.bundle
+          python -m pip install -r scripts/requirements.txt
+          python scripts/download_adb_binaries.py
+
       - name: Test RetroArcher
         env:
           TARGET_DIR: ./Contents/Code/retroarcher
