@@ -130,3 +130,4 @@ jobs:
           token: ${{ secrets.GH_PAT }}
           allowUpdates: true
           body: ${{ needs.check_changelog.outputs.release_body }}
+          discussionCategory: Announcements
