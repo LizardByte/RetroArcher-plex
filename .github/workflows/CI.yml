@@ -90,8 +90,9 @@ jobs:
       - name: Overwrite ADB Binaries
         run: |
           echo "Overwriting Latest ADB Binaries"
-          python -m pip install -r ./scripts/requirements.txt
-          python ./scripts/download_adb_binaries.py
+          cd RetroArcher.bundle
+          python -m pip install -r scripts/requirements.txt
+          python scripts/download_adb_binaries.py
 
       - name: Test RetroArcher
         env:
