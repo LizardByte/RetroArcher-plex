@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.4] - 2022-02-26
+### Fixed
+- (Clients) - Resolved issue with outdated ADB binaries (#137)
+- (Dependencies) - Fixed issue with package excluding some dependencies
+
 ## [1.2.3] - 2022-02-25
 ### Fixed
 - (Dependencies) - Fixed issue with package excluding some dependencies
