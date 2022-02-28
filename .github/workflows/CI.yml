@@ -44,7 +44,7 @@ jobs:
           path: RetroArcher.bundle
 
       - name: Install Python 2.7
-        uses: actions/setup-python@v2  # https://github.com/actions/setup-python
+        uses: actions/setup-python@v3  # https://github.com/actions/setup-python
         with:
           python-version: '2.7'
 
@@ -67,7 +67,7 @@ jobs:
           python ${{ env.TARGET_DIR }}/__init__.py
 
       - name: Install Python 3.9
-        uses: actions/setup-python@v2  # https://github.com/actions/setup-python
+        uses: actions/setup-python@v3  # https://github.com/actions/setup-python
         with:
           python-version: '3.9'
 
