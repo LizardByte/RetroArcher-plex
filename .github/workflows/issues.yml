@@ -3,13 +3,15 @@ name: Issues
 on:
   issues:
     types: [labeled, unlabeled]
+  discussion:
+    types: [ labeled, unlabeled ]
 
 jobs:
   label:
-    name: Label Issues
+    name: Label Actions
     runs-on: ubuntu-latest
     steps:
-      - name: Label Issues
+      - name: Label Actions
         uses: dessant/label-actions@v2
         with:
           github-token: ${{ github.token }}
