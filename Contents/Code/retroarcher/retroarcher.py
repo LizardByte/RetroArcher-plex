@@ -379,8 +379,12 @@ def launcher():
 def launch_adb(moonlight_pc_uuid, moonlight_app_id):
     # https://stackoverflow.com/a/37327094/11214013
 
+    # stop and restart the adb server
+    adb.server_kill()
+    time.sleep(3)
+    adb.__init__(socket_timeout=10)
+
     adb_ranges = [
-        [5555, 5556],  # Android version < 11 Default
         [5557, 5585],  # Android version < 11 Others
         [30000, 39999],  # https://www.reddit.com/r/tasker/comments/jbzeg5/adb_wifi_and_android_11_wireless_debugging/
         [40000, 49999],
@@ -389,22 +393,29 @@ def launch_adb(moonlight_pc_uuid, moonlight_app_id):
     ]
 
     device = None
-    for adb_range in adb_ranges:
-        adb_threaded_scan(adb_range)
 
-    count = 0
-    while count < 90:
-        if adb_connected:
-            device = adb.device(serial=adb_connected)
-            break
-        time.sleep(1)
-        count += 1
+    # try port 5555 first
+    adb_address = adb_connect(5555)
+    if adb_address:
+        device = adb.device(serial=adb_address)
+    else:
+        for adb_range in adb_ranges:
+            if not adb_connected:
+                adb_threaded_scan(adb_range)
+
+        count = 0
+        while count < 90:
+            if adb_connected:
+                device = adb.device(serial=adb_connected)
+                break
+            time.sleep(1)
+            count += 1
 
     if not device:
         logging.error('no adb device found, exiting')
         sys.exit(1)
 
-    # possible apps that can be useful
+    # packages dictionary
     packages = {
         'Moonlight': {
             'package': 'com.limelight'
@@ -412,7 +423,7 @@ def launch_adb(moonlight_pc_uuid, moonlight_app_id):
     }
 
     for package in packages:
-        if device.shell('pm list packages | grep ' + packages[package]['package']):
+        if packages[package]['package'] in device.list_packages():
             packages[package]['installed'] = True
             logging.info(f'{package} is installed on client device: {packages[package]["package"]}')
         else:
@@ -422,28 +433,50 @@ def launch_adb(moonlight_pc_uuid, moonlight_app_id):
     # add -W for more silent starting https://developer.android.com/studio/command-line/adb
     # why did -W stop working after a server reboot?
     if packages[Prefs['enum_GameStreamApp']]['installed']:
+        # stop playback in plex
+        device.keyevent(key_code=86)
+        # https://developer.android.com/reference/android/view/KeyEvent#KEYCODE_MEDIA_STOP
+
         # open moonlight on client device streaming from server desktop
-        status = device.shell(
-            f'am start -W -n com.limelight/com.limelight.ShortcutTrampoline --es "UUID" "{moonlight_pc_uuid}" --es "AppId" "{moonlight_app_id}"')
+        shell_commands = [
+            'am', 'start', '-W', '-n', 'com.limelight/com.limelight.ShortcutTrampoline',
+            '--es', '"UUID"', f'"{moonlight_pc_uuid}"',
+            '--es', '"AppId"', f'"{moonlight_app_id}"'
+        ]
+
+        status = device.shell(shell_commands)
         logging.debug(f'command status: {status}')
-        return True
+
+        if 'status: ok' in status.lower():
+            return True
+        else:
+            return False
     else:
         return False
 
 
 def adb_connect(adb_port):
     adb_address = f'{client_ip}:{adb_port}'
-    adb_connect_output = adb.connect(adb_address)
-    logging.debug(f'adb_connect_output: {adb_connect_output}')
-    message = adb_connect_output.split(f'{client_ip}:{adb_port}', 1)[0].strip().lower()
-    logging.debug(message)
-    count = 0  # Android 12 is reporting failed connection on first attempt, even though connection succeeds
+    logging.debug(f'attempting connection on: {adb_address}')
+    try:
+        adb.connect(addr=adb_address, timeout=10)
+    except AdbTimeout as e:
+        logging.warning(f'{e}: {adb_address}')
 
-    while count < 5:
-        count += 1
-        if message == 'connected to' or message == 'already connected to':
+    device = adb.device(serial=adb_address)
+    try:
+        state = device.get_state()
+    except AdbError as e:
+        logging.warning(f'{e}: {adb_address}')
+    else:
+        logging.debug(f'device state: {state}')
+
+        if state == 'device':
             logging.info(f'adb connected on port: {adb_port}')
             return adb_address
+        else:
+            adb.disconnect(addr=adb_address)  # disconnect if connection not successful
+            return False
 
     return False
 
@@ -486,8 +519,11 @@ def port_scan(port):  # determine whether `host` has the `port` open
         # tries to connect to host using that port
         s.connect((client_ip, port))
         # make timeout if you want it a little faster ( less accuracy )
-        s.settimeout(0.2)
+        s.settimeout(0.3)
     except ConnectionRefusedError:
+        # cannot connect, port is closed
+        pass
+    except TimeoutError:
         # cannot connect, port is closed
         pass
     else:
@@ -1263,6 +1299,7 @@ if __name__ == '__main__':
 
     # from module imports
     from adbutils import adb  # https://github.com/openatx/adbutils
+    from adbutils.errors import AdbError, AdbTimeout
     from ffmpy import FFmpeg  # ffmpeg wrapper
 
     from aiohttp import ClientSession, web  # xbox client
