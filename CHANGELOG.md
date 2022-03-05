@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.2.5] - 2022-03-04
+### Added
+- (Clients) - Stop playback in Plex before launching Moonlight on Android
+### Changed
+- (Emulators) - Updated accepted extensions for PS2 cores in RetroArch
+### Fixed
+- (Clients) - Resolved issue where ADB port scanner wouldn't connect in some cases for Android 11+
+- (Clients) - Improved speed of ADB port scanner for Android 11+
+- (Clients) - Attempt to connect on port 5555 before scanning ports for Android clients
+- (Scanner) - Fixed issue where some characters would cause scanner to fail
+
 ## [1.2.4] - 2022-02-26
 ### Fixed
 - (Clients) - Resolved issue with outdated ADB binaries (#137)
