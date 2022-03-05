@@ -4416,7 +4416,7 @@ dPlatformMapping = {
             'thegamesdb': 11
         },
         'libraryType': 'Games',
-        'romExtensions': ['ciso', 'cue', 'elf', 'iso', 'isz', 'cso'],
+        'romExtensions': ['elf', 'iso', 'ciso', 'chd', 'cso', 'bin', 'mdf', 'nrg', 'dump', 'gz', 'img', 'isz', 'cue'],
         'romType': 0,
         'multiDisk': False,
         'emulators': {
@@ -4428,11 +4428,12 @@ dPlatformMapping = {
                     1: 'pcsx2_libretro.dll',  # PCSX2
                     2: 'play_libretro.dll',  # Play!
                     'pcsx2_libretro.dll': {
-                        'coreExtensions': ['elf', 'iso', 'ciso', 'cue', 'bin'],
+                        'coreExtensions': ['elf', 'iso', 'ciso', 'chd', 'cso', 'bin', 'mdf', 'nrg', 'dump', 'gz',
+                                           'img', 'm3u'],
                         'friendlyName': 'Sony - PlayStation 2 (PCSX2)'
                     },
                     'play_libretro.dll': {
-                        'coreExtensions': ['iso', 'isz', 'cso', 'bin', 'elf'],
+                        'coreExtensions': ['chd', 'cso', 'cue', 'elf', 'iso', 'isz'],
                         'friendlyName': 'Sony - PlayStation 2 (Play!)'
                     }
                 }
