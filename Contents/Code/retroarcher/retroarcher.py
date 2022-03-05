@@ -607,15 +607,19 @@ def make_video(src, dst, rom_name):
     # https://stackoverflow.com/a/57512653/11214013
     font_file = font_file.replace('\\', '/').replace(':', '\\\\:')
 
-    illegal_characters = [',']
-
     title = rom_name
+    text_title = title.replace("'", r"'\\\''")  # quote character itself cannot be escaped
+    # https://ffmpeg.org/ffmpeg-utils.html#Quoting-and-escaping
+
+    illegal_characters = [',', '%', '"']
+
     current_time = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+
+    for character in illegal_characters:
+        text_title = text_title.replace(character, f'\\{character}')
 
     if os.path.isfile(dst):
         os.remove(dst)  # remove destination if it exists already
-    for character in illegal_characters:
-        rom_name = rom_name.replace(character, f'\\{character}')
 
     if sys.platform == 'win32':
         ff_executable = os.path.join(paths['retroarcherFFMPEGDir'], 'ffmpeg')
@@ -628,10 +632,10 @@ def make_video(src, dst, rom_name):
         outputs={dst: [
             '-t', ffmpeg_overlay['videoLength'], '-vf',
 
-            f"drawtext=text='{rom_name}': fontfile='{font_file}': fontcolor={ffmpeg_overlay['fontColor']}: \
-            fontsize={ffmpeg_overlay['fontSize']}: box={ffmpeg_overlay['border']}: \
-            boxcolor={ffmpeg_overlay['borderColor']}: boxborderw={ffmpeg_overlay['borderSize']}: \
-            x={ffmpeg_overlay['fontX']}: y={ffmpeg_overlay['fontY']}",
+            f"drawtext=text='{text_title}': fontfile='{font_file}': fontcolor={ffmpeg_overlay['fontColor']}: "
+            f"fontsize={ffmpeg_overlay['fontSize']}: box={ffmpeg_overlay['border']}: "
+            f"boxcolor={ffmpeg_overlay['borderColor']}: boxborderw={ffmpeg_overlay['borderSize']}: "
+            f"x={ffmpeg_overlay['fontX']}: y={ffmpeg_overlay['fontY']}",
 
             '-codec:v', Prefs['enum_FfmpegEncoder'], '-codec:a', 'copy', '-map_metadata', '-1', '-metadata',
             f'title={title}', '-metadata', f'creation_time={current_time}', '-map_chapters', '-1'
