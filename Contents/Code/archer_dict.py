@@ -4428,7 +4428,8 @@ dPlatformMapping = {
                     1: 'pcsx2_libretro.dll',  # PCSX2
                     2: 'play_libretro.dll',  # Play!
                     'pcsx2_libretro.dll': {
-                        'coreExtensions': ['elf', 'iso', 'ciso', 'chd', 'cso', 'bin', 'mdf', 'nrg', 'dump', 'gz', 'img'],
+                        'coreExtensions': ['elf', 'iso', 'ciso', 'chd', 'cso', 'bin', 'mdf', 'nrg', 'dump', 'gz',
+                                           'img', 'm3u'],
                         'friendlyName': 'Sony - PlayStation 2 (PCSX2)'
                     },
                     'play_libretro.dll': {
