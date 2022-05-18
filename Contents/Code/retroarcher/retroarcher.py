@@ -338,7 +338,7 @@ def launcher():
 
     # probably should replace client_platform with client_device
     if client_platform.lower() == 'android' or client_device.lower() == 'android':
-        launch_status = launch_adb(moonlight_pc_uuid, moonlight_app_id)
+        launch_status = launch_adb(moonlight_pc_uuid=moonlight_pc_uuid, moonlight_app_id=moonlight_app_id)
     elif client_platform.lower() == 'windows' or client_device.lower() == 'windows':
         launch_status = launch_windows(moonlight_pc_uuid, moonlight_app_name, secrets)
     elif client_platform.lower() == 'xbox':
@@ -376,7 +376,7 @@ def launcher():
         return
 
 
-def launch_adb(moonlight_pc_uuid, moonlight_app_id):
+def launch_adb(moonlight_pc_uuid: str, moonlight_app_id: str):
     # https://stackoverflow.com/a/37327094/11214013
 
     # stop and restart the adb server
@@ -440,8 +440,8 @@ def launch_adb(moonlight_pc_uuid, moonlight_app_id):
         # open moonlight on client device streaming from server desktop
         shell_commands = [
             'am', 'start', '-W', '-n', 'com.limelight/com.limelight.ShortcutTrampoline',
-            '--es', '"UUID"', f'"{moonlight_pc_uuid}"',
-            '--es', '"AppId"', f'"{moonlight_app_id}"'
+            '--es', 'UUID', moonlight_pc_uuid,
+            '--es', 'AppId', moonlight_app_id
         ]
 
         status = device.shell(shell_commands)
@@ -459,9 +459,10 @@ def adb_connect(adb_port):
     adb_address = f'{client_ip}:{adb_port}'
     logging.debug(f'attempting connection on: {adb_address}')
     try:
-        adb.connect(addr=adb_address, timeout=10)
+        adb.connect(addr=adb_address, timeout=10)  # re-pairing device or restarting server may help if device is timing out
     except AdbTimeout as e:
         logging.warning(f'{e}: {adb_address}')
+        return False
 
     device = adb.device(serial=adb_address)
     try:
@@ -1321,7 +1322,7 @@ if __name__ == '__main__':
 
     # argparse
     parser = argparse.ArgumentParser(
-        description="Script to stream desktop to Android using Moonlight and then launches emulator and rom on PC.",
+        description="Retro gaming in Plex!",
         formatter_class=argparse.RawTextHelpFormatter)
 
     # arguments for launcher
