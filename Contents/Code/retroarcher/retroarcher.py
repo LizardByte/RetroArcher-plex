@@ -379,10 +379,10 @@ def launcher():
 def launch_adb(moonlight_pc_uuid: str, moonlight_app_id: str):
     # https://stackoverflow.com/a/37327094/11214013
 
-    # stop and restart the adb server
-    adb.server_kill()
-    time.sleep(3)
-    adb.__init__(socket_timeout=10)
+    # # stop and restart the adb server
+    # adb.server_kill()
+    # time.sleep(3)
+    # adb.__init__(socket_timeout=10)
 
     adb_ranges = [
         [5557, 5585],  # Android version < 11 Others
