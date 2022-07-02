@@ -1,13 +1,15 @@
+# This action is centrally managed in https://github.com/retroarcher/.github/
+# Don't make changes to this file in this repo as they will be overwritten with changes made to the same file in
+# the above-mentioned repo.
+
 # Configuration for Label Actions - https://github.com/dessant/label-actions
 
 added:
   comment: >
     This feature has been added and will be available in the next release.
-
 fixed:
   comment: >
     This issue has been fixed and will be available in the next release.
-
 invalid:duplicate:
   comment: >
     :wave: @{issue-author}, this appears to be a duplicate of a pre-existing issue.
