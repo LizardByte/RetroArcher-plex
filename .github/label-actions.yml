@@ -1,4 +1,4 @@
-# This action is centrally managed in https://github.com/retroarcher/.github/
+# This action is centrally managed in https://github.com/<organization>/.github/
 # Don't make changes to this file in this repo as they will be overwritten with changes made to the same file in
 # the above-mentioned repo.
 
@@ -25,7 +25,7 @@ invalid:support:
   comment: >
     :wave: @{issue-author}, we use the issue tracker exclusively for bug reports.
     However, this issue appears to be a support request. Please use our
-    [Discord Server](https://retroarcher.github.io/discord) to get help with RetroArcher. Thanks.
+    [Discord Server](https://app.lizardbyte.dev/discord) to get help. Thanks.
   close: true
   lock: true
   lock-reason: 'off-topic'
