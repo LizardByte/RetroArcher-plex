@@ -1,13 +1,15 @@
+# This action is centrally managed in https://github.com/<organization>/.github/
+# Don't make changes to this file in this repo as they will be overwritten with changes made to the same file in
+# the above-mentioned repo.
+
 # Configuration for Label Actions - https://github.com/dessant/label-actions
 
 added:
   comment: >
     This feature has been added and will be available in the next release.
-
 fixed:
   comment: >
     This issue has been fixed and will be available in the next release.
-
 invalid:duplicate:
   comment: >
     :wave: @{issue-author}, this appears to be a duplicate of a pre-existing issue.
@@ -23,7 +25,7 @@ invalid:support:
   comment: >
     :wave: @{issue-author}, we use the issue tracker exclusively for bug reports.
     However, this issue appears to be a support request. Please use our
-    [Discord Server](https://retroarcher.github.io/discord) to get help with RetroArcher. Thanks.
+    [Discord Server](https://app.lizardbyte.dev/discord) to get help. Thanks.
   close: true
   lock: true
   lock-reason: 'off-topic'
