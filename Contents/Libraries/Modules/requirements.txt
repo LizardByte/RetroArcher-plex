@@ -1,4 +1,4 @@
-adbutils==0.16.2
+adbutils==1.0.3
 cryptography==37.0.2  # XboxDiscovery.py
 ffmpy==0.3.0
 psutil==5.9.0
