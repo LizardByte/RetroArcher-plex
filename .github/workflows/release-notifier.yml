@@ -61,10 +61,10 @@ jobs:
           password: ${{ secrets.REDDIT_PASSWORD }}
           app-id: ${{ secrets.REDDIT_CLIENT_ID }}
           app-secret: ${{ secrets.REDDIT_CLIENT_SECRET }}
-          subreddit: ${{ secrets.REDDIT_SUBREDDIT }}  # Submit to /r/RetroArcher
+          subreddit: ${{ secrets.REDDIT_SUBREDDIT }}
           title: ${{ github.event.repository.name }} ${{ github.ref_name }} Released
           url: ${{ github.event.release.html_url }}
-          flair-id: 2c5c66f8-627d-11eb-b58f-0eb22ac1892b  # https://www.reddit.com/r/retroarcher/api/link_flair.json
+          flair-id: ${{ secrets.REDDIT_FLAIR_ID }}  # https://www.reddit.com/r/<subreddit>>/api/link_flair.json
           comment: ${{ github.event.release.body }}
 
   twitter:
