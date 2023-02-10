@@ -23,13 +23,13 @@ Install Requirements
 Install Requirements
    .. code-block:: bash
 
-      # use python 2.7 venv
-      python ./scripts/install_requirements.txt
+      python -m pip install --upgrade --target=./Contents/Libraries/Shared -r \
+        requirements.txt --no-warn-script-location
 
 Development Requirements
    .. code-block:: bash
 
-      python -m pip install -r ./scripts/requirements-dev.txt
+      python -m pip install -r requirements-dev.txt
 
 Build Plist
 -----------
