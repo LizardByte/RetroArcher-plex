@@ -54,10 +54,10 @@ jobs:
           echo "Installing Requirements"
           python --version
           python -m pip --no-python-version-warning --disable-pip-version-check install --upgrade pip setuptools
-          
+
           # install dev requirements
           python -m pip install --upgrade -r requirements-dev.txt
-          
+
           python -m pip install --upgrade --target=./Contents/Libraries/Shared -r \
             requirements.txt --no-warn-script-location
 
@@ -108,7 +108,7 @@ jobs:
             "-xr!RetroArcher-plex.bundle/docs" \
             "-xr!RetroArcher-plex.bundle/scripts" \
             a "./RetroArcher-plex.bundle.zip" "RetroArcher-plex.bundle"
-          
+
           mkdir artifacts
           mv ./RetroArcher-plex.bundle.zip ./artifacts/
 
