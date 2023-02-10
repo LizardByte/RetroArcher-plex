@@ -1,0 +1,21 @@
+# This action is centrally managed in https://github.com/<organization>/.github/
+# Don't make changes to this file in this repo as they will be overwritten with changes made to the same file in
+# the above-mentioned repo.
+
+name: Issues
+
+on:
+  issues:
+    types: [labeled, unlabeled]
+  discussion:
+    types: [ labeled, unlabeled ]
+
+jobs:
+  label:
+    name: Label Actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Label Actions
+        uses: dessant/label-actions@v2
+        with:
+          github-token: ${{ github.token }}
