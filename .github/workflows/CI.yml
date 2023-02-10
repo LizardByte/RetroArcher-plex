@@ -9,6 +9,10 @@ on:
     branches: [master]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check_changelog:
     name: Check Changelog
@@ -30,12 +34,7 @@ jobs:
       release_body: ${{ steps.verify_changelog.outputs.changelog_parser_description }}
 
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [windows-2019, ubuntu-20.04, macos-11]
-
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-20.04
     needs: check_changelog
 
     steps:
@@ -45,19 +44,22 @@ jobs:
           path: RetroArcher-plex.bundle
 
       - name: Install Python 2.7
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: '2.7'
 
       - name: Set up Python 2.7 Dependencies
         working-directory: RetroArcher-plex.bundle
         run: |
-          echo "Installing Plex Agent Requirements"
+          echo "Installing Requirements"
           python --version
           python -m pip --no-python-version-warning --disable-pip-version-check install --upgrade pip setuptools
-
+          
+          # install dev requirements
+          python -m pip install --upgrade -r requirements-dev.txt
+          
           python -m pip install --upgrade --target=./Contents/Libraries/Shared -r \
-            ./Contents/Libraries/Shared/requirements.txt --no-warn-script-location
+            requirements.txt --no-warn-script-location
 
       - name: Build plist
         working-directory: RetroArcher-plex.bundle
@@ -68,41 +70,53 @@ jobs:
 
       - name: Test Plex Agent
         working-directory: RetroArcher-plex.bundle
-        env:
-          TARGET_DIR: ./Contents/Code
         run: |
-          python --version
-          python ${{ env.TARGET_DIR }}/__init__.py
+          python ./Contents/Code/__init__.py
 
       - name: Upload Artifacts
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
         uses: actions/upload-artifact@v3
         with:
-          name: RetroArcher-plex.bundle-${{ runner.os }}
+          name: RetroArcher-plex.bundle
           if-no-files-found: error  # 'warn' or 'ignore' are also available, defaults to `warn`
           path: |
             ${{ github.workspace }}
             !**/*.git*
             !**/*.pyc
             !**/__pycache__
+            !**/plexhints*
+            !**/RetroArcher-plex.bundle/.*
+            !**/RetroArcher-plex.bundle/cache.sqlite
+            !**/RetroArcher-plex.bundle/DOCKER_README.md
+            !**/RetroArcher-plex.bundle/Dockerfile
+            !**/RetroArcher-plex.bundle/docs
             !**/RetroArcher-plex.bundle/scripts
 
       - name: Package Release
         shell: bash
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         run: |
-          7z "-xr!*.git*" "-xr!*.pyc" "-xr!__pycache__" "-x!scripts" a "./RetroArcher-plex.bundle-${{ runner.os }}.zip" \
-            "RetroArcher-plex.bundle"
+          7z \
+            "-xr!*.git*" \
+            "-xr!*.pyc" \
+            "-xr!__pycache__" \
+            "-xr!plexhints*" \
+            "-xr!RetroArcher-plex.bundle/.*" \
+            "-xr!RetroArcher-plex.bundle/cache.sqlite" \
+            "-xr!RetroArcher-plex.bundle/DOCKER_README.md" \
+            "-xr!RetroArcher-plex.bundle/Dockerfile" \
+            "-xr!RetroArcher-plex.bundle/docs" \
+            "-xr!RetroArcher-plex.bundle/scripts" \
+            a "./RetroArcher-plex.bundle.zip" "RetroArcher-plex.bundle"
+          
+          mkdir artifacts
+          mv ./RetroArcher-plex.bundle.zip ./artifacts/
 
-      # todo ... use org action instead
-      - name: Create/Update GitHub Release
+      - name: Create Release
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
-        uses: ncipollo/release-action@v1  # https://github.com/ncipollo/release-action
+        uses: LizardByte/.github/actions/create_release@master
         with:
-          name: ${{ needs.check_changelog.outputs.next_version }}
-          tag: ${{ needs.check_changelog.outputs.next_version }}
-          artifacts: "*.zip"
-          token: ${{ secrets.GH_BOT_PAT }}
-          allowUpdates: true
-          body: ${{ needs.check_changelog.outputs.release_body }}
-          discussionCategory: Announcements
+          token: ${{ secrets.GH_BOT_TOKEN }}
+          next_version: ${{ needs.check_changelog.outputs.next_version }}
+          last_version: ${{ needs.check_changelog.outputs.last_version }}
+          release_body: ${{ needs.check_changelog.outputs.release_body }}
