@@ -19,4 +19,3 @@
 
    code_docs/main
    code_docs/helpers
-   code_docs/igdb_helpers
