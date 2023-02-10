@@ -1,0 +1,43 @@
+# Ignore Mac system files
+.DS_Store
+
+# Ignore python cache files
+*__pycache__
+*.pyc
+
+# Ignore PyCharm files
+.idea/
+venv/
+
+# Ignore log files
+*.log
+
+# Ignore backup files
+*.bak
+
+# Ignore Certain Start Videos
+!Contents/Resources/StartVideos/Games/
+Contents/Resources/StartVideos/Games/*
+!Contents/Resources/StartVideos/Games/.keep
+!Contents/Resources/StartVideos/Platforms/
+Contents/Resources/StartVideos/Platforms/*
+!Contents/Resources/StartVideos/Platforms/.keep
+Contents/Resources/StartVideos/Platforms.bak/
+
+# Ignore these for now until we include vidoes that we have permission to distribute
+!Contents/Resources/StartVideos/Main/
+Contents/Resources/StartVideos/Main/*
+!Contents/Resources/StartVideos/Main/*.keep
+
+# Keep any start video named RetroArcher.mp4
+!Contents/Resources/StartVideos/*/RetroArcher.mp4
+
+# Keep empty directories
+!*.keep
+
+# Remove python modules
+Contents/Libraries/Modules/
+Contents/Libraries/Shared/
+
+# Keep requirements.txt files
+!*requirements.txt
