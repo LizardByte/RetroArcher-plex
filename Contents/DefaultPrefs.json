@@ -1,0 +1,23 @@
+[
+  {
+    "id": "enum_PreferredRatingSystem",
+    "label": "[METADATA] Preferred rating system",
+    "type": "enum",
+    "values": [
+      "ESRB",
+      "PEGI",
+      "CERO",
+      "USK",
+      "GRAC",
+      "CLASS_IND",
+      "ACB"
+    ],
+    "default": "ESRB"
+  },
+  {
+    "id": "bool_PlatformAsCollection",
+    "label": "[METADATA] Use platform name as collection (disable if you use platform specific libraries)",
+    "type": "bool",
+    "default": "True"
+  }
+]

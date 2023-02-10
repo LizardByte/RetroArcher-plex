@@ -1,0 +1,2 @@
+# plex agent requirements
+-r Contents/Libraries/Shared/requirements.txt

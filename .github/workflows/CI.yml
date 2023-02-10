@@ -1,0 +1,108 @@
+---
+name: CI
+
+on:
+  pull_request:
+    branches: [master, nightly]
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  check_changelog:
+    name: Check Changelog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Verify Changelog
+        id: verify_changelog
+        if: ${{ github.ref == 'refs/heads/master' || github.base_ref == 'master' }}
+        # base_ref for pull request check, ref for push
+        uses: LizardByte/.github/actions/verify_changelog@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+    outputs:
+      next_version: ${{ steps.verify_changelog.outputs.changelog_parser_version }}
+      last_version: ${{ steps.verify_changelog.outputs.latest_release_tag_name }}
+      release_body: ${{ steps.verify_changelog.outputs.changelog_parser_description }}
+
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2019, ubuntu-20.04, macos-11]
+
+    runs-on: ${{ matrix.os }}
+    needs: check_changelog
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: RetroArcher-plex.bundle
+
+      - name: Install Python 2.7
+        uses: actions/setup-python@v3
+        with:
+          python-version: '2.7'
+
+      - name: Set up Python 2.7 Dependencies
+        working-directory: RetroArcher-plex.bundle
+        run: |
+          echo "Installing Plex Agent Requirements"
+          python --version
+          python -m pip --no-python-version-warning --disable-pip-version-check install --upgrade pip setuptools
+
+          python -m pip install --upgrade --target=./Contents/Libraries/Shared -r \
+            ./Contents/Libraries/Shared/requirements.txt --no-warn-script-location
+
+      - name: Build plist
+        working-directory: RetroArcher-plex.bundle
+        env:
+          BUILD_VERSION: ${{ needs.check_changelog.outputs.next_version }}
+        run: |
+          python scripts/build_plist.py
+
+      - name: Test Plex Agent
+        working-directory: RetroArcher-plex.bundle
+        env:
+          TARGET_DIR: ./Contents/Code
+        run: |
+          python --version
+          python ${{ env.TARGET_DIR }}/__init__.py
+
+      - name: Upload Artifacts
+        if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: RetroArcher-plex.bundle-${{ runner.os }}
+          if-no-files-found: error  # 'warn' or 'ignore' are also available, defaults to `warn`
+          path: |
+            ${{ github.workspace }}
+            !**/*.git*
+            !**/*.pyc
+            !**/__pycache__
+            !**/RetroArcher-plex.bundle/scripts
+
+      - name: Package Release
+        shell: bash
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        run: |
+          7z "-xr!*.git*" "-xr!*.pyc" "-xr!__pycache__" "-x!scripts" a "./RetroArcher-plex.bundle-${{ runner.os }}.zip" \
+            "RetroArcher-plex.bundle"
+
+      # todo ... use org action instead
+      - name: Create/Update GitHub Release
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        uses: ncipollo/release-action@v1  # https://github.com/ncipollo/release-action
+        with:
+          name: ${{ needs.check_changelog.outputs.next_version }}
+          tag: ${{ needs.check_changelog.outputs.next_version }}
+          artifacts: "*.zip"
+          token: ${{ secrets.GH_BOT_PAT }}
+          allowUpdates: true
+          body: ${{ needs.check_changelog.outputs.release_body }}
+          discussionCategory: Announcements

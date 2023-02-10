@@ -1,0 +1,4 @@
+# these requirements must support python 2.7
+# it is doubtful that Plex will ever update to Python 3+
+requests==2.27.1;python_version<"3"  # 2.27 is last version supporting Python 2.7
+typing==3.10.0.0
