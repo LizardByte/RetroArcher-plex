@@ -23,8 +23,7 @@ Install Requirements
 Install Requirements
    .. code-block:: bash
 
-      python -m pip install --upgrade --target=./Contents/Libraries/Shared -r \
-        requirements.txt --no-warn-script-location
+      python -m pip install --upgrade --target=./Contents/Libraries/Shared -r requirements.txt --no-warn-script-location
 
 Development Requirements
    .. code-block:: bash
