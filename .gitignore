@@ -168,6 +168,3 @@ plexhints-temp/
 
 # Remove python modules
 Contents/Libraries/Shared/
-
-# Keep requirements.txt files
-!*requirements.txt

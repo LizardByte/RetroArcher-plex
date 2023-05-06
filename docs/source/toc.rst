@@ -3,13 +3,14 @@
    :caption: About
 
    about/overview
+   about/changelog
 
 .. toctree::
    :maxdepth: 2
    :caption: Contributing
 
-   contributing/build
    contributing/contributing
+   contributing/build
    contributing/testing
 
 .. toctree::
