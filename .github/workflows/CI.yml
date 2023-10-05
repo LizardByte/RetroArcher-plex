@@ -44,9 +44,7 @@ jobs:
           path: RetroArcher-plex.bundle
 
       - name: Install Python 2.7
-        uses: actions/setup-python@v4
-        with:
-          python-version: '2.7'
+        uses: LizardByte/.github/actions/setup_python2@nightly
 
       - name: Set up Python 2.7 Dependencies
         working-directory: RetroArcher-plex.bundle
