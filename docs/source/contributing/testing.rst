@@ -7,7 +7,7 @@ Unless otherwise specified the ``requirements.txt`` file is located in the ``scr
 
 Flake8
 ------
-RetroArcher uses `Flake8 <https://pypi.org/project/flake8/>`_ for enforcing consistent code styling. Flake is included
+RetroArcher uses `Flake8 <https://pypi.org/project/flake8/>`__ for enforcing consistent code styling. Flake8 is included
 in the ``requirements.txt``.
 
 The config file for flake8 is ``.flake8``. This is already included in the root of the repo and should not be modified.
@@ -19,10 +19,10 @@ Test with Flake8
 
 Sphinx
 ------
-RetroArcher uses `Sphinx <https://www.sphinx-doc.org/en/master/>`_ for documentation building. Sphinx is included
+RetroArcher uses `Sphinx <https://www.sphinx-doc.org/en/master/>`__ for documentation building. Sphinx is included
 in the ``requirements.txt``.
 
-RetroArcher follows `numpydoc <https://numpydoc.readthedocs.io/en/latest/format.html>`_ styling and formatting in
+RetroArcher follows `numpydoc <https://numpydoc.readthedocs.io/en/latest/format.html>`__ styling and formatting in
 docstrings. This will be tested when building the docs.
 
 The config file for Sphinx is ``docs/source/conf.py``. This is already included in the root of the repo and should not
@@ -45,7 +45,7 @@ pytest
 ------
 .. Todo:: PyTest is not yet implemented.
 
-RetroArcher uses `pytest <https://pypi.org/project/pytest/>`_ for unit testing. pytest is included in the
+RetroArcher uses `pytest <https://pypi.org/project/pytest/>`__ for unit testing. pytest is included in the
 ``requirements.txt``.
 
 No config is required for pytest.

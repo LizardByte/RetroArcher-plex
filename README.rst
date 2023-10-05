@@ -8,7 +8,7 @@ About
 RetroArcher-plex is plug-in for Plex Media Player that connects plex to RetroArcher.
 
 .. Note:: This project is under development and not useful at this time. RetroArcher is in the process of being
-   rewritten. You can follow progress on the `RetroArcher GitHub <https://github.com/LizardByte/RetroArcher>`_.
+   rewritten. You can follow progress on the `RetroArcher GitHub <https://github.com/LizardByte/RetroArcher>`__.
 
 Integrations
 ------------
