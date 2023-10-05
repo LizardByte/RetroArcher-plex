@@ -5,5 +5,6 @@ m2r2==0.3.2;python_version<"3"
 git+https://github.com/LizardByte/plexhints.git#egg=plexhints  # type hinting library for plex development
 pytest==4.6.11;python_version<"3"
 requests==2.27.1;python_version<"3"
+rstcheck==3.5.0;python_version<"3"
 Sphinx==1.8.6;python_version<"3"
 sphinx-rtd-theme==1.2.0;python_version<"3"

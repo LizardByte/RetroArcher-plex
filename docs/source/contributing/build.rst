@@ -7,7 +7,7 @@ Python 2.7.
 
 Clone
 -----
-Ensure `git <https://git-scm.com/>`_ is installed and run the following:
+Ensure `git <https://git-scm.com/>`__ is installed and run the following:
 
    .. code-block:: bash
 
