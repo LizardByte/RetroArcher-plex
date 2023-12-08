@@ -1,4 +1,4 @@
-:github_url: https://github.com/LizardByte/RetroArcher-plex/tree/nightly/docs/source/contributing/testing.rst
+:github_url: https://github.com/LizardByte/RetroArcher-plex/blob/master/docs/source/contributing/testing.rst
 
 Testing
 =======

@@ -1,4 +1,4 @@
-:github_url: https://github.com/LizardByte/RetroArcher-plex/tree/nightly/Contents/Code/helpers.py
+:github_url: https://github.com/LizardByte/RetroArcher-plex/blob/master/Contents/Code/helpers.py
 
 .. include:: ../global.rst
 

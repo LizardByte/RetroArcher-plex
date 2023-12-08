@@ -7,7 +7,6 @@
 # standard imports
 from datetime import datetime
 import os
-import re
 import sys
 
 
@@ -37,8 +36,8 @@ epub_copyright = project_copyright
 author = 'ReenigneArcher'
 
 # The full version, including alpha/beta/rc tags
-with open(os.path.join(root_dir, 'CHANGELOG.md'), 'r') as f:
-    version = re.search(r"\[((\d+)\.(\d+)\.(\d+))]", str(f.read())).group(1)
+# https://docs.readthedocs.io/en/stable/reference/environment-variables.html#envvar-READTHEDOCS_VERSION
+version = os.getenv('READTHEDOCS_VERSION', 'dirty')
 
 
 # -- General configuration ---------------------------------------------------
@@ -79,6 +78,15 @@ html_logo = os.path.join(root_dir, 'Contents', 'Resources', 'attribution.png')
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 # html_static_path = ['_static']
+
+# These paths are either relative to html_static_path
+# or fully qualified paths (eg. https://...)
+# html_css_files = [
+#     'css/custom.css',
+# ]
+# html_js_files = [
+#     'js/custom.js',
+# ]
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
