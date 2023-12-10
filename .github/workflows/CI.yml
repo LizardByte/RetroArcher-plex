@@ -55,7 +55,7 @@ jobs:
           path: RetroArcher-plex.bundle
 
       - name: Set up Python
-        uses: LizardByte/setup-python-action@v2023.1128.10441
+        uses: LizardByte/setup-python-action@v2023.1210.35516
         with:
           python-version: '2.7'
 
