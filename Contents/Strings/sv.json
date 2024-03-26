@@ -1,0 +1,4 @@
+{
+  "bool_PlatformAsCollection": "Använd plattformsnamn som samling (inaktivera om du använder plattformsspecifika bibliotek)",
+  "enum_PreferredRatingSystem": "Önskat ratingsystem"
+}
