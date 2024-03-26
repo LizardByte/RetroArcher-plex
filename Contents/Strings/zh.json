@@ -1,0 +1,4 @@
+{
+  "bool_PlatformAsCollection": "使用平台名称作为收藏(如果您使用平台特定的库，请禁用)",
+  "enum_PreferredRatingSystem": "首选评级系统"
+}
