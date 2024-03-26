@@ -1,0 +1,4 @@
+{
+  "bool_PlatformAsCollection": "Use platform name as collection (disable if you use platform specific libraries)",
+  "enum_PreferredRatingSystem": "Preferred rating system"
+}
