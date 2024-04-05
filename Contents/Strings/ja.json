@@ -1,0 +1,4 @@
+{
+  "bool_PlatformAsCollection": "プラットフォーム名をコレクションとして使用 (プラットフォーム固有のライブラリを使用する場合は無効)",
+  "enum_PreferredRatingSystem": "優先レーティングシステム"
+}
