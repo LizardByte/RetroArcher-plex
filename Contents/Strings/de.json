@@ -1,4 +1,4 @@
 {
-  "bool_PlatformAsCollection": "Plattformname als Sammlung verwenden (deaktivieren, wenn du plattformspezifische Bibliotheken verwendest)",
+  "bool_PlatformAsCollection": "Plattformname als Sammlung verwenden (deaktivieren, wenn du eine plattformspezifische Bibliotheken verwendest)",
   "enum_PreferredRatingSystem": "Bevorzugtes Bewertungssystem"
 }
