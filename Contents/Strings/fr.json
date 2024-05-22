@@ -1,0 +1,4 @@
+{
+  "bool_PlatformAsCollection": "Utiliser le nom de la plateforme comme collection (désactiver si vous utilisez des bibliothèques spécifiques à la plateforme)",
+  "enum_PreferredRatingSystem": "Système de classement préféré"
+}
