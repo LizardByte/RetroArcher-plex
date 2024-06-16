@@ -1,0 +1,4 @@
+{
+  "bool_PlatformAsCollection": "Platform adını koleksiyon olarak kullan (platforma özel kütüphaneler kullanıyorsanız devre dışı bırakın)",
+  "enum_PreferredRatingSystem": "Tercih edilen derecelendirme sistemi"
+}
