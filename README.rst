@@ -3,6 +3,12 @@
 Overview
 ========
 
+.. attention::
+
+   Plex is removing ALL support for plugins. This project is no longer maintained. See
+   `Plex Forum <https://forums.plex.tv/t/important-information-for-users-running-plex-media-server-on-nvidia-shield-devices/883484>`__
+   for more information.
+
 About
 -----
 RetroArcher-plex is plug-in for Plex Media Player that connects plex to RetroArcher.
